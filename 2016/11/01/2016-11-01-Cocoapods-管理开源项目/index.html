@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS cocoapods," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="准备 创建或者已经有了 github 账号.  了解和熟悉如何在 github 上面创建 Repository.  安装了 cocoapods.  如果你还没有使用 cocoapods, 建议看看 Mac OSX 10.11.1+ 安装 Cocoapods 这篇博客. 在博客 iOS 项目: 打造本地 pod 库 里面有介绍如何打造本地的 pod 库. 今天给大家分享如何将代码开源并放到 pod">
+<meta name="keywords" content="iOS cocoapods">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cocoapods 管理开源项目">
+<meta property="og:url" content="http://yoursite.com/2016/11/01/2016-11-01-Cocoapods-管理开源项目/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="准备 创建或者已经有了 github 账号.  了解和熟悉如何在 github 上面创建 Repository.  安装了 cocoapods.  如果你还没有使用 cocoapods, 建议看看 Mac OSX 10.11.1+ 安装 Cocoapods 这篇博客. 在博客 iOS 项目: 打造本地 pod 库 里面有介绍如何打造本地的 pod 库. 今天给大家分享如何将代码开源并放到 pod">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2016/11/1/1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2016/11/1/2.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2016/11/1/3.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2016/11/1/4.png">
+<meta property="og:updated_time" content="2017-11-18T15:10:35.355Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cocoapods 管理开源项目">
+<meta name="twitter:description" content="准备 创建或者已经有了 github 账号.  了解和熟悉如何在 github 上面创建 Repository.  安装了 cocoapods.  如果你还没有使用 cocoapods, 建议看看 Mac OSX 10.11.1+ 安装 Cocoapods 这篇博客. 在博客 iOS 项目: 打造本地 pod 库 里面有介绍如何打造本地的 pod 库. 今天给大家分享如何将代码开源并放到 pod">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2016/11/1/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/01/2016-11-01-Cocoapods-管理开源项目/"/>
+
+
+
+
+
+  <title>Cocoapods 管理开源项目 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/01/2016-11-01-Cocoapods-管理开源项目/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Cocoapods 管理开源项目</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-01T22:33:21+08:00">
+                2016-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/01/2016-11-01-Cocoapods-管理开源项目/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/11/01/2016-11-01-Cocoapods-管理开源项目/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+          
+            <span>&nbsp; | &nbsp;
+            <span id="busuanzi_value_page_pv" ></span>次阅读
+            </span>    
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li><p>创建或者已经有了 github 账号.</p>
+</li>
+<li><p>了解和熟悉如何在 github 上面创建 Repository.</p>
+</li>
+<li>安装了 cocoapods.</li>
+</ul>
+<p>如果你还没有使用 cocoapods, 建议看看 <a href="http://blog.csdn.net/veryitman/article/details/50769069" target="_blank" rel="noopener">Mac OSX 10.11.1+ 安装 Cocoapods</a> 这篇博客.</p>
+<p>在博客 iOS 项目: 打造本地 pod 库 里面有介绍如何打造本地的 pod 库.</p>
+<p>今天给大家分享如何将代码开源并放到 pod 库中, 供别人使用.<br>这篇博客是基于一个实际例子 <a href="https://github.com/veryitman/MZInsetLabel" target="_blank" rel="noopener">MZInsetLabel</a> 来说明的.</p>
+<h2 id="创建-Repository-并完善项目"><a href="#创建-Repository-并完善项目" class="headerlink" title="创建 Repository 并完善项目"></a>创建 Repository 并完善项目</h2><ul>
+<li>1.在 github 上面创建 Repository, 取名为 MZInsetLabel.</li>
+<li>2.clone 到本地磁盘.</li>
+<li>3.写代码, 这里我只写了 MZInsetLabel.h | .m 文件.</li>
+<li>4.创建 spec 文件, 使用下面命令:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod spec create MZInsetLabel</div></pre></td></tr></table></figure>
+<p>在当前目录会生成 MZInsetLabel.spec 文件.</p>
+<p>按照规范和实际情况填写.</p>
+<blockquote>
+<p>注意: Tag 版本号不要错误.</p>
+</blockquote>
+<p>最终内容如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Pod::Spec.new do |s|</div><div class="line">  s.name         = &quot;MZInsetLabel&quot;</div><div class="line">  s.version      = &quot;0.2.0&quot;</div><div class="line">  s.summary      = &quot;MZInsetLabel is subClass of UILabel.&quot;</div><div class="line">  s.description  = &lt;&lt;-DESC</div><div class="line">                        MZInsetLabel is a sub class of UILabel that can be set insets.</div><div class="line">                   DESC</div><div class="line">  s.homepage     = &quot;http://www.veryitman.com&quot;</div><div class="line">  s.license      = &quot;MIT&quot;</div><div class="line">  s.author       = &#123; &quot;veryitman&quot; =&gt; &quot;veryitman@126.com&quot; &#125;</div><div class="line">  s.platform     = :ios, &quot;7.0&quot;</div><div class="line">  s.source = &#123; :git =&gt; &quot;https://github.com/veryitman/MZInsetLabel.git&quot;, :tag =&gt; &quot;#&#123;s.version&#125;&quot; &#125;</div><div class="line">  s.source_files  = &quot;*.&#123;h,m&#125;&quot;</div><div class="line">  s.framework  = &quot;UIKit&quot;</div><div class="line">  s.requires_arc = true</div><div class="line">end</div></pre></td></tr></table></figure>
+<h2 id="项目检测"><a href="#项目检测" class="headerlink" title="项目检测"></a>项目检测</h2><ol>
+<li>检查该 podspec</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod lib lint MZInsetLabel.podspec</div></pre></td></tr></table></figure>
+<blockquote>
+<p>–verbose 可以输出更加详细的内容</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod lib lint MZInsetLabel.podspec --verbose</div></pre></td></tr></table></figure>
+<p>正确的话, 你可以看到</p>
+<p><img src="/upload/images/2016/11/1/1.jpg" alt="1"></p>
+<h2 id="push-项目到-Repository"><a href="#push-项目到-Repository" class="headerlink" title="push 项目到 Repository"></a>push 项目到 Repository</h2><p>没有错误的话可以执行下面操作.</p>
+<ol>
+<li>将本地的代码 push 到 github 的 Repository, 就是刚才创建的 MZInsetLabel.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git add </div><div class="line">git commit -m &quot;Init&quot;</div><div class="line">git push</div></pre></td></tr></table></figure>
+<ol>
+<li>创建一个 Release 作为 Tag<br>如图所示:</li>
+</ol>
+<p><img src="/upload/images/2016/11/1/2.jpg" alt="1"></p>
+<h2 id="推送到-cocoapods"><a href="#推送到-cocoapods" class="headerlink" title="推送到 cocoapods"></a>推送到 cocoapods</h2><p>1.注册 trunk</p>
+<blockquote>
+<p>pod trunk register 你的邮箱 ‘用户名’ –description=’简单描述’</p>
+</blockquote>
+<p>完整命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod trunk register veryitman@126.com &apos;veryitman&apos; --description=&apos;mark&apos;</div></pre></td></tr></table></figure>
+<p>2.打开邮箱, 激活邮件, 点击链接激活即可.</p>
+<p>3.检查注册信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod trunk me</div></pre></td></tr></table></figure>
+<p>4.添加到 cocoapods</p>
+<p>执行下面命令, 即可.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod trunk push MZInsetLabel.podspec</div></pre></td></tr></table></figure>
+<p>成功的效果图:</p>
+<p><img src="/upload/images/2016/11/1/3.jpg" alt="1"></p>
+<p><img src="/upload/images/2016/11/1/4.png" alt="1"></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>1.检查是否可以搜索到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod search MZInsetLabel</div></pre></td></tr></table></figure>
+<p>如果搜索不到, 请执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod setup</div></pre></td></tr></table></figure>
+<p>2.在项目中可以使用该项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod &apos;MZInsetLabel&apos;, &apos;~&gt; 0.1.0&apos;</div></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>可能遇到的麻烦</p>
+<p>1.执行 pod trunk push MZInsetLabel.podspec 时, 好久没反应?</p>
+<blockquote>
+<p>这种情况, 大多数都是因为你的网络不给力造成的, 如果你确定你的网络没问题, 那么请翻墙.</p>
+</blockquote>
+<p>2.执 行 pod trunk push MZInsetLabel.podspec 时报错?</p>
+<p>报错信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR | [iOS] unknown: Encountered an unknown error (Simulator iPhone 4s is not available.) during validation.</div></pre></td></tr></table></figure>
+<p>这个错误是因为, 更新了 xcode8 之后不再支持 ios7 的缘故.</p>
+<p>解决方案(我的), 升级 cocoapods.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gem install -n /usr/local/bin cocoapods</div></pre></td></tr></table></figure>
+<p>3.pod trunk push 失败</p>
+<p>失败提示信息类似:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Cloning into &apos;master&apos;...</div><div class="line">error: RPC failed; curl 56 SSLRead() return error -36</div><div class="line">fatal: The remote end hung up unexpectedly</div><div class="line">fatal: early EOF</div><div class="line">fatal: index-pack failed</div></pre></td></tr></table></figure>
+<p>解决方案: 更新 gem</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gem update --system</div></pre></td></tr></table></figure>
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><p>1.删除远程 Tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push --delete origin [TagName]</div></pre></td></tr></table></figure>
+<p>如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push --delete origin 0.10.0</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在 github 上面如果你不小心打错了 Release, 然后删除该 Release.<br>你会发现, tag 无法删除.使用上面方式妥妥的解决.</p>
+</blockquote>
+<p>2.删除本地 Tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git tag --delete [TagName]</div></pre></td></tr></table></figure>
+<p>如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git tag --delete 0.10.0</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-cocoapods/" rel="tag"># iOS cocoapods</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/22/2016-10-22-iOS-谈谈-frame-和-bounds/" rel="next" title="iOS: 谈谈 frame 和 bounds">
+                <i class="fa fa-chevron-left"></i> iOS: 谈谈 frame 和 bounds
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/08/2016-11-08-Cocoapods-问题集锦/" rel="prev" title="Cocoapods 问题集锦">
+                Cocoapods 问题集锦 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Repository-并完善项目"><span class="nav-number">2.</span> <span class="nav-text">创建 Repository 并完善项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目检测"><span class="nav-number">3.</span> <span class="nav-text">项目检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#push-项目到-Repository"><span class="nav-number">4.</span> <span class="nav-text">push 项目到 Repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推送到-cocoapods"><span class="nav-number">5.</span> <span class="nav-text">推送到 cocoapods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">6.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">7.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他操作"><span class="nav-number">8.</span> <span class="nav-text">其他操作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+总访问量 <span id="busuanzi_value_site_pv"></span> &nbsp&nbsp&nbsp
+您是第<span id="busuanzi_value_site_uv"></span>个达人
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://veryitman.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2016/11/01/2016-11-01-Cocoapods-管理开源项目/';
+          this.page.identifier = '2016/11/01/2016-11-01-Cocoapods-管理开源项目/';
+          this.page.title = 'Cocoapods 管理开源项目';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://veryitman.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
