@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/11/08/2016-11-08-Cocoapods-%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</loc>
+    
+    <lastmod>2018-01-25T16:05:47.803Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/11/08/2016-11-08-Mac-install-Cocoapods/</loc>
+    
+    <lastmod>2018-01-25T16:05:23.044Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2017-12-17T11:35:43.404Z</lastmod>
@@ -250,20 +264,6 @@
     <loc>http://yoursite.com/2016/11/12/2016-11-12-GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</loc>
     
     <lastmod>2017-11-19T13:55:35.274Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/11/08/2016-11-08-Mac-install-Cocoapods/</loc>
-    
-    <lastmod>2017-11-19T13:48:05.212Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/11/08/2016-11-08-Cocoapods-%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</loc>
-    
-    <lastmod>2017-11-18T15:13:46.317Z</lastmod>
     
   </url>
   
