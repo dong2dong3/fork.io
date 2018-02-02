@@ -102,7 +102,7 @@
     
     <entry>
       <title><![CDATA[GCC: 共享库]]></title>
-      <url>/2017/10/07/2017-10-07-GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/</url>
+      <url>/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/</url>
       <content type="html"><![CDATA[<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>共享库: 在程序执行期间需要调用到共享库的时候才加载到内存里面，可以被多个程序共享使用.</p>
 <p>在 MacOS 上面创建和使用共享库要比在 Linux 上面简单.<br>在 Linux 上面还会牵扯到共享库路径问题, 在 Mac 上面就没有这样的问题.</p>
 <p>在 MacOS 上面使用的 GCC 其本质是 LLVM. 你可以在命令行:</p>
@@ -167,7 +167,7 @@
     
     <entry>
       <title><![CDATA[GCC: Homebrew 安装 GCC 和 Binutils]]></title>
-      <url>/2017/10/07/2017-10-07-GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</url>
+      <url>/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</url>
       <content type="html"><![CDATA[<h2 id="文章背景"><a href="#文章背景" class="headerlink" title="文章背景"></a>文章背景</h2><p>前段时间, 有个博客上面的小伙伴给我发来邮件, 问我关于 GCC 相关的知识, 对于 GCC 我也只是略懂皮毛, 于是回复他的时候, 也很粗略的说了一通.</p>
 <p>这位小伙伴还在读大学, 自学能力比较强, 自己出了完成课时之外, 还会在网上找资料自学.</p>
 <p>我记得自己在大学的时候, 对 GCC 一窍不通, 只知道 Turbo-C 和那些被强制记住的关键字, 哈哈!</p>
@@ -222,7 +222,7 @@
     
     <entry>
       <title><![CDATA[GCC: 编译C语言的流程]]></title>
-      <url>/2017/10/03/2017-10-03-GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
+      <url>/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
       <content type="html"><![CDATA[<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>这篇博文 <a href="http://blog.csdn.net/veryitman/article/details/7340668" target="_blank" rel="noopener">makefile: gcc 工作流程</a> 早期被我放在 CSDN 上面过.时隔多年, 仍不能忘怀, 现乔迁至此.</p>
 <p>本文比较简单, 比较适合初学者.<br>我只是试图以实例的方式给大家讲解一下 GCC 编译链接 C语言程序的流程, 并没有高深的知识.</p>
 <h2 id="编译流程"><a href="#编译流程" class="headerlink" title="编译流程"></a>编译流程</h2><p>C 语言经过预处理、编译、连接最后生成可执行文件.</p>
@@ -281,7 +281,7 @@
     
     <entry>
       <title><![CDATA[iOS APNs: 处理数据]]></title>
-      <url>/2017/08/07/2017-08-07-iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/</url>
+      <url>/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/</url>
       <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>博文:<br>iOS 细说推送: 远程推送<br>iOS 细说推送: 本地推送</p>
 <p>分别介绍了 iOS 的两种典型推送, 当然, iOS 还有很多类型的推送, 如静默推送, VOIP 推送(iOS8)等, 后面会慢慢介绍给大家.</p>
 <p>今天跟大家聊聊关于如何处理推送的数据(payload).</p>
@@ -372,7 +372,7 @@
     
     <entry>
       <title><![CDATA[iOS APNs: 本地推送]]></title>
-      <url>/2017/08/06/2017-08-06-iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/</url>
+      <url>/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/</url>
       <content type="html"><![CDATA[<h2 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h2><p><code>iOS APNs: 远程推送</code> 说过远程推送(RemotePush).</p>
 <p>今天说说本地推送, 本地推送也就是平时所说的 LocalPush.</p>
 <p>该系列博客:</p>
@@ -430,7 +430,7 @@
     
     <entry>
       <title><![CDATA[iOS APNs: 远程推送]]></title>
-      <url>/2017/08/06/2017-08-06-iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/</url>
+      <url>/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/</url>
       <content type="html"><![CDATA[<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>本篇博文, 你首先需要知道的内容:</p>
 <blockquote>
 <p>1.了解过 Push.<br>2.阅读过 [iOS 后台模式] 这篇文章.<br>3.申请过苹果证书或者知道如何申请和制作证书.<br>4.iOS 开发基本知识.</p>
@@ -569,7 +569,7 @@
     
     <entry>
       <title><![CDATA[iOS 后台模式]]></title>
-      <url>/2017/07/30/2017-07-30-iOS-%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F/</url>
+      <url>/2017/07/30/iOS-%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h2 id="应用状态"><a href="#应用状态" class="headerlink" title="应用状态"></a>应用状态</h2><p>来自苹果开发者文档 The App Life Cycle 的图.</p>
 <p><img src="/upload/images/2017/07/30/Background1.jpg" alt="1"></p>
 <p>下面这张图说明了应用程序的状态, 如下所示:</p>
@@ -666,7 +666,7 @@
     
     <entry>
       <title><![CDATA[使用 Charles]]></title>
-      <url>/2017/07/23/2017-07-23-%E4%BD%BF%E7%94%A8-Charles/</url>
+      <url>/2017/07/23/%E4%BD%BF%E7%94%A8-Charles/</url>
       <content type="html"><![CDATA[<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Charles 是 Mac 上面比较好用的抓包工具.</p>
 <p>在使用微信登录 SDK 的时候, 我想看看微信请求的内容, 以及其授权过程, 发现只要连接 Charles, 跳转到微信之后无法打开微信的授权登录页面, 提示网络不可用.</p>
 <p>经过研究, 是需要使用 Charles 配置 HTTPS, 配置完成后, 就可以随心所欲了.</p>
@@ -737,7 +737,7 @@
     
     <entry>
       <title><![CDATA[Cocos2d-js: 在 iOS 上运行]]></title>
-      <url>/2017/07/23/2017-07-23-Cocos2d-js-%E5%9C%A8-iOS-%E4%B8%8A%E8%BF%90%E8%A1%8C/</url>
+      <url>/2017/07/23/Cocos2d-js-%E5%9C%A8-iOS-%E4%B8%8A%E8%BF%90%E8%A1%8C/</url>
       <content type="html"><![CDATA[<p>在我的博文 <a href="http://www.veryitman.com/2017/05/14/2017-05-14-Cocos2d-js-%E9%A6%96%E6%AC%A1%E5%9C%A8-Mac-%E4%B8%8A%E9%9D%A2%E8%BF%90%E8%A1%8C/" target="_blank" rel="noopener">Cocos2d-js: 首次在 Mac 上面运行</a> 这篇文章中, 介绍了 Cocos2d 相关的知识, 并且使用Cocos2dx 创建了一个 JS 的简单游戏项目.</p>
 <p>今天跟大家分享一下, 如何在 ios 设备上面运行一个 JS 游戏项目.</p>
 <p>该游戏项目(贪吃蛇)来自网络资源, 只供演示使用, 不提供任何关于游戏的资源.</p>
@@ -802,7 +802,7 @@
     
     <entry>
       <title><![CDATA[Android: Chrome 调试 WEB 页面]]></title>
-      <url>/2017/06/01/2017-06-01-Android-Chrome-%E8%B0%83%E8%AF%95-WEB-%E9%A1%B5%E9%9D%A2/</url>
+      <url>/2017/06/01/Android-Chrome-%E8%B0%83%E8%AF%95-WEB-%E9%A1%B5%E9%9D%A2/</url>
       <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在 Mac OS 上面通过 Safari 调试 iOS 设备或者模拟器的 WEB 页面, 比较方便.</p>
 <p>关于具体如何使用 Safari 来调试 iOS 设备, 可以参考 [Safari 的开发者模式] 这篇文章.</p>
 <p>自从踏上开发的道路, 电脑上就安装了 Chrome 浏览器, 并且一直保持着更新, Chrome 以其简单设计和高效的用法吸引了大批开发者.</p>
@@ -862,7 +862,7 @@
     
     <entry>
       <title><![CDATA[保持你的好习惯]]></title>
-      <url>/2017/05/29/2017-05-29-%E4%BF%9D%E6%8C%81%E4%BD%A0%E7%9A%84%E5%A5%BD%E4%B9%A0%E6%83%AF/</url>
+      <url>/2017/05/29/%E4%BF%9D%E6%8C%81%E4%BD%A0%E7%9A%84%E5%A5%BD%E4%B9%A0%E6%83%AF/</url>
       <content type="html"><![CDATA[<p><img src="/upload/images/2017/05/29/1.jpeg" alt="1"></p>
 <p>明天就是传统的端午节了, 提前祝大家端午安康!</p>
 <p>今天老婆让我帮忙把粽叶子洗洗, 说要包粽子, 我听话地把刚买来的粽叶子洗了个干净, 那都是带有绿色的叶子, 生机勃勃, 让我从指尖中感到无比的温馨和无尽的希望.</p>
@@ -908,7 +908,7 @@
     
     <entry>
       <title><![CDATA[Safari 的开发者模式]]></title>
-      <url>/2017/05/15/2017-05-15-Safari-%E7%9A%84%E5%BC%80%E5%8F%91%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+      <url>/2017/05/15/Safari-%E7%9A%84%E5%BC%80%E5%8F%91%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h2 id="设置-Safari"><a href="#设置-Safari" class="headerlink" title="设置 Safari"></a>设置 Safari</h2><p>1.打开 Safari 的 Preference<br><img src="/upload/images/2017/05/15/14948249631231.jpg" alt="1"></p>
 <p>2.切换到 Advanced 选项<br><img src="/upload/images/2017/05/15/14948250437147.jpg" alt="1"></p>
 <p>将 <code>Show Develop menu in menu bar</code> 选中.</p>
@@ -938,7 +938,7 @@
     
     <entry>
       <title><![CDATA[iOS: 自定义 UIWebView 和 WKWebView 的 UserAgent]]></title>
-      <url>/2017/05/14/2017-05-14-iOS-%E8%87%AA%E5%AE%9A%E4%B9%89-UIWebView-%E5%92%8C-WKWebView-%E7%9A%84-UserAgent/</url>
+      <url>/2017/05/14/iOS-%E8%87%AA%E5%AE%9A%E4%B9%89-UIWebView-%E5%92%8C-WKWebView-%E7%9A%84-UserAgent/</url>
       <content type="html"><![CDATA[<h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><p>在 iOS8, 苹果推出了 WKWebView, 目的很明显: 取代 UIWebView.</p>
 <p>随着时间的推移, 越来越多的应用开始最低版本支持为 iOS8, 大家也纷纷的开始使用 WKWebView 组件.</p>
 <p>在 iOS10.x 版本上, UIWebView 的表现不尽如人意, 在我们的后台日志和用户反馈, 存在很多莫名其妙的 crash 以及卡顿现象, 内存飙升等问题. 针对不同的 JS 游戏引擎, UIWebView 表现也不够好, 所以是时候使用 WKWebView 了.</p>
@@ -994,7 +994,7 @@
     
     <entry>
       <title><![CDATA[Cocos2d-js: 首次在 Mac 上面运行]]></title>
-      <url>/2017/05/14/2017-05-14-Cocos2d-js-%E9%A6%96%E6%AC%A1%E5%9C%A8-Mac-%E4%B8%8A%E9%9D%A2%E8%BF%90%E8%A1%8C/</url>
+      <url>/2017/05/14/Cocos2d-js-%E9%A6%96%E6%AC%A1%E5%9C%A8-Mac-%E4%B8%8A%E9%9D%A2%E8%BF%90%E8%A1%8C/</url>
       <content type="html"><![CDATA[<h2 id="Cocos2d-js-介绍"><a href="#Cocos2d-js-介绍" class="headerlink" title="Cocos2d-js 介绍"></a>Cocos2d-js 介绍</h2><p>如果你是刚接触 Cocos2d-js 开发的人, 一定会被 Cocos2d-js 和 Cocos2d-HTML5 以及 Cocos2d-x 搞得晕头转向.</p>
 <p>下面简单介绍一下 Cocos2d-js 的前世今生.</p>
 <p>目前 Cocos2d-x 支持使用 C++、Lua、Javascript 语言来进行开发，且内置 JavaScript 引擎，通过 C++ 解析 Javascript 去执行.</p>
@@ -1088,7 +1088,7 @@
     
     <entry>
       <title><![CDATA[小小篮球队]]></title>
-      <url>/2017/04/29/2017-04-29-%E5%B0%8F%E5%B0%8F%E7%AF%AE%E7%90%83%E9%98%9F/</url>
+      <url>/2017/04/29/%E5%B0%8F%E5%B0%8F%E7%AF%AE%E7%90%83%E9%98%9F/</url>
       <content type="html"><![CDATA[<p><img src="/upload/images/2017/04/29/hua.jpeg" alt="1"></p>
 <p>篮球, 我最喜欢的一项体育运动, 大学的业余时间基本都”泡”在球场, 压根不知道什么是累.</p>
 <p>毕业后的第一份工作, 做的比较开心, 大家年龄相仿, 兴趣相投.</p>
@@ -1147,7 +1147,7 @@
     
     <entry>
       <title><![CDATA[iOS: 应用内打开 AppStore]]></title>
-      <url>/2017/04/15/2017-04-15-iOS-%E5%BA%94%E7%94%A8%E5%86%85%E6%89%93%E5%BC%80-AppStore/</url>
+      <url>/2017/04/15/iOS-%E5%BA%94%E7%94%A8%E5%86%85%E6%89%93%E5%BC%80-AppStore/</url>
       <content type="html"><![CDATA[<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>我们的 App 需要在 AppStore 上面打开某个 App 或者游戏, 目的最常见的有:</p>
 <blockquote>
 <p>1.评分评论.<br>2.推荐下载(App 或者游戏).</p>
@@ -1199,7 +1199,7 @@
     
     <entry>
       <title><![CDATA[找合伙人, 不易]]></title>
-      <url>/2017/03/26/2017-03-26-%E6%89%BE%E5%90%88%E4%BC%99%E4%BA%BA-%E4%B8%8D%E6%98%93/</url>
+      <url>/2017/03/26/%E6%89%BE%E5%90%88%E4%BC%99%E4%BA%BA-%E4%B8%8D%E6%98%93/</url>
       <content type="html"><![CDATA[<p>早在高中时期, 读过 &lt;三言&gt; 中的 &lt;警世通言&gt;, 第一章写的是 <code>俞伯牙摔琴谢知音</code>, 讲的是钟子期和俞伯牙的故事.</p>
 <p>读完之后, 整个人都觉得难受, 心理有说不出的滋味, 眼泪竟夺眶而出.</p>
 <p>流传的这首诗, 可以感受下.</p>
@@ -1249,7 +1249,7 @@
     
     <entry>
       <title><![CDATA[让自己变强]]></title>
-      <url>/2017/03/10/2017-03-10-%E8%AE%A9%E8%87%AA%E5%B7%B1%E5%8F%98%E5%BC%BA/</url>
+      <url>/2017/03/10/%E8%AE%A9%E8%87%AA%E5%B7%B1%E5%8F%98%E5%BC%BA/</url>
       <content type="html"><![CDATA[<p>当你读到这篇文章的时候, 我其实还不知道『怎么让自己变强』.<br>具体说, 就是没有一套让你或者让他变强的武林秘籍.</p>
 <p>只能结合自己经历的事, 分享给大家, 希望能感同身受!</p>
 <p>这几天加班加地有点猛, 浑然不知周末轮回了.<br>心理总是在念叨, 好久没有在公众号涂鸦了, 手痒痒了.<br>趁今晚回来早(22:30回到家), 就动笔了.</p>
@@ -1303,7 +1303,7 @@
     
     <entry>
       <title><![CDATA[Tomcat8 配置 HTTPS]]></title>
-      <url>/2017/02/15/2017-02-15-Tomcat8-%E9%85%8D%E7%BD%AE-HTTPS/</url>
+      <url>/2017/02/15/Tomcat8-%E9%85%8D%E7%BD%AE-HTTPS/</url>
       <content type="html"><![CDATA[<p>博客 [Tomcat8 域名配置] 介绍了如何在本地配置 Tomcat8 的域名以及通过域名来访问对应的资源.</p>
 <p>今天继续跟大家分享如何配置 Tomcat8 的 HTTPS (单向认证), 本篇博客的主要内容如下:</p>
 <blockquote>
@@ -1364,7 +1364,7 @@
     
     <entry>
       <title><![CDATA[Tomcat8 域名配置]]></title>
-      <url>/2017/02/13/2017-02-13-Tomcat8-%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE/</url>
+      <url>/2017/02/13/Tomcat8-%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE/</url>
       <content type="html"><![CDATA[<p>博客 [Mac 配置 Tomcat8] 介绍了在 Mac 下安装和启动 Tomcat.</p>
 <p>接下来介绍, 如何在本地配置 Tomcat8 的域名.</p>
 <p>网上有很多关于 Tomcat 如何配置单域名或者多域名的文章, 很多都是翻译或者复制别人的, 根本没有实践过, 害人不浅!</p>
@@ -1430,7 +1430,7 @@
     
     <entry>
       <title><![CDATA[ATS: HTTPS 认证]]></title>
-      <url>/2017/02/08/2017-02-08-ATS-HTTPS-%E8%AE%A4%E8%AF%81/</url>
+      <url>/2017/02/08/ATS-HTTPS-%E8%AE%A4%E8%AF%81/</url>
       <content type="html"><![CDATA[<p>在 ATS: HTTP/HTTPS 协议介绍 中介绍了一些关于 HTTP/HTTPS 的概念以及相关的基本知识.</p>
 <p>今天来聊聊关于 HTTPS 的认证方式和过程.</p>
 <p>说 HTTPS 认证前, 先了解几个概念.</p>
@@ -1494,7 +1494,7 @@
     
     <entry>
       <title><![CDATA[ATS: HTTP/HTTPS 协议介绍]]></title>
-      <url>/2017/02/06/2017-02-06-ATS-HTTP-HTTPS-%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/</url>
+      <url>/2017/02/06/ATS-HTTP-HTTPS-%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/</url>
       <content type="html"><![CDATA[<p>苹果在2017年要求 App 必须支持 HTTPS, 不过, 这个要求, 最后又被苹果自己延期了.</p>
 <p>我只能说, 苹果的开发哥哥们真会玩…</p>
 <p>该系列博客介绍 iOS 上面的 ATS 以及相关的 HTTPS 知识, 分为三篇来分享.</p>
@@ -1565,7 +1565,7 @@
     
     <entry>
       <title><![CDATA[RN: Yarn]]></title>
-      <url>/2017/02/05/2017-02-05-RN-Yarn/</url>
+      <url>/2017/02/05/RN-Yarn/</url>
       <content type="html"><![CDATA[<p>React Native 正式版已经更新到 0.41.1 了.</p>
 <p>最近使用 <code>react-native-cli</code> 来创建 React Native 工程, 提示如下信息:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">This will walk you through creating a new React Native project in /Users/mark/workspace/mzProjs/ReactNative/LatestRN</div><div class="line">Installing react-native...</div><div class="line">Consider installing yarn to make this faster: https://yarnpkg.com</div></pre></td></tr></table></figure>
@@ -1642,7 +1642,7 @@
     
     <entry>
       <title><![CDATA[安装 PHP 遇到的问题]]></title>
-      <url>/2017/02/02/2017-02-02-%E5%AE%89%E8%A3%85-PHP-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      <url>/2017/02/02/%E5%AE%89%E8%A3%85-PHP-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在博客 [PHP 开发准备] 介绍了安装并部署 PHP 程序到 Nginx.</p>
 <p>今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等.</p>
 <h2 id="pecl-安装"><a href="#pecl-安装" class="headerlink" title="pecl 安装"></a>pecl 安装</h2><blockquote>
@@ -1717,7 +1717,7 @@
     
     <entry>
       <title><![CDATA[PHP 开发准备]]></title>
-      <url>/2017/02/02/2017-02-02-PHP-%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87/</url>
+      <url>/2017/02/02/PHP-%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87/</url>
       <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>亲自实践在 MacOS 上面安装 PHP+MySQL+Nginx.</p>
 <p>将自己遇到的问题和对应的解决方案, 分享出来, 希望能帮到你.</p>
 <p>MacOS 上面搭建 PHP 开发环境, 使用 Homebrew 来安装对应的开发套件, 就更加简单了.</p>
@@ -1813,7 +1813,7 @@
     
     <entry>
       <title><![CDATA[过年回家这几天]]></title>
-      <url>/2017/01/31/2017-01-31-%E8%BF%87%E5%B9%B4%E5%9B%9E%E5%AE%B6%E8%BF%99%E5%87%A0%E5%A4%A9/</url>
+      <url>/2017/01/31/%E8%BF%87%E5%B9%B4%E5%9B%9E%E5%AE%B6%E8%BF%99%E5%87%A0%E5%A4%A9/</url>
       <content type="html"><![CDATA[<p>从放假回家到现在已经一个多星期了, 感触颇多.</p>
 <p>主要有以下几个感触:</p>
 <blockquote>
@@ -1867,7 +1867,7 @@
     
     <entry>
       <title><![CDATA[学习杂谈]]></title>
-      <url>/2017/01/27/2017-01-27-%E5%AD%A6%E4%B9%A0%E6%9D%82%E8%B0%88/</url>
+      <url>/2017/01/27/%E5%AD%A6%E4%B9%A0%E6%9D%82%E8%B0%88/</url>
       <content type="html"><![CDATA[<p>今天是中国传统节日, 大年三十, 祝大家新年快乐, 身体健康, 幸福美满.</p>
 <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>最近无论是朋友还是同事或者博友, 都问过我关于学习方面的事情.</p>
 <p>探讨的问题大概分为如下几种:</p>
@@ -1917,7 +1917,7 @@
     
     <entry>
       <title><![CDATA[iOS: 聊聊 UIWebView 缓存]]></title>
-      <url>/2017/01/15/2017-01-15-iOS-%E8%81%8A%E8%81%8A-UIWebView-%E7%BC%93%E5%AD%98/</url>
+      <url>/2017/01/15/iOS-%E8%81%8A%E8%81%8A-UIWebView-%E7%BC%93%E5%AD%98/</url>
       <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在开发项目过程中, 一些若交互的页面会使用 HTML 展示.</p>
 <p>在 iOS 中, 使用 UIWebView 的频率还是比较高的.</p>
 <p>今天跟大家聊聊 UIWebView 缓存相关的话题.</p>
@@ -1991,7 +1991,7 @@
     
     <entry>
       <title><![CDATA[f8app]]></title>
-      <url>/2017/01/01/2017-01-01-f8app/</url>
+      <url>/2017/01/01/f8app/</url>
       <content type="html"><![CDATA[<p>本文主要探讨的是如何编译和运行 f8app.</p>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><code>f8app</code> 是 Facebook 开源的, 基于 React Native 开发的一款 App.</p>
 <p>代码基本都是 js 的, 很少有原生的代码.</p>
@@ -2072,7 +2072,7 @@
     
     <entry>
       <title><![CDATA[再见 2016]]></title>
-      <url>/2016/12/11/2016-12-31-%E5%86%8D%E8%A7%81-2016/</url>
+      <url>/2016/12/11/%E5%86%8D%E8%A7%81-2016/</url>
       <content type="html"><![CDATA[<p>今天是 2016 年的最后一天, 正好赶上放假, 给自己的这一年做个小结.</p>
 <p>2016, 继续做项目, 作为一名软件工程师, 不停地在学习.</p>
 <p>2016, 学习到了很多关于产品和运营相关的知识. 知道了 倒逼 的作用.</p>
@@ -2105,7 +2105,7 @@
     
     <entry>
       <title><![CDATA[Mac 配置 Tomcat8]]></title>
-      <url>/2016/11/26/2016-11-26-Mac-%E9%85%8D%E7%BD%AE-Tomcat8/</url>
+      <url>/2016/11/26/Mac-%E9%85%8D%E7%BD%AE-Tomcat8/</url>
       <content type="html"><![CDATA[<h2 id="Tomcat-简介"><a href="#Tomcat-简介" class="headerlink" title="Tomcat 简介"></a>Tomcat 简介</h2><p>Tomcat 是一个 Web 服务器.</p>
 <blockquote>
 <p>Web 服务器是指为特定组件提供服务的一个标准化的运行时的环境.<br>可为组件提供事务处理, 数据访问, 安全性和持久性等服务.</p>
@@ -2158,7 +2158,7 @@
     
     <entry>
       <title><![CDATA[Mac 安装和使用 infer]]></title>
-      <url>/2016/11/26/2016-11-26-Mac-%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8-infer/</url>
+      <url>/2016/11/26/Mac-%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8-infer/</url>
       <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>infer 是 Facebook 开源的一款代码静态检查工具, 源码可以在 <a href="https://github.com/facebook/infer" target="_blank" rel="noopener">Github</a> 上面获取.</p>
 <p>支持 Java/C/OC 等语言, 支持 Gradle, Buck, Maven, Xcodebuild, Make 等.</p>
 <p>我一般用来分析 iOS 和 Android 工程.</p>
@@ -2223,7 +2223,7 @@
     
     <entry>
       <title><![CDATA[Mac 配置 JDK1.8]]></title>
-      <url>/2016/11/26/2016-11-26-Mac-%E9%85%8D%E7%BD%AE-JDK1-8/</url>
+      <url>/2016/11/26/Mac-%E9%85%8D%E7%BD%AE-JDK1-8/</url>
       <content type="html"><![CDATA[<h2 id="下载-JDK"><a href="#下载-JDK" class="headerlink" title="下载 JDK"></a>下载 JDK</h2><p>在 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">这里下载</a> jdk.</p>
 <p>下载版本是 1.8u112, 信息如下:</p>
 <p><img src="/upload/images/2016/11/26/jdk1.png" alt="1"></p>
@@ -2259,7 +2259,7 @@
     
     <entry>
       <title><![CDATA[GameDevelopment: 与 Cocos2d 的再相逢]]></title>
-      <url>/2016/11/12/2016-11-12-GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</url>
+      <url>/2016/11/12/GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</url>
       <content type="html"><![CDATA[<h2 id="认识-Cocos2d"><a href="#认识-Cocos2d" class="headerlink" title="认识 Cocos2d"></a>认识 Cocos2d</h2><p>相信很多人听说过 cocos2d-x 这个引擎, 但听过 <a href="http://cocos2d-objc.org/" target="_blank" rel="noopener">cocos2d-objc</a> 的人应该不多.</p>
 <p>cocos2d-objc 是 cocos 系列的 objective-c 版本.<br>开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍).</p>
 <p>欣赏一下 cocos2d-objc 的 logo, 如图:<br><img src="/upload/images/2016/11/12/1.png" alt="1"></p>
@@ -2306,7 +2306,7 @@
     
     <entry>
       <title><![CDATA[Mac install Cocoapods]]></title>
-      <url>/2016/11/08/2016-11-08-Mac-install-Cocoapods/</url>
+      <url>/2016/11/08/Mac-install-Cocoapods/</url>
       <content type="html"><![CDATA[<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>这篇博客原本被我发表在 <a href="http://blog.csdn.net/veryitman/article/details/50769069" target="_blank" rel="noopener">CSDN</a> .</p>
 <p>那里不再更新, 现在在这里做持续更新.</p>
 <h2 id="导引"><a href="#导引" class="headerlink" title="导引"></a>导引</h2><p>如果你的 Mac OSX 升级到 10.11.x+, 并且需要安装 Cocoapods, 可以参考本博客.</p>
@@ -2412,7 +2412,7 @@
     
     <entry>
       <title><![CDATA[Cocoapods 问题集锦]]></title>
-      <url>/2016/11/08/2016-11-08-Cocoapods-%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</url>
+      <url>/2016/11/08/Cocoapods-%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</url>
       <content type="html"><![CDATA[<h2 id="承诺"><a href="#承诺" class="headerlink" title="承诺"></a>承诺</h2><p>本文会持续更新, 分享在使用 cocoapods 过程中遇到的问题和解决方案.</p>
 <p>欢迎大家补充.</p>
 <h2 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h2><p>可以阅读博客 <a href="http://www.veryitman.com/2016/11/08/2016-11-08-Mac-install-Cocoapods/" target="_blank" rel="noopener">Mac 安装 Cocoapods</a>.</p>
@@ -2460,7 +2460,7 @@
     
     <entry>
       <title><![CDATA[Cocoapods 管理开源项目]]></title>
-      <url>/2016/11/01/2016-11-01-Cocoapods-%E7%AE%A1%E7%90%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
+      <url>/2016/11/01/Cocoapods-%E7%AE%A1%E7%90%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
       <content type="html"><![CDATA[<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
 <li><p>创建或者已经有了 github 账号.</p>
 </li>
@@ -2571,7 +2571,7 @@
     
     <entry>
       <title><![CDATA[iOS: 谈谈 frame 和 bounds]]></title>
-      <url>/2016/10/22/2016-10-22-iOS-%E8%B0%88%E8%B0%88-frame-%E5%92%8C-bounds/</url>
+      <url>/2016/10/22/iOS-%E8%B0%88%E8%B0%88-frame-%E5%92%8C-bounds/</url>
       <content type="html"><![CDATA[<h2 id="事情的起因"><a href="#事情的起因" class="headerlink" title="事情的起因"></a>事情的起因</h2><p>大家知道, 我们可以设置 view 的四个角或者其中一个或者几个为圆角.</p>
 <p>使用的方法:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">+ (instancetype)bezierPathWithRoundedRect:(CGRect)rect byRoundingCorners:(UIRectCorner)corners cornerRadii:(CGSize)cornerRadii;</div><div class="line">storyboard</div></pre></td></tr></table></figure>
@@ -2670,7 +2670,7 @@
     
     <entry>
       <title><![CDATA[RN: 模拟 Mobx]]></title>
-      <url>/2016/10/11/2016-10-11-RN-%E6%A8%A1%E6%8B%9F-Mobx/</url>
+      <url>/2016/10/11/RN-%E6%A8%A1%E6%8B%9F-Mobx/</url>
       <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看过 [React Native 使用 Mobx] 这篇博客的同学, 对 Mobx 应该有了一个简单直观的认识.</p>
 <p>其实, 我们完全可以使用 RN 中的 State 来达到同样的效果.</p>
 <p>今天的主要内容是使用 State 来模拟 Mobx, 也算是对 Mobx 的进一步认识.</p>
@@ -2705,7 +2705,7 @@
     
     <entry>
       <title><![CDATA[RN: 使用 Mobx]]></title>
-      <url>/2016/10/06/2016-10-08-RN-%E4%BD%BF%E7%94%A8-Mobx/</url>
+      <url>/2016/10/06/RN-%E4%BD%BF%E7%94%A8-Mobx/</url>
       <content type="html"><![CDATA[<h2 id="来由"><a href="#来由" class="headerlink" title="来由"></a>来由</h2><p>在 <a href="https://jsfiddle.net/24u7juu0/" target="_blank" rel="noopener">JSFiddler</a> 上面看到 React 结合 Mobx 的一个小例子.</p>
 <p>爱不释手, 遂拿来改造一下, 让其能在 RN 上面一展雄风.</p>
 <p>之前听过 Mobx, 说是要替代 Redux, 反正我是不知道这些东东, 第一次听说没有什么感觉!<br>如今又再次偶遇 Mobx, 决定认真学习一下它.</p>
@@ -2772,7 +2772,7 @@
     
     <entry>
       <title><![CDATA[RN: 0.34 运行在 Android 的问题]]></title>
-      <url>/2016/09/26/2016-09-26-RN-0-34-%E8%BF%90%E8%A1%8C%E5%9C%A8-Android-%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      <url>/2016/09/26/RN-0-34-%E8%BF%90%E8%A1%8C%E5%9C%A8-Android-%E7%9A%84%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<p>今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑.</p>
 <p>想看看运行效果怎么样?!</p>
 <h2 id="适合读者"><a href="#适合读者" class="headerlink" title="适合读者"></a>适合读者</h2><ul>
@@ -2836,7 +2836,7 @@
     
     <entry>
       <title><![CDATA[iOS 项目: 打造本地 pod 库]]></title>
-      <url>/2016/09/25/2016-09-25-iOS-%E9%A1%B9%E7%9B%AE-%E6%89%93%E9%80%A0%E6%9C%AC%E5%9C%B0-pod-%E5%BA%93/</url>
+      <url>/2016/09/25/iOS-%E9%A1%B9%E7%9B%AE-%E6%89%93%E9%80%A0%E6%9C%AC%E5%9C%B0-pod-%E5%BA%93/</url>
       <content type="html"><![CDATA[<p>项目到了一定规模, 代码组织和结构显得尤为重要.</p>
 <p>重构项目结构, 可以从分离代码开始.</p>
 <p>代码分离, 可以把常用稳定的组件封装抽离出来.</p>
@@ -2905,7 +2905,7 @@
     
     <entry>
       <title><![CDATA[RN: 如何启动 local server]]></title>
-      <url>/2016/09/22/2016-09-22-RN-%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8-local-server/</url>
+      <url>/2016/09/22/RN-%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8-local-server/</url>
       <content type="html"><![CDATA[<p>使用 <code>react-native init</code> 创建的工程, 在 xcode 中运行会自动启动一个 RN 的本地 Server.</p>
 <p>像下面图片展示这样:<br><img src="/upload/images/2016/9/22/rn_1.png" alt="1"></p>
 <p>那么, 这里问题来了.</p>
@@ -2943,7 +2943,7 @@
     
     <entry>
       <title><![CDATA[RN: 创建iOS工程代码的indent问题]]></title>
-      <url>/2016/09/19/2016-09-19-RN-%E5%88%9B%E5%BB%BAiOS%E5%B7%A5%E7%A8%8B%E4%BB%A3%E7%A0%81%E7%9A%84indent%E9%97%AE%E9%A2%98/</url>
+      <url>/2016/09/19/RN-%E5%88%9B%E5%BB%BAiOS%E5%B7%A5%E7%A8%8B%E4%BB%A3%E7%A0%81%E7%9A%84indent%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>使用最新版RN(0.33)来创建工程, 大家可以发现, OC 代码的退格变成了两个空格.<br>如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</div><div class="line">&#123;</div><div class="line">  NSURL *jsCodeLocation;</div><div class="line">  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@&quot;index.ios&quot; fallbackResource:nil];</div><div class="line">  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation</div><div class="line">                                                      moduleName:@&quot;Mark&quot;</div><div class="line">                                               initialProperties:nil</div><div class="line">                                                   launchOptions:launchOptions];</div><div class="line">  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];</div><div class="line">  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];</div><div class="line">  UIViewController *rootViewController = [UIViewController new];</div><div class="line">  rootViewController.view = rootView;</div><div class="line">  self.window.rootViewController = rootViewController;</div><div class="line">  [self.window makeKeyAndVisible];</div><div class="line">  return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>无论你回车或者 tab 或者格式化(<code>右键/Structure/Re-Indent</code>)代码, 会发现, 都是这种调调.</p>
@@ -2981,7 +2981,7 @@
     
     <entry>
       <title><![CDATA[RN: Mac 配置 ES6 简易开发环境]]></title>
-      <url>/2016/09/16/2016-09-15-RN-Mac-%E9%85%8D%E7%BD%AE-ES6-%E7%AE%80%E6%98%93%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+      <url>/2016/09/16/RN-Mac-%E9%85%8D%E7%BD%AE-ES6-%E7%AE%80%E6%98%93%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
       <content type="html"><![CDATA[<h2 id="创建文件夹-ES6"><a href="#创建文件夹-ES6" class="headerlink" title="创建文件夹 ES6"></a>创建文件夹 ES6</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ES6</div><div class="line">-lib</div><div class="line">-src</div></pre></td></tr></table></figure>
 <p>你可以任意取一个你喜欢的目录名称.</p>
 <h3 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm init</div></pre></td></tr></table></figure>
@@ -3055,7 +3055,7 @@
     
     <entry>
       <title><![CDATA[iOS: 手机是否设置网络代理]]></title>
-      <url>/2016/09/16/2016-09-16-iOS-%E6%89%8B%E6%9C%BA%E6%98%AF%E5%90%A6%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/</url>
+      <url>/2016/09/16/iOS-%E6%89%8B%E6%9C%BA%E6%98%AF%E5%90%A6%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/</url>
       <content type="html"><![CDATA[<h2 id="情景"><a href="#情景" class="headerlink" title="情景"></a>情景</h2><p>项目开发过程中, 会遇到下面这样一种情景:</p>
 <blockquote>
 <p>产品或者设计同事需要体验目前产品开发的进度, 然后要求开发人员, 将现在的版本给他们体验.<br>做过程序开发的人都知道, 开发版本会有不少问题.<br>这时, 产品和设计同事就会抱怨, 怎么登录不了, 这里没有数据了!<br>有个小伙伴被折腾的实在受不了, 连网页都打不开了.<br>最后找到原因:<br>他手机被之前的程序猿设置了网络代理, 代理到程序猿哥哥的电脑上来抓包调试问题, 忘记取消设置了.</p>
@@ -3094,7 +3094,7 @@
     
     <entry>
       <title><![CDATA[与 CSDN 的诀别]]></title>
-      <url>/2016/09/10/2016-09-10-%E4%B8%8E-CSDN-%E7%9A%84%E8%AF%80%E5%88%AB/</url>
+      <url>/2016/09/10/%E4%B8%8E-CSDN-%E7%9A%84%E8%AF%80%E5%88%AB/</url>
       <content type="html"><![CDATA[<p>写这个话题, 内心还是蛮沉重的.</p>
 <p>几年前与 CSDN 不期而遇, 在里面各种折腾, 翻阅大牛们的博客, 写评论, 甚至打印出来. 在技术论坛不停地”灌水”, 订阅 CSDN 杂志, 准备练就一身武艺.</p>
 <p>互联网的蓬勃发展, 让我原来不安的心有了更加狂躁的冲动.</p>
