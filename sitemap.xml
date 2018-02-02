@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/02/02/Hi-2018-%E6%88%91%E5%8F%88%E6%9D%A5%E4%BA%86/</loc>
+    
+    <lastmod>2018-02-02T16:36:15.149Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/01/27/%E5%AD%A6%E4%B9%A0%E6%9D%82%E8%B0%88/</loc>
+    
+    <lastmod>2018-02-02T15:58:07.942Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/07/23/Cocos2d-js-%E5%9C%A8-iOS-%E4%B8%8A%E8%BF%90%E8%A1%8C/</loc>
     
     <lastmod>2018-02-02T15:51:16.690Z</lastmod>
@@ -208,13 +222,6 @@
     <loc>http://yoursite.com/2017/01/31/%E8%BF%87%E5%B9%B4%E5%9B%9E%E5%AE%B6%E8%BF%99%E5%87%A0%E5%A4%A9/</loc>
     
     <lastmod>2017-11-26T06:31:15.727Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/01/27/%E5%AD%A6%E4%B9%A0%E6%9D%82%E8%B0%88/</loc>
-    
-    <lastmod>2017-11-26T06:29:04.492Z</lastmod>
     
   </url>
   
