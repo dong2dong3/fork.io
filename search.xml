@@ -3,14 +3,6 @@
   
     
     <entry>
-      <title><![CDATA[Hi 2018, 我又来了]]></title>
-      <url>/2018/02/02/Hi-2018-%E6%88%91%E5%8F%88%E6%9D%A5%E4%BA%86/</url>
-      <content type="html"></content>
-      
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[GCC: 静态库]]></title>
       <url>/2017/10/08/GCC-%E9%9D%99%E6%80%81%E5%BA%93/</url>
       <content type="html"><![CDATA[<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 [GCC: 编译C语言的流程[ 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜.</p>
