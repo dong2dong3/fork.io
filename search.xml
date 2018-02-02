@@ -738,11 +738,11 @@
     <entry>
       <title><![CDATA[Cocos2d-js: 在 iOS 上运行]]></title>
       <url>/2017/07/23/2017-07-23-Cocos2d-js-%E5%9C%A8-iOS-%E4%B8%8A%E8%BF%90%E8%A1%8C/</url>
-      <content type="html"><![CDATA[<p>在我的博文 [Cocos2d-js: 首次在 Mac 上面运行] 这篇文章中, 介绍了 Cocos2d 相关的知识, 并且使用Cocos2dx 创建了一个 JS 的简单游戏项目.</p>
+      <content type="html"><![CDATA[<p>在我的博文 <a href="http://www.veryitman.com/2017/05/14/2017-05-14-Cocos2d-js-%E9%A6%96%E6%AC%A1%E5%9C%A8-Mac-%E4%B8%8A%E9%9D%A2%E8%BF%90%E8%A1%8C/" target="_blank" rel="noopener">Cocos2d-js: 首次在 Mac 上面运行</a> 这篇文章中, 介绍了 Cocos2d 相关的知识, 并且使用Cocos2dx 创建了一个 JS 的简单游戏项目.</p>
 <p>今天跟大家分享一下, 如何在 ios 设备上面运行一个 JS 游戏项目.</p>
 <p>该游戏项目(贪吃蛇)来自网络资源, 只供演示使用, 不提供任何关于游戏的资源.</p>
 <h2 id="当初的想当然"><a href="#当初的想当然" class="headerlink" title="当初的想当然"></a>当初的想当然</h2><p>在 Mac 上面 so easy 的编译并运行了 JS 游戏, 我想在 iOS 设备上应该也很简单的就可以运行起来, 但是我发现我简单不加思考的想法, 是行不通的.</p>
-<p>博文 [Cocos2d-js: 首次在 Mac] 上面运行 在 FireFox 浏览器上面可以直接运行 <code>index.html</code>, 但是在 Chrome 浏览器上面就没那么顺利.</p>
+<p>博文 <a href="http://www.veryitman.com/2017/05/14/2017-05-14-Cocos2d-js-%E9%A6%96%E6%AC%A1%E5%9C%A8-Mac-%E4%B8%8A%E9%9D%A2%E8%BF%90%E8%A1%8C/" target="_blank" rel="noopener">Cocos2d-js: 首次在 Mac 上面运行</a> 在 FireFox 浏览器上面可以直接运行 <code>index.html</code>, 但是在 Chrome 浏览器上面就没那么顺利.</p>
 <p>想到这里, 我就受到了启发, 莫非 iOS 设备上面需要自己搭建一套 Web Server?</p>
 <h2 id="搭建-Web-Server"><a href="#搭建-Web-Server" class="headerlink" title="搭建 Web Server"></a>搭建 Web Server</h2><p>既然想到了这一步, 接下来就是找方案实施了.</p>
 <p><a href="https://github.com/robbiehanson/CocoaHTTPServer" target="_blank" rel="noopener">CocoaHTTPServer</a> 这个可以满足我的需求, 于是, 我就直接拿来使用了.</p>
@@ -782,7 +782,7 @@
 <p>1.游戏资源包管理和下载.<br>2.游戏中需要和 Native 的交互逻辑.<br>3.数据加密.<br>4.移动端游戏本身的加载优化.</p>
 </blockquote>
 <p>如果你有更好的方案和想法, 我很乐意邮件 (veryitman@126.com) 与你沟通, 非常感谢!</p>
-<p>代码示例我放在了 GitHub, 点击 <a href="https://github.com/veryitman/MZMWPlay" target="_blank" rel="noopener">MZMWPlay</a> 前往.</p>
+<p>代码示例我放在了 GitHub, 点击 <a href="https://github.com/veryitman/MZMWPlay" target="_blank" rel="noopener">MZMWPlay</a> 前往下载体验.</p>
 ]]></content>
       
         <categories>
