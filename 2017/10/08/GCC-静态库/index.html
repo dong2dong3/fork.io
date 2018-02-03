@@ -80,20 +80,20 @@
 
 
 
-<meta name="description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 [GCC: 编译C语言的流程[ 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 意思是 -c 选项只是进行了预处理, 编译, 汇编的阶段">
+<meta name="description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会">
 <meta name="keywords" content="GCC 编译器 静态库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GCC: 静态库">
 <meta property="og:url" content="http://yoursite.com/2017/10/08/GCC-静态库/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 [GCC: 编译C语言的流程[ 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 意思是 -c 选项只是进行了预处理, 编译, 汇编的阶段">
+<meta property="og:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/10/08/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/10/08/2.jpg">
-<meta property="og:updated_time" content="2017-12-17T11:31:14.124Z">
+<meta property="og:updated_time" content="2018-02-03T06:14:41.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GCC: 静态库">
-<meta name="twitter:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 [GCC: 编译C语言的流程[ 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 意思是 -c 选项只是进行了预处理, 编译, 汇编的阶段">
+<meta name="twitter:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2017/10/08/1.jpg">
 
 
@@ -373,15 +373,15 @@
       
 
       
-        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 [GCC: 编译C语言的流程[ 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜.</p>
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 <a href="http://www.veryitman.com/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">GCC: 编译C语言的流程</a> 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜.</p>
 <p>本篇博文用到的一些基础知识点:</p>
-<p>1.GCC</p>
+<p><strong>1.GCC</strong></p>
 <p>gcc -c 选项含义:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Only run preprocess, compile, and assemble steps</div></pre></td></tr></table></figure>
-<p>意思是 <code>-c</code> 选项只是进行了预处理, 编译, 汇编的阶段, 不会进行链接的操作.</p>
-<p>2.静态库</p>
+<p>是 <code>-c</code> 选项只是进行了预处理, 编译, 汇编的阶段, 不会进行链接的操作.</p>
+<p><strong>2.静态库</strong></p>
 <p>Linux 上的静态库，本质是一些目标文件的归档文件.</p>
-<p>3.静态库和共享库区别:</p>
+<p><strong>3.静态库和共享库区别</strong></p>
 <p>[1].使用共享库可以节省内存.</p>
 <blockquote>
 <p>比如 libc，系统中几乎所有的进程都映射 libc 到自己的进程地址空间，而 libc 的只读部分在物理内存中只需要存在一份，就可以被所有进程共享，这就是“共享库”这个名称的由来了.</p>
@@ -397,7 +397,7 @@
 <p>下面结合具体例子, 展开讲.</p>
 <h2 id="写源文件"><a href="#写源文件" class="headerlink" title="写源文件"></a>写源文件</h2><p>目录结构<br><img src="/upload/images/2017/10/08/1.jpg" alt="1"></p>
 <p>示例文件都是很简单的代码, 附录可以查看完整示例.</p>
-<h2 id="生成目标文件"><a href="#生成目标文件" class="headerlink" title="生成目标文件"></a>生成目标文件</h2><p>将 libs 目录下面的(c源)文件进行预处理, 编译和汇编.<br>注意这里没有进行链接.</p>
+<h2 id="生成目标文件"><a href="#生成目标文件" class="headerlink" title="生成目标文件"></a>生成目标文件</h2><p>将 libs 目录下面的(c)源文件进行预处理, 编译和汇编.<br>注意这里没有进行链接.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -c libs/person.c libs/eat.c libs/play.c libs/sleep.c</div></pre></td></tr></table></figure>
 <p>执行城后, 会生成对应的 .o 文件.</p>
 <h2 id="归档"><a href="#归档" class="headerlink" title="归档"></a>归档</h2><p><code>libperson.a</code> 是要生成的库文件.</p>
@@ -436,21 +436,34 @@
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -static main.c -L. -lperson -Ilibs -o main</div></pre></td></tr></table></figure>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>示例完整代码</p>
+<blockquote>
 <p>main.c</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &quot;person.h&quot;</div><div class="line">int main() &#123;</div><div class="line">    init(101);</div><div class="line">    eat();</div><div class="line">    play();</div><div class="line">    sleep();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
 <p>person.h</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#ifndef _PERSON_H</div><div class="line">#define _PERSON_H</div><div class="line">extern void init(int pUid);</div><div class="line">extern void eat();</div><div class="line">extern void play();</div><div class="line">extern void sleep();</div><div class="line">#endif</div></pre></td></tr></table></figure>
+<blockquote>
 <p>person.c</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int uid;</div><div class="line">void init(int pUid) &#123;</div><div class="line">    uid = pUid;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
 <p>eat.c</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void eat() &#123;</div><div class="line">    printf(&quot;uid: %i eating\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
 <p>play.c</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void play() &#123;</div><div class="line">    printf(&quot;uid: %i playing\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
 <p>sleep.c</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void sleep() &#123;</div><div class="line">    printf(&quot;uid: %i has sleep\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="GCC-系列博文"><a href="#GCC-系列博文" class="headerlink" title="GCC 系列博文"></a>GCC 系列博文</h2><p>GCC: 编译C语言的流程</p>
-<p>GCC: Homebrew 安装 GCC 和 Binutils</p>
-<p>GCC: 共享库</p>
+<h2 id="GCC-系列博文"><a href="#GCC-系列博文" class="headerlink" title="GCC 系列博文"></a>GCC 系列博文</h2><p><a href="http://www.veryitman.com/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">GCC: 编译 C 语言的流程</a></p>
+<p><a href="http://www.veryitman.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/" target="_blank" rel="noopener">GCC: Homebrew 安装 GCC 和 Binutils</a></p>
+<p><a href="http://www.veryitman.com/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/" target="_blank" rel="noopener">GCC: 共享库</a></p>
+<p><a href="http://www.veryitman.com/2017/10/08/GCC-%E9%9D%99%E6%80%81%E5%BA%93/" target="_blank" rel="noopener">GCC: 静态库</a></p>
 
       
     </div>
