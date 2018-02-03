@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/02/02/Hi-2018-%E6%88%91%E5%8F%88%E6%9D%A5%E4%BA%86/</loc>
+    
+    <lastmod>2018-02-03T15:08:10.437Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/</loc>
     
     <lastmod>2018-02-03T06:18:29.921Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>http://yoursite.com/2017/10/08/GCC-%E9%9D%99%E6%80%81%E5%BA%93/</loc>
     
     <lastmod>2018-02-03T06:14:41.172Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/02/02/Hi-2018-%E6%88%91%E5%8F%88%E6%9D%A5%E4%BA%86/</loc>
-    
-    <lastmod>2018-02-02T16:38:18.212Z</lastmod>
     
   </url>
   
