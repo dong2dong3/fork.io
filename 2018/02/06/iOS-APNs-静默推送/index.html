@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="iOS Android ReactNative," />
+  <meta name="keywords" content="APNs 推送," />
 
 
 
@@ -80,18 +80,18 @@
 
 
 
-<meta name="description" content="前言看过 [React Native 使用 Mobx] 这篇博客的同学, 对 Mobx 应该有了一个简单直观的认识. 其实, 我们完全可以使用 RN 中的 State 来达到同样的效果. 今天的主要内容是使用 State 来模拟 Mobx, 也算是对 Mobx 的进一步认识. 效果 实现效果和 [React Native 使用 Mobx] 中的效果一致, 只是代码没有使用 Mobx 框架. 实现L">
-<meta name="keywords" content="iOS Android ReactNative">
+<meta name="description" content="今天跟大家介绍一下 ios 的静默推送功能. 静默推送, 简单来说就是通过推送实现用户无感知的消息通知. 该系列博文:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据iOS APNs: 静默推送(本篇)  普通推送例如微信, 好友给你发送了一条消息, 你的微信APP 在后台, 此时会收到带声音的一个消息提示. 这条推送机油有文字又有声音, 点开这个推送可以直">
+<meta name="keywords" content="APNs 推送">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RN: 模拟 Mobx">
-<meta property="og:url" content="http://yoursite.com/2016/10/11/RN-模拟-Mobx/index.html">
+<meta property="og:title" content="iOS APNs: 静默推送">
+<meta property="og:url" content="http://yoursite.com/2018/02/06/iOS-APNs-静默推送/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="前言看过 [React Native 使用 Mobx] 这篇博客的同学, 对 Mobx 应该有了一个简单直观的认识. 其实, 我们完全可以使用 RN 中的 State 来达到同样的效果. 今天的主要内容是使用 State 来模拟 Mobx, 也算是对 Mobx 的进一步认识. 效果 实现效果和 [React Native 使用 Mobx] 中的效果一致, 只是代码没有使用 Mobx 框架. 实现L">
+<meta property="og:description" content="今天跟大家介绍一下 ios 的静默推送功能. 静默推送, 简单来说就是通过推送实现用户无感知的消息通知. 该系列博文:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据iOS APNs: 静默推送(本篇)  普通推送例如微信, 好友给你发送了一条消息, 你的微信APP 在后台, 此时会收到带声音的一个消息提示. 这条推送机油有文字又有声音, 点开这个推送可以直">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-30T12:46:42.000Z">
+<meta property="og:updated_time" content="2018-02-06T15:24:09.773Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RN: 模拟 Mobx">
-<meta name="twitter:description" content="前言看过 [React Native 使用 Mobx] 这篇博客的同学, 对 Mobx 应该有了一个简单直观的认识. 其实, 我们完全可以使用 RN 中的 State 来达到同样的效果. 今天的主要内容是使用 State 来模拟 Mobx, 也算是对 Mobx 的进一步认识. 效果 实现效果和 [React Native 使用 Mobx] 中的效果一致, 只是代码没有使用 Mobx 框架. 实现L">
+<meta name="twitter:title" content="iOS APNs: 静默推送">
+<meta name="twitter:description" content="今天跟大家介绍一下 ios 的静默推送功能. 静默推送, 简单来说就是通过推送实现用户无感知的消息通知. 该系列博文:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据iOS APNs: 静默推送(本篇)  普通推送例如微信, 好友给你发送了一条消息, 你的微信APP 在后台, 此时会收到带声音的一个消息提示. 这条推送机油有文字又有声音, 点开这个推送可以直">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/10/11/RN-模拟-Mobx/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/06/iOS-APNs-静默推送/"/>
 
 
 
 
 
-  <title>RN: 模拟 Mobx | veryitman</title>
+  <title>iOS APNs: 静默推送 | veryitman</title>
   
 
 
@@ -254,7 +254,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/11/RN-模拟-Mobx/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/06/iOS-APNs-静默推送/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="veryitman">
@@ -271,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">RN: 模拟 Mobx</h1>
+          <h1 class="post-title" itemprop="name headline">iOS APNs: 静默推送</h1>
         
 
         <div class="post-meta">
@@ -283,8 +283,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-11T20:41:04+08:00">
-                2016-10-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T22:24:09+08:00">
+                2018-02-06
               </time>
             
 
@@ -306,8 +306,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ReactNative/" itemprop="url" rel="index">
-                    <span itemprop="name">ReactNative</span>
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
                   </a>
                 </span>
 
@@ -324,9 +324,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/10/11/RN-模拟-Mobx/#comments" itemprop="discussionUrl">
+                <a href="/2018/02/06/iOS-APNs-静默推送/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/10/11/RN-模拟-Mobx/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/02/06/iOS-APNs-静默推送/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -360,21 +360,64 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看过 [React Native 使用 Mobx] 这篇博客的同学, 对 Mobx 应该有了一个简单直观的认识.</p>
-<p>其实, 我们完全可以使用 RN 中的 State 来达到同样的效果.</p>
-<p>今天的主要内容是使用 State 来模拟 Mobx, 也算是对 Mobx 的进一步认识.</p>
-<p>效果</p>
-<p>实现效果和 [React Native 使用 Mobx] 中的效果一致, 只是代码没有使用 Mobx 框架.</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="LegacyCounter-js"><a href="#LegacyCounter-js" class="headerlink" title="LegacyCounter.js"></a>LegacyCounter.js</h3><blockquote>
-<p>Add 和 Minus 两个按钮分别触发各自的回调, 来更新 state.<br>使用 state 的变化来到达更新 View (计数的 Text 会相应的做出变化)的目的.</p>
+        <p>今天跟大家介绍一下 ios 的静默推送功能.</p>
+<p>静默推送, 简单来说就是通过推送实现用户无感知的消息通知.</p>
+<p>该系列博文:</p>
+<blockquote>
+<p><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a><br><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a><br><a href="http://www.veryitman.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" target="_blank" rel="noopener">iOS APNs: 处理数据</a><br>iOS APNs: 静默推送(本篇)</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 模拟 Mobx 在 ReactNative 上的一个小例子.</div><div class="line"> * </div><div class="line"> * state -&gt; view</div><div class="line"> */</div><div class="line">&apos;use strict&apos;;</div><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  StyleSheet,</div><div class="line">  View,</div><div class="line">  Text,</div><div class="line">  TouchableHighlight</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">class LegacyCounter extends Component &#123;</div><div class="line">    //构造方法</div><div class="line">    constructor(props) &#123;</div><div class="line">        super(props);</div><div class="line">    </div><div class="line">        this.state = &#123;</div><div class="line">            //计数</div><div class="line">            counter: 0</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    render () &#123;</div><div class="line">        return (</div><div class="line">          &lt;View style = &#123;styles.container&#125;&gt;</div><div class="line">            &#123;/*加一*/&#125;</div><div class="line">            &lt;TouchableHighlight</div><div class="line">                onPress = &#123;() =&gt; &#123;this.setState(&#123;</div><div class="line">                    counter: ++this.state.counter</div><div class="line">                &#125;)&#125;&#125;&gt;</div><div class="line">                &lt;Text&gt;Add&lt;/Text&gt;</div><div class="line">            &lt;/TouchableHighlight&gt;</div><div class="line">            &#123;/* 显示处理结果 */&#125;</div><div class="line">            &lt;Text style = &#123;styles.resultTxtStyle&#125;&gt;</div><div class="line">            &#123;this.state.counter&#125;</div><div class="line">            &lt;/Text&gt;</div><div class="line">            &#123;/*减一*/&#125;</div><div class="line">            &lt;TouchableHighlight </div><div class="line">                onPress = &#123;() =&gt; &#123;this.setState(&#123;</div><div class="line">                    counter: --this.state.counter</div><div class="line">                &#125;)&#125;&#125;&gt;</div><div class="line">                &lt;Text&gt;Minus&lt;/Text&gt;</div><div class="line">            &lt;/TouchableHighlight&gt;</div><div class="line">          &lt;/View&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">export default class LegacyComponent extends Component &#123;</div><div class="line">    render () &#123;</div><div class="line">        return (</div><div class="line">            &lt;View style = &#123;&#123;flex: 1, marginTop: 64&#125;&#125;&gt;</div><div class="line">            </div><div class="line">                &lt;LegacyCounter/&gt;</div><div class="line">            &lt;/View&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">/* 样式定义 */</div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">    container: &#123;</div><div class="line">        flexDirection: &apos;row&apos;,</div><div class="line">        justifyContent: &apos;space-around&apos;</div><div class="line">    &#125;,</div><div class="line">    resultTxtStyle: &#123;</div><div class="line">        fontSize: 22, </div><div class="line">        color: &apos;red&apos;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h3 id="index-ios-js"><a href="#index-ios-js" class="headerlink" title="index.ios.js"></a>index.ios.js</h3><blockquote>
-<p>这个文件很简单, 只是调用 LegacyCounter 中的组件.</p>
+<h2 id="普通推送"><a href="#普通推送" class="headerlink" title="普通推送"></a>普通推送</h2><p>例如微信, 好友给你发送了一条消息, 你的微信APP 在后台, 此时会收到带声音的一个消息提示.</p>
+<p>这条推送机油有文字又有声音, 点开这个推送可以直接打开 APP.</p>
+<p>从程序的角度来讲, 进入 App 后会调用下面的方法:</p>
+<p>iOS10.0.x 和其之前的系统调用下面的方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo</div></pre></td></tr></table></figure>
+<p>iOS10.0.x 之后的系统, 会调用如下的方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application</div><div class="line">                    didReceiveRemoteNotification:(NSDictionary *)userInfo</div><div class="line">                    fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler</div></pre></td></tr></table></figure>
+<h2 id="静默推送的异同"><a href="#静默推送的异同" class="headerlink" title="静默推送的异同"></a>静默推送的异同</h2><p><strong>1.没有弹出框</strong></p>
+<p>没有推送的弹框出现, 用户毫无感知的接收到了这个推送消息. 有 <code>润物细无声</code> 的感觉.</p>
+<p>该推送既没有文字又没有声音.</p>
+<p><strong>2.需要用户授权允许推送</strong></p>
+<p>这个跟普通推送一样, 都需要用户授权才可以推送.</p>
+<p><strong>3.会执行代理方法</strong></p>
+<p>静默推送来的时候, 也能执行上面的回调方法. 执行上面方法的场景如下::</p>
+<blockquote>
+<p>1.App 在前台.<br>2.App 在后台, 但是没有被 kill 掉.</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">//引入自定义模块</div><div class="line">import LegacyComponent from &apos;./js/Mobx/LegacyCounter&apos;</div><div class="line">import &#123;</div><div class="line">  AppRegistry</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">class RNMobxDemo extends Component &#123;</div><div class="line">    render() &#123;</div><div class="line">        return(</div><div class="line">            &lt;LegacyComponent/&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">AppRegistry.registerComponent(&apos;RNMobxDemo&apos;, () =&gt; MZRNTutorial);</div></pre></td></tr></table></figure>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>如果你想了解更多关于 RN 中 State 的知识, 请移步官方文档查阅 State 的用法.</p>
-<p>后续会给大家带来更多关于 RN 这些方面的东西.</p>
+<p><strong>4.iOS7 以后才有的</strong></p>
+<p>对于 iOS 之前是没有静默推送的.</p>
+<p><strong>5.可以延长后台时间</strong></p>
+<p>收到静默推送后, 在应用程序挂起之前有 30 秒左右可以执行相关的操作.</p>
+<p>6.推送频率的控制</p>
+<p>静默的推送是苹果推送服务器控制推送频率的.</p>
+<p>苹果推送服务根据后台推送任务的能耗(用电量,接收情况)来控制后台推送的推送频率和延迟时间.</p>
+<hr>
+<p><strong>总之</strong>, 静默推送是普通推送的一种变种而已. </p>
+<p>无论是静默推送还是普通推送, 开发者证书里面必须开通 push 相关的功能, 并且也需要用户开启允许推送的授权.</p>
+<p>这个在 <a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a> 里面已经介绍过, 不在这里赘述.</p>
+<h2 id="推送的格式"><a href="#推送的格式" class="headerlink" title="推送的格式"></a>推送的格式</h2><p>普通推送的格式, 大致是这个样子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;aps&quot;:</div><div class="line">		&#123;</div><div class="line">			&quot;alert&quot;:&quot;Testing.. (15),</div><div class="line">			&quot;badge&quot;:1,</div><div class="line">			&quot;sound&quot;:&quot;default&quot;</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>静默推送是不允许带 <code>alert</code> <code>badge</code>  <code>sound</code> 等字段的. 但是必须包含 <code>&quot;content-available&quot;:1</code>.</p>
+<p>例如下面的形式都可以:</p>
+<blockquote>
+<p>形式1</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;aps&quot;:</div><div class="line">		&#123;</div><div class="line">			&quot;content-available&quot;:1</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>形式2</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;aps&quot;:</div><div class="line">		&#123;</div><div class="line">			&quot;custom&quot;:&quot;open_profile_page&quot;</div><div class="line">			&quot;content-available&quot;:1</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中, custom 是自己定义的, 大家根据需求自行扩展即可.</p>
+<blockquote>
+<p>形式3</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;aps&quot; : &#123;</div><div class="line">        &quot;content-available&quot; : 1</div><div class="line">    &#125;,</div><div class="line">    &quot;acme1&quot; : &quot;bar&quot;,</div><div class="line">    &quot;acme2&quot; : 42</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个来自苹果开发者 <a href="https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html" target="_blank" rel="noopener">文档</a>.</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>具体的使用场景, 需要结合本身的业务和功能特点来说.</p>
+<p>静默推送的前提是 APP 没有被杀死, 可以通过回调函数来执行相关的代码.</p>
+<p>另外, 静默推送不会打扰用户, 比如用户正在游戏中战斗, 你频繁的使用普通推送给他, 估计他都要疯了. </p>
+<p>我个人使用静默推送的场景大致是这样的, APP 将要挂起的时候, 请求服务器去发一条静默推送, 然后使用本地通知的方式唤起用户来打开 APP, 从而保证 APP 处于饱活的状态, 至少静默推送可以增加后台挂起的时间.</p>
+<p>关于本地通知的内容, 可以参考之前的文章 <a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a>.</p>
+<p>更多的使用场景等大家在业务中去挖掘.</p>
 
       
     </div>
@@ -421,7 +464,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS-Android-ReactNative/" rel="tag"># iOS Android ReactNative</a>
+            <a href="/tags/APNs-推送/" rel="tag"># APNs 推送</a>
           
         </div>
       
@@ -434,8 +477,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/06/RN-使用-Mobx/" rel="next" title="RN: 使用 Mobx">
-                <i class="fa fa-chevron-left"></i> RN: 使用 Mobx
+              <a href="/2018/02/02/Hi-2018-我又来了/" rel="next" title="Hi 2018, 我又来了">
+                <i class="fa fa-chevron-left"></i> Hi 2018, 我又来了
               </a>
             
           </div>
@@ -443,10 +486,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/22/iOS-谈谈-frame-和-bounds/" rel="prev" title="iOS: 谈谈 frame 和 bounds">
-                iOS: 谈谈 frame 和 bounds <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -604,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LegacyCounter-js"><span class="nav-number">2.1.</span> <span class="nav-text">LegacyCounter.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index-ios-js"><span class="nav-number">2.2.</span> <span class="nav-text">index.ios.js</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通推送"><span class="nav-number">1.</span> <span class="nav-text">普通推送</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静默推送的异同"><span class="nav-number">2.</span> <span class="nav-text">静默推送的异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推送的格式"><span class="nav-number">3.</span> <span class="nav-text">推送的格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">4.</span> <span class="nav-text">使用场景</span></a></li></ol></div>
             
 
           </div>
@@ -768,9 +807,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2016/10/11/RN-模拟-Mobx/';
-          this.page.identifier = '2016/10/11/RN-模拟-Mobx/';
-          this.page.title = 'RN: 模拟 Mobx';
+          this.page.url = 'http://yoursite.com/2018/02/06/iOS-APNs-静默推送/';
+          this.page.identifier = '2018/02/06/iOS-APNs-静默推送/';
+          this.page.title = 'iOS APNs: 静默推送';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://veryitman.disqus.com/embed.js';
