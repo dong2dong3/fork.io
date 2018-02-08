@@ -80,20 +80,20 @@
 
 
 
-<meta name="description" content="概括iOS APNs: 远程推送 说过远程推送(RemotePush). 今天说说本地推送, 本地推送也就是平时所说的 LocalPush. 该系列博客:   iOS APNs: 远程推送 iOS APNs: 本地推送(本篇) iOS APNs: 处理数据   业务场景在具体实现之前, 先说一下业务场景. 假如你的 APP 具有 IM(即时通讯) 功能, 这个时候, 你可以根据连接来判断用户是否在">
+<meta name="description" content="概括iOS APNs: 远程推送 说过远程推送(RemotePush). 今天说说本地推送, 本地推送也就是平时所说的 LocalPush. 该系列博客:   iOS APNs: 远程推送 iOS APNs: 本地推送(本篇) iOS APNs: 处理数据 iOS APNs: 静默推送 iOS APNs: Background Fetch   业务场景在具体实现之前, 先说一下业务场景. 假如你的">
 <meta name="keywords" content="APNs 远程推送">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS APNs: 本地推送">
 <meta property="og:url" content="http://yoursite.com/2017/08/06/iOS-APNs-本地推送/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="概括iOS APNs: 远程推送 说过远程推送(RemotePush). 今天说说本地推送, 本地推送也就是平时所说的 LocalPush. 该系列博客:   iOS APNs: 远程推送 iOS APNs: 本地推送(本篇) iOS APNs: 处理数据   业务场景在具体实现之前, 先说一下业务场景. 假如你的 APP 具有 IM(即时通讯) 功能, 这个时候, 你可以根据连接来判断用户是否在">
+<meta property="og:description" content="概括iOS APNs: 远程推送 说过远程推送(RemotePush). 今天说说本地推送, 本地推送也就是平时所说的 LocalPush. 该系列博客:   iOS APNs: 远程推送 iOS APNs: 本地推送(本篇) iOS APNs: 处理数据 iOS APNs: 静默推送 iOS APNs: Background Fetch   业务场景在具体实现之前, 先说一下业务场景. 假如你的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/08/06/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/08/06/2.jpg">
-<meta property="og:updated_time" content="2018-02-04T15:58:27.968Z">
+<meta property="og:updated_time" content="2018-02-08T16:12:13.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS APNs: 本地推送">
-<meta name="twitter:description" content="概括iOS APNs: 远程推送 说过远程推送(RemotePush). 今天说说本地推送, 本地推送也就是平时所说的 LocalPush. 该系列博客:   iOS APNs: 远程推送 iOS APNs: 本地推送(本篇) iOS APNs: 处理数据   业务场景在具体实现之前, 先说一下业务场景. 假如你的 APP 具有 IM(即时通讯) 功能, 这个时候, 你可以根据连接来判断用户是否在">
+<meta name="twitter:description" content="概括iOS APNs: 远程推送 说过远程推送(RemotePush). 今天说说本地推送, 本地推送也就是平时所说的 LocalPush. 该系列博客:   iOS APNs: 远程推送 iOS APNs: 本地推送(本篇) iOS APNs: 处理数据 iOS APNs: 静默推送 iOS APNs: Background Fetch   业务场景在具体实现之前, 先说一下业务场景. 假如你的">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2017/08/06/1.png">
 
 
@@ -371,6 +371,8 @@
 <li><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a></li>
 <li>iOS APNs: 本地推送(本篇)</li>
 <li><a href="http://www.veryitman.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" target="_blank" rel="noopener">iOS APNs: 处理数据</a></li>
+<li><a href="http://www.veryitman.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 静默推送</a></li>
+<li><a href="http://www.veryitman.com/2018/02/08/iOS-APNs-Background-Fetch/" target="_blank" rel="noopener">iOS APNs: Background Fetch</a></li>
 </ul>
 </blockquote>
 <h2 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h2><p>在具体实现之前, 先说一下业务场景.</p>

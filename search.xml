@@ -18,6 +18,7 @@
 <p>这些都是对 iOS 后台多任务的补充和完善, Apple 一直在优化系统从而增强用户体验.</p>
 <h2 id="开启-Background-Fetch"><a href="#开启-Background-Fetch" class="headerlink" title="开启 Background Fetch"></a>开启 Background Fetch</h2><p><strong>1.需要 APP 支持</strong></p>
 <p>如下图所示, 勾选即可.</p>
+<p><img src="/upload/images/2018/02/08/1.png" alt="1"></p>
 <p><strong>2.设置 fetch 时间间隔</strong></p>
 <p>在 AppDelegate 中设置.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123; </div><div class="line"></div><div class="line">	// 设置 fetch 时间间隔</div><div class="line">    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -497,7 +498,7 @@
 <p>今天跟大家聊聊关于如何处理推送的数据(payload).</p>
 <p>该系列博客:</p>
 <blockquote>
-<p><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a><br><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a><br>iOS APNs: 处理数据(本篇)<br><a href="http://www.veryitman.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 静默推送</a></p>
+<p><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a><br><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a><br>iOS APNs: 处理数据(本篇)<br><a href="http://www.veryitman.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 静默推送</a><br><a href="http://www.veryitman.com/2018/02/08/iOS-APNs-Background-Fetch/" target="_blank" rel="noopener">iOS APNs: Background Fetch</a></p>
 </blockquote>
 <h2 id="推送的代理回调时机"><a href="#推送的代理回调时机" class="headerlink" title="推送的代理回调时机"></a>推送的代理回调时机</h2><p>还记得 AppDelegate 里面关于推送的几个代理方法吧.<br>~ 估计你也忘记了, 没关系, 我们再一起整理一下.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;markApp push. RemotePush userInfo: %@&quot;, userInfo);</div><div class="line">    </div><div class="line">    // 可以根据推送内容决定下一步的行为</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -591,6 +592,8 @@
 <li><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a></li>
 <li>iOS APNs: 本地推送(本篇)</li>
 <li><a href="http://www.veryitman.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" target="_blank" rel="noopener">iOS APNs: 处理数据</a></li>
+<li><a href="http://www.veryitman.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 静默推送</a></li>
+<li><a href="http://www.veryitman.com/2018/02/08/iOS-APNs-Background-Fetch/" target="_blank" rel="noopener">iOS APNs: Background Fetch</a></li>
 </ul>
 </blockquote>
 <h2 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h2><p>在具体实现之前, 先说一下业务场景.</p>
@@ -687,6 +690,8 @@
 <li>iOS APNs: 远程推送(本篇)</li>
 <li><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a></li>
 <li><a href="http://www.veryitman.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" target="_blank" rel="noopener">iOS APNs: 处理数据</a></li>
+<li><a href="http://www.veryitman.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 静默推送</a></li>
+<li><a href="http://www.veryitman.com/2018/02/08/iOS-APNs-Background-Fetch/" target="_blank" rel="noopener">iOS APNs: Background Fetch</a></li>
 </ul>
 <p>如果需要完整源码的, 可以通过邮件联系我(veritman@126.com), 后续完成后会上传到 github.</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>先看官方的流程图, 如下所示:</p>

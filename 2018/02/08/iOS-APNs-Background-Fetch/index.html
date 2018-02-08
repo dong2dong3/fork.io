@@ -88,10 +88,12 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="在前面的几篇文章中, 给大家介绍了跟推送相关的内容. 今天跟大家聊一聊 iOS7 新加入的 Background Fetch 功能. 该系列博客:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据iOS APNs: 静默推送iOS APNs: Background Fetch(本篇)  简介从 Background Fetch 字面上来看, 大致意思是可在后台">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-08T16:04:02.366Z">
+<meta property="og:image" content="http://yoursite.com/upload/images/2018/02/08/1.png">
+<meta property="og:updated_time" content="2018-02-08T16:15:22.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS APNs: Background Fetch">
 <meta name="twitter:description" content="在前面的几篇文章中, 给大家介绍了跟推送相关的内容. 今天跟大家聊一聊 iOS7 新加入的 Background Fetch 功能. 该系列博客:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据iOS APNs: 静默推送iOS APNs: Background Fetch(本篇)  简介从 Background Fetch 字面上来看, 大致意思是可在后台">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2018/02/08/1.png">
 
 
 
@@ -373,6 +375,7 @@
 <p>这些都是对 iOS 后台多任务的补充和完善, Apple 一直在优化系统从而增强用户体验.</p>
 <h2 id="开启-Background-Fetch"><a href="#开启-Background-Fetch" class="headerlink" title="开启 Background Fetch"></a>开启 Background Fetch</h2><p><strong>1.需要 APP 支持</strong></p>
 <p>如下图所示, 勾选即可.</p>
+<p><img src="/upload/images/2018/02/08/1.png" alt="1"></p>
 <p><strong>2.设置 fetch 时间间隔</strong></p>
 <p>在 AppDelegate 中设置.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123; </div><div class="line"></div><div class="line">	// 设置 fetch 时间间隔</div><div class="line">    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];</div><div class="line">&#125;</div></pre></td></tr></table></figure>

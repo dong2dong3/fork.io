@@ -89,7 +89,7 @@
 <meta property="og:description" content="简介博文:iOS 细说推送: 远程推送iOS 细说推送: 本地推送 分别介绍了 iOS 的两种典型推送, 当然, iOS 还有很多类型的推送, 如静默推送, VOIP 推送(iOS8)等, 后面会慢慢介绍给大家. 今天跟大家聊聊关于如何处理推送的数据(payload). 该系列博客:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据(本篇)iOS APNs:">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/08/07/1.jpg">
-<meta property="og:updated_time" content="2018-02-08T15:28:32.653Z">
+<meta property="og:updated_time" content="2018-02-08T16:12:26.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS APNs: 处理数据">
 <meta name="twitter:description" content="简介博文:iOS 细说推送: 远程推送iOS 细说推送: 本地推送 分别介绍了 iOS 的两种典型推送, 当然, iOS 还有很多类型的推送, 如静默推送, VOIP 推送(iOS8)等, 后面会慢慢介绍给大家. 今天跟大家聊聊关于如何处理推送的数据(payload). 该系列博客:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据(本篇)iOS APNs:">
@@ -367,7 +367,7 @@
 <p>今天跟大家聊聊关于如何处理推送的数据(payload).</p>
 <p>该系列博客:</p>
 <blockquote>
-<p><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a><br><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a><br>iOS APNs: 处理数据(本篇)<br><a href="http://www.veryitman.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 静默推送</a></p>
+<p><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 远程推送</a><br><a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a><br>iOS APNs: 处理数据(本篇)<br><a href="http://www.veryitman.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 静默推送</a><br><a href="http://www.veryitman.com/2018/02/08/iOS-APNs-Background-Fetch/" target="_blank" rel="noopener">iOS APNs: Background Fetch</a></p>
 </blockquote>
 <h2 id="推送的代理回调时机"><a href="#推送的代理回调时机" class="headerlink" title="推送的代理回调时机"></a>推送的代理回调时机</h2><p>还记得 AppDelegate 里面关于推送的几个代理方法吧.<br>~ 估计你也忘记了, 没关系, 我们再一起整理一下.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;markApp push. RemotePush userInfo: %@&quot;, userInfo);</div><div class="line">    </div><div class="line">    // 可以根据推送内容决定下一步的行为</div><div class="line">&#125;</div></pre></td></tr></table></figure>
