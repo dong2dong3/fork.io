@@ -4,12 +4,32 @@
 
     
   <url>
-    <loc>http://yoursite.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/</loc>
-    <lastmod>2018-02-06T15:24:09.773Z</lastmod>
+    <loc>http://yoursite.com/2018/02/08/iOS-APNs-Background-Fetch/</loc>
+    <lastmod>2018-02-08T16:04:02.366Z</lastmod>
     <data>
         <display>
-        <title>iOS APNs: 静默推送</title>
-        <pubTime>2018-02-06T14:24:09.000Z</pubTime>
+        <title>iOS APNs: Background Fetch</title>
+        <pubTime>2018-02-08T15:17:43.000Z</pubTime>
+        
+        <tag>APNs 远程推送 BackgroundFetch</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2018-02-08T15:28:32.653Z</lastmod>
+    <data>
+        <display>
+        <title>iOS APNs: 处理数据</title>
+        <pubTime>2017-08-07T14:59:38.000Z</pubTime>
         
         <tag>APNs 推送</tag>
          
@@ -24,12 +44,32 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/</loc>
-    <lastmod>2018-02-04T16:00:53.492Z</lastmod>
+    <loc>http://yoursite.com/2017/07/30/iOS-%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2018-02-08T15:11:37.047Z</lastmod>
     <data>
         <display>
-        <title>iOS APNs: 处理数据</title>
-        <pubTime>2017-08-07T14:59:38.000Z</pubTime>
+        <title>iOS 后台模式</title>
+        <pubTime>2017-07-30T13:47:15.000Z</pubTime>
+        
+        <tag>后台模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/</loc>
+    <lastmod>2018-02-08T14:13:35.734Z</lastmod>
+    <data>
+        <display>
+        <title>iOS APNs: 静默推送</title>
+        <pubTime>2018-02-06T14:24:09.000Z</pubTime>
         
         <tag>APNs 推送</tag>
          
@@ -72,26 +112,6 @@
         <pubTime>2017-08-06T14:56:29.000Z</pubTime>
         
         <tag>推送 APNs</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/07/30/iOS-%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2018-02-04T15:54:15.143Z</lastmod>
-    <data>
-        <display>
-        <title>iOS 后台模式</title>
-        <pubTime>2017-07-30T13:47:15.000Z</pubTime>
-        
-        <tag>后台模式</tag>
          
          
            

@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/</loc>
+    <loc>http://yoursite.com/2018/02/08/iOS-APNs-Background-Fetch/</loc>
     
-    <lastmod>2018-02-06T15:24:09.773Z</lastmod>
+    <lastmod>2018-02-08T16:04:02.366Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/</loc>
     
-    <lastmod>2018-02-04T16:00:53.492Z</lastmod>
+    <lastmod>2018-02-08T15:28:32.653Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/07/30/iOS-%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F/</loc>
+    
+    <lastmod>2018-02-08T15:11:37.047Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/02/06/iOS-APNs-%E9%9D%99%E9%BB%98%E6%8E%A8%E9%80%81/</loc>
+    
+    <lastmod>2018-02-08T14:13:35.734Z</lastmod>
     
   </url>
   
@@ -26,13 +40,6 @@
     <loc>http://yoursite.com/2017/08/06/iOS-APNs-%E8%BF%9C%E7%A8%8B%E6%8E%A8%E9%80%81/</loc>
     
     <lastmod>2018-02-04T15:56:44.863Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/07/30/iOS-%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F/</loc>
-    
-    <lastmod>2018-02-04T15:54:15.143Z</lastmod>
     
   </url>
   

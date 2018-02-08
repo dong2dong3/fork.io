@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="今天跟大家介绍一下 ios 的静默推送功能. 静默推送, 简单来说就是通过推送实现用户无感知的消息通知. 该系列博文:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据iOS APNs: 静默推送(本篇)  普通推送例如微信, 好友给你发送了一条消息, 你的微信APP 在后台, 此时会收到带声音的一个消息提示. 这条推送机油有文字又有声音, 点开这个推送可以直">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-06T15:24:09.773Z">
+<meta property="og:updated_time" content="2018-02-08T14:13:35.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS APNs: 静默推送">
 <meta name="twitter:description" content="今天跟大家介绍一下 ios 的静默推送功能. 静默推送, 简单来说就是通过推送实现用户无感知的消息通知. 该系列博文:  iOS APNs: 远程推送iOS APNs: 本地推送iOS APNs: 处理数据iOS APNs: 静默推送(本篇)  普通推送例如微信, 好友给你发送了一条消息, 你的微信APP 在后台, 此时会收到带声音的一个消息提示. 这条推送机油有文字又有声音, 点开这个推送可以直">
@@ -415,7 +415,7 @@
 <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>具体的使用场景, 需要结合本身的业务和功能特点来说.</p>
 <p>静默推送的前提是 APP 没有被杀死, 可以通过回调函数来执行相关的代码.</p>
 <p>另外, 静默推送不会打扰用户, 比如用户正在游戏中战斗, 你频繁的使用普通推送给他, 估计他都要疯了. </p>
-<p>我个人使用静默推送的场景大致是这样的, APP 将要挂起的时候, 请求服务器去发一条静默推送, 然后使用本地通知的方式唤起用户来打开 APP, 从而保证 APP 处于饱活的状态, 至少静默推送可以增加后台挂起的时间.</p>
+<p>我个人使用静默推送的场景大致是这样的, APP 将要挂起的时候, 请求服务器去发一条静默推送, 然后使用本地通知的方式唤起用户来打开 APP, 从而保证 APP 处于保活的状态, 至少静默推送可以增加后台挂起的时间.</p>
 <p>关于本地通知的内容, 可以参考之前的文章 <a href="http://www.veryitman.com/2017/08/06/iOS-APNs-%E6%9C%AC%E5%9C%B0%E6%8E%A8%E9%80%81/" target="_blank" rel="noopener">iOS APNs: 本地推送</a>.</p>
 <p>更多的使用场景等大家在业务中去挖掘.</p>
 
@@ -486,6 +486,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/08/iOS-APNs-Background-Fetch/" rel="prev" title="iOS APNs: Background Fetch">
+                iOS APNs: Background Fetch <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -572,7 +576,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +598,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
