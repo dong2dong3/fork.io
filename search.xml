@@ -3,6 +3,146 @@
   
     
     <entry>
+      <title><![CDATA[iOS 多线程: 初步认识]]></title>
+      <url>/2018/02/12/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%88%9D%E6%AD%A5%E8%AE%A4%E8%AF%86/</url>
+      <content type="html"><![CDATA[<p>几乎每个编程语言或者平台都会遇到多线程的问题, 说明多线程是一个非常重要且开发者必须了解和掌握的.</p>
+<p>多线程也是面试官比较喜欢问的问题, 例如:</p>
+<ul>
+<li>进程和线程的区别, Android 是否支持多进程?</li>
+<li>线程池如何实现的?</li>
+<li>锁机制?</li>
+<li>多线程之间如何通信?</li>
+</ul>
+<p>谈及 iOS 中的多线程，一般说的是 pthread，NSthread，GCD，NSOperation 这四种, 用的最多也最方便的就是 GCD 了. 关于这四者, 后续会为大家一一分享.</p>
+<p>phtread 是跨平台的, C/C++ 中都有它的声影, GCD 和 NSOperation 都是常用的，NSOperation 是基于 GCD 的. GCD 的核心概念是将一个任务添加到队列，指定任务执行的方法，然后执行, NSOperation 则是直接将一个操作添加到队列中.</p>
+<p>该系列文章来跟大家分享关于 iOS 中的多线程.</p>
+<ul>
+<li>iOS 多线程: 初步认识(本篇)</li>
+</ul>
+<h2 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h2><p>进程和线程的定义, 大家可以自行到维基百科上面去查.</p>
+<p>这里只说二者的区别.</p>
+<ul>
+<li><p>一个程序至少有一个进程, 一个进程至少有一个线程如主线程.</p>
+</li>
+<li><p>多线程程序的并发性高.</p>
+</li>
+<li><p>进程在执行过程中拥有独立的内存单元，而多线程是共享内存的，从而极大地提高了程序的运行效率.</p>
+</li>
+<li><p>每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口. 线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制.</p>
+</li>
+<li><p>操作系统并没有将多个线程看做多个独立的应用, 多线程的意义在于一个应用程序中，有多个执行部分可以同时执行, 从而实现了进程的调度和管理以及资源分配.</p>
+</li>
+</ul>
+<h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>iOS 中, 队列主要分为:</p>
+<ul>
+<li>全局队列</li>
+<li>主队列.</li>
+<li>串行队列.</li>
+<li>并发队列.</li>
+</ul>
+<blockquote>
+<ul>
+<li><p>Concurrent:<br>tasks are dequeued in FIFO order, but run concurrently and can finish in any order.</p>
+</li>
+<li><p>Serial: .<br>tasks execute one at a time in FIFO order</p>
+</li>
+</ul>
+</blockquote>
+<p>并发: 任务以 FIFO 从序列中移除，然后并发运行，可以按照任何顺序完成.</p>
+<p>串行: 任务以FIFO从序列中一个一个执行. 一次只调度一个任务.</p>
+<p>在 iOS 中, 并发不一定会开启多个线程, 串行也不一定只开启一个线程. 因为这里会牵扯到是异步还是同步执行.</p>
+<p>主队列, 即 mainQueue.</p>
+<blockquote>
+<p>Returns the default queue that is bound to the main thread.</p>
+</blockquote>
+<p>会关联主线程.</p>
+<p>全局队列, 即 globalQueue.</p>
+<blockquote>
+<p>The well-known global concurrent queues may not be modified.</p>
+</blockquote>
+<p>全局队列中执行不一定会开启新线程.</p>
+<h2 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h2><p>在 iOS 的 GCD 中, 还有同步和异步执行的区别.</p>
+<blockquote>
+<p>同步</p>
+</blockquote>
+<p>同步执行代码块, 诸如 dispatch_async 中执行的.</p>
+<blockquote>
+<p>异步</p>
+</blockquote>
+<p>异步执行代码块, 诸如 dispatch_sync 中执行的.</p>
+<h2 id="创建队列的方法"><a href="#创建队列的方法" class="headerlink" title="创建队列的方法"></a>创建队列的方法</h2><p><strong>创建主队列</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t dispatch_get_main_queue(void);</div></pre></td></tr></table></figure>
+<p><strong>创建全局队列</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t dispatch_get_global_queue(long identifier, unsigned long flags);</div></pre></td></tr></table></figure>
+<p>参数 identifier 用来表示优先级. 对应的优先级为:</p>
+<ul>
+<li>DISPATCH_QUEUE_PRIORITY_HIG</li>
+<li>DISPATCH_QUEUE_PRIORITY_DEFAULT</li>
+<li>DISPATCH_QUEUE_PRIORITY_LOW</li>
+<li>DISPATCH_QUEUE_PRIORITY_BACKGROUND</li>
+</ul>
+<p>如果传入 0 标示 DISPATCH_QUEUE_PRIORITY_DEFAULT.</p>
+<p>参数 flags 是一个保留参数, API 文档要求传入 0, 非0值可能会导致返回结果为 NULL.</p>
+<p><strong>自定义队列</strong></p>
+<p>dispatch_queue_t dispatch_queue_create(const char *label, dispatch_queue_attr_t attr);</p>
+<p>参数 label 是一个字符串.</p>
+<p>参数 attr 用来标示是串行还是并行队列. 可以从 DISPATCH_QUEUE_SERIAL, DISPATCH_QUEUE_CONCURRENT 二者中取值.</p>
+<p>如果该参数传入 NULL, 默认是 DISPATCH_QUEUE_SERIAL 串行队列.</p>
+<h2 id="串行队列中的线程"><a href="#串行队列中的线程" class="headerlink" title="串行队列中的线程"></a>串行队列中的线程</h2><p>串行队列到底是开了一个线程, 还是开了多个线程, 我们一探究竟.</p>
+<p>先看例子1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t serialQueue = dispatch_queue_create(&quot;com.veryitman&quot;, DISPATCH_QUEUE_SERIAL);</div><div class="line">    </div><div class="line">for (int i=0; i&lt;10; i++) &#123;</div><div class="line">    </div><div class="line">    dispatch_async(serialQueue, ^&#123;</div><div class="line">        NSLog(@&quot;dispatch_async. DISPATCH_QUEUE_SERIAL CurrentThread: %@&quot;, [NSThread currentThread]);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2018/02/12/1.jpg" alt="1"></p>
+<p>可以看出, 只开启一个新线程.</p>
+<p>再看例子2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t serialQueue = dispatch_queue_create(&quot;com.veryitman&quot;, DISPATCH_QUEUE_SERIAL);</div><div class="line">    </div><div class="line">dispatch_async(serialQueue, ^&#123;</div><div class="line">    NSLog(@&quot;dispatch_async. DISPATCH_QUEUE_SERIAL CurrentThread: %@&quot;, [NSThread currentThread]);</div><div class="line">    sleep(2);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">dispatch_async(serialQueue, ^&#123;</div><div class="line">    NSLog(@&quot;dispatch_sync. DISPATCH_QUEUE_SERIAL CurrentThread: %@&quot;, [NSThread currentThread]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2018/02/12/2.jpg" alt="1"></p>
+<p>可以看出, 也只开启一个新线程.</p>
+<p>改造一下例子2, 将其中的一个异步改为同步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t serialQueue = dispatch_queue_create(&quot;com.veryitman&quot;, DISPATCH_QUEUE_SERIAL);</div><div class="line">    </div><div class="line">dispatch_async(serialQueue, ^&#123;</div><div class="line">    NSLog(@&quot;dispatch_async. DISPATCH_QUEUE_SERIAL CurrentThread: %@&quot;, [NSThread currentThread]);</div><div class="line">    sleep(2);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">dispatch_sync(serialQueue, ^&#123;</div><div class="line">    NSLog(@&quot;dispatch_sync. DISPATCH_QUEUE_SERIAL CurrentThread: %@&quot;, [NSThread currentThread]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2018/02/12/3.jpg" alt="1"></p>
+<p>可以看出, 同步的执行在主线程, 二者并不是在一个线程中执行.</p>
+<p>所以, 串行队列中执行的代码, 不一定都在子线程中, 如果是异步都是同一个线程中执行.如果是同步的话, 会在主线程中执行.</p>
+<p><strong>同理, 并行队列中的异步执行会开启多个线程来执行.</strong></p>
+<h2 id="执行方式和队列"><a href="#执行方式和队列" class="headerlink" title="执行方式和队列"></a>执行方式和队列</h2><p>这里的执行方式指的是同步或者异步执行.</p>
+<p>先看异步执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">/// 异步全局队列和主队列</div><div class="line">    &#123;</div><div class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">            // 1</div><div class="line">            NSLog(@&quot;dispatch_async. mainQueue. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;</div><div class="line">            // 0</div><div class="line">            NSLog(@&quot;dispatch_async. globalQueue. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /// 异步串行和并行队列</div><div class="line">    &#123;</div><div class="line">        dispatch_async(dispatch_queue_create(&quot;&quot;, DISPATCH_QUEUE_SERIAL), ^&#123;</div><div class="line">            // 0</div><div class="line">            NSLog(@&quot;dispatch_async. DISPATCH_QUEUE_SERIAL. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        dispatch_async(dispatch_queue_create(&quot;&quot;, DISPATCH_QUEUE_CONCURRENT), ^&#123;</div><div class="line">            // 0</div><div class="line">            NSLog(@&quot;dispatch_async. DISPATCH_QUEUE_CONCURRENT. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2018/02/12/4.jpg" alt="1"></p>
+<p>再看同步执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/// 同步全局队列和主队列</div><div class="line">    &#123;</div><div class="line"></div><div class="line">    #if 0</div><div class="line">        // 会死锁</div><div class="line">        dispatch_sync(dispatch_get_main_queue(), ^&#123;</div><div class="line">            NSLog(@&quot;dispatch_sync. mainQueue. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line">    #endif</div><div class="line"></div><div class="line">        dispatch_sync(dispatch_get_global_queue(0, 0), ^&#123;</div><div class="line">            // 1</div><div class="line">            NSLog(@&quot;dispatch_sync. globalQueue. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /// 同步串行和并行队列</div><div class="line">    &#123;</div><div class="line">        dispatch_sync(dispatch_queue_create(&quot;&quot;, DISPATCH_QUEUE_SERIAL), ^&#123;</div><div class="line">            // 1</div><div class="line">            NSLog(@&quot;dispatch_sync. DISPATCH_QUEUE_SERIAL. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        dispatch_sync(dispatch_queue_create(&quot;&quot;, DISPATCH_QUEUE_CONCURRENT), ^&#123;</div><div class="line">            // 1</div><div class="line">            NSLog(@&quot;dispatch_sync. DISPATCH_QUEUE_CONCURRENT. isMainThread: %i&quot;, [NSThread isMainThread]);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2018/02/12/5.jpg" alt="1"></p>
+<blockquote>
+<p>得出结论</p>
+</blockquote>
+<ul>
+<li>任何队列的同步执行, 都没有开启新线程, 在主线程中执行.</li>
+<li>主队列的同步执行会造成死锁.</li>
+<li>主队列的异步执行, 没有开启新线程. 在主线程中执行.</li>
+<li>串行和并行以及全局队列的异步执行, 都会开启新线程.</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><p><a href="http://blog.csdn.net/robbyo/article/details/8549904" target="_blank" rel="noopener">进程和线程的区别</a></p>
+</li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></p>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> iOS 多线程 进程 GCD </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C/C++: 如何相互调用]]></title>
       <url>/2018/02/12/C-C-%E5%A6%82%E4%BD%95%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/</url>
       <content type="html"><![CDATA[<p>C++ 中调用 C 比较简单. 但是 C 调用 C++ 稍微复杂一些.</p>
