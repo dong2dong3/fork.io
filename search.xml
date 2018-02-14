@@ -6,11 +6,13 @@
       <title><![CDATA[音视频编程: 编译 faac/faad2]]></title>
       <url>/2018/02/14/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91-faac-faad2/</url>
       <content type="html"><![CDATA[<p>本文分享如何在 MacOS 上面编译 faac 和 faad2, 编译后的库文件可以直接在 iOS 上面使用.</p>
-<p>后续会分享如何编译给 Android 使用的方法以及实战.</p>
-<p>该系列博文包括:</p>
+<p>后续会分享如何编译给 Android 使用的库文件的方法以及实战.</p>
+<p><strong>该系列博文:</strong></p>
 <ul>
-<li>音视频编程: 编译 faac/faad2(本篇)</li>
-<li>音视频编程: iOS 使用 faac/faad2(待出炉)</li>
+<li><p><a href="http://www.veryitman.com/2018/02/14/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91-faac-faad2/" target="_blank" rel="noopener">音视频编程: 编译 faac/faad2</a>(本篇)</p>
+</li>
+<li><p>音视频编程: iOS 使用 faac/faad2(待出炉)</p>
+</li>
 </ul>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>faad</code> 是 AAC 格式文件的音频解码库. 相对于 FFmpeg 来说比较轻量和简单. 编译出来全平台静态库文件较小, API 也比较简单, 缺点是功能单一, 只能处理 AAC 格式的音频文件.</p>
 <p><code>faac</code> 是与之对应的 AAC 音频编码库. <code>faac</code> 是一个成熟的 AAC 音频编码库，具有解码速度快、便携性好、技术广泛等特点.</p>
