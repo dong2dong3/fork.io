@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2018-02-16T15:37:13.219Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/02/16/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faac-%E7%BC%96%E7%A0%81/</loc>
     
     <lastmod>2018-02-16T15:29:18.810Z</lastmod>
@@ -145,13 +152,6 @@
     <loc>http://yoursite.com/2016/11/08/Mac-install-Cocoapods/</loc>
     
     <lastmod>2018-01-25T16:05:23.044Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2017-12-17T11:35:43.404Z</lastmod>
     
   </url>
   
