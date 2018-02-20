@@ -15,7 +15,7 @@
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a></p>
 </li>
-<li><p>音视频编程: iOS 使用 faad2 (本篇)</p>
+<li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> (本篇)</p>
 </li>
 </ul>
 <h2 id="例子简介"><a href="#例子简介" class="headerlink" title="例子简介"></a>例子简介</h2><p>本文以一个实际的例子, 使用 faad2的各个函数来解码 AAC 数据.</p>
@@ -79,6 +79,8 @@
 <li><p><a href="http://www.veryitman.com/2018/02/16/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faac-%E7%BC%96%E7%A0%81/" target="_blank" rel="noopener">音视频编程: iOS 使用 faac 编码</a></p>
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a>(本篇)</p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> </p>
 </li>
 </ul>
 <h2 id="WAV-简介"><a href="#WAV-简介" class="headerlink" title="WAV 简介"></a>WAV 简介</h2><p>WAV 只是该音频文件的后缀名, 其完整名称缩写是 WAVE.</p>
@@ -152,6 +154,8 @@
 <li><p><a href="http://www.veryitman.com/2018/02/16/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faac-%E7%BC%96%E7%A0%81/" target="_blank" rel="noopener">音视频编程: iOS 使用 faac 编码</a>(本篇)</p>
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a></p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> </p>
 </li>
 </ul>
 <h2 id="函数介绍"><a href="#函数介绍" class="headerlink" title="函数介绍"></a>函数介绍</h2><blockquote>
@@ -234,6 +238,8 @@
 <li><p><a href="http://www.veryitman.com/2018/02/16/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faac-%E7%BC%96%E7%A0%81/" target="_blank" rel="noopener">音视频编程: iOS 使用 faac 编码</a></p>
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a></p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> </p>
 </li>
 </ul>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>faad</code> 是 AAC 格式文件的音频解码库. 相对于 FFmpeg 来说比较轻量和简单. 编译出来全平台静态库文件较小, API 也比较简单, 缺点是功能单一, 只能处理 AAC 格式的音频文件.</p>
