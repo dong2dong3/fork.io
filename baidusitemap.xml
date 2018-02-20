@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/</loc>
+    <lastmod>2018-02-20T15:47:15.774Z</lastmod>
+    <data>
+        <display>
+        <title>音视频编程: iOS 使用 faad2</title>
+        <pubTime>2018-02-20T15:29:29.000Z</pubTime>
+        
+        <tag>音视频 wav pcm faad2 aac</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/02/14/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91-faac-faad2/</loc>
     <lastmod>2018-02-20T15:35:43.235Z</lastmod>
     <data>
@@ -52,26 +72,6 @@
         <pubTime>2018-02-20T13:07:27.000Z</pubTime>
         
         <tag>音视频 wav pcm</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/</loc>
-    <lastmod>2018-02-20T15:33:45.927Z</lastmod>
-    <data>
-        <display>
-        <title>音视频编程: iOS 使用 faad2</title>
-        <pubTime>2018-02-20T15:29:29.000Z</pubTime>
-        
-        <tag>音视频 wav pcm faad2 aac</tag>
          
          
            
