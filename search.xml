@@ -39,6 +39,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexdump -n 44 m.wav</div></pre></td></tr></table></figure>
 <p><img src="/upload/images/2018/02/20/2.jpg" alt="2"></p>
 <p>其中, <code>-n 44</code> 表示查看前 44 个字节.</p>
+<p>按字节分组的图, 如下所示:<br><img src="/upload/images/2018/02/20/3.png" alt="2"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">52 49 46 46</div></pre></td></tr></table></figure>
 <p>分别是 RIFF 的 ASCII 码.</p>
 <p>跟在 RIFF 后面的四个字节是文件的大小信息, 我们先使用 <code>ls</code> 命令看一下该文件的大小.</p>
@@ -46,7 +47,7 @@
 <p>输出文件大小为(字节数): 1080808</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">staff  1080808 Jan 25 15:44 m.wav</div></pre></td></tr></table></figure>
 <p>RIFF 后面的四个字节分别是: e0 7d 10 00, 由于该存储使用了小端序(Little-Endian 存储，也就是说对其中的数据，低位字节在前，高位字节在后), 所以16进制表示为: 0x00107de0, 对应的字节大小是 <code>1080808</code>.</p>
-<p>上面说到, 线性 PCM, 其实在该文件头中, 第17到第第22个字节标示了 PCM 的类型, 即:</p>
+<p>上面说到, 线性 PCM, 其实在该文件头中, 第17到第第22个字节(上图红色的5和6组合)标示了 PCM 的类型, 即:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10 00 00 00 01 00</div></pre></td></tr></table></figure>
 <p>其他类型的 PCM 类型定义为:</p>
 <blockquote>
