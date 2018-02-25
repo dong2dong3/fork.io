@@ -5,7 +5,10 @@
     <entry>
       <title><![CDATA[音视频编程: 构建 nginx 推流服务器]]></title>
       <url>/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-      <content type="html"><![CDATA[<p>本篇分享的主要内容:<br>如何构建本地的推流服务器(nginx+rtmp-nginx-module), 并使用 ffmpeg 命令进行视频推流, 然后使用 VLC 播放器播放视频.</p>
+      <content type="html"><![CDATA[<blockquote>
+<p>本篇分享的主要内容</p>
+</blockquote>
+<p>如何构建本地的推流服务器(nginx+rtmp-nginx-module), 并使用 ffmpeg 命令进行视频推流, 然后使用 VLC 播放器播放视频.</p>
 <p><strong>该系列博文:</strong></p>
 <ul>
 <li><p><a href="http://www.veryitman.com/2018/02/14/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91-faac-faad2/" target="_blank" rel="noopener">音视频编程: 编译 faac/faad2</a></p>
