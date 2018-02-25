@@ -5,7 +5,20 @@
     <entry>
       <title><![CDATA[音视频编程: 构建 nginx 推流服务器]]></title>
       <url>/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-      <content type="html"><![CDATA[<p>本篇分享如何构建本地的推流服务器(nginx+rtmp-nginx-module), 并使用 ffmpeg 命令进行视频推流, 然后使用 VLC 播放器播放视频.</p>
+      <content type="html"><![CDATA[<p>本篇分享的主要内容:<br>如何构建本地的推流服务器(nginx+rtmp-nginx-module), 并使用 ffmpeg 命令进行视频推流, 然后使用 VLC 播放器播放视频.</p>
+<p><strong>该系列博文:</strong></p>
+<ul>
+<li><p><a href="http://www.veryitman.com/2018/02/14/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%BC%96%E8%AF%91-faac-faad2/" target="_blank" rel="noopener">音视频编程: 编译 faac/faad2</a></p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/16/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faac-%E7%BC%96%E7%A0%81/" target="_blank" rel="noopener">音视频编程: iOS 使用 faac 编码</a></p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a></p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> </p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">音视频编程: 构建 nginx 推流服务器</a> (本篇)</p>
+</li>
+</ul>
 <h2 id="安装-rtmp-nginx-module"><a href="#安装-rtmp-nginx-module" class="headerlink" title="安装 rtmp-nginx-module"></a>安装 rtmp-nginx-module</h2><p>之前在测试 php 程序的时候, 我已经安装过 nginx, 但是发现这样在配置 rtmp-nginx-module 的时候, 无法成功.</p>
 <p>配置文件修改完成之后, nginx 总是无法识别 <code>rtmp</code>, 报错如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[emerg] 30766#0: unknown directive &quot;rtmp&quot; in /usr/local/etc/nginx/nginx.conf:40</div></pre></td></tr></table></figure>
@@ -166,6 +179,8 @@
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> (本篇)</p>
 </li>
+<li><p><a href="http://www.veryitman.com/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">音视频编程: 构建 nginx 推流服务器</a></p>
+</li>
 </ul>
 <h2 id="例子简介"><a href="#例子简介" class="headerlink" title="例子简介"></a>例子简介</h2><p>本文以一个实际的例子, 使用 faad2的各个函数来解码 AAC 数据.</p>
 <p>主要有以下几个步骤:</p>
@@ -236,6 +251,8 @@
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a>(本篇)</p>
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> </p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">音视频编程: 构建 nginx 推流服务器</a></p>
 </li>
 </ul>
 <h2 id="WAV-简介"><a href="#WAV-简介" class="headerlink" title="WAV 简介"></a>WAV 简介</h2><p>WAV 只是该音频文件的后缀名, 其完整名称缩写是 WAVE.</p>
@@ -311,6 +328,8 @@
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a></p>
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> </p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">音视频编程: 构建 nginx 推流服务器</a></p>
 </li>
 </ul>
 <h2 id="函数介绍"><a href="#函数介绍" class="headerlink" title="函数介绍"></a>函数介绍</h2><blockquote>
@@ -395,6 +414,8 @@
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a></p>
 </li>
 <li><p><a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E4%BD%BF%E7%94%A8-faad2/" target="_blank" rel="noopener">音视频编程: iOS 使用 faad2</a> </p>
+</li>
+<li><p><a href="http://www.veryitman.com/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">音视频编程: 构建 nginx 推流服务器</a></p>
 </li>
 </ul>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>faad</code> 是 AAC 格式文件的音频解码库. 相对于 FFmpeg 来说比较轻量和简单. 编译出来全平台静态库文件较小, API 也比较简单, 缺点是功能单一, 只能处理 AAC 格式的音频文件.</p>
