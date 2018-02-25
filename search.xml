@@ -3,6 +3,65 @@
   
     
     <entry>
+      <title><![CDATA[音视频编程: 构建 nginx 推流服务器]]></title>
+      <url>/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+      <content type="html"><![CDATA[<p>本篇分享如何构建本地的推流服务器(nginx+rtmp-nginx-module), 并使用 ffmpeg 命令进行视频推流, 然后使用 VLC 播放器播放视频.</p>
+<h2 id="安装-rtmp-nginx-module"><a href="#安装-rtmp-nginx-module" class="headerlink" title="安装 rtmp-nginx-module"></a>安装 rtmp-nginx-module</h2><p>之前在测试 php 程序的时候, 我已经安装过 nginx, 但是发现这样在配置 rtmp-nginx-module 的时候, 无法成功.</p>
+<p>配置文件修改完成之后, nginx 总是无法识别 <code>rtmp</code>, 报错如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[emerg] 30766#0: unknown directive &quot;rtmp&quot; in /usr/local/etc/nginx/nginx.conf:40</div></pre></td></tr></table></figure>
+<p>现在需要卸载原来已经安装的 nginx, 命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew uninstall nginx</div></pre></td></tr></table></figure>
+<p>再次安装:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install nginx-full --with-rtmp-module</div></pre></td></tr></table></figure>
+<p>耐心等待一会 ~~</p>
+<p>nginx 的版本(nginx -v):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx/1.12.2</div></pre></td></tr></table></figure>
+<p>rtmp-nginx-module 版本:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1.1.7.11-dev_2</div></pre></td></tr></table></figure>
+<h2 id="配置-rtmp"><a href="#配置-rtmp" class="headerlink" title="配置 rtmp"></a>配置 rtmp</h2><p>编辑 nginx 的配置文件, 文件位置位于:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/etc/nginx/nginx.conf</div></pre></td></tr></table></figure>
+<p>在 <code>http {}</code> 后面写入如下内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">rtmp &#123;</div><div class="line">   server &#123;</div><div class="line">        #rtmp协议的默认端口号是 1935</div><div class="line">        listen 1935;</div><div class="line">        #直播流配置, 访问 path 是 rtmplive</div><div class="line">        application rtmplive &#123;</div><div class="line">              #开启实时</div><div class="line">              live on;</div><div class="line">              #设置 rtmp 引擎的最大连接数. 默认为off</div><div class="line">              max_connections 1024;</div><div class="line">              #不记录数据</div><div class="line">             record off;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意: <code>rtmplive</code> 是固定的.</p>
+<p>具体的 nginx 配置详见后面的附录内容.</p>
+<h2 id="推流"><a href="#推流" class="headerlink" title="推流"></a>推流</h2><p>使用 brew 安装 ffmpeg 即可. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install ffmpeg</div></pre></td></tr></table></figure>
+<p>这个过程有点久, 如果你没有梯子基本安装不了 [大哭]~</p>
+<p>安装 VLC, 直接去官网下载 dmg 包, 安装即可.</p>
+<p>打开 VLC 然后选择从 File/Open Network 打开文件, 如下图所示:</p>
+<p><img src="/upload/images/2018/02/25/1.jpg" alt="1"></p>
+<p>在弹出的框中, 写入推流地址 <code>rtmp://localhost:1935/rtmplive/channel</code>, 如图所示:</p>
+<p><img src="/upload/images/2018/02/25/2.jpg" alt="1"></p>
+<p>直接点击 Open.</p>
+<p>ffmpeg 推流的命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -re -i ~/Desktop/launcher.mp4 -vcodec libx264 -acodec aac -strict -2 -f flv rtmp://localhost:1935/rtmplive/channel</div></pre></td></tr></table></figure>
+<p>其中 <code>launcher.mp4</code> 是我自己从网络上面下载的一个视频文件, 时长大约是 5 分钟.</p>
+<p>在 VLC 中, 就可以看到推流播放的视频了. [开心]~~</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="nginx-配置文件"><a href="#nginx-配置文件" class="headerlink" title="nginx 配置文件"></a>nginx 配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">worker_processes  1;</div><div class="line"> </div><div class="line">error_log  /usr/local/etc/nginx/logs/error.log debug;</div><div class="line"></div><div class="line">pid        /usr/local/var/run/nginx.pid;</div><div class="line"> </div><div class="line">events &#123;</div><div class="line">    worker_connections  256;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">http &#123;</div><div class="line">    include             mime.types;</div><div class="line">    default_type        application/octet-stream;</div><div class="line"> </div><div class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</div><div class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</div><div class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</div><div class="line"> </div><div class="line">    access_log  /usr/local/etc/nginx/logs/access.log  main;</div><div class="line"> </div><div class="line">    sendfile            on;</div><div class="line"> </div><div class="line">    keepalive_timeout   65;</div><div class="line"> </div><div class="line">    index index.html index.php;</div><div class="line"> </div><div class="line">    include /usr/local/etc/nginx/sites-enabled/*; </div><div class="line">    include /usr/local/etc/nginx/conf.d/*;</div><div class="line"></div><div class="line">     server &#123;</div><div class="line">        listen       8080;</div><div class="line">        server_name  localhost;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   /Users/me/workspace/projs/phpwork/; #web的根目录</div><div class="line">            index  index.php index.html index.htm; </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">rtmp &#123;</div><div class="line">   server &#123;</div><div class="line">        #rtmp协议的默认端口号是1935</div><div class="line">        listen 1935;</div><div class="line">        #直播流配置,访问路径是rtmplive</div><div class="line">        application rtmplive &#123;</div><div class="line">              #开启实时</div><div class="line">              live on;</div><div class="line">              #为rtmp引擎设置最大连接数.默认为off</div><div class="line">              max_connections 1024;</div><div class="line">              #不记录数据</div><div class="line">             record off;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="视频文件"><a href="#视频文件" class="headerlink" title="视频文件"></a>视频文件</h2><p>使用下载的 mp4 文件, 有些无法播放, 暂时估计应该是码率的问题, 大家在测试过程中, 发现视频无法播放, 最后试试其他视频文件.</p>
+<p>另外, 视频文件不要太小, 尽量能让其播放时长在 3-5 分钟.</p>
+<h2 id="brew-install-uninstall-报错"><a href="#brew-install-uninstall-报错" class="headerlink" title="brew install/uninstall 报错"></a>brew install/uninstall 报错</h2><p>报错信息如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Error: undefined method `patch&apos; for #&lt;Resource:0x000001040877a8&gt;</div><div class="line">/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/gcc@4.9.rb:55:in `block in &lt;class:GccAT49&gt;&apos;</div><div class="line">/usr/local/Homebrew/Library/Homebrew/resource.rb:49:in `instance_eval&apos;</div><div class="line">/usr/local/Homebrew/Library/Homebrew/resource.rb:49:in `initialize&apos;</div><div class="line">/usr/local/Homebrew/Library/Homebrew/software_spec.rb:111:in `new&apos;</div><div class="line">/usr/local/Homebrew/Library/Homebrew/software_spec.rb:111:in `resource&apos;</div></pre></td></tr></table></figure>
+<p>最终的解决方案是重新安装 Homebrew, 命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 音视频 rtmp nginx </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[NSLog 格式化输出 NSInteger/NSUInteger]]></title>
       <url>/2018/02/22/NSLog-%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA-NSInteger-NSUInteger/</url>
       <content type="html"><![CDATA[<p>在 Xcode 中 使用 NSLog 打印 NSInteger/NSUInteger 数据, 经常会遇到类似的警告. </p>
