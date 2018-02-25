@@ -24,16 +24,22 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">rtmp &#123;</div><div class="line">   server &#123;</div><div class="line">        #rtmp协议的默认端口号是 1935</div><div class="line">        listen 1935;</div><div class="line">        #直播流配置, 访问 path 是 rtmplive</div><div class="line">        application rtmplive &#123;</div><div class="line">              #开启实时</div><div class="line">              live on;</div><div class="line">              #设置 rtmp 引擎的最大连接数. 默认为off</div><div class="line">              max_connections 1024;</div><div class="line">              #不记录数据</div><div class="line">             record off;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>注意: <code>rtmplive</code> 是固定的.</p>
 <p>具体的 nginx 配置详见后面的附录内容.</p>
-<h2 id="推流"><a href="#推流" class="headerlink" title="推流"></a>推流</h2><p>使用 brew 安装 ffmpeg 即可. </p>
+<h2 id="推流"><a href="#推流" class="headerlink" title="推流"></a>推流</h2><p><strong>1.安装 ffmpeg 即可. </strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install ffmpeg</div></pre></td></tr></table></figure>
 <p>这个过程有点久, 如果你没有梯子基本安装不了 [大哭]~</p>
-<p>安装 VLC, 直接去官网下载 dmg 包, 安装即可.</p>
+<p><strong>2.安装 VLC</strong></p>
+<p>直接去官网下载 dmg 包, 安装即可.</p>
 <p>打开 VLC 然后选择从 File/Open Network 打开文件, 如下图所示:</p>
 <p><img src="/upload/images/2018/02/25/1.jpg" alt="1"></p>
 <p>在弹出的框中, 写入推流地址 <code>rtmp://localhost:1935/rtmplive/channel</code>, 如图所示:</p>
 <p><img src="/upload/images/2018/02/25/2.jpg" alt="1"></p>
 <p>直接点击 Open.</p>
-<p>ffmpeg 推流的命令如下:</p>
+<p><strong>3.启动 nginx</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nginx</div></pre></td></tr></table></figure>
+<p>可以在浏览器访问如下地址, 看看 nginx 是否启动成功.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/index.html</div></pre></td></tr></table></figure>
+<p><strong>4.ffmpeg 推流</strong></p>
+<p>推流的命令如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -re -i ~/Desktop/launcher.mp4 -vcodec libx264 -acodec aac -strict -2 -f flv rtmp://localhost:1935/rtmplive/channel</div></pre></td></tr></table></figure>
 <p>其中 <code>launcher.mp4</code> 是我自己从网络上面下载的一个视频文件, 时长大约是 5 分钟.</p>
 <p>在 VLC 中, 就可以看到推流播放的视频了. [开心]~~</p>
