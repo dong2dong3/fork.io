@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="本篇分享是基于 音视频编程: 构建 nginx 推流服务器 这篇文章的, 之前是使用 ffmpeg 命令进行推流并且都是在 macos 上面进行的操作. 现在在 iOS 平台上使用 LFLiveKit 进行推流, 然后使用 VLC 播放器播放流视频. 该系列博文:  音视频编程: 编译 faac/faad2  音视频编程: iOS 使用 faac 编码  音视频编程: 简单分析 WAV 文件  音">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-26T15:08:28.751Z">
+<meta property="og:updated_time" content="2018-02-26T15:11:35.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="音视频编程: iOS 推流">
 <meta name="twitter:description" content="本篇分享是基于 音视频编程: 构建 nginx 推流服务器 这篇文章的, 之前是使用 ffmpeg 命令进行推流并且都是在 macos 上面进行的操作. 现在在 iOS 平台上使用 LFLiveKit 进行推流, 然后使用 VLC 播放器播放流视频. 该系列博文:  音视频编程: 编译 faac/faad2  音视频编程: iOS 使用 faac 编码  音视频编程: 简单分析 WAV 文件  音">
@@ -399,7 +399,7 @@
 <p><code>192.168.1.102</code> 是我的本机(mac) ip 地址.</p>
 <p>如果一切正常的话, 你在手机上面可以看到自己的预览画面.</p>
 <p><strong>3.VLC 播放</strong></p>
-<p>使用 VLC 播放 rtmp 的流, 在 VLC 中 File/Open Network, 打开 <code>rtmp://192.168.1.102:1935/rtmplive/channel</code> 即可播放.</p>
+<p>使用 VLC 播放 rtmp 的流, 打开 VLC 播放器, 选择 File/Open Network, 输入 <code>rtmp://192.168.1.102:1935/rtmplive/channel</code> 这个地址即可实时播放了.</p>
 <p>这里注意一定要使用本机的 ip 地址, 不要使用 <code>localhost:1935</code> 类似的地址, 否则无法播放和推流.</p>
 <p>后续分享如何在 iOS 上面使用播放器来播放直播流.</p>
 

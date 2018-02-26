@@ -44,7 +44,7 @@
 <p><code>192.168.1.102</code> 是我的本机(mac) ip 地址.</p>
 <p>如果一切正常的话, 你在手机上面可以看到自己的预览画面.</p>
 <p><strong>3.VLC 播放</strong></p>
-<p>使用 VLC 播放 rtmp 的流, 在 VLC 中 File/Open Network, 打开 <code>rtmp://192.168.1.102:1935/rtmplive/channel</code> 即可播放.</p>
+<p>使用 VLC 播放 rtmp 的流, 打开 VLC 播放器, 选择 File/Open Network, 输入 <code>rtmp://192.168.1.102:1935/rtmplive/channel</code> 这个地址即可实时播放了.</p>
 <p>这里注意一定要使用本机的 ip 地址, 不要使用 <code>localhost:1935</code> 类似的地址, 否则无法播放和推流.</p>
 <p>后续分享如何在 iOS 上面使用播放器来播放直播流.</p>
 ]]></content>
