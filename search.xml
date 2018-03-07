@@ -3,6 +3,67 @@
   
     
     <entry>
+      <title><![CDATA[C 指针与 OC 对象之间的转换]]></title>
+      <url>/2018/03/07/C-%E6%8C%87%E9%92%88%E4%B8%8E-OC-%E5%AF%B9%E8%B1%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/</url>
+      <content type="html"><![CDATA[<h2 id="Core-Foundation-框架"><a href="#Core-Foundation-框架" class="headerlink" title="Core Foundation 框架"></a>Core Foundation 框架</h2><p>Core Foundation 框架 (CoreFoundation.framework) 是一组 C 语言接口， 简称 CF. </p>
+<p>它们为 iOS 应用程序提供基本数据管理和服务功能.</p>
+<p>如 Core Graphics、Core Text，并且我们可能需要将 CF 对象和OC 对象进行相互转化，ARC 下，编译器不会自动管理 CF 对象的内存，我们需要手动管理. </p>
+<p>创建一个 CF 对象使用后, 需要使用 CFRelease 将其手动释放, 换句话说, Core Foundation 对象类型不在 ARC 管理范畴内.</p>
+<p>如何将 CF 和 OC 对象有效的结合起来, 在 ARC 环境下, 提供了 <code>桥接</code> 的技术, 即 ARC 下 OC 对象和 Core Foundation 对象之间的桥梁.</p>
+<h2 id="ARC-桥接"><a href="#ARC-桥接" class="headerlink" title="ARC 桥接"></a>ARC 桥接</h2><p>ARC 下 C 指针与 OC 指针(对象)之间转换, 一般会用到下面的方法.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">__bridge_retained &lt;#CF type#&gt;)&lt;#expression#&gt;</div><div class="line"></div><div class="line">__bridge_transfer &lt;#Objective-C type#&gt;)&lt;#expression#&gt;</div><div class="line"></div><div class="line">__bridge &lt;#type#&gt;)&lt;#expression#&gt;</div></pre></td></tr></table></figure>
+<p>也就是所谓的 <code>桥接</code>, 它是 Object-C 在 ARC 环境下开发出来的一种用作转换 C 指针跟 OC (类)指针的一种转换技术, 所以是 ARC 下的称谓, 在 MRC 下没有 <code>桥接</code>.</p>
+<p>针对内存管理问题，ARC 可以管理 Objective-C 对象, 但不支持 Core Foundation 对象的管理，所以转换后要注意一个问题：谁来释放使用后的对象.</p>
+<p>结合 ARC 和 内存管理, 下面分别介绍一下.</p>
+<p>Core Foundation 对象必须使用 CFRetain 和 CFRelease 来进行内存管理.<br>当使用 Objective-C 和 Core Foundation 对象相互转换的时候，必须让编译器知道，到底由谁来负责释放对象，是否交给 ARC 处理, 只有正确的处理，才能避免内存泄漏和 double free 导致程序崩溃.</p>
+<h2 id="bridge-retained-lt-CF-type-gt-lt-expression-gt"><a href="#bridge-retained-lt-CF-type-gt-lt-expression-gt" class="headerlink" title="__bridge_retained &lt;#CF type#&gt;)&lt;#expression#&gt;"></a>__bridge_retained &lt;#CF type#&gt;)&lt;#expression#&gt;</h2><p><code>__bridge_retained</code> 等同于 <code>CFBridgingRetain()</code>.</p>
+<p>将 Objective-C 对象转换为 Core Foundation 对象，把对象所有权桥接给 Core Foundation 对象，同时剥夺 ARC 的管理权，后续需要开发者使用 CFRelease 或者相关方法手动来释放 CF 对象.</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">void *cPointer;</div><div class="line">NSObject *objc = [[NSObject alloc] init];</div><div class="line"></div><div class="line">//将 OC 对象转换为 C 指针</div><div class="line">cPointer = (__bridge_retained void*)objc;</div><div class="line"></div><div class="line">//use cPointer ...</div><div class="line"></div><div class="line">//需要释放资源</div><div class="line">CFRelease(cPointer);</div></pre></td></tr></table></figure>
+<p>在 ARC 下, CFBridgingRetain 实现如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NS_INLINE CF_RETURNS_RETAINED CFTypeRef _Nullable CFBridgingRetain(id _Nullable X) &#123;</div><div class="line">    return (__bridge_retained CFTypeRef)X;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>关于 CFTypeRef, 如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">typedef const CF_BRIDGED_TYPE(id) void * CFTypeRef;</div></pre></td></tr></table></figure>
+<p>所以 CFBridgingRetain 返回值是 <code>const void *</code> 类型的.</p>
+<p>上面的示例可以改写为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const void *cPointer;</div><div class="line">const NSObject *objc = [[NSObject alloc] init];</div><div class="line">cPointer = CFBridgingRetain(objc);</div><div class="line">    </div><div class="line">//use cPointer ...</div><div class="line">    </div><div class="line">CFRelease(cPointer);</div></pre></td></tr></table></figure>
+<h2 id="bridge-transfer-lt-Objective-C-type-gt-lt-expression-gt"><a href="#bridge-transfer-lt-Objective-C-type-gt-lt-expression-gt" class="headerlink" title="__bridge_transfer &lt;#Objective-C type#&gt;)&lt;#expression#&gt;"></a>__bridge_transfer &lt;#Objective-C type#&gt;)&lt;#expression#&gt;</h2><p><code>__bridge_transfer</code> 等同于 <code>CFBridgingRelease()</code>.</p>
+<p>将非 OC 对象转换为 OC 对象，同时将对象的管理权交给 ARC，开发者无需手动管理内存.</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);</div><div class="line">CFStringRef strUUID = CFUUIDCreateString(kCFAllocatorDefault, uuid);</div><div class="line">NSString *str = (__bridge_transfer NSString *)strUUID;</div><div class="line"></div><div class="line">//无需释放 strUUID</div><div class="line">//CFRelease(strUUID);</div><div class="line"></div><div class="line">CFRelease(uuid);</div></pre></td></tr></table></figure>
+<p>CFBridgingRelease 实现如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NS_INLINE id _Nullable CFBridgingRelease(CFTypeRef CF_CONSUMED _Nullable X) &#123;</div><div class="line">    return (__bridge_transfer id)X;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的示例可以改写为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);</div><div class="line">CFStringRef strUUID = CFUUIDCreateString(kCFAllocatorDefault, uuid);</div><div class="line">NSString *str = CFBridgingRelease(strUUID);</div><div class="line">    </div><div class="line">//无需释放 strUUID</div><div class="line">//CFRelease(strUUID);</div><div class="line">    </div><div class="line">CFRelease(uuid);</div></pre></td></tr></table></figure>
+<h2 id="bridge"><a href="#bridge" class="headerlink" title="__bridge"></a>__bridge</h2><p><code>__bridge</code> 不改变对象所有权, 需要我们自己来管理内存, 它也是我们经常使用的方法, 从某种程度上来说, 它是上面两个方法的简化版本.</p>
+<p><code>__bridge</code> 可以将 OC 对象 与 C 指针相互转换, 示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//CFString -&gt; OC 对象</div><div class="line">CFStringRef cfString = CFStringCreateWithCString(kCFAllocatorDefault, &quot;very&quot;, kCFStringEncodingUTF8);</div><div class="line">NSString *nsString = (__bridge NSString *)cfString;</div><div class="line">NSLog(@&quot;CFString -&gt; NSString: %@&quot;, nsString);</div><div class="line">CFRelease(cfString);</div></pre></td></tr></table></figure>
+<p>如果将 <code>CFRelease(cfString)</code> 注释掉, Xcode 的静态检测器会告诉你有内存泄露的情况, 如图:</p>
+<p><img src="/upload/images/2018/03/07/2.png" alt="1"></p>
+<p>再来另外一个例子, 如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//OC 对象 -&gt; CFString</div><div class="line">NSString *nstr = @&quot;itman&quot;;</div><div class="line">CFStringRef cfStringRef = (__bridge CFStringRef)nstr;</div><div class="line">NSLog(@&quot;NSString -&gt; CFString: %@&quot;, cfStringRef);</div><div class="line">CFRelease(cfStringRef);</div></pre></td></tr></table></figure>
+<p>无论是使用 <code>CFRelease(cfStringRef)</code>, 还是注释掉, 静态检测器都不会报错. 说明这种情况下, 当前的内存管理已经被 OC 对象管理.</p>
+<h2 id="野指针"><a href="#野指针" class="headerlink" title="野指针"></a>野指针</h2><p>运行下面的示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">void *p;</div><div class="line">&#123;</div><div class="line">    NSObject *objc = [[NSObject alloc] init];</div><div class="line">    p = (__bridge void*)objc;</div><div class="line">&#125;</div><div class="line">    </div><div class="line">NSLog(@&quot;p: %@&quot;, (__bridge NSObject*)p);</div></pre></td></tr></table></figure>
+<p>会直接 crash, 如图:</p>
+<p><img src="/upload/images/2018/03/07/1.jpg" alt="1"></p>
+<p>当 <code>objc</code> 这个对象超出作用域范围，其内存就会被回收，接着在作用域范围外用 <code>void *p</code> 去访问 <code>objc</code> 的内存，就造成了野指针.</p>
+<p>结合上面所说的, 我们可以让指针 p 对 objc 进行引用即 retain 操作, 修改如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">void *p;</div><div class="line">&#123;</div><div class="line">    NSObject *objc = [[NSObject alloc] init];</div><div class="line">    //p = (__bridge void*)objc;</div><div class="line">    p = (__bridge_retained void*)objc;</div><div class="line">&#125;</div><div class="line">    </div><div class="line">NSLog(@&quot;p: %@&quot;, (__bridge NSObject*)p);</div><div class="line">    </div><div class="line">// 一定要释放</div><div class="line">CFRelease(p);</div></pre></td></tr></table></figure>
+<p>可以正常的运行. 还可以修改为另一种方式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">void *p;</div><div class="line">&#123;</div><div class="line">    NSObject *objc = [[NSObject alloc] init];</div><div class="line">    //p = (__bridge void*)objc;</div><div class="line">    //p = (__bridge_retained void*)objc;</div><div class="line">    p = (void *)CFBridgingRetain(objc);</div><div class="line">&#125;</div><div class="line">    </div><div class="line">NSLog(@&quot;p: %@&quot;, (__bridge NSObject*)p);</div><div class="line">    </div><div class="line">// 一定要释放</div><div class="line">CFRelease(p);</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[音视频编程: iOS 推流]]></title>
       <url>/2018/02/26/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-iOS-%E6%8E%A8%E6%B5%81/</url>
       <content type="html"><![CDATA[<p>本篇分享是基于 <a href="http://www.veryitman.com/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">音视频编程: 构建 nginx 推流服务器</a> 这篇文章的, 之前是使用 ffmpeg 命令进行推流并且都是在 macos 上面进行的操作.</p>
