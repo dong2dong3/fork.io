@@ -3,6 +3,74 @@
   
     
     <entry>
+      <title><![CDATA[GO: 写第一个 GOLang 程序]]></title>
+      <url>/2018/03/11/GO-%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA-GOLang-%E7%A8%8B%E5%BA%8F/</url>
+      <content type="html"><![CDATA[<p>本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序.</p>
+<p>其他关于 GO 的安装方式, 如使用 brew 安装或者使用源码安装的方式, 请自行尝试.</p>
+<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>在 <a href="https://golang.org/doc/install" target="_blank" rel="noopener">这里</a> 下载 GO 的 pkg 安装包.</p>
+<p>但是你需要科(fan)学(qiang)才能下载.</p>
+<p><img src="/upload/images/2018/03/11/1.jpg" alt="1"></p>
+<p>你也可以下载 Stable versions.</p>
+<p>下载完成后, 直接双击安装即可.</p>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>安装完成后, GO 安装目录在 <code>/usr/local</code> 下面.</p>
+<p>安装目录如下图所示:</p>
+<p><img src="/upload/images/2018/03/11/2.jpg" alt="1"></p>
+<p>需要将其设置到环境变量中, 才能在终端使用其相关的命令.</p>
+<p>编辑 <code>~/.bash_profile</code>, 增加下面几行即可.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># Golang</div><div class="line"></div><div class="line">export GOROOT=/usr/local/go</div><div class="line">export GOPATH=$GOROOT/bin</div><div class="line">export PATH=$GOPATH:$PATH</div></pre></td></tr></table></figure>
+<blockquote>
+<p>记住, GOROOT 和 GOPATH 必须设置. </p>
+</blockquote>
+<p>我刚开始没有配置 GOROOT 变量, 执行 go 命令会提示警告, 警告内容如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">warning: GOPATH set to GOROOT (/usr/local/go) has no effect</div></pre></td></tr></table></figure>
+<p>编辑保存, 然后使其立即生效.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.bash_profile</div></pre></td></tr></table></figure>
+<p>检查环境变量是否生效.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go version</div></pre></td></tr></table></figure>
+<p>对应输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go version go1.9.4 darwin/amd64</div></pre></td></tr></table></figure>
+<p>也可以使用 <code>go env</code> 来查看更加详细的内容.</p>
+<h2 id="编译运行-GOLang-程序"><a href="#编译运行-GOLang-程序" class="headerlink" title="编译运行 GOLang 程序"></a>编译运行 GOLang 程序</h2><p><strong>1.编写代码</strong></p>
+<p>编辑一个 <code>Hello GOLang</code> 的程序.</p>
+<p>在任意一个文件夹位置, 新建一个 <code>go_hello.go</code> 的文件.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch go_hello.go</div></pre></td></tr></table></figure>
+<p>写入如下程序:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">   fmt.Println(&quot;Hello, GOLang!&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2.编译运行</strong></p>
+<p>使用 <code>go build</code> 命令编译.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go build go_hello.go</div></pre></td></tr></table></figure>
+<p>编译成功后, 生成可执行文件 <code>go_hello</code>. 执行即可.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./go_hello</div></pre></td></tr></table></figure>
+<p>或者直接运行, 执行下面的命令.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run go_hello.go</div></pre></td></tr></table></figure>
+<p>这个不会生成可执行文件.</p>
+<h2 id="卸载-GO"><a href="#卸载-GO" class="headerlink" title="卸载 GO"></a>卸载 GO</h2><p>如果你想卸载 GO 环境, 只需要三个步骤.</p>
+<p><strong>1.删除安装目录</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm -fr /usr/local/go</div></pre></td></tr></table></figure>
+<p><strong>2.删除 go 文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm -f /etc/paths.d/go</div></pre></td></tr></table></figure>
+<p><strong>3.删除环境变量</strong></p>
+<p>编辑 etc, 删除对应添加的 go 环境变量即可.</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://golang.org/doc/install" target="_blank" rel="noopener">GO: Getting Started</a></p>
+<p><a href="https://golang.org/doc/" target="_blank" rel="noopener">GO: DOC</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Server </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> GOLanguage Google </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C 指针与 OC 对象之间的转换]]></title>
       <url>/2018/03/07/C-%E6%8C%87%E9%92%88%E4%B8%8E-OC-%E5%AF%B9%E8%B1%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/</url>
       <content type="html"><![CDATA[<h2 id="Core-Foundation-框架"><a href="#Core-Foundation-框架" class="headerlink" title="Core Foundation 框架"></a>Core Foundation 框架</h2><p>Core Foundation 框架 (CoreFoundation.framework) 是一组 C 语言接口， 简称 CF. </p>
