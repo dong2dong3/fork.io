@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/07/23/9.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/07/23/10.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/07/23/11.jpg">
-<meta property="og:updated_time" content="2018-03-25T06:50:46.193Z">
+<meta property="og:updated_time" content="2018-03-25T06:53:19.369Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Charles">
 <meta name="twitter:description" content="概要Charles 是 Mac 上面比较好用的抓包工具. 在使用微信登录 SDK 的时候, 我想看看微信请求的内容, 以及其授权过程, 发现只要连接 Charles, 跳转到微信之后无法打开微信的授权登录页面, 提示网络不可用. 经过研究, 是需要使用 Charles 配置 HTTPS, 配置完成后, 就可以随心所欲了. 所以, 今天跟大家分享一下 Charles 使用的两个点:  Charles">
@@ -418,13 +418,14 @@
 <p>可以看到很多类型的网络供你选择.</p>
 <p>Add Preset 可以自己自定义一个网络环境.</p>
 <p>这个功能非常实用, 可以让我们模拟慢网络环境, 更好地调试自己的程序.</p>
-<h2 id="遇到麻烦"><a href="#遇到麻烦" class="headerlink" title="遇到麻烦"></a>遇到麻烦</h2><p>一. 如果你上面的设置都没有问题, 然而在真正抓取 HTTPS 的请求出现如下错误:</p>
+<h2 id="遇到麻烦"><a href="#遇到麻烦" class="headerlink" title="遇到麻烦"></a>遇到麻烦</h2><p>1.抓取 HTTPS 的请求出现错误</p>
+<p>错误日志如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SSLHandshake: Received fatal alert: unknown_ca</div><div class="line">Charles Proxy will even offer a helpful suggestion:</div><div class="line">You may need to configure your browser or application to trust the Charles Root Certificate. See SSL Proxying in the Help menu.</div></pre></td></tr></table></figure>
 <p><img src="/upload/images/2017/07/23/10.jpg" alt="1"></p>
 <p>这种错误一般是出现在 iOS10 上面.</p>
 <p>请在关于本机里面再设置一次 证书信任设置, 即可.</p>
 <p><img src="/upload/images/2017/07/23/11.jpg" alt="1"></p>
-<p>二. 系统升级后, 设置的 HTTPS 抓包失效.</p>
+<p>2.系统升级后, 设置的 HTTPS 抓包失效</p>
 <p>按照上述方法, 重新设置一次即可.</p>
 
       
