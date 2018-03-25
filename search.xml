@@ -1858,15 +1858,18 @@
 <li>Mac OS: 10.12.5.</li>
 <li>Charles: 4.0.2.</li>
 </ul>
-<h2 id="抓取-HTTPS-请求"><a href="#抓取-HTTPS-请求" class="headerlink" title="抓取 HTTPS 请求"></a>抓取 HTTPS 请求</h2><h4 id="Mac-安装证书"><a href="#Mac-安装证书" class="headerlink" title="Mac 安装证书"></a>Mac 安装证书</h4><blockquote>
+<h2 id="抓取-HTTPS-请求"><a href="#抓取-HTTPS-请求" class="headerlink" title="抓取 HTTPS 请求"></a>抓取 HTTPS 请求</h2><p><strong>1.Mac 安装证书</strong></p>
+<blockquote>
 <p>打开 Charles, 在 Help 选项中选择 SSL Proxying, 如下图所示:</p>
 </blockquote>
 <p><img src="/upload/images/2017/07/23/1.jpg" alt="1"></p>
-<h4 id="Mac-信任证书"><a href="#Mac-信任证书" class="headerlink" title="Mac 信任证书"></a>Mac 信任证书</h4><blockquote>
+<p><strong>2.Mac 信任证书</strong></p>
+<blockquote>
 <p>打开 Keychain Access (钥匙串), 找到刚才安装的证书, 信任证书, 如图:</p>
 </blockquote>
 <p><img src="/upload/images/2017/07/23/2.jpg" alt="1"></p>
-<h4 id="给-iPhone-安装证书"><a href="#给-iPhone-安装证书" class="headerlink" title="给 iPhone 安装证书"></a>给 iPhone 安装证书</h4><blockquote>
+<p><strong>3.给 iPhone 安装证书</strong></p>
+<blockquote>
 <p>打开 Charles, 在 Help 选项中选择 SSL Proxying, 操作如图:</p>
 </blockquote>
 <p><img src="/upload/images/2017/07/23/3.jpg" alt="1"></p>

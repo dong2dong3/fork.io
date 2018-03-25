@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/07/23/9.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/07/23/10.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/07/23/11.jpg">
-<meta property="og:updated_time" content="2017-12-17T10:10:12.992Z">
+<meta property="og:updated_time" content="2018-03-25T06:50:46.193Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Charles">
 <meta name="twitter:description" content="概要Charles 是 Mac 上面比较好用的抓包工具. 在使用微信登录 SDK 的时候, 我想看看微信请求的内容, 以及其授权过程, 发现只要连接 Charles, 跳转到微信之后无法打开微信的授权登录页面, 提示网络不可用. 经过研究, 是需要使用 Charles 配置 HTTPS, 配置完成后, 就可以随心所欲了. 所以, 今天跟大家分享一下 Charles 使用的两个点:  Charles">
@@ -385,15 +385,18 @@
 <li>Mac OS: 10.12.5.</li>
 <li>Charles: 4.0.2.</li>
 </ul>
-<h2 id="抓取-HTTPS-请求"><a href="#抓取-HTTPS-请求" class="headerlink" title="抓取 HTTPS 请求"></a>抓取 HTTPS 请求</h2><h4 id="Mac-安装证书"><a href="#Mac-安装证书" class="headerlink" title="Mac 安装证书"></a>Mac 安装证书</h4><blockquote>
+<h2 id="抓取-HTTPS-请求"><a href="#抓取-HTTPS-请求" class="headerlink" title="抓取 HTTPS 请求"></a>抓取 HTTPS 请求</h2><p><strong>1.Mac 安装证书</strong></p>
+<blockquote>
 <p>打开 Charles, 在 Help 选项中选择 SSL Proxying, 如下图所示:</p>
 </blockquote>
 <p><img src="/upload/images/2017/07/23/1.jpg" alt="1"></p>
-<h4 id="Mac-信任证书"><a href="#Mac-信任证书" class="headerlink" title="Mac 信任证书"></a>Mac 信任证书</h4><blockquote>
+<p><strong>2.Mac 信任证书</strong></p>
+<blockquote>
 <p>打开 Keychain Access (钥匙串), 找到刚才安装的证书, 信任证书, 如图:</p>
 </blockquote>
 <p><img src="/upload/images/2017/07/23/2.jpg" alt="1"></p>
-<h4 id="给-iPhone-安装证书"><a href="#给-iPhone-安装证书" class="headerlink" title="给 iPhone 安装证书"></a>给 iPhone 安装证书</h4><blockquote>
+<p><strong>3.给 iPhone 安装证书</strong></p>
+<blockquote>
 <p>打开 Charles, 在 Help 选项中选择 SSL Proxying, 操作如图:</p>
 </blockquote>
 <p><img src="/upload/images/2017/07/23/3.jpg" alt="1"></p>
@@ -652,7 +655,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具和系统"><span class="nav-number">2.</span> <span class="nav-text">工具和系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抓取-HTTPS-请求"><span class="nav-number">3.</span> <span class="nav-text">抓取 HTTPS 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mac-安装证书"><span class="nav-number">3.0.1.</span> <span class="nav-text">Mac 安装证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mac-信任证书"><span class="nav-number">3.0.2.</span> <span class="nav-text">Mac 信任证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#给-iPhone-安装证书"><span class="nav-number">3.0.3.</span> <span class="nav-text">给 iPhone 安装证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟任意网络"><span class="nav-number">4.</span> <span class="nav-text">模拟任意网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到麻烦"><span class="nav-number">5.</span> <span class="nav-text">遇到麻烦</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具和系统"><span class="nav-number">2.</span> <span class="nav-text">工具和系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抓取-HTTPS-请求"><span class="nav-number">3.</span> <span class="nav-text">抓取 HTTPS 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟任意网络"><span class="nav-number">4.</span> <span class="nav-text">模拟任意网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到麻烦"><span class="nav-number">5.</span> <span class="nav-text">遇到麻烦</span></a></li></ol></div>
             
 
           </div>
