@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/10/22/iOS-%E8%B0%88%E8%B0%88-frame-%E5%92%8C-bounds/</loc>
+    <lastmod>2018-03-26T15:53:27.604Z</lastmod>
+    <data>
+        <display>
+        <title>iOS: 谈谈 frame 和 bounds</title>
+        <pubTime>2016-10-22T12:46:59.000Z</pubTime>
+        
+        <tag>iOS frame bounds</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/07/23/%E4%BD%BF%E7%94%A8-Charles/</loc>
     <lastmod>2018-03-25T06:53:19.369Z</lastmod>
     <data>
@@ -1053,26 +1073,6 @@
         <pubTime>2016-11-01T14:33:21.000Z</pubTime>
         
         <tag>iOS cocoapods</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/10/22/iOS-%E8%B0%88%E8%B0%88-frame-%E5%92%8C-bounds/</loc>
-    <lastmod>2017-11-18T14:57:13.127Z</lastmod>
-    <data>
-        <display>
-        <title>iOS: 谈谈 frame 和 bounds</title>
-        <pubTime>2016-10-22T12:46:59.000Z</pubTime>
-        
-        <tag>iOS frame bounds</tag>
          
          
            
