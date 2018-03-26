@@ -3830,9 +3830,8 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
 <li>frame, 描述的是当前视图在其父视图中的位置和大小.<br>bounds, 描述的是当前视图在其自身坐标系统中的位置和大小.</li>
 </ul>
-<blockquote>
-<p>另外还有一个 <code>center</code> 描述的是当前视图的中心点在其父视图中的位置.</p>
-</blockquote>
+<p>所以, bounds 默认是 <code>(0, 0, frame.size.width, frame.size.height)</code></p>
+<p>另外, 还有一个 <code>center</code> 描述的是当前视图的中心点在其父视图中的位置.</p>
 <ul>
 <li>bounds 和 frame 是两个不等同的概念, 改变 bounds 会影响子视图的位置(人眼看到其改变了位置), 设置 bounds 可以修改自己坐标系的原点位置. 但是不会改变子视图的 bounds 和 frame.</li>
 </ul>
