@@ -3838,16 +3838,16 @@
 <blockquote>
 <p>明白上面的道理很重要, iOS 中滚动视图能让你看到其中的内容, 正是利用了 contentoffset 和 bounds 属性.</p>
 <p>这里以 tableView 为例子, 当我们向上滚动 tableView, tableView 的 contentOffset 和 bounds 的坐标都是正数, 相当于其本地坐标(0, 0)改变了即增加了(坐标系往下为增加), 那么其子视图就会向上去.</p>
-<p>向下滑动时, 也是同一个道理.<br>可以通过运行 完整 Demo 中[查看 TableView]按钮来打开例子, 看日志.</p>
+<p>向下滑动时, 也是同一个道理.<br>可以通过运行 <a href="https://github.com/veryitman/iOSDemo/tree/master/na" target="_blank" rel="noopener">完整 Demo</a> 中[查看 TableView]按钮来打开例子, 看日志.</p>
 </blockquote>
 <ul>
-<li><p>改变子视图所有父视图的 bounds, 子视图的位置是累加改变的.<br>如上面改变 redView 和 yellowView 的 bounds, blueView 的位置相对 redView 往下移动了40.</p>
+<li><p>改变子视图所有父视图的 bounds, 子视图的位置是累加改变的.<br>如上面改变 redView 和 yellowView 的 bounds, blueView 的位置相对 redView 往下移动了 40.</p>
 </li>
 <li><p>当同一个视图的 bounds 大于 frame, 会导致 frame 被撑大，frame 的 x, y, width, height 都会被改变. 反之, bounds 小于 frame, frame 也会变小.</p>
 </li>
 </ul>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><ol>
-<li><p>GitHub 上面可以 下载完整 <a href="https://github.com/veryitman/iOSDemo/tree/master/na" target="_blank" rel="noopener">Demo</a></p>
+<li><p>GitHub 上面可以下载 <a href="https://github.com/veryitman/iOSDemo/tree/master/na" target="_blank" rel="noopener">完整 Demo</a></p>
 </li>
 <li><p>推荐之前写在 CSDN 上的博文: <a href="http://blog.csdn.net/veryitman/article/details/51622235" target="_blank" rel="noopener">iOS UI 技巧: 视图无法被点击
 </a></p>
