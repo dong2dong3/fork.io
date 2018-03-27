@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/11/12/GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</loc>
+    <lastmod>2018-03-27T15:22:48.061Z</lastmod>
+    <data>
+        <display>
+        <title>GameDevelopment: 与 Cocos2d 的再相逢</title>
+        <pubTime>2016-11-12T14:53:56.000Z</pubTime>
+        
+        <tag>Cocos2d Game</tag>
+         
+         
+           
+             
+              <breadCrumb title="Game" url="http://yoursite.com/categories/Game/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/10/22/iOS-%E8%B0%88%E8%B0%88-frame-%E5%92%8C-bounds/</loc>
     <lastmod>2018-03-26T16:08:16.349Z</lastmod>
     <data>
@@ -1038,26 +1058,6 @@
            
              
               <breadCrumb title="Java" url="http://yoursite.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/11/12/GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</loc>
-    <lastmod>2017-11-19T13:55:35.274Z</lastmod>
-    <data>
-        <display>
-        <title>GameDevelopment: 与 Cocos2d 的再相逢</title>
-        <pubTime>2016-11-12T14:53:56.000Z</pubTime>
-        
-        <tag>Cocos2d Game</tag>
-         
-         
-           
-             
-              <breadCrumb title="GameDevelopment" url="http://yoursite.com/categories/GameDevelopment/"/>
           
         </display>
     </data>

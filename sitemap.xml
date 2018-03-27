@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/11/12/GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</loc>
+    
+    <lastmod>2018-03-27T15:22:48.061Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/10/22/iOS-%E8%B0%88%E8%B0%88-frame-%E5%92%8C-bounds/</loc>
     
     <lastmod>2018-03-26T16:08:16.349Z</lastmod>
@@ -383,13 +390,6 @@
     <loc>http://yoursite.com/2016/11/26/Mac-%E9%85%8D%E7%BD%AE-JDK1-8/</loc>
     
     <lastmod>2017-11-19T14:01:51.565Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/11/12/GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</loc>
-    
-    <lastmod>2017-11-19T13:55:35.274Z</lastmod>
     
   </url>
   
