@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/02/12/C-C-%E5%A6%82%E4%BD%95%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/</loc>
+    <lastmod>2018-03-27T16:17:41.342Z</lastmod>
+    <data>
+        <display>
+        <title>C/C++: 如何相互调用</title>
+        <pubTime>2018-02-11T16:14:40.000Z</pubTime>
+        
+        <tag>C C++ 编程语言</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/11/12/GameDevelopment-%E4%B8%8E-Cocos2d-%E7%9A%84%E5%86%8D%E7%9B%B8%E9%80%A2/</loc>
     <lastmod>2018-03-27T15:22:48.061Z</lastmod>
     <data>
@@ -283,26 +303,6 @@
 
     
     
-    
-  <url>
-    <loc>http://yoursite.com/2018/02/12/C-C-%E5%A6%82%E4%BD%95%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/</loc>
-    <lastmod>2018-02-11T16:16:44.042Z</lastmod>
-    <data>
-        <display>
-        <title>C/C++: 如何相互调用</title>
-        <pubTime>2018-02-11T16:14:40.000Z</pubTime>
-        
-        <tag>C C++ 编程语言</tag>
-         
-         
-           
-             
-              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
-          
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://yoursite.com/2018/02/08/iOS-APNs-Background-Fetch/</loc>
