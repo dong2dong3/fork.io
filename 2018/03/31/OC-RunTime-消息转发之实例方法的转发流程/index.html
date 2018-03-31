@@ -89,7 +89,7 @@
 <meta property="og:description" content="本篇只是从系统函数的实现上, 来分析消息转发的流程.  下一篇结合本篇的理论和实际的例子来分析一下消息转发. 需要明确的几个问题在往下看这篇博文之前, 有几个问题需要大家达成共识. 1.Objective-C 的特点按照是否需要编译的原理来说, 编程语言一般可以分为静态编译类型和动态解释类型. 如 Java/C/C++ 是属于编译类型的语言, Php/Python/Ruby 属于解释类型的语言.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/03/31/1.jpg">
-<meta property="og:updated_time" content="2018-03-31T08:36:26.083Z">
+<meta property="og:updated_time" content="2018-03-31T08:37:41.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC-RunTime: 消息转发之实例方法的转发流程">
 <meta name="twitter:description" content="本篇只是从系统函数的实现上, 来分析消息转发的流程.  下一篇结合本篇的理论和实际的例子来分析一下消息转发. 需要明确的几个问题在往下看这篇博文之前, 有几个问题需要大家达成共识. 1.Objective-C 的特点按照是否需要编译的原理来说, 编程语言一般可以分为静态编译类型和动态解释类型. 如 Java/C/C++ 是属于编译类型的语言, Php/Python/Ruby 属于解释类型的语言.">
@@ -437,7 +437,7 @@
 <blockquote>
 <p>关于 <code>resolveClassMethod</code> 这个放在另一篇博客中讲解.</p>
 </blockquote>
-<p><strong>步骤3.</strong> 如果 resolveXX 返回 YES, 直接结束后面的流程, 执行解析得到的方法. 如果 resolveXX 返回 NO，运行时就发送forwardingTargetForSelector 消息, 允许这个消息转发给另一个可能实现了对应 selector 的对象.</p>
+<p><strong>步骤3.</strong> 如果 resolveXX 返回 YES, 直接结束后面的流程, 执行解析得到的方法. 如果 resolveXX 返回 NO，运行时就发送 forwardingTargetForSelector 消息, 允许这个消息转发给另一个可能实现了对应 selector 的对象.</p>
 <p><strong>步骤4.</strong> 如果没有新的目标对象返回, 运行时就会发送methodSignatureForSelector 消息, 找到对应的方法签名.<br>如果找到了, 会接着调用 forwardInvocation, 如果没有找到即返回 nil, 那么直接调用 doesNotRecognizeSelector.</p>
 <p>下一篇结合实际例子分析一下整个实例方法的转发流程.</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.Apple 开发者文档 <a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html#//apple_ref/doc/uid/TP40008048-CH105-SW1" target="_blank" rel="noopener">Message Forwarding</a></p>

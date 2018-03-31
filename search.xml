@@ -80,7 +80,7 @@
 <blockquote>
 <p>关于 <code>resolveClassMethod</code> 这个放在另一篇博客中讲解.</p>
 </blockquote>
-<p><strong>步骤3.</strong> 如果 resolveXX 返回 YES, 直接结束后面的流程, 执行解析得到的方法. 如果 resolveXX 返回 NO，运行时就发送forwardingTargetForSelector 消息, 允许这个消息转发给另一个可能实现了对应 selector 的对象.</p>
+<p><strong>步骤3.</strong> 如果 resolveXX 返回 YES, 直接结束后面的流程, 执行解析得到的方法. 如果 resolveXX 返回 NO，运行时就发送 forwardingTargetForSelector 消息, 允许这个消息转发给另一个可能实现了对应 selector 的对象.</p>
 <p><strong>步骤4.</strong> 如果没有新的目标对象返回, 运行时就会发送methodSignatureForSelector 消息, 找到对应的方法签名.<br>如果找到了, 会接着调用 forwardInvocation, 如果没有找到即返回 nil, 那么直接调用 doesNotRecognizeSelector.</p>
 <p>下一篇结合实际例子分析一下整个实例方法的转发流程.</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.Apple 开发者文档 <a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html#//apple_ref/doc/uid/TP40008048-CH105-SW1" target="_blank" rel="noopener">Message Forwarding</a></p>
