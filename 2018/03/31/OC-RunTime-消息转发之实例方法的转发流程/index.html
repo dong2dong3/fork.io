@@ -69,7 +69,7 @@
 
 
 
-  <meta name="keywords" content="iOS RunTime," />
+  <meta name="keywords" content="iOS RunTime MessageForward," />
 
 
 
@@ -81,7 +81,7 @@
 
 
 <meta name="description" content="本篇只是从系统函数的实现上, 来分析消息转发的流程.  下一篇结合本篇的理论和实际的例子来分析一下消息转发. 需要明确的几个问题在往下看这篇博文之前, 有几个问题需要大家达成共识. 1.Objective-C 的特点按照是否需要编译的原理来说, 编程语言一般可以分为静态编译类型和动态解释类型. 如 Java/C/C++ 是属于编译类型的语言, Php/Python/Ruby 属于解释类型的语言.">
-<meta name="keywords" content="iOS RunTime">
+<meta name="keywords" content="iOS RunTime MessageForward">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OC-RunTime: 消息转发之实例方法的转发流程">
 <meta property="og:url" content="http://yoursite.com/2018/03/31/OC-RunTime-消息转发之实例方法的转发流程/index.html">
@@ -89,7 +89,7 @@
 <meta property="og:description" content="本篇只是从系统函数的实现上, 来分析消息转发的流程.  下一篇结合本篇的理论和实际的例子来分析一下消息转发. 需要明确的几个问题在往下看这篇博文之前, 有几个问题需要大家达成共识. 1.Objective-C 的特点按照是否需要编译的原理来说, 编程语言一般可以分为静态编译类型和动态解释类型. 如 Java/C/C++ 是属于编译类型的语言, Php/Python/Ruby 属于解释类型的语言.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/03/31/1.jpg">
-<meta property="og:updated_time" content="2018-03-31T08:37:41.940Z">
+<meta property="og:updated_time" content="2018-04-01T15:37:49.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC-RunTime: 消息转发之实例方法的转发流程">
 <meta name="twitter:description" content="本篇只是从系统函数的实现上, 来分析消息转发的流程.  下一篇结合本篇的理论和实际的例子来分析一下消息转发. 需要明确的几个问题在往下看这篇博文之前, 有几个问题需要大家达成共识. 1.Objective-C 的特点按照是否需要编译的原理来说, 编程语言一般可以分为静态编译类型和动态解释类型. 如 Java/C/C++ 是属于编译类型的语言, Php/Python/Ruby 属于解释类型的语言.">
@@ -488,7 +488,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS-RunTime/" rel="tag"># iOS RunTime</a>
+            <a href="/tags/iOS-RunTime-MessageForward/" rel="tag"># iOS RunTime MessageForward</a>
           
         </div>
       
@@ -510,6 +510,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/01/OC-RunTime-消息转发之实例方法的转发流程-实例讲解/" rel="prev" title="OC-RunTime: 消息转发之实例方法的转发流程[实例讲解]">
+                OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -596,7 +600,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

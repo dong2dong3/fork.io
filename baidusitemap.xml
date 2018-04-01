@@ -4,19 +4,59 @@
 
     
   <url>
-    <loc>http://yoursite.com/2018/03/31/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/</loc>
-    <lastmod>2018-03-31T08:37:41.940Z</lastmod>
+    <loc>http://yoursite.com/2018/04/01/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B-%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/</loc>
+    <lastmod>2018-04-01T15:38:48.613Z</lastmod>
     <data>
         <display>
-        <title>OC-RunTime: 消息转发之实例方法的转发流程</title>
-        <pubTime>2018-03-31T08:27:44.000Z</pubTime>
+        <title>OC-RunTime: 消息转发之实例方法的转发流程[实例讲解]</title>
+        <pubTime>2018-04-01T15:36:49.000Z</pubTime>
         
-        <tag>iOS RunTime</tag>
+        <tag>iOS RunTime MessageForward</tag>
          
          
            
              
               <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2018/03/31/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/</loc>
+    <lastmod>2018-04-01T15:37:49.656Z</lastmod>
+    <data>
+        <display>
+        <title>OC-RunTime: 消息转发之实例方法的转发流程</title>
+        <pubTime>2018-03-31T08:27:44.000Z</pubTime>
+        
+        <tag>iOS RunTime MessageForward</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2018/02/02/Hi-2018-%E6%88%91%E5%8F%88%E6%9D%A5%E4%BA%86/</loc>
+    <lastmod>2018-03-31T12:36:01.825Z</lastmod>
+    <data>
+        <display>
+        <title>Hi 2018, 我又来了</title>
+        <pubTime>2018-02-02T15:57:36.000Z</pubTime>
+        
+        <tag>学习 生活 反思</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/"/>
           
         </display>
     </data>
@@ -438,26 +478,6 @@
            
              
               <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/02/02/Hi-2018-%E6%88%91%E5%8F%88%E6%9D%A5%E4%BA%86/</loc>
-    <lastmod>2018-02-03T15:08:10.437Z</lastmod>
-    <data>
-        <display>
-        <title>Hi 2018, 我又来了</title>
-        <pubTime>2018-02-02T15:57:36.000Z</pubTime>
-        
-        <tag>学习 生活 反思</tag>
-         
-         
-           
-             
-              <breadCrumb title="随笔" url="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/"/>
           
         </display>
     </data>
