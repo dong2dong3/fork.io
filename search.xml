@@ -6,7 +6,7 @@
       <title><![CDATA[OC-RunTime: 消息转发之实例方法的转发流程[实例讲解]]]></title>
       <url>/2018/04/01/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B-%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/</url>
       <content type="html"><![CDATA[<p><a href="http://www.veryitman.com/2018/03/31/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程</a> 分享了消息转发的流程, 本次结合实际例子继续分析一下消息转发流程.</p>
-<h2 id="向-ViewController-发送不存在的消息"><a href="#向-ViewController-发送不存在的消息" class="headerlink" title="向 ViewController 发送不存在的消息"></a>向 ViewController 发送不存在的消息</h2><p>在 ViewController 的 viewDidLoad 中运行 <code>veryTestMethod</code> 方法.</p>
+<h2 id="发送不存在的消息"><a href="#发送不存在的消息" class="headerlink" title="发送不存在的消息"></a>发送不存在的消息</h2><p>在 ViewController 的 viewDidLoad 中运行 <code>veryTestMethod</code> 方法.</p>
 <p><strong>ViewController.m</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">static NSString * const sPerformInstanceMethodName = @&quot;veryTestMethod&quot;;</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    </div><div class="line">    [super viewDidLoad];</div><div class="line">    </div><div class="line">    // 运行实例方法</div><div class="line">    SEL selector = NSSelectorFromString(sPerformInstanceMethodName);</div><div class="line">    </div><div class="line">    SuppressPerformSelectorLeakWarning(</div><div class="line">        [self performSelector:selector withObject:nil];</div><div class="line">    );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>其中, <code>SuppressPerformSelectorLeakWarning</code> 是定义的一个宏.</p>
@@ -14,7 +14,7 @@
 <p>在 ViewController 中我并没有写 <code>veryTestMethod</code> 这个函数, 只是借助 <code>performSelector</code> 动态执行, 如果编译运行直接会 crash.</p>
 <p>可以查看 <code>NSObject.mm</code> 源码, 里面关于消息转发的几个重要函数都写着 <code>_objc_fatal</code>, 可谓是招招毙命.</p>
 <p>紧接着, 我们可以借助 <code>resolveInstanceMethod</code> 来完成消息转发给 ViewController.</p>
-<h2 id="用-resolveInstanceMethod-转发"><a href="#用-resolveInstanceMethod-转发" class="headerlink" title="用 resolveInstanceMethod 转发"></a>用 resolveInstanceMethod 转发</h2><p>重写 NSObject 中的 <code>resolveInstanceMethod</code> 函数.</p>
+<h2 id="resolveInstanceMethod-转发"><a href="#resolveInstanceMethod-转发" class="headerlink" title="resolveInstanceMethod 转发"></a>resolveInstanceMethod 转发</h2><p>重写 NSObject 中的 <code>resolveInstanceMethod</code> 函数.</p>
 <blockquote>
 <p>+resolveInstanceMethod</p>
 </blockquote>
@@ -27,10 +27,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- -proxyMethod of instance&apos;s method for OC.</div></pre></td></tr></table></figure>
 <p>到此为止, 我们已经看到动态添加一个方法的实现并成功运行的完整例子.</p>
 <p>接下来, 我们将转发给其他对象 <code>MZTempObj</code> 来执行.</p>
-<h2 id="自定义转发的对象"><a href="#自定义转发的对象" class="headerlink" title="自定义转发的对象"></a>自定义转发的对象</h2><p><strong>MZTempObj.m</strong></p>
+<h2 id="自定义被转发的对象"><a href="#自定义被转发的对象" class="headerlink" title="自定义被转发的对象"></a>自定义被转发的对象</h2><p><strong>MZTempObj.m</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@implementation MZTempObj</div><div class="line"></div><div class="line">- (void)veryTestMethod</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;---veryitman--- veryTestMethod&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>veryTestMethod</code> 就是我们要转发对应的消息.</p>
-<h2 id="消息转发"><a href="#消息转发" class="headerlink" title="消息转发"></a>消息转发</h2><p>接下来我们把向 ViewController 发送 <code>veryTestMethod</code> 的消息转发给 <code>MZTempObj</code> 的  <code>veryTestMethod</code> 方法.</p>
+<h2 id="消息转发实践"><a href="#消息转发实践" class="headerlink" title="消息转发实践"></a>消息转发实践</h2><p>接下来我们把向 ViewController 发送 <code>veryTestMethod</code> 的消息转发给 <code>MZTempObj</code> 的  <code>veryTestMethod</code> 方法.</p>
 <p>继续重写下面函数, 不过 <code>resolveInstanceMethod</code> 要稍微改造一下, 才能达到我们实践的目的.</p>
 <blockquote>
 <ol>
@@ -51,7 +51,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- 2--- -forwardingTargetForSelector</div><div class="line">---veryitman--- 3--- -methodSignatureForSelector</div><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- 4--- -forwardInvocation</div><div class="line">---veryitman--- veryTestMethod</div></pre></td></tr></table></figure>
 <p>如果不去重写 <code>methodSignatureForSelector</code> 打印结果如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- 2--- -forwardingTargetForSelector</div><div class="line">---veryitman--- 5--- -doesNotRecognizeSelector: veryTestMethod</div></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1.Apple RunTime 源码 <a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">objc4-723.tar.gz</a></p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.Apple RunTime 源码 <a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">objc4-723.tar.gz</a></p>
 <p>2.<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html#//apple_ref/doc/uid/TP40008048-CH105-SW1" target="_blank" rel="noopener">Message Forwarding</a></p>
 ]]></content>
       
