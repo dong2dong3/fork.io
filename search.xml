@@ -51,7 +51,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- 2--- -forwardingTargetForSelector</div><div class="line">---veryitman--- 3--- -methodSignatureForSelector</div><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- 4--- -forwardInvocation</div><div class="line">---veryitman--- veryTestMethod</div></pre></td></tr></table></figure>
 <p>如果不去重写 <code>methodSignatureForSelector</code> 打印结果如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- 2--- -forwardingTargetForSelector</div><div class="line">---veryitman--- 5--- -doesNotRecognizeSelector: veryTestMethod</div></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>Apple RunTime 源码 <a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">objc4-723.tar.gz</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1.Apple RunTime 源码 <a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">objc4-723.tar.gz</a></p>
+<p>2.<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html#//apple_ref/doc/uid/TP40008048-CH105-SW1" target="_blank" rel="noopener">Message Forwarding</a></p>
 ]]></content>
       
         <categories>
