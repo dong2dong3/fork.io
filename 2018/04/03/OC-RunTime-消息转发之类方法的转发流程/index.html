@@ -80,19 +80,19 @@
 
 
 
-<meta name="description" content="本篇是 消息转发 系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
+<meta name="description" content="本篇是「消息转发」系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
 <meta name="keywords" content="iOS RunTime MessageForward">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OC-RunTime: 消息转发之类方法的转发流程">
 <meta property="og:url" content="http://yoursite.com/2018/04/03/OC-RunTime-消息转发之类方法的转发流程/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="本篇是 消息转发 系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
+<meta property="og:description" content="本篇是「消息转发」系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/04/03/1.jpg">
-<meta property="og:updated_time" content="2018-04-02T16:04:13.009Z">
+<meta property="og:updated_time" content="2018-04-02T16:07:14.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC-RunTime: 消息转发之类方法的转发流程">
-<meta name="twitter:description" content="本篇是 消息转发 系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
+<meta name="twitter:description" content="本篇是「消息转发」系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2018/04/03/1.jpg">
 
 
@@ -362,7 +362,7 @@
       
 
       
-        <p>本篇是 <code>消息转发</code> 系列的第三篇, 在 <a href="http://www.veryitman.com/2018/03/31/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程</a> 和 <a href="http://www.veryitman.com/2018/04/01/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B-%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程[实例讲解]</a> 中分享了实例方法的转发流程.</p>
+        <p>本篇是「消息转发」系列的第三篇, 在 <a href="http://www.veryitman.com/2018/03/31/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程</a> 和 <a href="http://www.veryitman.com/2018/04/01/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B-%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程[实例讲解]</a> 中分享了实例方法的转发流程.</p>
 <p>今天分享如何对类方法进行消息的转发.</p>
 <h2 id="resolveClassMethod"><a href="#resolveClassMethod" class="headerlink" title="resolveClassMethod"></a>resolveClassMethod</h2><p>NSObject 提供了 <code>resolveClassMethod</code> 来让开发者在里面动态添加一个类方法.</p>
 <p>类方法的转发流程和实例方法转发的流程大致一样, 唯独不同的是需要重写的方法(NSObject中)的不一样.</p>
