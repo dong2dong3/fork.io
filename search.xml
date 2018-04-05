@@ -170,6 +170,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---veryitman--- 1--- +resolveClassMethod. selector: veryClassMethod</div><div class="line">---veryitman--- 2--- +forwardingTargetForSelector</div><div class="line">---veryitman--- 3--- +methodSignatureForSelector</div><div class="line">---veryitman--- 1--- +resolveClassMethod. selector: _forwardStackInvocation:</div><div class="line">---veryitman--- 4--- +forwardInvocation</div><div class="line">---veryitman--- veryClassMethod</div></pre></td></tr></table></figure>
 <p>同理我们可以得到类方法的消息转发流程图, 如下图所示:</p>
 <p><img src="/upload/images/2018/04/03/1.jpg" alt="1"></p>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p><a href="http://www.veryitman.com/2018/03/31/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程</a></p>
+<p><a href="http://www.veryitman.com/2018/04/01/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B-%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程实例讲解</a></p>
+<p><a href="http://www.veryitman.com/2018/04/05/OC-RunTime-%E6%80%BB%E7%BB%93%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_blank" rel="noopener">OC-RunTime: 总结消息转发中用到的知识点</a></p>
 ]]></content>
       
         <categories>
@@ -239,6 +242,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">---veryitman--- 1--- +resolveInstanceMethod</div><div class="line">---veryitman--- 2--- -forwardingTargetForSelector</div><div class="line">---veryitman--- 5--- -doesNotRecognizeSelector: veryTestMethod</div></pre></td></tr></table></figure>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.Apple RunTime 源码 <a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">objc4-723.tar.gz</a></p>
 <p>2.<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html#//apple_ref/doc/uid/TP40008048-CH105-SW1" target="_blank" rel="noopener">Message Forwarding</a></p>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p><a href="http://www.veryitman.com/2018/03/31/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程</a></p>
+<p><a href="http://www.veryitman.com/2018/04/03/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E7%B1%BB%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">OC-RunTime: 消息转发之类方法的转发流程</a></p>
+<p><a href="http://www.veryitman.com/2018/04/05/OC-RunTime-%E6%80%BB%E7%BB%93%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_blank" rel="noopener">OC-RunTime: 总结消息转发中用到的知识点</a></p>
 ]]></content>
       
         <categories>
@@ -339,6 +345,9 @@
 <p>下一篇结合实际例子分析一下整个实例方法的转发流程.</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.Apple 开发者文档 <a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html#//apple_ref/doc/uid/TP40008048-CH105-SW1" target="_blank" rel="noopener">Message Forwarding</a></p>
 <p>2.Apple RunTime 源码 <a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">objc4-723.tar.gz</a></p>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p><a href="http://www.veryitman.com/2018/04/01/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B-%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程实例讲解</a></p>
+<p><a href="http://www.veryitman.com/2018/04/03/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E7%B1%BB%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">OC-RunTime: 消息转发之类方法的转发流程</a></p>
+<p><a href="http://www.veryitman.com/2018/04/05/OC-RunTime-%E6%80%BB%E7%BB%93%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_blank" rel="noopener">OC-RunTime: 总结消息转发中用到的知识点</a></p>
 ]]></content>
       
         <categories>
