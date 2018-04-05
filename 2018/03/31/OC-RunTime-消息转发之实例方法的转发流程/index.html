@@ -89,7 +89,7 @@
 <meta property="og:description" content="本篇只是从系统函数的实现上, 来分析消息转发的流程.  下一篇结合本篇的理论和实际的例子来分析一下消息转发. 需要明确的几个问题在往下看这篇博文之前, 有几个问题需要大家达成共识. 1.Objective-C 的特点按照是否需要编译的原理来说, 编程语言一般可以分为静态编译类型和动态解释类型. 如 Java/C/C++ 是属于编译类型的语言, Php/Python/Ruby 属于解释类型的语言.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/03/31/1.jpg">
-<meta property="og:updated_time" content="2018-04-05T06:41:48.414Z">
+<meta property="og:updated_time" content="2018-04-05T14:20:01.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC-RunTime: 消息转发之实例方法的转发流程">
 <meta name="twitter:description" content="本篇只是从系统函数的实现上, 来分析消息转发的流程.  下一篇结合本篇的理论和实际的例子来分析一下消息转发. 需要明确的几个问题在往下看这篇博文之前, 有几个问题需要大家达成共识. 1.Objective-C 的特点按照是否需要编译的原理来说, 编程语言一般可以分为静态编译类型和动态解释类型. 如 Java/C/C++ 是属于编译类型的语言, Php/Python/Ruby 属于解释类型的语言.">
@@ -440,6 +440,7 @@
 <h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p><a href="http://www.veryitman.com/2018/04/01/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B-%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/" target="_blank" rel="noopener">OC-RunTime: 消息转发之实例方法的转发流程实例讲解</a></p>
 <p><a href="http://www.veryitman.com/2018/04/03/OC-RunTime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B9%8B%E7%B1%BB%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">OC-RunTime: 消息转发之类方法的转发流程</a></p>
 <p><a href="http://www.veryitman.com/2018/04/05/OC-RunTime-%E6%80%BB%E7%BB%93%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_blank" rel="noopener">OC-RunTime: 总结消息转发中用到的知识点</a></p>
+<p>点击下载文中完整的 <a href="https://github.com/veryitman/iOSDemo/tree/master/MZRuntimeMsgForward" target="_blank" rel="noopener">Demo</a>.</p>
 
       
     </div>
