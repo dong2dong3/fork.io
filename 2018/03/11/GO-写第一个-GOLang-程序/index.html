@@ -80,20 +80,20 @@
 
 
 
-<meta name="description" content="本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序. 其他关于 GO 的安装方式, 如使用 brew 安装或者使用源码安装的方式, 请自行尝试. 下载安装在 这里 下载 GO 的 pkg 安装包. 但是你需要科(fan)学(qiang)才能下载.  你也可以下载 Stable versions. 下载完成后, 直接双击安装即可.">
+<meta name="description" content="本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序. 其他关于 GO 的安装方式, 如使用 Homebrew 安装或者使用源码安装的方式, 请自行尝试. 下载安装在 这里 下载 GO 的 pkg 安装包. 但是你需要科(fan)学(qiang)才能下载.  你也可以下载 Stable versions. 下载完成后, 直接双击安">
 <meta name="keywords" content="GOLanguage Google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GO: 写第一个 GOLang 程序">
 <meta property="og:url" content="http://yoursite.com/2018/03/11/GO-写第一个-GOLang-程序/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序. 其他关于 GO 的安装方式, 如使用 brew 安装或者使用源码安装的方式, 请自行尝试. 下载安装在 这里 下载 GO 的 pkg 安装包. 但是你需要科(fan)学(qiang)才能下载.  你也可以下载 Stable versions. 下载完成后, 直接双击安装即可.">
+<meta property="og:description" content="本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序. 其他关于 GO 的安装方式, 如使用 Homebrew 安装或者使用源码安装的方式, 请自行尝试. 下载安装在 这里 下载 GO 的 pkg 安装包. 但是你需要科(fan)学(qiang)才能下载.  你也可以下载 Stable versions. 下载完成后, 直接双击安">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/03/11/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/03/11/2.jpg">
-<meta property="og:updated_time" content="2018-04-15T09:38:14.415Z">
+<meta property="og:updated_time" content="2018-04-15T09:43:09.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GO: 写第一个 GOLang 程序">
-<meta name="twitter:description" content="本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序. 其他关于 GO 的安装方式, 如使用 brew 安装或者使用源码安装的方式, 请自行尝试. 下载安装在 这里 下载 GO 的 pkg 安装包. 但是你需要科(fan)学(qiang)才能下载.  你也可以下载 Stable versions. 下载完成后, 直接双击安装即可.">
+<meta name="twitter:description" content="本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序. 其他关于 GO 的安装方式, 如使用 Homebrew 安装或者使用源码安装的方式, 请自行尝试. 下载安装在 这里 下载 GO 的 pkg 安装包. 但是你需要科(fan)学(qiang)才能下载.  你也可以下载 Stable versions. 下载完成后, 直接双击安">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2018/03/11/1.jpg">
 
 
@@ -359,7 +359,7 @@
 
       
         <p>本文分享在 MacOS 上面通过 pkg 的方式安装 GO 编程环境, 以及编译运行第一个使用 GOLang 编写的程序.</p>
-<p>其他关于 GO 的安装方式, 如使用 brew 安装或者使用源码安装的方式, 请自行尝试.</p>
+<p>其他关于 GO 的安装方式, 如使用 Homebrew 安装或者使用源码安装的方式, 请自行尝试.</p>
 <h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>在 <a href="https://golang.org/doc/install" target="_blank" rel="noopener">这里</a> 下载 GO 的 pkg 安装包.</p>
 <p>但是你需要科(fan)学(qiang)才能下载.</p>
 <p><img src="/upload/images/2018/03/11/1.jpg" alt="1"></p>
@@ -372,7 +372,7 @@
 <p>编辑 <code>~/.bash_profile</code>, 增加下面几行即可.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># Golang</div><div class="line"></div><div class="line">export GOROOT=/usr/local/go</div><div class="line">export GOPATH=~/gowork</div><div class="line">export PATH=$GOROOT/bin:$GOPATH:$PATH</div></pre></td></tr></table></figure>
 <blockquote>
-<p>记住, GOROOT 和 GOPATH 必须设置.<br>gowork 是我自己新建的目录. GOPATH 可以理解为工作目录.</p>
+<p>记住, GOROOT 和 GOPATH 必须设置.<br><code>gowork</code> 是我自己新建的目录. GOPATH 可以理解为工作目录.</p>
 </blockquote>
 <p>关于 GOPATH 可以参考这个文档 <a href="https://github.com/golang/go/wiki/SettingGOPATH" target="_blank" rel="noopener">SettingGOPATH</a>.</p>
 <p>我刚开始没有配置 GOROOT 变量, 执行 go 命令会提示警告, 警告内容如下:</p>
