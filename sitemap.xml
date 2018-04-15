@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/03/11/GO-%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA-GOLang-%E7%A8%8B%E5%BA%8F/</loc>
+    
+    <lastmod>2018-04-15T09:38:14.415Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/04/15/%E4%B8%8D%E8%AE%A9-SIGPIPE-signal-%E5%A4%AA%E5%9A%A3%E5%BC%A0/</loc>
     
     <lastmod>2018-04-15T03:36:17.370Z</lastmod>
@@ -124,13 +131,6 @@
     <loc>http://yoursite.com/2018/03/24/MacOS-%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F%E7%9A%84%E5%8D%95%E4%BD%8D/</loc>
     
     <lastmod>2018-03-24T05:36:09.111Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/03/11/GO-%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA-GOLang-%E7%A8%8B%E5%BA%8F/</loc>
-    
-    <lastmod>2018-03-11T06:51:37.448Z</lastmod>
     
   </url>
   
