@@ -3,9 +3,116 @@
   
     
     <entry>
+      <title><![CDATA[不让 SIGPIPE signal 太嚣张]]></title>
+      <url>/2018/04/15/%E4%B8%8D%E8%AE%A9-SIGPIPE-signal-%E5%A4%AA%E5%9A%A3%E5%BC%A0/</url>
+      <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>由于项目迭代比较快, 大家还没有来得及做自我调整和总结, 就需要投入到新版本当中开发新功能了.</p>
+<p>在最近的一次版本测试和体验过程中, 很多内测用户反馈进入或者退出 App 的聊天室, 会莫名其妙的崩溃掉(crash).<br>对于 crash 的问题, 我们开发同事绝对是零容忍, 于是就开始跟踪问题.</p>
+<p>跟踪了很久, 发现这个 crash 并不是那么的 ‘乖巧’, 很难复现!<br>既然用户已经反馈了并且后台也有 crash 上报, 这个问题肯定存在, 所以我们不能放弃.</p>
+<p>好吧, 继续加班搞…苦逼中…</p>
+<p>最终, 我们发现一个规律, 在日志后台, 看到很多类似下面的日志:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Signal 13 was raised. SIGPIPE (_mh_execute_header + 420728)</div></pre></td></tr></table></figure>
+<p>很遗憾的是, 堆栈信息中没有提供给我们更有力的证据, 所以当时定位在 <code>Signal 13</code> 这个点上面.</p>
+<p>也算是有了突破…这班没有白加…</p>
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>既然所有的罪证都指向了 <code>Signal 13</code>, 我们就需要去跟踪它, 去调查它, 去研究它.</p>
+<p>在 <code>signal.h</code> 文件中, 可以发现其定义如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/* write on a pipe with no one to read it */</div><div class="line">#define	SIGPIPE	13</div></pre></td></tr></table></figure>
+<p>用通俗的话来讲, 就是管道破裂.</p>
+<blockquote>
+<p>管道破裂，这个信号通常在进程间通信产生，比如采用 FIFO(管道)通信的两个进程，读管道没打开或者意外终止就往管道写，写进程会收到 SIGPIPE 信号.<br>此外用 Socket 通信的两个进程，写进程在写 Socket 的时候，读进程已经终止.<br>另外, 在 send/write 时会引起管道破裂，关闭 Socket, 管道时也会出现管道破裂.<br>使用 Socket 一般都会收到这个 SIGPIPE 信号.</p>
+</blockquote>
+<p>也就是说, 该信号是跟 Socket 的连接以及数据的读写相关联的.</p>
+<p>这样的话，我们就知道为什么进退房间导致 crash 了，我们的进退房间都和 Socket 有关联，这种 crash 大都数是在用户网络不好的情况下发生的.</p>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>类似 <code>signal 13</code> 这种错误是系统发出来的, 和内存使用异常和野指针一样，由于是系统级别崩溃，所以不能通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@try &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line">@catch(NSException *exception) &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>捕获到这类异常.</p>
+<p>因此, <code>try catch</code> 是无法解决问题的.</p>
+<p>目前有两个方案可用:</p>
+<blockquote>
+<p>方案1. 忽略这类信号.</p>
+<p>方案2. 修改源码, 在 IM 代码里面修改.</p>
+</blockquote>
+<p>因为, IMSDK 我们是使用第三方的, 所以无法更改其源码, 所以采取了方案1: 忽略这类信号.</p>
+<p>忽略的方案很简单, 在你连接或者初始化 IMSDK 之前, 只需要一行代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">signal(SIGPIPE, SIG_IGN);</div></pre></td></tr></table></figure>
+<p>示例代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions </div><div class="line">&#123;</div><div class="line">	// ...</div><div class="line">	</div><div class="line">	signal(SIGPIPE, SIG_IGN);</div><div class="line">	</div><div class="line">	// ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于 <code>方案2</code>, 我查阅了一下 <code>CocoaAsyncSocket</code> 的源码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// Prevent SIGPIPE signals</div><div class="line">    </div><div class="line">int nosigpipe = 1;</div><div class="line">setsockopt(socketFD, SOL_SOCKET, SO_NOSIGPIPE, &amp;nosigpipe, sizeof(nosigpipe));</div></pre></td></tr></table></figure>
+<p>所以对于 <code>方案2</code>, 就是增加上面的代码即可, 即设置 Socket 不发送 SIGPIPE 信号.</p>
+<p>对于上面的两种方案, 苹果开发者文档 <a href="https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/CommonPitfalls/CommonPitfalls.html" target="_blank" rel="noopener">Avoiding Common Networking Mistakes</a> 都有提及.</p>
+<p><img src="/upload/images/2018/04/15/1.jpg" alt="-w380"></p>
+<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>既然这个问题很难复现, 我们就想办法让他很容易复现.</p>
+<p>可以采用手动发送 signal 的方式, 来复现这个问题.</p>
+<p>先看一下 <a href="https://linux.die.net/man/3/kill" target="_blank" rel="noopener">kill(3) - Linux man page</a> 函数:</p>
+<blockquote>
+<p>The kill() function shall send a signal to a process or a group of processes specified by pid. The signal to be sent is specified by sig and is either one from the list given in <signal.h> or 0. If sig is 0 (the null signal), error checking is performed but no signal is actually sent. The null signal can be used to check the validity of pid.</signal.h></p>
+</blockquote>
+<p>kill 函数是可移植操作系统接口 POSIX(Portable Operating System Interface of UNIX) 定义的, 可以参考 <a href="https://zh.wikipedia.org/wiki/POSIX" target="_blank" rel="noopener">维基百科</a>.</p>
+<p>示例代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad</div><div class="line">&#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    </div><div class="line">    //获取进程 id</div><div class="line">    pid_t cur_pid = getpid();</div><div class="line">    printf(&quot;current process&apos;s id: %i\n&quot;, cur_pid);</div><div class="line">    </div><div class="line">    //延时10s 为了让 Bugtags 有时间上报日志.</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        </div><div class="line">        wpcSendSignal(cur_pid);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">///手动发送信号</div><div class="line">int wpcSendSignal(int pid)</div><div class="line">&#123;</div><div class="line">    int ret = kill(pid, SIGPIPE);</div><div class="line">    </div><div class="line">    return ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们将 <code>signal(SIGPIPE, SIG_IGN)</code> 代码先注释.</p>
+<p>运行 APP 到手机, 然后退出 Xcode 的连接.</p>
+<blockquote>
+<p>注意: 这里如果连接 Xcode, 不会直接 crash, 所以需要断开手机与 Xcode 的连接.</p>
+</blockquote>
+<p>在后台可以看到类似的 crash 日志:</p>
+<p><img src="/upload/images/2018/04/15/2.jpg" alt="-w500"></p>
+<p>除了上面使用 <code>kill</code> 函数外, 我们还可以使用 <code>raise</code> 函数来发送 signal.</p>
+<p>关于 raise 函数, 可以查阅 <a href="https://linux.die.net/man/3/raise" target="_blank" rel="noopener">手册</a>.</p>
+<p>或者直接问男人(man):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">man raise</div></pre></td></tr></table></figure>
+<h2 id="问题再次来临-与-Bugtags-的结合"><a href="#问题再次来临-与-Bugtags-的结合" class="headerlink" title="问题再次来临: 与 Bugtags 的结合"></a>问题再次来临: 与 Bugtags 的结合</h2><p>本以为采用上述方案就万事大吉了, 在第二次提测后, 还是有这种 crash 的问题在后台上报.</p>
+<p>排查了很久后才发现，问题的原因是 BugTags 也会控制这个开头，默认是不忽略，这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 是否忽略 PIPE Signal (SIGPIPE) 闪退，默认 NO</div><div class="line"> */</div><div class="line">@property(nonatomic, assign) BOOL ignorePIPESignalCrash;</div></pre></td></tr></table></figure>
+<p>这个默认设置为 NO, 即可以上报 PIPE Signal Crash 的问题.</p>
+<p>这里也说明一个问题, 即使我们采用 <code>方案1</code> 解决 crash 的问题了, Bugtags 还是会将这种 crash 上报到后台.</p>
+<p>示例代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">bugtag.option.ignorePIPESignalCrash = YES;</div><div class="line"></div><div class="line">// ...</div><div class="line"></div><div class="line">signal(SIGPIPE, SIG_IGN);</div></pre></td></tr></table></figure>
+<p>对比一下测试的两张图, 第一张图到第二张图是增加了两次崩溃次数, 原因是故意设置了 <code>bugtag.option.ignorePIPESignalCrash = NO</code>, 也正好验证了我们的想法.</p>
+<p><img src="/upload/images/2018/04/15/3.jpg" alt="-w600"><br><img src="/upload/images/2018/04/15/4.jpg" alt="-w600"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li><p>Xcode 连接真机或者模拟器, 运行出现异常断点, 可能就是隐患点.</p>
+</li>
+<li><p>学会使用后台日志找到规律, 继而去思考并解决问题.</p>
+</li>
+<li><p>对 crash 进行更深入的分析和总结, 不要轻易放弃.</p>
+</li>
+</ol>
+<h2 id="后续研究"><a href="#后续研究" class="headerlink" title="后续研究"></a>后续研究</h2><ol>
+<li><p>是否可以忽略其他的 signal, 来避免不必要的 crash?</p>
+</li>
+<li><p>自定义一套关于 signal 捕获的跨平台库, 在开发阶段可以直接看到完整的日志, 是否可以提供给 iOS 和 Android 使用(跨平台)?</p>
+</li>
+</ol>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ol>
+<li><p><a href="https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/CommonPitfalls/CommonPitfalls.html" target="_blank" rel="noopener">Avoiding Common Networking Mistakes</a></p>
+</li>
+<li><p><a href="https://linux.die.net/" target="_blank" rel="noopener">linux</a></p>
+</li>
+<li><p><a href="https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/UsingSocketsandSocketStreams.html#//apple_ref/doc/uid/CH73-SW1" target="_blank" rel="noopener">Using Sockets and Socket Streams</a></p>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> crash linux signal SIGPIPE </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[这样学习你愿意吗?]]></title>
       <url>/2018/04/07/%E8%BF%99%E6%A0%B7%E5%AD%A6%E4%B9%A0%E4%BD%A0%E6%84%BF%E6%84%8F%E5%90%97/</url>
-      <content type="html"><![CDATA[<p><img src="/upload/images/2018/04/07/1.jpg" alt="1"></p>
+      <content type="html"><![CDATA[<p><img src="/upload/images/2018/04/07/1.jpg" alt=""></p>
 <p>不得不承认, 学习确实是个「苦差事」, 这里说的学习不仅仅指伏案学习, 之乎者也等, 而是一种广泛的学习.</p>
 <p>如何学习是始终要去探讨的一个话题, 时代在变, 环境在变, 学习当然也不能一成不变. 坚持学习是一辈子的事, 活到老学到老.</p>
 <p>既然学习是一个漫长的马拉松, 那我们只有持之以恒的’跑’下去, 才能保持不掉队. 这样一来, 学习方法和学习技巧就是取胜的关键了.</p>
@@ -36,7 +143,7 @@
 <p>参加工作之后, 我也有写博客的习惯, 把自己工作中遇到的问题以及解决问题的思路和方式写出来, 分享给其他人, 快乐无比. 特别是收到文章的评论后, 心理美滋滋的. 在互联网的海洋里, 大家素不相识, 通过键盘上敲击的文字互相交流知识和想法, 彼此成长着, 也别具一番乐趣.</p>
 <p>阅读和写作可以培养自己的专注力, 这么好的习惯你千万不要拒绝. 写作可以倒逼着你去阅读, 去关心生活里面的点滴, 阅读和生活中的体验又可以激发你写作的欲望, 两者相辅相成.</p>
 <p>推荐给大家一本书: <strong>Google 工作整理术</strong></p>
-<p><img src="/upload/images/2018/04/07/2.png" alt="1"></p>
+<p><img src="/upload/images/2018/04/07/2.png" alt="-w200"></p>
 <blockquote>
 <p>谷歌前CIO（首席信息官）分享风靡谷歌的信息整理术，帮助现代人彻底告别无序工作，学会利用数字工具为大脑减压！信息太多、时间太少，整理信息已成为现代人急需掌握的必备技能。谷歌作为引领全球的信息搜索与整合巨头，拥有能够有序整理信息的独特方式，而谷歌首席信息官便是主导这一“信息工厂”的总工程师。如今，曾担任“总工程师”的道格拉斯梅里尔亲自将风靡谷歌的信息整理方式分享给大众读者，帮助现代人克服无序工作的通病。《Google工作整理术》告诉你：不要花太多时间给信息归档，用的时候学会去搜索；在数字信息文档中加上关键词，方便日后检索；从前，知识就是力量,现在，共享知识才是力量；把工作和生活融为一体，而不是力图在二者之间求平衡。这些实用 Tips 都揭示了：信息整理才是高效工作的关键，信息整理已是现代人的工作必备技能！</p>
 </blockquote>
