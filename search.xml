@@ -6,8 +6,8 @@
       <title><![CDATA[不让 SIGPIPE signal 太嚣张]]></title>
       <url>/2018/04/15/%E4%B8%8D%E8%AE%A9-SIGPIPE-signal-%E5%A4%AA%E5%9A%A3%E5%BC%A0/</url>
       <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>由于项目迭代比较快, 大家还没有来得及做自我调整和总结, 就需要投入到新版本当中开发新功能了.</p>
-<p>在最近的一次版本测试和体验过程中, 很多内测用户反馈进入或者退出 App 的聊天室, 会莫名其妙的崩溃掉(crash).<br>对于 crash 的问题, 我们开发同事绝对是零容忍, 于是就开始跟踪问题.</p>
-<p>跟踪了很久, 发现这个 crash 并不是那么的 ‘乖巧’, 很难复现!<br>既然用户已经反馈了并且后台也有 crash 上报, 这个问题肯定存在, 所以我们不能放弃.</p>
+<p>在最近的一次版本测试和体验过程中, 很多内测用户反馈进入或者退出 App 的聊天室, 会莫名其妙的崩溃掉(Crash).<br>对于 Crash 的问题, 我们开发同事绝对是零容忍, 于是就开始跟踪问题.</p>
+<p>跟踪了很久, 发现这个 Crash 并不是那么的 ‘乖巧’, 很难复现!<br>既然用户已经反馈了并且后台也有 Crash 上报, 这个问题肯定存在, 所以我们不能放弃.</p>
 <p>好吧, 继续加班搞…苦逼中…</p>
 <p>最终, 我们发现一个规律, 在日志后台, 看到很多类似下面的日志:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Signal 13 was raised. SIGPIPE (_mh_execute_header + 420728)</div></pre></td></tr></table></figure>
@@ -21,7 +21,7 @@
 <p>管道破裂，这个信号通常在进程间通信产生，比如采用 FIFO(管道)通信的两个进程，读管道没打开或者意外终止就往管道写，写进程会收到 SIGPIPE 信号.<br>此外用 Socket 通信的两个进程，写进程在写 Socket 的时候，读进程已经终止.<br>另外, 在 send/write 时会引起管道破裂，关闭 Socket, 管道时也会出现管道破裂.<br>使用 Socket 一般都会收到这个 SIGPIPE 信号.</p>
 </blockquote>
 <p>也就是说, 该信号是跟 Socket 的连接以及数据的读写相关联的.</p>
-<p>这样的话，我们就知道为什么进退房间导致 crash 了，我们的进退房间都和 Socket 有关联，这种 crash 大都数是在用户网络不好的情况下发生的.</p>
+<p>这样的话，我们就知道为什么进退房间导致 Crash 了，我们的进退房间都和 Socket 有关联，这种 Crash 大都数是在用户网络不好的情况下发生的.</p>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>类似 <code>signal 13</code> 这种错误是系统发出来的, 和内存使用异常和野指针一样，由于是系统级别崩溃，所以不能通过</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@try &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line">@catch(NSException *exception) &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>捕获到这类异常.</p>
@@ -53,19 +53,19 @@
 <p>我们将 <code>signal(SIGPIPE, SIG_IGN)</code> 代码先注释.</p>
 <p>运行 APP 到手机, 然后退出 Xcode 的连接.</p>
 <blockquote>
-<p>注意: 这里如果连接 Xcode, 不会直接 crash, 所以需要断开手机与 Xcode 的连接.</p>
+<p>注意: 这里如果连接 Xcode, 不会直接 Crash, 所以需要断开手机与 Xcode 的连接.</p>
 </blockquote>
-<p>在后台可以看到类似的 crash 日志:</p>
+<p>在后台可以看到类似的 Crash 日志:</p>
 <p><img src="/upload/images/2018/04/15/2.jpg" alt="-w500"></p>
 <p>除了上面使用 <code>kill</code> 函数外, 我们还可以使用 <code>raise</code> 函数来发送 signal.</p>
 <p>关于 raise 函数, 可以查阅 <a href="https://linux.die.net/man/3/raise" target="_blank" rel="noopener">手册</a>.</p>
 <p>或者直接问男人(man):</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">man raise</div></pre></td></tr></table></figure>
-<h2 id="问题再次来临-与-Bugtags-的结合"><a href="#问题再次来临-与-Bugtags-的结合" class="headerlink" title="问题再次来临: 与 Bugtags 的结合"></a>问题再次来临: 与 Bugtags 的结合</h2><p>本以为采用上述方案就万事大吉了, 在第二次提测后, 还是有这种 crash 的问题在后台上报.</p>
+<h2 id="问题再次来临-与-Bugtags-的结合"><a href="#问题再次来临-与-Bugtags-的结合" class="headerlink" title="问题再次来临: 与 Bugtags 的结合"></a>问题再次来临: 与 Bugtags 的结合</h2><p>本以为采用上述方案就万事大吉了, 在第二次提测后, 还是有这种 Crash 的问题在后台上报.</p>
 <p>排查了很久后才发现，问题的原因是 BugTags 也会控制这个开头，默认是不忽略，这样：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 是否忽略 PIPE Signal (SIGPIPE) 闪退，默认 NO</div><div class="line"> */</div><div class="line">@property(nonatomic, assign) BOOL ignorePIPESignalCrash;</div></pre></td></tr></table></figure>
 <p>这个默认设置为 NO, 即可以上报 PIPE Signal Crash 的问题.</p>
-<p>这里也说明一个问题, 即使我们采用 <code>方案1</code> 解决 crash 的问题了, Bugtags 还是会将这种 crash 上报到后台.</p>
+<p>这里也说明一个问题, 即使我们采用 <code>方案1</code> 解决 Crash 的问题了, Bugtags 还是会将这种 Crash 上报到后台.</p>
 <p>示例代码:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">bugtag.option.ignorePIPESignalCrash = YES;</div><div class="line"></div><div class="line">// ...</div><div class="line"></div><div class="line">signal(SIGPIPE, SIG_IGN);</div></pre></td></tr></table></figure>
 <p>对比一下测试的两张图, 第一张图到第二张图是增加了两次崩溃次数, 原因是故意设置了 <code>bugtag.option.ignorePIPESignalCrash = NO</code>, 也正好验证了我们的想法.</p>
@@ -75,19 +75,19 @@
 </li>
 <li><p>学会使用后台日志找到规律, 继而去思考并解决问题.</p>
 </li>
-<li><p>对 crash 进行更深入的分析和总结, 不要轻易放弃.</p>
+<li><p>对 Crash 进行更深入的分析和总结, 不要轻易放弃.</p>
 </li>
 </ol>
 <h2 id="后续研究"><a href="#后续研究" class="headerlink" title="后续研究"></a>后续研究</h2><ol>
-<li><p>是否可以忽略其他的 signal, 来避免不必要的 crash?</p>
+<li><p>是否可以忽略其他的 signal, 来避免不必要的 Crash?</p>
 </li>
-<li><p>自定义一套关于 signal 捕获的跨平台库, 在开发阶段可以直接看到完整的日志, 是否可以提供给 iOS 和 Android 使用(跨平台)?</p>
+<li><p>自定义一套关于 signal 捕获的跨平台库, 在开发阶段可以直接看到完整的日志.</p>
 </li>
 </ol>
 <h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><ol>
 <li><p><a href="https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/CommonPitfalls/CommonPitfalls.html" target="_blank" rel="noopener">Avoiding Common Networking Mistakes</a></p>
 </li>
-<li><p><a href="https://linux.die.net/" target="_blank" rel="noopener">linux</a></p>
+<li><p><a href="https://linux.die.net/" target="_blank" rel="noopener">linux die</a></p>
 </li>
 <li><p><a href="https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/UsingSocketsandSocketStreams.html#//apple_ref/doc/uid/CH73-SW1" target="_blank" rel="noopener">Using Sockets and Socket Streams</a></p>
 </li>
@@ -103,7 +103,7 @@
         
         <tags>
             
-            <tag> crash linux signal SIGPIPE </tag>
+            <tag> Crash linux signal SIGPIPE </tag>
             
         </tags>
         
