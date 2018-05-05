@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="推荐博文: OC-RunTime: 消息转发之实例方法的转发流程 OC-RunTime: 消息转发之实例方法的转发流程实例讲解 OC-RunTime: 消息转发之类方法的转发流程 在上面的博文中给大家分享了关于消息转发相关的知识点, 里面有很多细节没有阐述, 如果在之前的文章中加入这些细节点的话, 就拉长了文章的内容, 对于刚接触 RunTime 的朋友来说并不是什么好事, 不如另写一篇来补充一下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-05T14:20:51.355Z">
+<meta property="og:updated_time" content="2018-04-22T14:45:25.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC-RunTime: 总结消息转发中用到的知识点">
 <meta name="twitter:description" content="推荐博文: OC-RunTime: 消息转发之实例方法的转发流程 OC-RunTime: 消息转发之实例方法的转发流程实例讲解 OC-RunTime: 消息转发之类方法的转发流程 在上面的博文中给大家分享了关于消息转发相关的知识点, 里面有很多细节没有阐述, 如果在之前的文章中加入这些细节点的话, 就拉长了文章的内容, 对于刚接触 RunTime 的朋友来说并不是什么好事, 不如另写一篇来补充一下">
@@ -406,10 +406,11 @@
 <p>imp2, imp3, imp4 都是正常的, 唯独 imp 不正常, 也充分说明了 instanceMethodForSelector 无法获取类方法的 IMP.</p>
 <h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>在源码 <code>runtime.h</code> 中, 定义 method, 其本质是一个结构体.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">struct objc_method &#123;</div><div class="line">    SEL method_name     OBJC2_UNAVAILABLE;</div><div class="line">    char *method_types  OBJC2_UNAVAILABLE;</div><div class="line">    IMP method_imp      OBJC2_UNAVAILABLE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看出, 有 SEL 和 IMP, method_types 是对应的方法类型, 如 <code>v@:</code>, 是一个字符串.</p>
+<p>方法名 <code>method_name</code> 类型为 SEL.<br><code>method_types</code> 方法类型, 是一个 char 指针，存储着方法的参数类型和返回值类型.<br>方法实现 <code>method_imp</code> 的类型为 IMP.</p>
+<p>可以看出, 有 SEL 和 IMP, method_types 是对应的方法返回值和参数类型, 如 <code>v@:</code>, 是一个字符串.</p>
 <p><code>runtime.h</code> 中有两个方法, 可以根据 SEL 直接获取实例方法和类方法的 Method, 如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Method class_getInstanceMethod(Class cls, SEL name);</div><div class="line"></div><div class="line">Method class_getClassMethod(Class cls, SEL name);</div></pre></td></tr></table></figure>
-<h2 id="SEL"><a href="#SEL" class="headerlink" title="SEL"></a>SEL</h2><p>iOS 开发中, 经常看到和使用 <code>selector</code>, 称之为方法选择器.</p>
+<h2 id="SEL"><a href="#SEL" class="headerlink" title="SEL"></a>SEL</h2><p>iOS 开发中, 经常看到和使用 <code>selector</code>, 称之为方法选择器. SEL 是 <code>selector</code> 在 Objective-C 中的表示类型. <code>selector</code> 可以理解为是区别各个方法的 ID.</p>
 <p>SEL 定义在源码 <code>objc.h</code> 中, 是一个结构体指针, 如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/// An opaque type that represents a method selector.</div><div class="line">typedef struct objc_selector *SEL;</div></pre></td></tr></table></figure>
 <p>但是源码中查不到 <code>objc_selector</code> 具体的定义和实现.</p>
@@ -621,7 +622,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
