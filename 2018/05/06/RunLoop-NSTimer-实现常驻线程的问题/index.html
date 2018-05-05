@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="可行性在 常驻线程是一种什么体验 给大家分享了如何实现一个常驻线程. 上面的实现是利用了 RunLoop 的特性, 并结合了 NSMachPort 实现的常驻线程. 今天我们继续探讨一下如何使用 NSTimer 实现常驻线程以及注意事项. 从 RunLoop 的特性来看, 只要有 Source 或者 Timer 都会使其能自循环使用, 不会立即终止, 所以从理论上来看 NSTimer 也是可以达到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-05T16:32:57.495Z">
+<meta property="og:updated_time" content="2018-05-05T16:35:53.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RunLoop: NSTimer 实现常驻线程的问题">
 <meta name="twitter:description" content="可行性在 常驻线程是一种什么体验 给大家分享了如何实现一个常驻线程. 上面的实现是利用了 RunLoop 的特性, 并结合了 NSMachPort 实现的常驻线程. 今天我们继续探讨一下如何使用 NSTimer 实现常驻线程以及注意事项. 从 RunLoop 的特性来看, 只要有 Source 或者 Timer 都会使其能自循环使用, 不会立即终止, 所以从理论上来看 NSTimer 也是可以达到">
@@ -370,7 +370,7 @@
 <p>跟之前一样, 可以使用点击事件来模拟和验证常驻线程的有效性.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</div><div class="line">    </div><div class="line">    // 模拟在指定线程上面再次执行方法</div><div class="line">    SEL seltor = NSSelectorFromString(@&quot;runAnyTime&quot;);</div><div class="line">    </div><div class="line">    [self performSelector:seltor onThread:[self permanentThread] withObject:nil waitUntilDone:NO];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>每点击一次屏幕, 都会对应执行 <code>runAnyTime</code> 里面的内容.</p>
-<h2 id="更改-repeat-参数"><a href="#更改-repeat-参数" class="headerlink" title="更改 repeat 参数"></a>更改 repeat 参数</h2><p>在上面的示例中, 我将 <code>repeat</code> 参数设置为 <code>YES</code>, 试想一下如果把 <code>repeat</code> 参数设置为 <code>NO</code>, 会不会造成常驻线程失效呢?</p>
+<h2 id="repeat-参数"><a href="#repeat-参数" class="headerlink" title="repeat 参数"></a>repeat 参数</h2><p>在上面的示例中, 我将 <code>repeat</code> 参数设置为 <code>YES</code>, 试想一下如果把 <code>repeat</code> 参数设置为 <code>NO</code>, 会不会造成常驻线程失效呢?</p>
 <p>动手试试…</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (void)_attachTimerToRunLoop &#123;</div><div class="line">    </div><div class="line">    if (nil == self.timer) &#123;</div><div class="line">        </div><div class="line">        // scheduledTimerWithTimeInterval 这种方式</div><div class="line">        // 创建的 Timer 会默认加入到当前的 RunLoop 的 NSDefaultRunLoopMode 中</div><div class="line">        _timer = [NSTimer scheduledTimerWithTimeInterval:2</div><div class="line">                                                  target:self</div><div class="line">                                                selector:@selector(runTimer)</div><div class="line">                                                userInfo:nil</div><div class="line">                                                 repeats:NO];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>再次点击屏幕若干次, 同样会执行对应函数里面的内容. 这就说明了即使将 <code>repeat</code> 参数设置为 <code>NO</code>, 也不会影响常驻线程.</p>
@@ -612,7 +612,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#可行性"><span class="nav-number">1.</span> <span class="nav-text">可行性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改-repeat-参数"><span class="nav-number">3.</span> <span class="nav-text">更改 repeat 参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#可行性"><span class="nav-number">1.</span> <span class="nav-text">可行性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repeat-参数"><span class="nav-number">3.</span> <span class="nav-text">repeat 参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
 
           </div>
