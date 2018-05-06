@@ -343,10 +343,9 @@
       
         
           
-          可行性在 常驻线程是一种什么体验 给大家分享了如何实现一个常驻线程.
-上面的实现是利用了 RunLoop 的特性, 并结合了 NSMachPort 实现的常驻线程.
-今天我们继续探讨一下如何使用 NSTimer 实现常驻线程以及注意事项.
-从 RunLoop 的特性来看, 只要有 Source 或者
+          可行性在 常驻线程是一种什么体验 给大家分享了利用 RunLoop 的特性, 结合 NSMachPort 实现的 常驻线程.
+今天我们探讨一下使用 NSTimer 如何实现 常驻线程 以及注意事项.
+从 RunLoop 的特性来看, 只要有 Source 或者 Timer 都会使其能自循环使用, 不
           ...
           <!--noindex-->
           <div class="post-button text-center">
