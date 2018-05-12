@@ -43,7 +43,8 @@
 <p>成功的话, 它先会警告你是否继续操作, 输入 <code>yes</code> 即可, 然后又提示你输入 root 密码, 密码就是前面说的修改后的密码. 如果你没有修改密码, 那就是 <code>alpine</code>. 操作流程如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">The authenticity of host &apos;192.168.1.105 (192.168.1.105)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is SHA256:ANF7Cvc1yM/ZdaHyz9V1EHjG115cylIcHWyOzCL+kzs.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;192.168.1.105&apos; (ECDSA) to the list of known hosts.</div><div class="line">root@192.168.1.105&apos;s password:</div></pre></td></tr></table></figure>
 <p>之前在 iOS 10.2.x 越狱修改对应的配置文件, 就可以使用 SSH 功能了, 但是在 iOS10.3.x 无济于事, 如果你是iOS 10.2.x 的越狱手机, 可以参考本文末附录配置 SSH, 也是我之前实践的结果.</p>
-<h2 id="usbmuxd"><a href="#usbmuxd" class="headerlink" title="usbmuxd"></a>usbmuxd</h2><p>上面是通过 wifi 来连接 iPhone 设备的, 其实还有一种方式, 就是借助于 <code>usbmuxd</code> 这个工具通过 USB 连接(手机数据线连接电脑)不需要 wifi, USB连接比WIFI响应速度快，且无网络环境的限制.</p>
+<h2 id="usbmuxd"><a href="#usbmuxd" class="headerlink" title="usbmuxd"></a>usbmuxd</h2><p>上面是通过 wifi 来连接 iPhone 设备的, 其实还有一种方式, 就是借助于 <code>usbmuxd</code> 这个工具通过 USB 连接(手机数据线连接电脑)不需要 wifi, USB连接比 wifi 响应速度快，且无网络环境的限制.</p>
+<p>使用 usbmuxd 的前提是你的手机可以正常的使用 SSH 功能, 否则 usbmuxd 也无法救你.</p>
 <p>[1].MacOS 安装 <code>usbmuxd</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install usbmuxd</div></pre></td></tr></table></figure>
 <p>[2]. 使用 <code>usbmuxd</code> 自带工具 <code>iproxy</code>.</p>
@@ -67,6 +68,10 @@
 <p>如果你看到进程是这样的:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/bin/dropbear -F -R -p 127.0.0.1:22</div></pre></td></tr></table></figure>
 <p>意思是只能数据线重定向连接 SSH，如果你想改成 WIFI 可以访问, 需要修改 <code>/private/var/containers/Bundle/Application/D9185B6D-EA9E-4678-B59C-BF43DEFE67BF/yalu102.app/dropbear.plist</code><br>把里面有个参数 <code>127.0.0.1:22</code> 改成<code>22</code> 保存，重启手机即可.</p>
+<p><strong>使用 <code>usbmuxd</code> 无法使用 SSH</strong></p>
+<p>执行 <code>ssh -p 5678 root@127.0.0.1</code> 后报错, 如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh_exchange_identification: read: Connection reset by peer</div></pre></td></tr></table></figure>
+<p>这种情况一般是没有正确的使用数据线连接 Mac 电脑.</p>
 ]]></content>
       
         <categories>
