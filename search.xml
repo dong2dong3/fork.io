@@ -55,7 +55,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -p 5678 root@127.0.0.1</div></pre></td></tr></table></figure>
 <p>执行过程如下, 类似上面通过 wifi 操作的方式.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">The authenticity of host &apos;[127.0.0.1]:5678 ([127.0.0.1]:5678)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is SHA256:ANF7Cvc1yM/ZdaHyz9V1EHjG115cylIcHWyOzCL+kzs.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;[127.0.0.1]:5678&apos; (ECDSA) to the list of known hosts.</div><div class="line">root@127.0.0.1&apos;s password:</div></pre></td></tr></table></figure>
-<p>接下来, 你就可以在 MacOS 终端上面操作你的 iPhone 设备了, 尽情的享受 shell 命令吧.</p>
+<p>接下来, 你就可以在 MacOS 终端上面操作你的 iPhone 设备了, 尽情的享受 shell 命令吧. 不使用的时候, 输入 <code>exit</code> 即可退出 SSH.</p>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><strong>iOS 10.2.x 越狱使用 SSH 功能.</strong></p>
 <p>首先修改 root 密码.</p>
 <p>iOS 10.2 (越狱后)自带 OpenSSH，不需要自己重新安装 OpenSSH, 但是需要修改一个文件才能使用.</p>
