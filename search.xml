@@ -3,6 +3,88 @@
   
     
     <entry>
+      <title><![CDATA[iOS 逆向: 越狱使用 SSH]]></title>
+      <url>/2018/05/12/iOS-%E9%80%86%E5%90%91-%E8%B6%8A%E7%8B%B1%E4%BD%BF%E7%94%A8-SSH/</url>
+      <content type="html"><![CDATA[<h2 id="越狱"><a href="#越狱" class="headerlink" title="越狱"></a>越狱</h2><p>使用苹果设备或者做 iOS 开发的朋友们, 几乎都应该听说过越狱这个词. 那么究竟什么是越狱呢?</p>
+<blockquote>
+<p>iOS越狱（英语：iOS Jailbreaking）是获取 iOS 设备的 Root 权限的技术手段。iOS 设备的 Root 权限一般是不开放的。由于获得了Root 权限，在越狱之前无法查看的 iOS 的文件系统也可查看.</p>
+</blockquote>
+<p>上面是维基百科的解释, 具体可以去 <a href="https://zh.wikipedia.org/wiki/%E8%B6%8A%E7%8D%84_(iOS" target="_blank" rel="noopener">iOS 越狱</a>) 了解一下. iOS 的越狱就类似 Android 获取 root 权限一样的道理.</p>
+<p>手头上面之前闲置了一台 iPhone4s, 闲来无事就把他越狱了, 后面不知道怎么操作的, 手机变成了白苹果(开机就白屏, 无法进入系统), 最后没办法, 只能升级系统, 这台手机也算是废了. </p>
+<p>当时使用的工具是 <a href="http://www.pangu.io/" target="_blank" rel="noopener">盘古越狱</a>, 越狱的 iOS 系统是 7.x. 现在 iOS 已经升级到 11.x 了, 很多 APP 和游戏已经不再支持 iOS8 以下的系统了, 系统的安全性也越来越好了, 越狱破解的难度也随之提高了, 目前市面上能越狱的最高版本应该是 10.3.x 的系统(截止到该篇文章写的时候). </p>
+<p>为了能够分析和学习一些优秀 App 的设计, 我索性买了台iPhone6sPlus 拿来越狱, 所以接下来的分享都是基于这台手机的.</p>
+<blockquote>
+<p>越狱工具和设备</p>
+</blockquote>
+<p>1.设备 iPhone6s Plus, iOS10.3.2<br>2.越狱工具 doubleH3lix.ipa</p>
+<p>使用 <code>doubleH3lix</code> 直接运行, 越狱即可. 手机重启后, 你会看到 <code>Cydia</code> 静静的呆在那里了, 这种方式的越狱属于非完美越狱, 换句话说就是没有真正的破解 iOS 系统.</p>
+<p>如果发现手机断电关机或者重启后 <code>Cydia</code> 一打开就闪退, 就使用 <code>doubleH3lix</code> 重新越狱就可以了.</p>
+<h2 id="安装-iOS-终端"><a href="#安装-iOS-终端" class="headerlink" title="安装 iOS 终端"></a>安装 iOS 终端</h2><p>安装终端, 在 Cydia 中搜索 MTerminal, 安装即可.</p>
+<p><img src="/upload/images/2018/05/12/1.jpg" alt=""></p>
+<p>安装好终端工具后, 打开终端, 输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">su</div></pre></td></tr></table></figure>
+<p>紧接着让你输入密码, 默认的 root 用户密码是 <code>alpine</code>. 输入改密码回车即可.</p>
+<p>为了安全起见, 修改默认密码 <code>alpine</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">passwd</div></pre></td></tr></table></figure>
+<p>连续输入相同的密码即为呢修改后的新密码.</p>
+<h2 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a>配置 SSH</h2><p>iOS 10 越狱以后自带了 SSH, 所以不需要单独去 Cydia 下载和安装 <code>OpenSSH</code>.</p>
+<p>很多人越狱后, 发现也安装了 OpenSSH, 但是一旦连接 iPhone 设备就无法连接甚至报错. 如果你已经安装了 OpenSSH 并且无法使用 SSH 来操作你的 iPhone 设备, 请继续往下看.</p>
+<p>[1]. 打开 Cydia, 分别搜索 OpenSSL 和 Openssh, 然后分别卸载 OpenSSL 和 Openssh.</p>
+<p>[2]. 打开 Cydia, 添加源：<code>http://cydia.ichitaso.com/test</code></p>
+<p><img src="/upload/images/2018/05/12/2.jpg" alt=""></p>
+<p>点击左上角的 <code>添加</code>, 在弹框中输入对应的源地址即可.</p>
+<p>[3]. 在 Cydia 中搜索 <code>dropbear</code> 并安装.</p>
+<p><img src="/upload/images/2018/05/12/3.jpg" alt=""></p>
+<p>安装即可.</p>
+<p>安装成功后, 一般就可以正常使用 SSH 功能了.</p>
+<p>打开 MacOS 终端, 开始使用 SSH 连接你的 iPhone 设备.</p>
+<p>[1]. 查看 iPhone 设备的(wifi) IP 地址. 如我的是 <code>192.168.1.105</code>.<br>[2]. 使用 MacOS 终端, 输入:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.105</div></pre></td></tr></table></figure>
+<p>成功的话, 它先会警告你是否继续操作, 输入 <code>yes</code> 即可, 然后又提示你输入 root 密码, 密码就是前面说的修改后的密码. 如果你没有修改密码, 那就是 <code>alpine</code>. 操作流程如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">The authenticity of host &apos;192.168.1.105 (192.168.1.105)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is SHA256:ANF7Cvc1yM/ZdaHyz9V1EHjG115cylIcHWyOzCL+kzs.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;192.168.1.105&apos; (ECDSA) to the list of known hosts.</div><div class="line">root@192.168.1.105&apos;s password:</div></pre></td></tr></table></figure>
+<p>之前在 iOS 10.2.x 越狱修改对应的配置文件, 就可以使用 SSH 功能了, 但是在 iOS10.3.x 无济于事, 如果你是iOS 10.2.x 的越狱手机, 可以参考本文末附录配置 SSH, 也是我之前实践的结果.</p>
+<h2 id="usbmuxd"><a href="#usbmuxd" class="headerlink" title="usbmuxd"></a>usbmuxd</h2><p>上面是通过 wifi 来连接 iPhone 设备的, 其实还有一种方式, 就是借助于 <code>usbmuxd</code> 这个工具通过 USB 连接(手机数据线连接电脑)不需要 wifi, USB连接比WIFI响应速度快，且无网络环境的限制.</p>
+<p>[1].MacOS 安装 <code>usbmuxd</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install usbmuxd</div></pre></td></tr></table></figure>
+<p>[2]. 使用 <code>usbmuxd</code> 自带工具 <code>iproxy</code>.</p>
+<p><code>iproxy</code> 可以快捷的操作连接 iPhone 等操作.</p>
+<p>MacOS 上只支持 4 位的端口号，需要把 iPhone 的默认端口 22 映射到 Mac 上面一个 4 位端口号的端口上面，相当于建立一个 Mac 和 iPhone 之间的通道. <code>iproxy</code> 具体使用, 后面再讲. 大家先安装一下即可.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iproxy 5678 22</div><div class="line">waiting for connection</div></pre></td></tr></table></figure>
+<p>以上命令就是把当前连接设备的 <code>22</code> 端口(SSH端口)映射到电脑的 <code>5678</code> 端口，那么想和设备 <code>22</code> 端口通信，直接和本地的 <code>5678</code> 端口通信就可以了.</p>
+<p>终端提示 <code>waiting for connection</code>, 表示这两个端口之间已经可以通信了，保留当前终端窗口(如果关闭就停止端口之间的通信了)，新建另一个终端输入，默认密码 root 密码.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -p 5678 root@127.0.0.1</div></pre></td></tr></table></figure>
+<p>执行过程如下, 类似上面通过 wifi 操作的方式.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">The authenticity of host &apos;[127.0.0.1]:5678 ([127.0.0.1]:5678)&apos; can&apos;t be established.</div><div class="line">ECDSA key fingerprint is SHA256:ANF7Cvc1yM/ZdaHyz9V1EHjG115cylIcHWyOzCL+kzs.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;[127.0.0.1]:5678&apos; (ECDSA) to the list of known hosts.</div><div class="line">root@127.0.0.1&apos;s password:</div></pre></td></tr></table></figure>
+<p>接下来, 你就可以在 MacOS 终端上面操作你的 iPhone 设备了, 尽情的享受 shell 命令吧.</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><strong>iOS 10.2.x 越狱使用 SSH 功能.</strong></p>
+<p>首先修改 root 密码.</p>
+<p>iOS 10.2 (越狱后)自带 OpenSSH，不需要自己重新安装 OpenSSH, 但是需要修改一个文件才能使用.</p>
+<p>在手机上安装 MTERMINAL，运行 su，输入 root 密码，执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep dropbear</div></pre></td></tr></table></figure>
+<p>如果你看到的进程没有 dropbear, 执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/bin/dropbear -F -R -p 22</div></pre></td></tr></table></figure>
+<p>然后就可以连接了，重启依然有效.</p>
+<p>如果你看到进程是这样的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/bin/dropbear -F -R -p 127.0.0.1:22</div></pre></td></tr></table></figure>
+<p>意思是只能数据线重定向连接 SSH，如果你想改成 WIFI 可以访问, 需要修改 <code>/private/var/containers/Bundle/Application/D9185B6D-EA9E-4678-B59C-BF43DEFE67BF/yalu102.app/dropbear.plist</code><br>把里面有个参数 <code>127.0.0.1:22</code> 改成<code>22</code> 保存，重启手机即可.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> jailbreak </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[RunLoop: NSTimer 实现常驻线程的问题]]></title>
       <url>/2018/05/06/RunLoop-NSTimer-%E5%AE%9E%E7%8E%B0%E5%B8%B8%E9%A9%BB%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<h2 id="可行性"><a href="#可行性" class="headerlink" title="可行性"></a>可行性</h2><p>在 <a href="http://www.veryitman.com/2018/04/21/%E5%B8%B8%E9%A9%BB%E7%BA%BF%E7%A8%8B%E6%98%AF%E4%B8%80%E7%A7%8D%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C/" target="_blank" rel="noopener">常驻线程是一种什么体验</a> 这篇文章中给大家分享了如何利用 RunLoop 的特性, 结合 <code>NSMachPort</code> 实现一个 <code>常驻线程</code> 的主题内容.</p>
