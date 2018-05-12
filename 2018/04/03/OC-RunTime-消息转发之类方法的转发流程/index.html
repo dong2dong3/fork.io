@@ -89,7 +89,7 @@
 <meta property="og:description" content="本篇是「消息转发」系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/04/03/1.jpg">
-<meta property="og:updated_time" content="2018-04-05T14:20:23.757Z">
+<meta property="og:updated_time" content="2018-05-12T05:24:16.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC-RunTime: 消息转发之类方法的转发流程">
 <meta name="twitter:description" content="本篇是「消息转发」系列的第三篇, 在 OC-RunTime: 消息转发之实例方法的转发流程 和 OC-RunTime: 消息转发之实例方法的转发流程[实例讲解] 中分享了实例方法的转发流程. 今天分享如何对类方法进行消息的转发. resolveClassMethodNSObject 提供了 resolveClassMethod 来让开发者在里面动态添加一个类方法. 类方法的转发流程和实例方法转发的">
@@ -371,9 +371,9 @@
 <li>-doesNotRecognizeSelector:</li>
 </ol>
 </blockquote>
-<p>网上很多博文并没有深入的探讨关于类方法转发的流程, 只是在介绍实例方法转发的流程的同时, 一笔带过类方法转发.</p>
+<p>网上很多博文并没有深入的探讨关于类方法转发的流程, 只是在介绍实例方法转发的流程的同时, 一笔带过类方法转发机制和流程.</p>
 <p>通过对 <code>NSObject.mm</code> 源码的查看, 可以看到对应上面的几个方法都有类方法. 如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;1. +resolveClassMethod</div><div class="line">2. +forwardingTargetForSelector</div><div class="line">3. +methodSignatureForSelector</div><div class="line">4. +forwardInvocation</div><div class="line">5. +doesNotRecognizeSelector:</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1. +resolveClassMethod</div><div class="line">2. +forwardingTargetForSelector</div><div class="line">3. +methodSignatureForSelector</div><div class="line">4. +forwardInvocation</div><div class="line">5. +doesNotRecognizeSelector:</div></pre></td></tr></table></figure>
 <p>重新这几个方法才是解决问题的关键.</p>
 <p>现在我们重写 <code>resolveClassMethod</code>, 如下.</p>
 <hr>
