@@ -129,7 +129,7 @@
 <p>为了安全起见, 修改默认密码 <code>alpine</code>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">passwd</div></pre></td></tr></table></figure>
 <p>连续输入相同的密码即为呢修改后的新密码.</p>
-<h2 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a>配置 SSH</h2><p>配置和使用 SSH 功能, 是后续越狱工作的基础, 所以大家尽量要完成该步骤.</p>
+<h2 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a>配置 SSH</h2><p>配置和使用 SSH 功能是后续越狱工作的基础, 这样就可以在 MacOS 的终端中访问 iOS 系统了, 各种 shell 命令让你倍感亲切, 所以大家尽量要完成该步骤. 试想一下, 本来手机上面文字输入的体验就不好, 还需要在 iPhone 设备上面的终端中敲着命令…</p>
 <p>iOS 10 越狱以后自带了 SSH, 所以不需要单独去 Cydia 下载和安装 <code>OpenSSH</code>.</p>
 <p>很多人越狱后, 发现也安装了 OpenSSH, 但是一旦连接 iPhone 设备就无法连接甚至报错. 如果你已经安装了 OpenSSH 并且无法使用 SSH 来操作你的 iPhone 设备, 请继续往下看.</p>
 <p>[1]. 打开 Cydia, 分别搜索 OpenSSL 和 Openssh, 然后分别卸载 OpenSSL 和 Openssh.</p>
