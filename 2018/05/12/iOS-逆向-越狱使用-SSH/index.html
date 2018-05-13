@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/05/12/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/05/12/2.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/05/12/3.jpg">
-<meta property="og:updated_time" content="2018-05-13T14:29:18.431Z">
+<meta property="og:updated_time" content="2018-05-13T14:33:04.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 逆向: 越狱使用 SSH">
 <meta name="twitter:description" content="越狱使用苹果设备或者做 iOS 开发的朋友们, 几乎都应该听说过越狱这个词. 那么究竟什么是越狱呢?  iOS越狱（英语：iOS Jailbreaking）是获取 iOS 设备的 Root 权限的技术手段。iOS 设备的 Root 权限一般是不开放的。由于获得了Root 权限，在越狱之前无法查看的 iOS 的文件系统也可查看.  上面是维基百科的解释, 具体可以去 iOS 越狱) 了解一下. iO">
@@ -367,10 +367,8 @@
 <p>手头上面之前闲置了一台 iPhone4s, 闲来无事就把他越狱了, 后面不知道怎么操作的, 手机变成了白苹果(开机就白屏, 无法进入系统), 最后没办法, 只能升级系统, 这台手机也算是废了. </p>
 <p>当时使用的工具是 <a href="http://www.pangu.io/" target="_blank" rel="noopener">盘古越狱</a>, 越狱的 iOS 系统是 7.x. 现在 iOS 已经升级到 11.x 了, 很多 APP 和游戏已经不再支持 iOS8 以下的系统了, 系统的安全性也越来越好了, 越狱破解的难度也随之提高了, 目前市面上能越狱的最高版本应该是 10.3.x 的系统(截止到该篇文章写的时候). </p>
 <p>为了能够分析和学习一些优秀 App 的设计, 我索性买了台iPhone6sPlus 拿来越狱, 所以接下来的分享都是基于这台手机的.</p>
-<blockquote>
-<p>越狱工具和设备</p>
-</blockquote>
-<p>1.设备 iPhone6s Plus, iOS10.3.2<br>2.越狱工具 doubleH3lix.ipa</p>
+<p><strong>越狱工具和设备</strong></p>
+<p>[1]. 设备 iPhone6s Plus, iOS10.3.2<br>[2]. 越狱工具 doubleH3lix.ipa</p>
 <p>使用 <code>doubleH3lix</code> 直接运行, 越狱即可. 手机重启后, 你会看到 <code>Cydia</code> 静静的呆在那里了, 这种方式的越狱属于非完美越狱, 换句话说就是没有真正的破解 iOS 系统.</p>
 <p>如果发现手机断电关机或者重启后 <code>Cydia</code> 一打开就闪退, 就使用 <code>doubleH3lix</code> 重新越狱就可以了.</p>
 <h2 id="安装-iOS-终端"><a href="#安装-iOS-终端" class="headerlink" title="安装 iOS 终端"></a>安装 iOS 终端</h2><p>安装终端, 在 Cydia 中搜索 MTerminal, 安装即可.</p>
@@ -381,7 +379,7 @@
 <p>为了安全起见, 修改默认密码 <code>alpine</code>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">passwd</div></pre></td></tr></table></figure>
 <p>连续输入相同的密码即为呢修改后的新密码.</p>
-<h2 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a>配置 SSH</h2><p>配置和使用 SSH 功能是后续越狱工作的基础, 这样就可以在 MacOS 的终端中访问 iOS 系统了, 各种 shell 命令让你倍感亲切, 所以大家尽量要完成该步骤. 试想一下, 本来手机上面文字输入的体验就不好, 还需要在 iPhone 设备上面的终端中敲着命令…</p>
+<h2 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a>配置 SSH</h2><p>配置和使用 SSH 功能是后续越狱工作的基础, 这样就可以在 MacOS 的终端中访问 iOS 系统了, 各种 shell 命令让你倍感亲切, 所以大家尽量要完成该步骤. 试想一下, 本来手机上面文字输入的体验就不好, 还需要在 iPhone 设备上面的终端中敲着命令…没法忍!</p>
 <p>iOS 10 越狱以后自带了 SSH, 所以不需要单独去 Cydia 下载和安装 <code>OpenSSH</code>.</p>
 <p>很多人越狱后, 发现也安装了 OpenSSH, 但是一旦连接 iPhone 设备就无法连接甚至报错. 如果你已经安装了 OpenSSH 并且无法使用 SSH 来操作你的 iPhone 设备, 请继续往下看.</p>
 <p>[1]. 打开 Cydia, 分别搜索 OpenSSL 和 Openssh, 然后分别卸载 OpenSSL 和 Openssh.</p>
