@@ -3,12 +3,72 @@
   
     
     <entry>
+      <title><![CDATA[iOS 逆向: 砸壳]]></title>
+      <url>/2018/05/13/iOS-%E9%80%86%E5%90%91-%E7%A0%B8%E5%A3%B3/</url>
+      <content type="html"><![CDATA[<p>所谓的砸壳, 指的是将 App Store 下面的 App 进行解密破解的过程. 从 App Store 上下载的 ipa 文件中的二进制文件是经过加密(也可以理解为加壳了)的，需要通过破解去解密才能让我们 <code>为所欲为</code>, 那么砸壳就应运而生了.</p>
+<p>类似的 Android 的应用(apk 文件)也有加壳操作, 如果想破解别人的 apk, 首先要进行砸壳操作.</p>
+<h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><p>[1]. Clutch<br>[2]. iFunBox 或者 <code>pp 助手</code><br>[3]. 越狱手机一台, 我的 iPhone6sPlus iOS10.3.x 系统.<br>[4]. 正常可以使用的 SSH 功能.</p>
+<p>如果你还没有安装上面提到的除 <code>Clutch</code> 之外的工具, 请先阅读 <a href="http://www.veryitman.com/2018/05/13/iOS-%E9%80%86%E5%90%91-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%92%8C%E7%BB%93%E6%9E%84/" target="_blank" rel="noopener">iOS 逆向: 查看系统文件目录和结构</a> 这篇文章, 并安装对应的工具.</p>
+<h2 id="安装-Clutch"><a href="#安装-Clutch" class="headerlink" title="安装 Clutch"></a>安装 Clutch</h2><p>可以在 Github 获取 <a href="https://github.com/KJCracks/Clutch" target="_blank" rel="noopener">Clutch 源码</a>, 然后自己在 MacOS 上面编译得到二进制文件.</p>
+<p>也可以去直接下载已经编译好的 <a href="https://github.com/KJCracks/Clutch/releases" target="_blank" rel="noopener">二进制包</a>, 直接使用, 我是直接下载了已经编译好的二进制包的, 截止到写这篇文章为止, <code>Clutch</code> 版本为 <code>2.0.4</code>.</p>
+<p>下载完成后, 我将其放到 <code>~/Downloads</code> 目录下面了.</p>
+<p>准备好越狱设备, 保证可以正常连接 wifi, 使用 scp 命令将 <code>Clutch</code> 二进制文件复制到设备的系统目录中, 命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp ~/Downloads/Clutch root@192.168.91.126:/usr/bin</div></pre></td></tr></table></figure>
+<p>其中, <code>192.168.91.126</code> 是我设备连接 wifi 后的 IP 地址.</p>
+<p>复制成功后, 使用 iFunBox 可以看到 <code>Clutch</code> 静静地躺在那里.</p>
+<p><img src="/upload/images/2018/05/13/6.jpg" alt=""></p>
+<p>你可以使用 iFunBox 或者 <code>pp 助手</code>, 直接将 <code>~/Downloads/Clutch</code> 拖拽到 <code>/usr/bin</code> 目录.</p>
+<h2 id="Clutch-的基本使用"><a href="#Clutch-的基本使用" class="headerlink" title="Clutch 的基本使用"></a>Clutch 的基本使用</h2><p>SSH 连接越狱设备, 开始使用 <code>Clutch</code>. 关于使用 SSH, 可以阅读一下 <a href="http://www.veryitman.com/2018/05/12/iOS-%E9%80%86%E5%90%91-%E8%B6%8A%E7%8B%B1%E4%BD%BF%E7%94%A8-SSH/" target="_blank" rel="noopener">iOS 逆向: 越狱使用 SSH</a> 这篇文章.</p>
+<p>如果你发现直接执行 <code>Clutch</code> 说没有权限之类的提示, 可以先将其授予可执行的权限.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x /usr/bin/Clutch</div></pre></td></tr></table></figure>
+<p>Clutch 命令选项如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-b --binary-dump     Only dump binary files from specified bundleID</div><div class="line">-d --dump            Dump specified bundleID into .ipa file</div><div class="line">-i --print-installed Print installed application</div><div class="line">--clean              Clean /var/tmp/clutch directory</div><div class="line">--version            Display version and exit</div><div class="line">-? --help            Display this help and exit</div></pre></td></tr></table></figure>
+<p><code>-b</code> 选项表示产出一个二进制文件, <code>-d</code> 选项表示产出一个 ipa 文件, <code>-i</code> 表示列出手机上面已经安装的 APP.</p>
+<p>我们先看一下手机上已经安装的 App, 命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Clutch -i</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2018/05/13/7.jpg" alt=""></p>
+<p>这些 APP 前面的数字表示指定的 id. <code>-d</code> 和 <code>-b</code> 选项都需要指定这些 id.</p>
+<h2 id="砸吧-骚年"><a href="#砸吧-骚年" class="headerlink" title="砸吧, 骚年"></a>砸吧, 骚年</h2><p>我们现在开始使用 <code>Clutch</code> 来对 APP 进行砸壳操作, 这里以已经安装的 App 序号为 8 的为例子.</p>
+<p>使用下面的命令开始砸壳:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Clutch -d 8</div></pre></td></tr></table></figure>
+<p>效果如下图所示:</p>
+<p><img src="/upload/images/2018/05/13/8.jpg" alt=""></p>
+<p>砸壳成功后会在 <code>/private/var/mobile/Documents/Dumped</code>  这个目录生成对应的 <code>*.ipa</code> 文件.</p>
+<p>砸壳后的 ipa 文件, 可以从 iFunBox 中复制到 MacOS 的目录中, 然后你就可以对该 ipa 进行下一步操作了, 比如获取图片/音频/视频等资源和对应的头文件. 关于这些后续的越狱工作, 我会在下几篇博客中分享给大家.</p>
+<p>也许有人会说了, 我自己从 <code>pp 助手</code> 中备份指定的 App 就可以获取资源了, 不需要使用 <code>Clutch</code> 这么麻烦了. 高系统版本, <code>pp 助手</code> 是无法直接获取 ipa 文件的, 况且我们也不仅仅是想获取别人 APP 的资源文件.</p>
+<p>当然了, 你可以从越狱 APP 市场直接下载已经被砸壳的 App 进行玩耍, 不需要自己千辛万苦的去砸壳了.</p>
+<h2 id="Clutch-并不是万能的"><a href="#Clutch-并不是万能的" class="headerlink" title="Clutch 并不是万能的"></a>Clutch 并不是万能的</h2><p>上面大家可以看出, <code>Clutch</code> 是可以进行砸壳的并且也挺方便, 但 <code>Clutch</code> 并不是万能的, 也就是说, <code>Clutch</code> 不能将任意一个 App Store 下载 APP 进行砸壳.</p>
+<p>拿上面序号为4 的微信来说, 执行下面命令报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Clutch -d 4</div></pre></td></tr></table></figure>
+<p>砸壳执行过程如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Writing new checksum</div><div class="line">...</div><div class="line">FAILED: &lt;WeChat bundleID: com.tencent.xin&gt;</div><div class="line">Finished dumping com.tencent.xin in 28.7 seconds</div></pre></td></tr></table></figure>
+<p>还有一些 APP, 再被砸壳的时候会报如下的错误:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">could not obtain mach port either the process is dead</div></pre></td></tr></table></figure>
+<p>虽然最新版本(2.0.4)说解决了该问题, 但是实际操作过程中, 还是会出现这个问题, 无法进行砸壳.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> jailbreak </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[iOS 逆向: 查看系统文件目录和结构]]></title>
       <url>/2018/05/13/iOS-%E9%80%86%E5%90%91-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%92%8C%E7%BB%93%E6%9E%84/</url>
       <content type="html"><![CDATA[<p>在 <a href="http://www.veryitman.com/2018/05/12/iOS-%E9%80%86%E5%90%91-%E8%B6%8A%E7%8B%B1%E4%BD%BF%E7%94%A8-SSH/" target="_blank" rel="noopener">iOS 逆向: 越狱使用 SSH</a> 中给大家分享了如何使用工具对 iOS10.3 的系统进行越狱和配置使用 SSH 的内容, 今天继续探逆向的知识.</p>
 <p>手机被越狱之后, 我们首先要搞清楚是否能够正常的访问手机里面的文件和目录结构, 这些文件和目录结构究竟是什么样的, 虽然这些知识很基础, 但是还是很有必要去了解和学习的, 就算是为后期逆向 APP 做点准备吧. </p>
 <h2 id="安装-iFunBox"><a href="#安装-iFunBox" class="headerlink" title="安装 iFunBox"></a>安装 iFunBox</h2><p><code>iFunBox</code> 是一个可以浏览 iPhone 文件目录的文件管理工具, 支持 MacOS 和 Windows 两个平台.</p>
-<p>点击这里 <a href="http://www.i-funbox.com/" target="_blank" rel="noopener">下载地址</a> 可以去下载 MacOS 版本的 iFunBox. 关于 <code>iFunBox</code> 的介绍和特性可以去 <a href="http://www.i-funbox.com/en_about.html" target="_blank" rel="noopener">这里</a> 查阅.</p>
+<p>点击 <a href="http://www.i-funbox.com/" target="_blank" rel="noopener">下载地址</a> 可以去下载 MacOS 版本的 iFunBox. 关于 <code>iFunBox</code> 的介绍和特性可以去 <a href="http://www.i-funbox.com/en_about.html" target="_blank" rel="noopener">这里</a> 查阅.</p>
 <p>最新版本是 <code>1.8</code>, 如图:</p>
 <p><img src="/upload/images/2018/05/13/1.jpg" alt=""></p>
 <p>手机插上 USB 连接上 Mac 电脑, iFunBox 就可以识别你的手机了, 如图所示:</p>
@@ -22,11 +82,11 @@
 <p>安装好之后, 再用 <code>iFunBox</code>, 就可以正常查看 iPhone 的系统目录了, 如下图所示:</p>
 <p><img src="/upload/images/2018/05/13/4.jpg" alt=""></p>
 <p>看到这些目录, 是不是跟 linux 或者 MacOS 的目录有很多相似的地方, 哈哈.</p>
-<h2 id="安装-pp-助手或者其他文件浏览工具"><a href="#安装-pp-助手或者其他文件浏览工具" class="headerlink" title="安装 pp 助手或者其他文件浏览工具"></a>安装 pp 助手或者其他文件浏览工具</h2><p>既然已经安装了 <code>iFunBox</code> 工具, 那为什么还需要安装 <code>pp 助手</code> 之类的工具呢? 其实, 这个看个人的需要吧, 在某种程度上, <code>pp 助手</code> 的界面和便捷性要比 <code>iFunBox</code> 好一点.</p>
+<h2 id="安装-pp-助手"><a href="#安装-pp-助手" class="headerlink" title="安装 pp 助手"></a>安装 pp 助手</h2><p>既然已经安装了 <code>iFunBox</code> 工具, 那为什么还需要安装 <code>pp 助手</code> 之类的工具呢? 其实, 这个看个人的需要吧, 在某种程度上, <code>pp 助手</code> 的界面和便捷性要比 <code>iFunBox</code> 好一点.</p>
 <p>安装好 <code>pp 助手</code> 后, 点击 Tools/File Manager 显示的目录导航, 如图:</p>
 <p><img src="/upload/images/2018/05/13/5.jpg" alt=""></p>
 <p>可以看出, 相比 <code>iFunBox</code> 的界面显示, <code>pp 助手</code> 工具显得更加友好一些. </p>
-<p>至于使用哪个工具, 要看个人爱好和自己的工作需要, 毕竟工具都是为了提高我们学习和工作效率的, 没有什么绝对的好与坏, 自己觉得合适顺手就好了, 最主要的是能够帮到自己. 我一般是将两者结合使用的.</p>
+<p>至于使用哪个工具, 要看个人爱好和自己的工作需要, 毕竟工具都是为了提高我们学习和工作效率的, 没有什么绝对的好与坏, 自己觉得合适顺手就好了, 最主要的是能够帮到自己. 我一般是将两者结合使用的, 当然你如果你有更好的工具也可以推荐给我.</p>
 ]]></content>
       
         <categories>
