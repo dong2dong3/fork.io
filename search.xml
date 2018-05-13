@@ -3,6 +3,48 @@
   
     
     <entry>
+      <title><![CDATA[iOS 逆向: 查看系统文件目录和结构]]></title>
+      <url>/2018/05/13/iOS-%E9%80%86%E5%90%91-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%92%8C%E7%BB%93%E6%9E%84/</url>
+      <content type="html"><![CDATA[<p>在 <a href="http://www.veryitman.com/2018/05/12/iOS-%E9%80%86%E5%90%91-%E8%B6%8A%E7%8B%B1%E4%BD%BF%E7%94%A8-SSH/" target="_blank" rel="noopener">iOS 逆向: 越狱使用 SSH</a> 中给大家分享了如何使用工具对 iOS10.3 的系统进行越狱和配置使用 SSH 的内容, 今天继续探逆向的知识.</p>
+<p>手机被越狱之后, 我们首先要搞清楚是否能够正常的访问手机里面的文件和目录结构, 这些文件和目录结构究竟是什么样的, 虽然这些知识很基础, 但是还是很有必要去了解和学习的, 就算是为后期逆向 APP 做点准备吧. </p>
+<h2 id="安装-iFunBox"><a href="#安装-iFunBox" class="headerlink" title="安装 iFunBox"></a>安装 iFunBox</h2><p><code>iFunBox</code> 是一个可以浏览 iPhone 文件目录的文件管理工具, 支持 MacOS 和 Windows 两个平台.</p>
+<p>点击这里 <a href="http://www.i-funbox.com/" target="_blank" rel="noopener">下载地址</a> 可以去下载 MacOS 版本的 iFunBox. 关于 <code>iFunBox</code> 的介绍和特性可以去 <a href="http://www.i-funbox.com/en_about.html" target="_blank" rel="noopener">这里</a> 查阅.</p>
+<p>最新版本是 <code>1.8</code>, 如图:</p>
+<p><img src="/upload/images/2018/05/13/1.jpg" alt=""></p>
+<p>手机插上 USB 连接上 Mac 电脑, iFunBox 就可以识别你的手机了, 如图所示:</p>
+<p><img src="/upload/images/2018/05/13/2.jpg" alt=""></p>
+<p>这个时候, 你点击 <code>Raw File System</code> 其实是看不到 iPhone 的系统目录的, 接下来在 iPhone 中安装另外一个软件就可以了.</p>
+<h2 id="安装-Apple-File-Conduit”2”"><a href="#安装-Apple-File-Conduit”2”" class="headerlink" title="安装 Apple File Conduit”2”"></a>安装 Apple File Conduit”2”</h2><p>在 Cydia 中搜索 Apple File Conduit, 如下图所示.</p>
+<p><img src="/upload/images/2018/05/13/3.jpg" alt=""></p>
+<p>点击更改/安装即可.</p>
+<p>如果你没有搜索到, 那么就需要自己添加对应的软件源地址.</p>
+<p>点击【软件源】–编辑/添加 –输入源地址 <code>apt.25pp.com</code> – 添加源, 然后再去搜索 <code>Apple File Conduit</code> 安装.</p>
+<p>安装好之后, 再用 <code>iFunBox</code>, 就可以正常查看 iPhone 的系统目录了, 如下图所示:</p>
+<p><img src="/upload/images/2018/05/13/4.jpg" alt=""></p>
+<p>看到这些目录, 是不是跟 linux 或者 MacOS 的目录有很多相似的地方, 哈哈.</p>
+<h2 id="安装-pp-助手或者其他文件浏览工具"><a href="#安装-pp-助手或者其他文件浏览工具" class="headerlink" title="安装 pp 助手或者其他文件浏览工具"></a>安装 pp 助手或者其他文件浏览工具</h2><p>既然已经安装了 <code>iFunBox</code> 工具, 那为什么还需要安装 <code>pp 助手</code> 之类的工具呢? 其实, 这个看个人的需要吧, 在某种程度上, <code>pp 助手</code> 的界面和便捷性要比 <code>iFunBox</code> 好一点.</p>
+<p>安装好 <code>pp 助手</code> 后, 点击 Tools/File Manager 显示的目录导航, 如图:</p>
+<p><img src="/upload/images/2018/05/13/5.jpg" alt=""></p>
+<p>可以看出, 相比 <code>iFunBox</code> 的界面显示, <code>pp 助手</code> 工具显得更加友好一些. </p>
+<p>至于使用哪个工具, 要看个人爱好和自己的工作需要, 毕竟工具都是为了提高我们学习和工作效率的, 没有什么绝对的好与坏, 自己觉得合适顺手就好了, 最主要的是能够帮到自己. 我一般是将两者结合使用的.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> jailbreak </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[iOS 逆向: 越狱使用 SSH]]></title>
       <url>/2018/05/12/iOS-%E9%80%86%E5%90%91-%E8%B6%8A%E7%8B%B1%E4%BD%BF%E7%94%A8-SSH/</url>
       <content type="html"><![CDATA[<h2 id="越狱"><a href="#越狱" class="headerlink" title="越狱"></a>越狱</h2><p>使用苹果设备或者做 iOS 开发的朋友们, 几乎都应该听说过越狱这个词. 那么究竟什么是越狱呢?</p>
