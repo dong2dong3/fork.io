@@ -3,6 +3,110 @@
   
     
     <entry>
+      <title><![CDATA[iOS 逆向: dumpdecrypted 砸壳记]]></title>
+      <url>/2018/06/07/iOS-%E9%80%86%E5%90%91-dumpdecrypted-%E7%A0%B8%E5%A3%B3%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<p>今天是一个特别的日子, 高考的第一天, 祝各位莘莘学子金榜题名.</p>
+<hr>
+<p><a href="http://www.veryitman.com/2018/05/13/iOS-%E9%80%86%E5%90%91-%E7%A0%B8%E5%A3%B3/" target="_blank" rel="noopener">iOS 逆向: 砸壳</a> 介绍了如何使用工具 <code>Clutch</code> 对 iOS 的应用进行砸壳操作, 今天继续给大家分享使用另外一个工具 <code>dumpdecrypted</code> 对 APP 进行砸壳.</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>有些朋友就会问了, 既然 <code>Clutch</code> 已经很牛B了, 为什么还需要 <code>dumpdecrypted</code> 这个工具呢? </p>
+<p>刚开始的时候, 我也很排斥使用 <code>dumpdecrypted</code> 这个工具的, 使用起来比较复杂, 并且套路不熟的情况下还很容易出错. </p>
+<p>之前说过 <code>Clutch</code> 并不是万能的, 从 App Store 下载的 App(比如 WeChat)有些并不能使用 <code>Clutch</code> 来进行砸壳, 换句话说, 使用 <code>Clutch</code> 工具来进行砸壳会失败, 那么, <code>dumpdecrypted</code> 就登场了.</p>
+<p>本次砸壳的系统依然是 <code>iOS10.3.x</code>, 工具使用 <code>dumpdecrypted</code>, 砸壳的对象是 WeChat 这个 App.</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>MacOS PC</li>
+<li>越狱手机一台(我用的是iPhone6SPlus 10.3.1)</li>
+<li>dumpdecrypted</li>
+<li>class-dump</li>
+<li>在 Cydia 中安装 cycript, 可以先不用管 cycript 是什么, 下载安装即可.</li>
+<li>iFunBox 或者其他助手工具</li>
+</ul>
+<h2 id="编译-dumpdecrypted"><a href="#编译-dumpdecrypted" class="headerlink" title="编译 dumpdecrypted"></a>编译 dumpdecrypted</h2><p>去 <a href="https://github.com/stefanesser/dumpdecrypted" target="_blank" rel="noopener">Github</a> 下载 <code>dumpdecrypted</code> 源码, 源码就一个 C 源文件.</p>
+<p>下载 zip 包之后, 解压, 如图:<br><img src="/upload/images/2018/06/07/1.jpg" alt=""></p>
+<p>在当前目录, 执行 <code>make</code> 即可完成编译, 如图所示:<br><img src="/upload/images/2018/06/07/2.jpg" alt=""></p>
+<p>编译成功后生成 <code>dumpdecrypted.dylib</code> 文件.</p>
+<p>这里有个小插曲, 编译 <code>dumpdecrypted</code> 的时候报错了, 错误信息如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">xcrun: error: SDK &quot;iphoneos&quot; cannot be located</div><div class="line">xcrun: error: unable to lookup item &apos;Path&apos; in SDK &apos;iphoneos&apos;</div><div class="line">clang: warning: no such sysroot directory: &apos;-F/System/Library/Frameworks&apos; [-Wmissing-sysroot]</div><div class="line">dumpdecrypted.c:27:10: fatal error: &apos;stdio.h&apos; file not found</div></pre></td></tr></table></figure>
+<p>无法找到对应的 <code>SDK</code> 和 <code>stdio.h</code> 文件, 这种问题大多数是 Xcode 路径造成的.</p>
+<p>使用下面的命令看一下系统指向的 Xcode 路径:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcode-select -p</div></pre></td></tr></table></figure>
+<p>控制台输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Library/Developer/CommandLineTools</div></pre></td></tr></table></figure>
+<p>显然不是 Xcode 的路径, 那只能重新切换一下其路径即指向正确的<code>Xcode</code> 路径即可.</p>
+<p>命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select --switch /Applications/Xcode.app</div></pre></td></tr></table></figure>
+<p>再次编译 <code>dumpdecrypted</code> 即可成功完成.</p>
+<h2 id="对-dumpecrypted-dylib-签名"><a href="#对-dumpecrypted-dylib-签名" class="headerlink" title="对 dumpecrypted.dylib 签名"></a>对 dumpecrypted.dylib 签名</h2><blockquote>
+<p>如果不对该文件进行签名, 后续砸壳的操作会失败.</p>
+</blockquote>
+<p>先找到已经在电脑上面安装的苹果开发者证书, 操作如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## 列出可签名证书, 找到 mac 上面已经安装的证书</div><div class="line">security find-identity -v -p codesigning</div></pre></td></tr></table></figure>
+<p>为 dumpecrypted.dylib 签名, 命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">codesign --force --verify --verbose --sign &quot;iPhone Developer: xxx xxxx (xxxxxxxxxx)&quot; dumpdecrypted.dylib</div></pre></td></tr></table></figure>
+<p>其中, <code>&quot;iPhone Developer: xxx xxxx (xxxxxxxxxx)&quot;</code> 为你自己本机安装的开发者证书名称.</p>
+<h2 id="SSH-连接手机"><a href="#SSH-连接手机" class="headerlink" title="SSH 连接手机"></a>SSH 连接手机</h2><p>使用 OpenSSH 让 Mac 和手机连接起来 这样可以很方便的在 Mac 终端使用 shell 命令来操作手机的目录了.</p>
+<p>关于 OpenSSH 的使用请参考我之前的博文 <a href="http://www.veryitman.com/2018/05/12/iOS-%E9%80%86%E5%90%91-%E8%B6%8A%E7%8B%B1%E4%BD%BF%E7%94%A8-SSH/" target="_blank" rel="noopener">iOS 逆向: 越狱使用 SSH</a>.</p>
+<h2 id="查找目标-App-所在进程"><a href="#查找目标-App-所在进程" class="headerlink" title="查找目标 App 所在进程"></a>查找目标 App 所在进程</h2><ul>
+<li>双击 Home 按键后, 手动杀掉 iPhone 上面所有在后台的 App.</li>
+<li>Home 到手机桌面.</li>
+<li>打开目标 App 即WeChat, 这里称之为 TargetApp.</li>
+<li>Home 到手机桌面.</li>
+<li>查看当前运行的所有进程, 命令如下:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -e</div></pre></td></tr></table></figure>
+<p>看到这个货:<br><img src="/upload/images/2018/06/07/3.jpg" alt=""></p>
+<p>在如下目录:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/var/containers/Bundle/Application/2837EC87-7C28-45C5-9309-24FACD3A97C9/WeChat.app/WeChat</div></pre></td></tr></table></figure>
+<p><code>WeChat.app</code> 就是我们要找的 TargetApp.</p>
+<p>连接 SSH 成功后, 在 MacOS 终端 <code>ls</code> 一下该目录, 可以发现 <code>WeChat.app</code> 躺在那里.<br><img src="/upload/images/2018/06/07/4.jpg" alt=""></p>
+<h2 id="砸壳"><a href="#砸壳" class="headerlink" title="砸壳"></a>砸壳</h2><p><strong>1. 查找 Documents 目录</strong></p>
+<p><code>WeChat</code> 为当前的进程目标执行文件名称, 从上面的图可以看出, 其对应的进程 id 是 <code>18983</code>.</p>
+<p>在命令行中通过 cycript 执行如下操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cycript -p 18983</div></pre></td></tr></table></figure>
+<p>再执行 OC 的方法, 如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0]</div></pre></td></tr></table></figure>
+<p>可以看到对应的输出, 如下图所示, 这就是对应的 Documents 目录.<br><img src="/upload/images/2018/06/07/5.jpg" alt=""></p>
+<blockquote>
+<p>注意: 执行过程中, 在 iPhone 上面打开运行一下 App, 不然上面的执行一直卡在那里不动.</p>
+</blockquote>
+<p>找到目录如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/var/mobile/Containers/Data/Application/2EFA08B6-DD7B-41A6-92C9-C6115CA6DDA1/Documents/</div></pre></td></tr></table></figure>
+<p>同理, 你也可以使用 iFunBox 查看该目录.</p>
+<p><strong>2. 拷贝 dumpdecrypted.dylib</strong>.</p>
+<p>拷贝 <code>dumpdecrypted.dylib</code> 这个之前编译签名好的文件到iPhone 上面该 APP 的 Documents 目录有两种方法.</p>
+<p>第一种方法, 直接在 mac 上面拖拽 <code>dumpdecrypted.dylib</code> 到 iFunBox 显示的这个目录中, 这种方法比较简单且快.</p>
+<p>第二种方法, 使用 <code>scp</code> 命令进行操作.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp ~/dumpdecrypted.dylib root@192.168.99.231:/var/mobile/Containers/Data/Application/2EFA08B6-DD7B-41A6-92C9-C6115CA6DDA1/Documents/</div></pre></td></tr></table></figure>
+<p><code>192.168.99.231</code> 是 iPhone 设备的 ip 地址.</p>
+<p><strong>3. 退出 cycript, 回到命令行模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ctrl + d</div></pre></td></tr></table></figure>
+<p><strong>4. cd 到 Documents 目录</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /var/mobile/Containers/Data/Application/2EFA08B6-DD7B-41A6-92C9-C6115CA6DDA1/Documents/</div></pre></td></tr></table></figure>
+<p><strong>5. 砸壳</strong></p>
+<p>终端在 Documents 目录下面, 执行下面命令即可:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib /var/containers/Bundle/Application/2837EC87-7C28-45C5-9309-24FACD3A97C9/WeChat.app/WeChat</div></pre></td></tr></table></figure>
+<p>执行过程显示如下:<br><img src="/upload/images/2018/06/07/6.jpg" alt=""></p>
+<p>最后生成了 <code>WeChat.decrypted</code> 文件, 如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-rw-r--r--  1 root   mobile 74513728 Jun  7 15:20 WeChat.decrypted</div><div class="line">drwxr-xr-x 14 mobile mobile      448 Jun  7 15:20 .</div><div class="line">-rw-r--r--  1 root   mobile   207760 Jun  7 15:15 dumpdecrypted.dylib</div><div class="line">-rw-r--r--  1 mobile mobile        8 Jun  7 13:22 db.globalconfig</div><div class="line">-rw-r--r--  1 mobile mobile       15 Jun  7 11:35 SafeMode.dat</div><div class="line">drwxr-xr-x 26 mobile mobile      832 Jun  7 11:35 MMappedKV</div><div class="line">drwxr-xr-x  3 mobile mobile       96 Jun  7 11:35 CrashReport</div><div class="line">-rw-r--r--  1 mobile mobile     1011 Jun  7 11:35 LocalInfo.lst</div><div class="line">drwxr-xr-x  5 mobile mobile      160 Jun  7 11:35 MemoryStat</div><div class="line">drwxr-xr-x  6 mobile mobile      192 Jun  7 11:35 00000000000000000000000000000000</div><div class="line">drwxr-xr-x 15 mobile mobile      480 Jun  5 13:43 MMResourceMgr</div><div class="line">-rw-r--r--  1 mobile mobile      592 Jun  5 13:43 heavy_user_id_mapping.dat</div><div class="line">drwxr-xr-x  2 mobile mobile       64 Jun  5 10:07 OpenImResource</div></pre></td></tr></table></figure>
+<p>使用 <code>iFunBox</code> 或者 <code>scp</code> 命令将 <code>WeChat.decrypted</code> 文件导出到 mac 的任意目录即可.</p>
+<p>后续会跟大家分享如何使用砸壳后的文件, 敬请期待.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> jailbreak </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[iOS 逆向: 砸壳]]></title>
       <url>/2018/05/13/iOS-%E9%80%86%E5%90%91-%E7%A0%B8%E5%A3%B3/</url>
       <content type="html"><![CDATA[<p>所谓的砸壳, 指的是将 App Store 下面的 App 进行解密破解的过程. 从 App Store 上下载的 ipa 文件中的二进制文件是经过加密(也可以理解为加壳了)的，需要通过破解去解密才能让我们 <code>为所欲为</code>, 那么砸壳就应运而生了.</p>
