@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/02/02/PHP-%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87/</loc>
+    <lastmod>2018-06-18T15:35:09.110Z</lastmod>
+    <data>
+        <display>
+        <title>PHP 开发准备</title>
+        <pubTime>2017-02-02T14:58:23.000Z</pubTime>
+        
+        <tag>PHP MySql</tag>
+         
+         
+           
+             
+              <breadCrumb title="Server" url="http://yoursite.com/categories/Server/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/05/13/iOS-%E9%80%86%E5%90%91-%E7%A0%B8%E5%A3%B3/</loc>
     <lastmod>2018-06-08T13:36:32.590Z</lastmod>
     <data>
@@ -1151,26 +1171,6 @@
         <display>
         <title>安装 PHP 遇到的问题</title>
         <pubTime>2017-02-02T15:59:49.000Z</pubTime>
-        
-        <tag>PHP MySql</tag>
-         
-         
-           
-             
-              <breadCrumb title="Server" url="http://yoursite.com/categories/Server/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/02/02/PHP-%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87/</loc>
-    <lastmod>2017-11-26T06:38:50.610Z</lastmod>
-    <data>
-        <display>
-        <title>PHP 开发准备</title>
-        <pubTime>2017-02-02T14:58:23.000Z</pubTime>
         
         <tag>PHP MySql</tag>
          
