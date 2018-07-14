@@ -3,6 +3,79 @@
   
     
     <entry>
+      <title><![CDATA[简单配置 Apache]]></title>
+      <url>/2018/07/14/%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE-Apache/</url>
+      <content type="html"><![CDATA[<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>有时候, 我们希望在自己本机(PC)搭建一个 WebServer, 然后自己可以在浏览器或者手机上面可以访问对应的地址直接查看效果, 再或者希望测试下载功能等, 其实 MacOS 自带的有 Apache 服务器.</p>
+<p>下面简单分享一下, 在 MacOS 中如何简单的使用 Apache 服务器.</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>常用的命令有开启/重启/停止等.</p>
+<p>1.开启: <code>sudo apachectl start</code><br>2.重启: <code>sudo apachectl restart</code><br>3.关闭: <code>sudo apachectl stop</code><br>4.查看版本号: <code>httpd -v</code></p>
+<p><strong>1.查看 Apache 版本号</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpd -v</div></pre></td></tr></table></figure>
+<p>或者使用下面的命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apachectl -v</div></pre></td></tr></table></figure>
+<p>查看结果如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Server version: Apache/2.4.28 (Unix)</div><div class="line">Server built:   Oct  9 2017 19:54:20</div></pre></td></tr></table></figure>
+<p><strong>2.启动 Apache</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apachectl start</div></pre></td></tr></table></figure>
+<p>在浏览器打开: <a href="http://localhost" target="_blank" rel="noopener">http://localhost</a></p>
+<p>会显示:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">It works</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2018/07/14/1.jpg" alt=""></p>
+<p><strong>3.停止 Apache</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apachectl stop</div></pre></td></tr></table></figure>
+<p>如果没有开启 Apache 服务, 执行上面命令的话, 会报下面的错误:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/System/Library/LaunchDaemons/org.apache.httpd.plist: </div><div class="line">Could not find specified service</div></pre></td></tr></table></figure>
+<p><strong>4.重新启动 Apache</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apachectl restart</div></pre></td></tr></table></figure>
+<p>如果修改了 Apache 的配置文件, 需要重新启动 Apache 服务, 执行上面的命令即可.</p>
+<h2 id="配置-Sites"><a href="#配置-Sites" class="headerlink" title="配置 Sites"></a>配置 Sites</h2><p>在自己的用户目录, 新建一个 <code>Sites</code> 目录, 例如我的用户目录是 <code>/Users/mark</code>, 可以在终端分别执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /Users/mark</div><div class="line"></div><div class="line">mkdir Sites</div></pre></td></tr></table></figure>
+<p>执行成功后, 可以看到如下图所示的目录:</p>
+<p><img src="/upload/images/2018/07/14/2.jpg" alt=""></p>
+<p>接下来修改 Apache 中的配置文件, 执行下面命令开始编辑 <code>httpd.conf</code> 文件.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/apache2/httpd.conf</div></pre></td></tr></table></figure>
+<p>打开 httpd.conf 文件，查找 <code>userdir</code> 关键字.</p>
+<p>找到如下两行被注释掉的内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#Include /private/etc/apache2/extra/httpd-userdir.conf</div><div class="line"></div><div class="line">#LoadModule userdir_module libexec/apache2/mod_userdir.so</div></pre></td></tr></table></figure>
+<p>将其前面的 <code>#</code>(注释) 去掉, 紧接着编辑这个文件, 增加如下内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Directory /Users/mark/Sites&gt;</div><div class="line">  Require all granted</div><div class="line">&lt;/Directory&gt;</div></pre></td></tr></table></figure>
+<p>将上面的这些代码放到如下代码下面即可:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;Directory &quot;/Library/WebServer/CGI-Executables&quot;&gt;</div><div class="line">    AllowOverride None</div><div class="line">    Options All</div><div class="line">    Require all granted</div><div class="line">&lt;/Directory&gt;</div></pre></td></tr></table></figure>
+<p>保存该文件并退出 vim.</p>
+<p>执行下面的命令修改 <code>httpd-userdir.conf</code> 文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /private/etc/apache2/extra/httpd-userdir.conf</div></pre></td></tr></table></figure>
+<p>增加如下内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">UserDir Sites</div><div class="line"></div><div class="line">&lt;IfModule bonjour_module&gt;</div><div class="line">   RegisterUserSite customized-users</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
+<p><strong>注意:</strong> 如果在 <code>/private/etc/apache2/extra/</code> 目录下没有该文件, 新建一个即可.</p>
+<p>保存文件并退出即可.</p>
+<p>我们可以将自己需要运行的 html 等文件放到该目录, 如我将 <code>index.html</code> 放到该目录.</p>
+<p>重新启动 Apache 服务, 在浏览器中输入 <code>http://localhost/~mark/</code>, 可以看到 <code>index.html</code> 里面的内容.</p>
+<h2 id="WebServer-目录"><a href="#WebServer-目录" class="headerlink" title="WebServer 目录"></a>WebServer 目录</h2><p>上面我们提到, 启动 Apache 服务之后, 在浏览器可以看到 <code>It Works</code> 的字样, 那么这个是哪个文件输出的呢?</p>
+<p>这个文件是 <code>sudo mvim index.html.en~orig</code>, 在如下目录:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Library/WebServer/Documents</div></pre></td></tr></table></figure>
+<p>可以使用 vim 编辑该文件, 然后再刷新浏览器就可以看到其变化.</p>
+<p>我们也可以把自己的 html 文件放到这里, 如 <code>mark.html</code>, 内容如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;h1&gt;Hi, mark, Apache server works!&lt;/h1&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>在浏览器中输入 <code>http://localhost/mark.html</code>, 可以看到对应的输出.</p>
+<p>如果嫌配置 <code>Sites</code> 目录麻烦, 可以使用这种方式, 直接拷贝对应的文件或者目录放到 <code>/Library/WebServer/Documents</code> 中, 只不过需要 root 权限罢了.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Server </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Apache WebServer MacOS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[RunLoop: 移除常驻线程]]></title>
       <url>/2018/07/01/RunLoop-%E7%A7%BB%E9%99%A4%E5%B8%B8%E9%A9%BB%E7%BA%BF%E7%A8%8B/</url>
       <content type="html"><![CDATA[<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>下面两篇文章:</p>
