@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="简介在博客 [PHP 开发准备] 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 P">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-26T06:44:44.835Z">
+<meta property="og:updated_time" content="2018-08-09T15:48:58.975Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安装 PHP 遇到的问题">
 <meta name="twitter:description" content="简介在博客 [PHP 开发准备] 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 P">
@@ -404,12 +404,17 @@
 <h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>1.执行 sudo php-fpm -D 报 php56-intl/intl.so 加载问题</p>
 <p>warning 的内容大致如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NOTICE: PHP message: PHP Warning:  PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found in Unknown on line 0</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;b&gt;Warning&lt;/b&gt;:  PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found in &lt;b&gt;Unknown&lt;/b&gt; on line &lt;b&gt;0&lt;/b&gt;&lt;br /&gt;</div><div class="line">Unknown(0) : Warning - PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found</div><div class="line">[31-Dec-2016 22:40:38] NOTICE: PHP message: PHP Warning:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in Unknown on line 0</div></pre></td></tr></table></figure>
-<p>解决方案: 执行下面的命令, 即可解决.<br>方案来源 <a href="https://github.com/Homebrew/homebrew-php/issues/2544" target="_blank" rel="noopener">Github</a>.</p>
+<p>解决方案: 执行下面的命令, 即可解决.方案来源 <a href="https://github.com/Homebrew/homebrew-php/issues/2544" target="_blank" rel="noopener">Github</a>.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew reinstall --build-from-source php56-intl</div></pre></td></tr></table></figure>
 <p>2.执行 sudo php-fpm -D 报 PHP Startup: mcrypt: Unable to initialize module</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">31-Dec-2016 22:56:51] NOTICE: PHP message: PHP Warning:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in Unknown on line 0</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;b&gt;Warning&lt;/b&gt;:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in &lt;b&gt;Unknown&lt;/b&gt; on line &lt;b&gt;0&lt;/b&gt;&lt;br /&gt;</div><div class="line">Unknown(0) : Warning - PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div></pre></td></tr></table></figure>
 <p>解决方案:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew reinstall --build-from-source php56-intl</div></pre></td></tr></table></figure>
+<p>3.连接 mysql</p>
+<p>使用 <code>mysql -u root -p</code> 连接 mysql, 提示 Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock 错误.</p>
+<p>解决方案: 启动 mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql.server start</div></pre></td></tr></table></figure>
+<p>重新连接即可.</p>
 
       
     </div>

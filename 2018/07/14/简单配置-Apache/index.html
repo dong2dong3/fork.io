@@ -90,7 +90,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/07/14/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/07/14/2.jpg">
-<meta property="og:updated_time" content="2018-07-14T15:02:35.250Z">
+<meta property="og:updated_time" content="2018-07-22T13:31:34.307Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单配置 Apache">
 <meta name="twitter:description" content="声明有时候, 我们希望在自己本机(PC)搭建一个 WebServer, 然后自己可以在浏览器或者手机上面可以访问对应的地址直接查看效果, 再或者希望测试下载功能等, 其实 MacOS 自带的有 Apache 服务器. 下面简单分享一下, 在 MacOS 中如何简单的使用 Apache 服务器. 常用命令常用的命令有开启/重启/停止等. 1.开启: sudo apachectl start2.重启:">
@@ -408,7 +408,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Library/WebServer/Documents</div></pre></td></tr></table></figure>
 <p>可以使用 vim 编辑该文件, 然后再刷新浏览器就可以看到其变化.</p>
 <p>我们也可以把自己的 html 文件放到这里, 如 <code>mark.html</code>, 内容如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;h1&gt;Hi, mark, Apache server works!&lt;/h1&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">	&lt;h1&gt;Hi, mark, Apache server works!&lt;/h1&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
 <p>在浏览器中输入 <code>http://localhost/mark.html</code>, 可以看到对应的输出.</p>
 <p>如果嫌配置 <code>Sites</code> 目录麻烦, 可以使用这种方式, 直接拷贝对应的文件或者目录放到 <code>/Library/WebServer/Documents</code> 中, 只不过需要 root 权限罢了.</p>
 
