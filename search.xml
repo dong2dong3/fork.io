@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[配置 php7 + Nginx]]></title>
       <url>/2018/08/19/%E9%85%8D%E7%BD%AE-php7-Nginx/</url>
-      <content type="html"><![CDATA[<h1 id="配置-php7-Nginx"><a href="#配置-php7-Nginx" class="headerlink" title="配置 php7 + Nginx"></a>配置 php7 + Nginx</h1><p>之前为了配合完成一个项目（php 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 php 版本已经是 7.1 了，于是就开始使用系统自带的 php 版本了。</p>
+      <content type="html"><![CDATA[<h2 id="配置-php7-Nginx"><a href="#配置-php7-Nginx" class="headerlink" title="配置 php7 + Nginx"></a>配置 php7 + Nginx</h2><p>之前为了配合完成一个项目（php 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 php 版本已经是 7.1 了，于是就开始使用系统自带的 php 版本了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -v</div></pre></td></tr></table></figure>
 <p>显示 php 版本信息，如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">PHP 7.1.16 (cli) (built: Apr  1 2018 13:14:42) ( NTS )</div><div class="line">Copyright (c) 1997-2018 The PHP Group</div><div class="line">Zend Engine v3.1.0, Copyright (c) 1998-2018 Zend Technologies</div></pre></td></tr></table></figure>
