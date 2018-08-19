@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PHP MySql nginx php-fpm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="配置 php7 + Nginx之前为了配合完成一个项目（php 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 php 版本已经是 7.1 了，于是就开始使用系统自带的 php 版本了。 1php -v 显示 php 版本信息，如下： 123PHP 7.1.16 (cli) (built: Apr  1 2018 13:14:42) ( NTS">
+<meta name="keywords" content="PHP MySql nginx php-fpm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置 php7 + Nginx">
+<meta property="og:url" content="http://yoursite.com/2018/08/19/配置-php7-Nginx/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="配置 php7 + Nginx之前为了配合完成一个项目（php 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 php 版本已经是 7.1 了，于是就开始使用系统自带的 php 版本了。 1php -v 显示 php 版本信息，如下： 123PHP 7.1.16 (cli) (built: Apr  1 2018 13:14:42) ( NTS">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2018/08/19/1.jpg">
+<meta property="og:updated_time" content="2018-08-19T08:42:44.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="配置 php7 + Nginx">
+<meta name="twitter:description" content="配置 php7 + Nginx之前为了配合完成一个项目（php 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 php 版本已经是 7.1 了，于是就开始使用系统自带的 php 版本了。 1php -v 显示 php 版本信息，如下： 123PHP 7.1.16 (cli) (built: Apr  1 2018 13:14:42) ( NTS">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2018/08/19/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/19/配置-php7-Nginx/"/>
+
+
+
+
+
+  <title>配置 php7 + Nginx | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/19/配置-php7-Nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">配置 php7 + Nginx</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-19T16:41:18+08:00">
+                2018-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/19/配置-php7-Nginx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/08/19/配置-php7-Nginx/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="配置-php7-Nginx"><a href="#配置-php7-Nginx" class="headerlink" title="配置 php7 + Nginx"></a>配置 php7 + Nginx</h1><p>之前为了配合完成一个项目（php 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 php 版本已经是 7.1 了，于是就开始使用系统自带的 php 版本了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -v</div></pre></td></tr></table></figure>
+<p>显示 php 版本信息，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">PHP 7.1.16 (cli) (built: Apr  1 2018 13:14:42) ( NTS )</div><div class="line">Copyright (c) 1997-2018 The PHP Group</div><div class="line">Zend Engine v3.1.0, Copyright (c) 1998-2018 Zend Technologies</div></pre></td></tr></table></figure>
+<p>安装 PHP56 可以参考：</p>
+<ul>
+<li><p><a href="http://www.veryitman.com/2017/02/02/PHP-%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87/" target="_blank" rel="noopener">PHP开发准备</a></p>
+</li>
+<li><p><a href="http://www.veryitman.com/2017/02/02/%E5%AE%89%E8%A3%85-PHP-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" target="_blank" rel="noopener">安装 PHP 遇到的问题</a></p>
+</li>
+</ul>
+<h2 id="卸载-PHP56"><a href="#卸载-PHP56" class="headerlink" title="卸载 PHP56"></a>卸载 PHP56</h2><p>执行 brew uninstall </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew uninstall php</div></pre></td></tr></table></figure>
+<p>即可完成卸载。</p>
+<p>如果卸载遇到问题，就打开 <code>/usr/local/Cellar/</code> 目录，删除对应的 php 目录即可。</p>
+<h2 id="配置-php-fpm"><a href="#配置-php-fpm" class="headerlink" title="配置 php-fpm"></a>配置 php-fpm</h2><p>现在新版本的 php 其内核已经集成了 php-fpm，我们不需要另外安装了。</p>
+<p>配置 php-fpm 配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp /private/etc/php-fpm.conf.default /private/etc/php-fpm.conf</div></pre></td></tr></table></figure>
+<p>修改配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi /private/etc/php-fpm.conf</div></pre></td></tr></table></figure>
+<p>找到 error_log 项，添加下面两个配置项，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error_log = /usr/local/var/log/php-fpm.log</div><div class="line">pid = /usr/local/var/run/php-fpm.pid</div></pre></td></tr></table></figure>
+<p>如果不配置上面的配置项，启动 php-fpm 会报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ERROR: failed to open error_log (/usr/var/log/php-fpm.log): No such file or directory (2)</div><div class="line">ERROR: failed to post process the configuration</div><div class="line">ERROR: FPM initialization failed</div></pre></td></tr></table></figure>
+<p>接下来, 继续配置，将 <code>www.conf.default</code> 复制一份命名为 <code>www.conf</code> 即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /private/etc/php-fpm.d/</div><div class="line"></div><div class="line">sudo cp www.conf.default www.conf</div></pre></td></tr></table></figure>
+<p>不配置上面的，会报如下错误:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ERROR: No pool defined. at least one pool section must be specified in config file</div><div class="line">ERROR: FPM initialization failed</div></pre></td></tr></table></figure>
+<p>至此，可以启动 php-fpm 了，执行下面命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo php-fpm -D</div></pre></td></tr></table></figure>
+<p>不出意外的话，已经成功启动，可以使用下面命令查看端口使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -an | grep 9000</div></pre></td></tr></table></figure>
+<p>如果你在启动 php-fpm 遇到下面的错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ERROR: unable to bind listening socket for address &apos;127.0.0.1:9000&apos;: Address already in use (48)</div><div class="line">ERROR: FPM initialization failed</div></pre></td></tr></table></figure>
+<p>有两种方式解决这个问题</p>
+<p><strong>1.</strong>修改 php-fpm 使用的端口号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /private/etc/php-fpm.d/www.conf</div></pre></td></tr></table></figure>
+<p>将 <code>listen = 127.0.0.1:9000</code> 改为 <code>listen = 127.0.0.1:9001</code> 即可。</p>
+<p><strong>2.</strong>杀掉9000端口占用的进程</p>
+<p>关闭所有之前启动的 php-fpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">killall php-fpm</div></pre></td></tr></table></figure>
+<p>找到占用端口的进程号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -an | grep 9000</div></pre></td></tr></table></figure>
+<p>然后 <code>kill -9 pid</code>，重新启动 php-fpm 即可。</p>
+<h2 id="安装和配置-Nginx"><a href="#安装和配置-Nginx" class="headerlink" title="安装和配置 Nginx"></a>安装和配置 Nginx</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install nginx</div></pre></td></tr></table></figure>
+<p>创建文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkdir -p /usr/local/var/logs/nginx</div><div class="line">mkdir -p /usr/local/etc/nginx/sites-available</div><div class="line">mkdir -p /usr/local/etc/nginx/sites-enabled</div><div class="line">mkdir -p /usr/local/etc/nginx/conf.d</div><div class="line">mkdir -p /usr/local/etc/nginx/ssl</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo mkdir -p /var/www</div><div class="line">sudo chown :staff /var/www</div><div class="line">sudo chmod 775 /var/www</div><div class="line">vi /var/www/info.php</div><div class="line">vi /var/www/index.html</div><div class="line">vi /var/www/403.html</div><div class="line">vi /var/www/404.html</div></pre></td></tr></table></figure>
+<p>改变 nginx.conf 配置文件</p>
+<p>该配置文件在 <code>/usr/local/etc/nginx/nginx.conf</code> 下面.</p>
+<p>我的配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">worker_processes  1;</div><div class="line"> </div><div class="line">error_log  /usr/local/etc/nginx/logs/error.log debug;</div><div class="line">pid        /usr/local/var/run/nginx.pid;</div><div class="line"> </div><div class="line">events &#123;</div><div class="line">    worker_connections  256;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">http &#123;</div><div class="line">    include             mime.types;</div><div class="line">    default_type        application/octet-stream;</div><div class="line"> </div><div class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</div><div class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</div><div class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</div><div class="line"> </div><div class="line">    access_log  /usr/local/etc/nginx/logs/access.log  main;</div><div class="line"> </div><div class="line">    sendfile            on;</div><div class="line"> </div><div class="line">    keepalive_timeout   65;</div><div class="line"> </div><div class="line">    index index.html index.php;</div><div class="line"> </div><div class="line">    include /usr/local/etc/nginx/sites-enabled/*; </div><div class="line">    include /usr/local/etc/nginx/conf.d/*;</div><div class="line">     server &#123;</div><div class="line">        listen       8080;</div><div class="line">        server_name  localhost;</div><div class="line">        #charset koi8-r;</div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line">        location / &#123;</div><div class="line">            root   ~/projs/phpdev/nginx/nginx_sites/; #web的根目录</div><div class="line">            index  index.php index.html index.htm; #加index.php</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location / &#123;</div><div class="line">	root   ~/projs/phpdev/nginx/nginx_sites/; #web的根目录</div><div class="line">	index  index.php index.html index.htm; #加index.php</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>配置了我的 web 目录和支持的文件.</p>
+<h2 id="运行-php"><a href="#运行-php" class="headerlink" title="运行 php"></a>运行 php</h2><ul>
+<li><p>创建 index.php</p>
+</li>
+<li><p>启动 PHP-fpm</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo php-fpm</div></pre></td></tr></table></figure>
+<p>或者以守护进程的方式来启动 PHP-fpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo php-fpm -D</div></pre></td></tr></table></figure>
+<ul>
+<li>启动 Nginx</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nginx</div></pre></td></tr></table></figure>
+<ul>
+<li>编辑 index.php</li>
+</ul>
+<p>在 web 目录(我配置的) <code>~/projs/phpdev/nginx/nginx_sites/</code> 新建文件 <code>index.php</code>.</p>
+<p>index.php 里面可以编写代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!-- lang: php --&gt;</div><div class="line">&lt;!-- ~/nginx_sites/index.php --&gt;</div><div class="line">&lt;?php</div><div class="line">    echo &quot;Hello PHP&quot;;</div><div class="line">    echo &quot;&lt;/br&gt;&quot;;</div><div class="line">    </div><div class="line">    echo &quot;学习 php&quot;;</div><div class="line">    echo &quot;&lt;/br&gt;&quot;;</div><div class="line">    echo phpinfo();</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>打开浏览器, 输入地址：<a href="http://localhost:8080/index.php" target="_blank" rel="noopener">http://localhost:8080/index.php</a> 你会看到下面的页面:<br><img src="/upload/images/2018/08/19/1.jpg" alt=""></p>
+<p>也可以在该目录下创建其他 php 文件, 如 <code>m.php</code> 文件.</p>
+<p>浏览器中输入 <a href="http://localhost:8080/m.php" target="_blank" rel="noopener">http://localhost:8080/m.php</a> 可以执行相对应的文件.</p>
+<p><strong>注意：</strong>这里的 <code>m.php</code> 是新建的 php 文件.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP-MySql-nginx-php-fpm/" rel="tag"># PHP MySql nginx php-fpm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/14/简单配置-Apache/" rel="next" title="简单配置 Apache">
+                <i class="fa fa-chevron-left"></i> 简单配置 Apache
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-php7-Nginx"><span class="nav-number">1.</span> <span class="nav-text">配置 php7 + Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#卸载-PHP56"><span class="nav-number">1.1.</span> <span class="nav-text">卸载 PHP56</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-php-fpm"><span class="nav-number">1.2.</span> <span class="nav-text">配置 php-fpm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装和配置-Nginx"><span class="nav-number">1.3.</span> <span class="nav-text">安装和配置 Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行-php"><span class="nav-number">1.4.</span> <span class="nav-text">运行 php</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+总访问量 <span id="busuanzi_value_site_pv"></span> &nbsp&nbsp&nbsp
+您是第<span id="busuanzi_value_site_uv"></span>个学友
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
