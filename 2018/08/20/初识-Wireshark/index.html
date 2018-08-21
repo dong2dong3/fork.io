@@ -80,22 +80,23 @@
 
 
 
-<meta name="description" content="使用 Charles 介绍了在 MacOS 上面的使用 Charles 工具, 虽然 Charles 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。 今天给大家分享强大的网络抓包工具 Wireshark。 简介 Wireshark 是免费的，支持 Windows、MacOS 和 Linux，提供丰富的 GUI 交互，能分析所有的网络协议，">
+<meta name="description" content="使用 Charles 介绍了在 MacOS 上面的使用 Charles 工具, 虽然 Charles 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。 今天给大家分享强大的网络抓包工具 Wireshark，算是初步认识一下这个工具，后续分享更多关于 Wireshark 的内容。 简介Wireshark 是免费的，支持 Windows、Mac">
 <meta name="keywords" content="Wireshark tcp ip udp http https">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识 Wireshark">
 <meta property="og:url" content="http://yoursite.com/2018/08/20/初识-Wireshark/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="使用 Charles 介绍了在 MacOS 上面的使用 Charles 工具, 虽然 Charles 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。 今天给大家分享强大的网络抓包工具 Wireshark。 简介 Wireshark 是免费的，支持 Windows、MacOS 和 Linux，提供丰富的 GUI 交互，能分析所有的网络协议，">
+<meta property="og:description" content="使用 Charles 介绍了在 MacOS 上面的使用 Charles 工具, 虽然 Charles 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。 今天给大家分享强大的网络抓包工具 Wireshark，算是初步认识一下这个工具，后续分享更多关于 Wireshark 的内容。 简介Wireshark 是免费的，支持 Windows、Mac">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/2.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/3.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/4.jpg">
-<meta property="og:updated_time" content="2018-08-20T15:41:55.255Z">
+<meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/5.jpg">
+<meta property="og:updated_time" content="2018-08-21T13:59:27.365Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识 Wireshark">
-<meta name="twitter:description" content="使用 Charles 介绍了在 MacOS 上面的使用 Charles 工具, 虽然 Charles 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。 今天给大家分享强大的网络抓包工具 Wireshark。 简介 Wireshark 是免费的，支持 Windows、MacOS 和 Linux，提供丰富的 GUI 交互，能分析所有的网络协议，">
+<meta name="twitter:description" content="使用 Charles 介绍了在 MacOS 上面的使用 Charles 工具, 虽然 Charles 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。 今天给大家分享强大的网络抓包工具 Wireshark，算是初步认识一下这个工具，后续分享更多关于 Wireshark 的内容。 简介Wireshark 是免费的，支持 Windows、Mac">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2018/08/20/1.jpg">
 
 
@@ -361,11 +362,11 @@
 
       
         <p><a href="http://www.veryitman.com/2017/07/23/%E4%BD%BF%E7%94%A8-Charles/" target="_blank" rel="noopener">使用 Charles</a> 介绍了在 MacOS 上面的使用 <code>Charles</code> 工具, 虽然 <code>Charles</code> 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。</p>
-<p>今天给大家分享强大的网络抓包工具 <code>Wireshark</code>。</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><img src="/upload/images/2018/08/20/1.jpg" alt=""></p>
-<p><code>Wireshark</code> 是免费的，支持 Windows、MacOS 和 Linux，提供丰富的 GUI 交互，能分析所有的网络协议，并且是开源的。</p>
+<p>今天给大家分享强大的网络抓包工具 <code>Wireshark</code>，算是初步认识一下这个工具，后续分享更多关于 <code>Wireshark</code> 的内容。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Wireshark</code> 是免费的，支持 Windows、MacOS 和 Linux，提供丰富的 GUI 交互，能分析所有的网络协议，并且是开源的。</p>
+<p><img src="/upload/images/2018/08/20/1.jpg" alt=""></p>
 <p>掌握好 <code>Wireshark</code>，能对绝大部分的网络协议进行分析了，所以学习它的使用对你的工作不无裨益。</p>
-<p>更多关于 <code>Wireshark</code> 的介绍和特性，也可以去 <a href="https://www.wireshark.org/" target="_blank" rel="noopener">Wireshark 官网</a> 查阅。</p>
+<p>关于 <code>Wireshark</code> 本身 UI（展示的界面内容） 的部分不在本文的讨论范围内，更多关于 <code>Wireshark</code> 的介绍和特性，可以去 <a href="https://www.wireshark.org/" target="_blank" rel="noopener">Wireshark 官网</a> 查阅。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>我的 MacOS 版本:<br><img src="/upload/images/2018/08/20/2.jpg" alt=""></p>
 <p>这里点击 <code>Wireshark</code> 的 <a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">下载地址</a>, 就可以去下载对应的平台版本。</p>
 <p><img src="/upload/images/2018/08/20/3.jpg" alt=""></p>
@@ -374,13 +375,13 @@
 </blockquote>
 <h2 id="抓-iOS-设备的数据包"><a href="#抓-iOS-设备的数据包" class="headerlink" title="抓 iOS 设备的数据包"></a>抓 iOS 设备的数据包</h2><p>想抓 iOS 设备的网络数据，需要让 iOS 设备数据通过 MacOS 才行，因为 <code>Wireshark</code> 是针对网口进行抓包的。</p>
 <p>当然了，你的 iOS 设备不需要越狱.</p>
-<p>设备连上数据线，然后在 Mac 的终端执行：</p>
+<p>通过 usb 连接 iOS 设备后，接下来创建远程虚拟接口，在终端执行下面命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rvictl -s 设备id(udid)</div></pre></td></tr></table></figure>
 <blockquote>
-<p>rvictl 即 Remote Virtual Interface Tool.</p>
+<p>rvictl 即 Remote Virtual Interface Tool。它可以通过 iOS 设备的 UDID 创建一个虚拟网卡，然后通过这个虚拟网卡监听设备上所有的网络流量。</p>
 </blockquote>
-<p>通过 usb 连接 iOS 设备后，Mac 会出现一个对应的虚拟网络接口，名字是 rvi0（如果有多个 iOS 设备， 则累加，rvi1，rvi2…），如下图所示：<br><img src="/upload/images/2018/08/20/4.jpg" alt=""></p>
-<p>只要启动 <code>Wireshark</code>，监听 rvi 接口就能抓到 iOS 设备的数据了，当然，也可以使用 <code>Wireshark</code> 以外的工具抓取或分析.</p>
+<p>执行成功后，Mac 会出现一个对应的虚拟网络接口，名字是 rvi0（如果有多个 iOS 设备， 则累加，rvi1，rvi2…），如下图所示：<br><img src="/upload/images/2018/08/20/4.jpg" alt=""></p>
+<p>只要启动 <code>Wireshark</code>，监听 rvi0 接口就能抓到 iOS 设备的数据了。</p>
 <blockquote>
 <p>关于获取 iOS 设备 ID(UDID)，可以使用 Xcode, 在 <code>Window/Devices and Simulators</code> 中选择相应设备，右面设备信息的 identifier 里就是对应的 UDID. 也可以通过 iTunes 或者第三方工具如 iTools 获取.</p>
 </blockquote>
@@ -388,6 +389,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install ideviceinstaller</div></pre></td></tr></table></figure>
 <p>然后执行下面命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">idevice_id -l</div></pre></td></tr></table></figure>
+<p>以抓取下面的一个 HTTP 请求为例，简单说明一下相关的知识。</p>
+<p>GET 请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/news/detailV3.html?id=1279391&amp;COMMON_ACCESS_TOKEN=(null)&amp;COMMON_ACCESS_TOKEN_SECRET=(null)&amp;_cT=IOS&amp;_cV=3.1.3&amp;_cA=PM</div></pre></td></tr></table></figure>
+<p>看返回结果，选中 Rsponse(200 OK) 右键, Follow/HTTP Stream，如图所示：<br><img src="/upload/images/2018/08/20/5.jpg" alt=""></p>
+<p>在弹出的窗口中就可以看到具体的响应内容，以及响应的 json 数据。</p>
 <h2 id="过滤器过滤"><a href="#过滤器过滤" class="headerlink" title="过滤器过滤"></a>过滤器过滤</h2><p>在 <code>Wireshark</code> 中显示过滤器会显示很多当前网络的数据包，如果你想看指定规则的数据包怎么办？</p>
 <p>别担心，<code>Wireshark</code> 给我们提供了过滤功能，按照一定的过滤规则就可以达到你的目的。</p>
 <p><strong>1. 网络协议过滤</strong></p>
