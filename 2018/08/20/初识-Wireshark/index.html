@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/3.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/4.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/20/5.jpg">
-<meta property="og:updated_time" content="2018-08-21T13:59:27.365Z">
+<meta property="og:updated_time" content="2018-08-21T15:59:07.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识 Wireshark">
 <meta name="twitter:description" content="使用 Charles 介绍了在 MacOS 上面的使用 Charles 工具, 虽然 Charles 很不错, 但是其只能抓 HTTP/HTTPS 的包, 对 TCP、UDP 等其他协议的网络包, 爱莫能助。 今天给大家分享强大的网络抓包工具 Wireshark，算是初步认识一下这个工具，后续分享更多关于 Wireshark 的内容。 简介Wireshark 是免费的，支持 Windows、Mac">
@@ -368,10 +368,10 @@
 <p>掌握好 <code>Wireshark</code>，能对绝大部分的网络协议进行分析了，所以学习它的使用对你的工作不无裨益。</p>
 <p>关于 <code>Wireshark</code> 本身 UI（展示的界面内容） 的部分不在本文的讨论范围内，更多关于 <code>Wireshark</code> 的介绍和特性，可以去 <a href="https://www.wireshark.org/" target="_blank" rel="noopener">Wireshark 官网</a> 查阅。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>我的 MacOS 版本:<br><img src="/upload/images/2018/08/20/2.jpg" alt=""></p>
-<p>这里点击 <code>Wireshark</code> 的 <a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">下载地址</a>, 就可以去下载对应的平台版本。</p>
+<p>点击 <code>Wireshark</code> 的 <a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">下载地址</a>, 可以去下载对应的平台版本。</p>
 <p><img src="/upload/images/2018/08/20/3.jpg" alt=""></p>
 <blockquote>
-<p>注意: 之前的 Mac 系统版本可能需要安装 <code>x11</code>, 现在新系统不需要安装.</p>
+<p>注意: 之前的 Mac 系统版本可能需要安装 <code>x11</code>, 现在新系统不需要安装了.</p>
 </blockquote>
 <h2 id="抓-iOS-设备的数据包"><a href="#抓-iOS-设备的数据包" class="headerlink" title="抓 iOS 设备的数据包"></a>抓 iOS 设备的数据包</h2><p>想抓 iOS 设备的网络数据，需要让 iOS 设备数据通过 MacOS 才行，因为 <code>Wireshark</code> 是针对网口进行抓包的。</p>
 <p>当然了，你的 iOS 设备不需要越狱.</p>
@@ -399,19 +399,18 @@
 <p><strong>1. 网络协议过滤</strong></p>
 <p>比如 TCP，只显示 TCP 协议，HTTP 只显示 HTTP 协议等。在过滤器输入框中直接输入协议名称即可，不区分大小写。</p>
 <p><strong>2. IP 地址过滤</strong></p>
-<p>比如 ip.src ==192.168.1.102 显示源地址为192.168.1.102，</p>
-<p>ip.dst==192.168.1.102, 目标地址为192.168.1.102</p>
+<p>如 ip.src == 192.168.1.102 显示源地址为 <code>192.168.1.102</code>，<br>而 ip.dst == 192.168.1.102, 目标地址为 <code>192.168.1.102</code>。</p>
 <p><strong>3. 端口过滤</strong></p>
-<p>tcp.port ==80,  端口为80的</p>
-<p>tcp.srcport == 80,  只显示TCP协议的愿端口为80的。</p>
+<p>tcp.port == 80, 端口为 80 的</p>
+<p>tcp.srcport == 80, 只显示 TCP 协议的原端口为 80 的。</p>
 <p><strong>4. Http 模式过滤</strong></p>
-<p>http.request.method==”GET”,   只显示HTTP GET方法的。</p>
+<p>http.request.method == “GET”，只显示 HTTP GET 方法的。</p>
 <p><strong>5. 结合逻辑运算符 AND/OR 组成复杂的表达式</strong></p>
 <blockquote>
 <p>AND/OR 也可以写成 <code>&amp;&amp;</code> / <code>||</code></p>
 </blockquote>
 <p>下面举几个常用的示例，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//源地址或者目标地址是192.168.1.103</div><div class="line">ip.src == 192.168.1.103 or ip.dst==192.168.1.103</div><div class="line"></div><div class="line">//显示所有目标或源地址是192.168.1.1的数据包</div><div class="line">ip.addr == 192.168.1.1 </div><div class="line"></div><div class="line">//显示目标地址是192.168.1.1的数据包</div><div class="line">ip.dst == 192.168.1.1 </div><div class="line"></div><div class="line">//显示源地址是192.168.1.1的数据包</div><div class="line">ip.src ==192.168.1.1 </div><div class="line"></div><div class="line">//tcp 连接端口为9101的数据包</div><div class="line">tcp.port == 9101</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//源地址或者目标地址是192.168.1.103</div><div class="line">ip.src == 192.168.1.103 or ip.dst == 192.168.1.103</div><div class="line"></div><div class="line">//显示所有目标或源地址是192.168.1.1的数据包</div><div class="line">ip.addr == 192.168.1.1 </div><div class="line"></div><div class="line">//显示目标地址是192.168.1.1的数据包</div><div class="line">ip.dst == 192.168.1.1 </div><div class="line"></div><div class="line">//显示源地址是192.168.1.1的数据包</div><div class="line">ip.src == 192.168.1.1 </div><div class="line"></div><div class="line">//tcp 连接端口为9101的数据包</div><div class="line">tcp.port == 9101</div></pre></td></tr></table></figure>
 <p>更多的过滤规则可以去 <a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html" target="_blank" rel="noopener">官方手册</a> 和 <a href="https://wiki.wireshark.org/CaptureFilters" target="_blank" rel="noopener">CaptureFilters</a> 查阅和学习。</p>
 <h2 id="美中不足"><a href="#美中不足" class="headerlink" title="美中不足"></a>美中不足</h2><p><code>Wireshark</code> 只能查看封包，而不能修改封包的内容，或者发送封包。</p>
 <p>对于 HTTP、HTTPS 网络封包，<code>Wireshark</code> 都可以捕获， 但不能直接解密 HTTPS，所以想使用 <code>Wireshark</code> 来分析 HTTPS 包中的内容，需要去额外配置，较麻烦，后续研究再分享给大家。</p>

@@ -12,10 +12,10 @@
 <p>掌握好 <code>Wireshark</code>，能对绝大部分的网络协议进行分析了，所以学习它的使用对你的工作不无裨益。</p>
 <p>关于 <code>Wireshark</code> 本身 UI（展示的界面内容） 的部分不在本文的讨论范围内，更多关于 <code>Wireshark</code> 的介绍和特性，可以去 <a href="https://www.wireshark.org/" target="_blank" rel="noopener">Wireshark 官网</a> 查阅。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>我的 MacOS 版本:<br><img src="/upload/images/2018/08/20/2.jpg" alt=""></p>
-<p>这里点击 <code>Wireshark</code> 的 <a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">下载地址</a>, 就可以去下载对应的平台版本。</p>
+<p>点击 <code>Wireshark</code> 的 <a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">下载地址</a>, 可以去下载对应的平台版本。</p>
 <p><img src="/upload/images/2018/08/20/3.jpg" alt=""></p>
 <blockquote>
-<p>注意: 之前的 Mac 系统版本可能需要安装 <code>x11</code>, 现在新系统不需要安装.</p>
+<p>注意: 之前的 Mac 系统版本可能需要安装 <code>x11</code>, 现在新系统不需要安装了.</p>
 </blockquote>
 <h2 id="抓-iOS-设备的数据包"><a href="#抓-iOS-设备的数据包" class="headerlink" title="抓 iOS 设备的数据包"></a>抓 iOS 设备的数据包</h2><p>想抓 iOS 设备的网络数据，需要让 iOS 设备数据通过 MacOS 才行，因为 <code>Wireshark</code> 是针对网口进行抓包的。</p>
 <p>当然了，你的 iOS 设备不需要越狱.</p>
@@ -43,19 +43,18 @@
 <p><strong>1. 网络协议过滤</strong></p>
 <p>比如 TCP，只显示 TCP 协议，HTTP 只显示 HTTP 协议等。在过滤器输入框中直接输入协议名称即可，不区分大小写。</p>
 <p><strong>2. IP 地址过滤</strong></p>
-<p>比如 ip.src ==192.168.1.102 显示源地址为192.168.1.102，</p>
-<p>ip.dst==192.168.1.102, 目标地址为192.168.1.102</p>
+<p>如 ip.src == 192.168.1.102 显示源地址为 <code>192.168.1.102</code>，<br>而 ip.dst == 192.168.1.102, 目标地址为 <code>192.168.1.102</code>。</p>
 <p><strong>3. 端口过滤</strong></p>
-<p>tcp.port ==80,  端口为80的</p>
-<p>tcp.srcport == 80,  只显示TCP协议的愿端口为80的。</p>
+<p>tcp.port == 80, 端口为 80 的</p>
+<p>tcp.srcport == 80, 只显示 TCP 协议的原端口为 80 的。</p>
 <p><strong>4. Http 模式过滤</strong></p>
-<p>http.request.method==”GET”,   只显示HTTP GET方法的。</p>
+<p>http.request.method == “GET”，只显示 HTTP GET 方法的。</p>
 <p><strong>5. 结合逻辑运算符 AND/OR 组成复杂的表达式</strong></p>
 <blockquote>
 <p>AND/OR 也可以写成 <code>&amp;&amp;</code> / <code>||</code></p>
 </blockquote>
 <p>下面举几个常用的示例，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//源地址或者目标地址是192.168.1.103</div><div class="line">ip.src == 192.168.1.103 or ip.dst==192.168.1.103</div><div class="line"></div><div class="line">//显示所有目标或源地址是192.168.1.1的数据包</div><div class="line">ip.addr == 192.168.1.1 </div><div class="line"></div><div class="line">//显示目标地址是192.168.1.1的数据包</div><div class="line">ip.dst == 192.168.1.1 </div><div class="line"></div><div class="line">//显示源地址是192.168.1.1的数据包</div><div class="line">ip.src ==192.168.1.1 </div><div class="line"></div><div class="line">//tcp 连接端口为9101的数据包</div><div class="line">tcp.port == 9101</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//源地址或者目标地址是192.168.1.103</div><div class="line">ip.src == 192.168.1.103 or ip.dst == 192.168.1.103</div><div class="line"></div><div class="line">//显示所有目标或源地址是192.168.1.1的数据包</div><div class="line">ip.addr == 192.168.1.1 </div><div class="line"></div><div class="line">//显示目标地址是192.168.1.1的数据包</div><div class="line">ip.dst == 192.168.1.1 </div><div class="line"></div><div class="line">//显示源地址是192.168.1.1的数据包</div><div class="line">ip.src == 192.168.1.1 </div><div class="line"></div><div class="line">//tcp 连接端口为9101的数据包</div><div class="line">tcp.port == 9101</div></pre></td></tr></table></figure>
 <p>更多的过滤规则可以去 <a href="https://www.wireshark.org/docs/man-pages/wireshark-filter.html" target="_blank" rel="noopener">官方手册</a> 和 <a href="https://wiki.wireshark.org/CaptureFilters" target="_blank" rel="noopener">CaptureFilters</a> 查阅和学习。</p>
 <h2 id="美中不足"><a href="#美中不足" class="headerlink" title="美中不足"></a>美中不足</h2><p><code>Wireshark</code> 只能查看封包，而不能修改封包的内容，或者发送封包。</p>
 <p>对于 HTTP、HTTPS 网络封包，<code>Wireshark</code> 都可以捕获， 但不能直接解密 HTTPS，所以想使用 <code>Wireshark</code> 来分析 HTTPS 包中的内容，需要去额外配置，较麻烦，后续研究再分享给大家。</p>
@@ -2727,7 +2726,18 @@
     <entry>
       <title><![CDATA[GCC: 编译C语言的流程]]></title>
       <url>/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
-      <content type="html"><![CDATA[<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>这篇博文 <a href="http://blog.csdn.net/veryitman/article/details/7340668" target="_blank" rel="noopener">makefile: gcc 工作流程</a> 早期被我放在 CSDN 上面过.时隔多年, 仍不能忘怀, 现乔迁至此.</p>
+      <content type="html"><![CDATA[<p>再看下文之前，先普及一下 Linux 和 gcc 的历史，下面的这段内容来自于网络。</p>
+<blockquote>
+<p>早在 20 世纪 70 年代，UNIX 系统是开源而且免费的。但是在 1979 年时，AT&amp;T 公司宣布了对 UNIX 系统的商业化计划，随之开源软件业转变成了版权式软件产业，源代码被当作商业机密，成为专利产品，人们再也不能自由地享受科技成果。</p>
+<p>于是在 1984 年，Richard Stallman 面对于如此封闭的软件创作环境，发起了 GNU 源代码开放计划并制定了著名的 GPL 许可协议。</p>
+<p>1987 年时，GNU 计划获得了一项重大突破—gcc编译器发布，这使得程序员可以基于该编译器编写出属于自己的开源软件。</p>
+<p>随之，在 1991 年10 月，芬兰赫尔辛基大学的在校生 Linus Torvalds 编写了一款名为 Linux 的操作系统。该系统因其较高的代码质量且基于 GNU GPL 许可协议的开放源代码特性，迅速得到了 GNU 计划和一大批黑客程序员的支持。</p>
+<p>随后 Linux 系统便进入了如火如荼的发展阶段。</p>
+<p>1994 年 1 月，Bob Young 在 Linux 系统内核的基础之上，集成了众多的源代码和程序软件，发布了红帽系统并开始出售技术服务，这进一步推动了 Linux 系统的普及。</p>
+<p>1998 年以后，随着 GNU 源代码开放计划和 Linux 系统的继续火热，以 IBM 和 Intel 为首的多家 IT 企业巨头开始大力推动开放源代码软件的发展。</p>
+<p>到了 2017 年年底，Linux 内核已经发展到了 4.13 版本，并且 Linux 系统版本也有数百个之多，但它们依然都使用 Linus Torvalds 开发、维护的Linux 系统内核。RedHat 公司也成为了开源行业及 Linux 系统的带头公司。</p>
+</blockquote>
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>这篇博文 <a href="http://blog.csdn.net/veryitman/article/details/7340668" target="_blank" rel="noopener">makefile: gcc 工作流程</a> 早期被我放在 CSDN 上面过.时隔多年, 仍不能忘怀, 现乔迁至此.</p>
 <p>本文比较简单, 比较适合初学者.<br>我只是试图以实例的方式给大家讲解一下 GCC 编译链接 C语言程序的流程, 并没有高深的知识.</p>
 <h2 id="编译流程"><a href="#编译流程" class="headerlink" title="编译流程"></a>编译流程</h2><p>C 语言经过预处理、编译、连接最后生成可执行文件.</p>
 <p>在 Linux 的 GCC 下面，看看其工作流程. 流程图如下：</p>
