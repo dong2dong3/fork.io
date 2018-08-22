@@ -4984,10 +4984,21 @@
 <p>在执行的过程中, 你可以在 <code>~/.cocoapods/repos</code> 使用<br><code>du -sh *</code> 来看 repos 目录的大小变化.</p>
 <p>如果观察好久, 大小没有变化, 最终会出现类似下面的错误:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Cloning into &apos;master&apos;...</div><div class="line">error: RPC failed; curl 56 SSLRead() return error -36</div><div class="line">fatal: The remote end hung up unexpectedly</div><div class="line">fatal: early EOF</div><div class="line">fatal: index-pack failed</div></pre></td></tr></table></figure>
-<p>解决方案: 更新 gem</p>
+<p>解决方案，如下：</p>
+<p>先更新 gem</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gem update --system</div></pre></td></tr></table></figure>
-<p>重新执行</p>
+<p>再重新执行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod setup</div></pre></td></tr></table></figure>
+<h2 id="pod-install-问题"><a href="#pod-install-问题" class="headerlink" title="pod install 问题"></a>pod install 问题</h2><p>无法使用，报类似下面的两种错误信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">can&apos;t find gem cocoapods (&gt;= 0.a) with executable pod (Gem::GemNotFoundException)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">While executing gem ... (TypeError) </div><div class="line">no implicit conversion of nil into String</div></pre></td></tr></table></figure>
+<p>解决方案，如下：</p>
+<p><strong>1. 重新安装 ruby</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew reinstall ruby</div></pre></td></tr></table></figure>
+<p><strong>2. gem 更新</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rm /usr/local/bin/update_rubygems</div><div class="line"></div><div class="line">sudo gem update --system</div></pre></td></tr></table></figure>
+<p><strong>3. 重新安装 Cocoapods 并重新添加源</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo gem uninstall cocoapods</div><div class="line"></div><div class="line">sudo gem install -n /usr/local/bin cocoapods</div><div class="line"></div><div class="line">gem sources -a https://gems.ruby-china.org/</div></pre></td></tr></table></figure>
 ]]></content>
       
         <categories>
