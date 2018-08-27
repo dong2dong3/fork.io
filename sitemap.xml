@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/08/19/%E9%85%8D%E7%BD%AE-php7-Nginx/</loc>
+    
+    <lastmod>2018-08-27T16:19:09.721Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/</loc>
     
     <lastmod>2018-08-27T15:08:18.746Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>http://yoursite.com/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/</loc>
     
     <lastmod>2018-08-21T15:55:54.250Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/08/19/%E9%85%8D%E7%BD%AE-php7-Nginx/</loc>
-    
-    <lastmod>2018-08-19T15:48:07.035Z</lastmod>
     
   </url>
   

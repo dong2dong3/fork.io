@@ -166,7 +166,7 @@
 <p>然后 <code>kill -9 pid</code>，重新启动 php-fpm 即可。</p>
 <h2 id="安装和配置-Nginx"><a href="#安装和配置-Nginx" class="headerlink" title="安装和配置 Nginx"></a>安装和配置 Nginx</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install nginx</div></pre></td></tr></table></figure>
 <p>创建文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkdir -p /usr/local/var/logs/nginx</div><div class="line">mkdir -p /usr/local/etc/nginx/sites-available</div><div class="line">mkdir -p /usr/local/etc/nginx/sites-enabled</div><div class="line">mkdir -p /usr/local/etc/nginx/conf.d</div><div class="line">mkdir -p /usr/local/etc/nginx/ssl</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkdir -p /usr/local/var/log/nginx</div><div class="line">mkdir -p /usr/local/etc/nginx/sites-available</div><div class="line">mkdir -p /usr/local/etc/nginx/sites-enabled</div><div class="line">mkdir -p /usr/local/etc/nginx/conf.d</div><div class="line">mkdir -p /usr/local/etc/nginx/ssl</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo mkdir -p /var/www</div><div class="line">sudo chown :staff /var/www</div><div class="line">sudo chmod 775 /var/www</div><div class="line">vi /var/www/info.php</div><div class="line">vi /var/www/index.html</div><div class="line">vi /var/www/403.html</div><div class="line">vi /var/www/404.html</div></pre></td></tr></table></figure>
 <p>改变 nginx.conf 配置文件</p>
 <p>该配置文件在 <code>/usr/local/etc/nginx/nginx.conf</code> 下面.</p>
@@ -198,6 +198,20 @@
 <p>也可以在该目录下创建其他 PHP 文件, 如 <code>m.php</code> 文件.</p>
 <p>浏览器中输入 <a href="http://localhost:8080/m.php" target="_blank" rel="noopener">http://localhost:8080/m.php</a> 可以执行相对应的文件.</p>
 <p><strong>注意：</strong>这里的 <code>m.php</code> 是新建的 PHP 文件.</p>
+<h2 id="重要文件"><a href="#重要文件" class="headerlink" title="重要文件"></a>重要文件</h2><p><strong>1. nginx log 文件</strong></p>
+<p><code>/usr/local/var/log/nginx/access.log</code></p>
+<p><code>/usr/local/var/log/nginx/error.log</code></p>
+<p><code>/usr/local/etc/nginx/logs/error.log</code></p>
+<p><strong>2. nginx 配置文件</strong></p>
+<p><code>/usr/local/etc/nginx/nginx.conf</code></p>
+<p><strong>3. php-fpm 配置文件</strong></p>
+<p><code>/private/etc/php-fpm.d/www.conf</code></p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>502 bad gateaway</strong></p>
+<p>我是经常看到这个问题，但是每次引起的原因又不太一样，绝大部分是因为 <code>php-fpm</code> 启动不了或者是其端口错误导致的。</p>
+<p>这种情况下，建议去看 <code>/usr/local/etc/nginx/logs/error.log</code> 日志文件。</p>
+<p>例如下面的错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[error] </div><div class="line">61016#0: *1 kevent() reported that connect() failed (61: Connection refused) while connecting to upstream, </div><div class="line">client: 127.0.0.1, </div><div class="line">server: localhost, </div><div class="line">request: &quot;GET /3.php HTTP/1.1&quot;, </div><div class="line">upstream: &quot;fastcgi://127.0.0.1:9000&quot;, </div><div class="line">host: &quot;localhost:8080&quot;</div></pre></td></tr></table></figure>
+<p>最终，我修改了 <code>/private/etc/php-fpm.d/www.conf</code> 中端口为 <code>9000</code>（我之前将该端口修改了其他的），重启 <code>php-fpm</code> 解决问题。 </p>
 ]]></content>
       
         <categories>
