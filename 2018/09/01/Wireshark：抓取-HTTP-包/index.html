@@ -98,7 +98,8 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/01/8.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/01/9.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/01/10.jpg">
-<meta property="og:updated_time" content="2018-09-01T06:15:40.593Z">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2018-09-01T07:00:11.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wireshark：抓取 HTTP 包">
 <meta name="twitter:description" content="开篇简要初识 Wireshark 简单介绍了强大的 Wireshark 工具，想用好或者是说想发挥 Wireshark 的巨大威力，还有很长的路要走（对我来说）。学习 Wireshark 的成本要比其他网络抓包工具的成本高，所以请做好学习的准备。 我身边很多开发同事，甚至包括一些刚入职的测试工程师都不喜欢使用抓包工具，遇到问题凭着自己的感觉在那里侃侃而谈，既耽误时间又没有解决问题，有时候还伤了和气">
@@ -371,7 +372,7 @@
 <p>说到 <code>Wireshark</code> 更是很少人使用，至少我身边的同事是这样。如果让你一直去看那些 RFC 等网络协议，不到半小时估计你就会感到疲惫，但是结合 <code>Wireshark</code> 来理解网络协议就会感到无比的快乐，何乐而不为呢？！</p>
 <p>继续阅读下去，你可以了解到如下几个知识：</p>
 <p><strong>1. 如何抓取 PC 端、iOS 设备的网络包？</strong><br><strong>2. 使用一些过滤条件如何查看包的内容？</strong><br><strong>3. 如何在 <code>Wireshark</code> 中显示域名？</strong></p>
-<h2 id="看-PC-端的-HTTP-请求"><a href="#看-PC-端的-HTTP-请求" class="headerlink" title="看 PC 端的 HTTP 请求"></a>看 PC 端的 HTTP 请求</h2><p>打开 <code>Wireshark</code>，选择对应的网口，因为我使用的是无线网络（WiFi），所以选择 <code>Wi-Fi：en0</code> 这个网口，你可以根据你的网络使用情况来选择对应的网口，如下图：</p>
+<h2 id="PC-端的-HTTP-请求"><a href="#PC-端的-HTTP-请求" class="headerlink" title="PC 端的 HTTP 请求"></a>PC 端的 HTTP 请求</h2><p>打开 <code>Wireshark</code>，选择对应的网口，因为我使用的是无线网络（WiFi），所以选择 <code>Wi-Fi：en0</code> 这个网口，你可以根据你的网络使用情况来选择对应的网口，如下图：</p>
 <p><img src="/upload/images/2018/09/01/1.jpg" alt=""></p>
 <p>可以看到对应有网络数据的网口，<code>Wireshark</code> 还在右侧显示对应的波浪，很人性化的设计。双击对应的网口，就可以使用 <code>Wireshark</code> 来抓包看数据了。</p>
 <p>下面我就以 PC 端访问 <code>www.veryitman.com</code> 来演示 HTTP 请求的抓包情况。</p>
@@ -389,16 +390,18 @@
 <p>选择任何一个请求，在对应的 <code>区域2</code> 可以看到该请求的详情。</p>
 <p>刚才使用的过滤条件只看到 PC（客户端）的请求，没有看到服务器返回信息，我们修改一下过滤条件为 <code>ip.src==185.199.109.153 &amp;&amp; http &amp;&amp; ip.dst==10.4.17.7</code>，这样就看以看到服务器的回包信息了，如下图所示：<br><img src="/upload/images/2018/09/01/7.jpg" alt=""></p>
 <p>双击进入该响应，就可以看到对应的响应数据详情了。</p>
-<h2 id="看-iOS-设备端的-HTTP-请求"><a href="#看-iOS-设备端的-HTTP-请求" class="headerlink" title="看 iOS 设备端的 HTTP 请求"></a>看 iOS 设备端的 HTTP 请求</h2><p>跟查看 PC 端的 HTTP 请求方式基本一致，只是此时的本机 ip 地址是手机端的而不是 pc 端的。</p>
+<h2 id="iOS-设备的-HTTP-请求"><a href="#iOS-设备的-HTTP-请求" class="headerlink" title="iOS 设备的 HTTP 请求"></a>iOS 设备的 HTTP 请求</h2><p>跟查看 PC 端的 HTTP 请求方式基本一致，只是此时的本机 ip 地址是手机端的而不是 pc 端的。</p>
 <p><a href="http://www.veryitman.com/2018/08/20/%E5%88%9D%E8%AF%86-Wireshark/" target="_blank" rel="noopener">初识 Wireshark</a> 中已经跟大家分享过如何去连接 iOS 设备到 <code>Wireshark</code> 抓包了，这里不再赘述。</p>
 <p>至于查看 iOS 设备的 ip 地址，就很简单了，打开 <code>设置/wifi</code> 看一下详情就知道了。</p>
 <h2 id="显示域名"><a href="#显示域名" class="headerlink" title="显示域名"></a>显示域名</h2><p>如果你经常使用 <code>Charles</code> 抓包，就可以发现 <code>Charles</code> 展示的请求中都是以域名来显示的，但是在 <code>Wireshark</code> 都是显示 ip 地址，或许因此感到不适，那么，<code>Wireshark</code> 能否展示域名呢？</p>
 <p><code>Wireshark</code> 是可以像 <code>Charles</code> 那样展示域名的，只是它默认显示 ip 地址罢了。</p>
 <p>打开 Preferences，如图：<br><img src="/upload/images/2018/09/01/8.jpg" alt=""><br><img src="/upload/images/2018/09/01/9.jpg" alt=""></p>
 <p>这样 <code>Wireshark</code> 的显示就是另一番景象了，不信，你看下图：<br><img src="/upload/images/2018/09/01/10.jpg" alt=""></p>
-<p>当然，你可以看出来了，过滤条件还是可以使用的。</p>
+<p>当然，你也看出来了，过滤条件还是可以使用的。</p>
 <p>你还可以使用其他的过滤条件，如下面的一些过滤条件，能帮你快速定位你要的数据。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">http.host == &quot;veryitman.com&quot;</div><div class="line"></div><div class="line">http.host contains &quot;veryitman.com&quot;</div><div class="line"></div><div class="line">http contains &quot;HTTP/1.1 200 OK&quot;</div></pre></td></tr></table></figure>
+<p>扫描关注它，你我就多一个朋友</p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
       
     </div>
@@ -621,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开篇简要"><span class="nav-number">1.</span> <span class="nav-text">开篇简要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看-PC-端的-HTTP-请求"><span class="nav-number">2.</span> <span class="nav-text">看 PC 端的 HTTP 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看-iOS-设备端的-HTTP-请求"><span class="nav-number">3.</span> <span class="nav-text">看 iOS 设备端的 HTTP 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示域名"><span class="nav-number">4.</span> <span class="nav-text">显示域名</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开篇简要"><span class="nav-number">1.</span> <span class="nav-text">开篇简要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PC-端的-HTTP-请求"><span class="nav-number">2.</span> <span class="nav-text">PC 端的 HTTP 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-设备的-HTTP-请求"><span class="nav-number">3.</span> <span class="nav-text">iOS 设备的 HTTP 请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示域名"><span class="nav-number">4.</span> <span class="nav-text">显示域名</span></a></li></ol></div>
             
 
           </div>
