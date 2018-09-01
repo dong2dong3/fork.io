@@ -4932,6 +4932,7 @@
 <p>2.重新添加源, 注意是 https.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem sources -a https://gems.ruby-china.org/</div></pre></td></tr></table></figure>
 <p>之前 <a href="https://ruby.taobao.org/" target="_blank" rel="noopener">taobao 的源</a> 好像已经不行了.</p>
+<p><strong>注意：</strong>添加源之前在浏览器打开 <code>https://gems.ruby-china.org/</code> 这个地址看一看是否能访问，如果不能访问就修改一下为 <code>https://gems.ruby-china.com</code> 这个地址。</p>
 <p>3.查看是否添加成功, 该步骤可选.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem sources -l</div></pre></td></tr></table></figure>
 <p>安装, 使用 root 权限安装.</p>

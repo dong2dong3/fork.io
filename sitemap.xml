@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/11/08/Mac-install-Cocoapods/</loc>
+    
+    <lastmod>2018-09-01T03:10:40.987Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/02/08/ATS-HTTPS-%E8%AE%A4%E8%AF%81/</loc>
     
     <lastmod>2018-08-30T15:42:30.930Z</lastmod>
@@ -376,13 +383,6 @@
     <loc>http://yoursite.com/2017/07/23/Cocos2d-js-%E5%9C%A8-iOS-%E4%B8%8A%E8%BF%90%E8%A1%8C/</loc>
     
     <lastmod>2018-02-02T15:51:16.690Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/11/08/Mac-install-Cocoapods/</loc>
-    
-    <lastmod>2018-01-25T16:05:23.044Z</lastmod>
     
   </url>
   

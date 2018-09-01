@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/11/08/Mac-install-Cocoapods/</loc>
+    <lastmod>2018-09-01T03:10:40.987Z</lastmod>
+    <data>
+        <display>
+        <title>Mac install Cocoapods</title>
+        <pubTime>2016-11-08T14:47:00.000Z</pubTime>
+        
+        <tag>CocoaPods, iOS</tag>
+         
+         
+           
+             
+              <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/02/08/ATS-HTTPS-%E8%AE%A4%E8%AF%81/</loc>
     <lastmod>2018-08-30T15:42:30.930Z</lastmod>
     <data>
@@ -1018,26 +1038,6 @@
            
              
               <breadCrumb title="Game" url="http://yoursite.com/categories/Game/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/11/08/Mac-install-Cocoapods/</loc>
-    <lastmod>2018-01-25T16:05:23.044Z</lastmod>
-    <data>
-        <display>
-        <title>Mac install Cocoapods</title>
-        <pubTime>2016-11-08T14:47:00.000Z</pubTime>
-        
-        <tag>CocoaPods, iOS</tag>
-         
-         
-           
-             
-              <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
           
         </display>
     </data>
