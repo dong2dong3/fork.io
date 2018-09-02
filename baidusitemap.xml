@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/08/19/%E9%85%8D%E7%BD%AE-php7-Nginx/</loc>
+    <lastmod>2018-09-02T11:19:28.717Z</lastmod>
+    <data>
+        <display>
+        <title>配置 php7 + Nginx</title>
+        <pubTime>2018-08-19T08:41:18.000Z</pubTime>
+        
+        <tag>PHP MySql nginx php-fpm</tag>
+         
+         
+           
+             
+              <breadCrumb title="Server" url="http://yoursite.com/categories/Server/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/04/15/%E4%B8%8D%E8%AE%A9-SIGPIPE-signal-%E5%A4%AA%E5%9A%A3%E5%BC%A0/</loc>
     <lastmod>2018-09-02T05:07:13.181Z</lastmod>
     <data>
@@ -177,26 +197,6 @@
            
              
               <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/08/19/%E9%85%8D%E7%BD%AE-php7-Nginx/</loc>
-    <lastmod>2018-09-02T04:54:14.766Z</lastmod>
-    <data>
-        <display>
-        <title>配置 php7 + Nginx</title>
-        <pubTime>2018-08-19T08:41:18.000Z</pubTime>
-        
-        <tag>PHP MySql nginx php-fpm</tag>
-         
-         
-           
-             
-              <breadCrumb title="Server" url="http://yoursite.com/categories/Server/"/>
           
         </display>
     </data>
