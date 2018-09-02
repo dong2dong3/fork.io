@@ -538,6 +538,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-rw-r--r--  1 root   mobile 74513728 Jun  7 15:20 WeChat.decrypted</div><div class="line">drwxr-xr-x 14 mobile mobile      448 Jun  7 15:20 .</div><div class="line">-rw-r--r--  1 root   mobile   207760 Jun  7 15:15 dumpdecrypted.dylib</div><div class="line">-rw-r--r--  1 mobile mobile        8 Jun  7 13:22 db.globalconfig</div><div class="line">-rw-r--r--  1 mobile mobile       15 Jun  7 11:35 SafeMode.dat</div><div class="line">drwxr-xr-x 26 mobile mobile      832 Jun  7 11:35 MMappedKV</div><div class="line">drwxr-xr-x  3 mobile mobile       96 Jun  7 11:35 CrashReport</div><div class="line">-rw-r--r--  1 mobile mobile     1011 Jun  7 11:35 LocalInfo.lst</div><div class="line">drwxr-xr-x  5 mobile mobile      160 Jun  7 11:35 MemoryStat</div><div class="line">drwxr-xr-x  6 mobile mobile      192 Jun  7 11:35 00000000000000000000000000000000</div><div class="line">drwxr-xr-x 15 mobile mobile      480 Jun  5 13:43 MMResourceMgr</div><div class="line">-rw-r--r--  1 mobile mobile      592 Jun  5 13:43 heavy_user_id_mapping.dat</div><div class="line">drwxr-xr-x  2 mobile mobile       64 Jun  5 10:07 OpenImResource</div></pre></td></tr></table></figure>
 <p>使用 <code>iFunBox</code> 或者 <code>scp</code> 命令将 <code>WeChat.decrypted</code> 文件导出到 mac 的任意目录即可.</p>
 <p>后续会跟大家分享如何使用砸壳后的文件, 敬请期待.</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -598,6 +601,9 @@
 <p>还有一些 APP, 再被砸壳的时候会报如下的错误:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">could not obtain mach port either the process is dead</div></pre></td></tr></table></figure>
 <p>虽然最新版本(2.0.4)说解决了该问题, 但是实际操作过程中, 还是会出现这个问题, 无法进行砸壳.</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -640,6 +646,9 @@
 <p><img src="/upload/images/2018/05/13/5.jpg" alt=""></p>
 <p>可以看出, 相比 <code>iFunBox</code> 的界面显示, <code>pp 助手</code> 工具显得更加友好一些. </p>
 <p>至于使用哪个工具, 要看个人爱好和自己的工作需要, 毕竟工具都是为了提高我们学习和工作效率的, 没有什么绝对的好与坏, 自己觉得合适顺手就好了, 最主要的是能够帮到自己. 我一般是将两者结合使用的, 当然你如果你有更好的工具也可以推荐给我.</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -728,6 +737,9 @@
 <p>执行 <code>ssh -p 5678 root@127.0.0.1</code> 后报错, 如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh_exchange_identification: read: Connection reset by peer</div></pre></td></tr></table></figure>
 <p>这种情况一般是没有正确的使用数据线连接 Mac 电脑, 使用数据线正常连接 Mac 电脑即可解决问题.</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -1015,6 +1027,9 @@
 <li><p><a href="https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/UsingSocketsandSocketStreams.html#//apple_ref/doc/uid/CH73-SW1" target="_blank" rel="noopener">Using Sockets and Socket Streams</a></p>
 </li>
 </ol>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
