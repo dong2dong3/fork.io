@@ -38,7 +38,8 @@
 <p>当然，你也看出来了，过滤条件还是可以使用的。</p>
 <p>你还可以使用其他的过滤条件，如下面的一些过滤条件，能帮你快速定位你要的数据。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">http.host == &quot;veryitman.com&quot;</div><div class="line"></div><div class="line">http.host contains &quot;veryitman.com&quot;</div><div class="line"></div><div class="line">http contains &quot;HTTP/1.1 200 OK&quot;</div></pre></td></tr></table></figure>
-<p>扫码关注，你我就各多一个朋友~</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
@@ -81,6 +82,9 @@
 <p><strong>5. 有个可以交心的朋友尤为重要，可以让彼此敞开心扉，无所顾忌的交谈。</strong></p>
 <p>这个世上没有免费的午餐，一切都要靠你自己去奋斗去争取，机会总是留给有准备的人，坚持自己的目标一直前行，相信自己，机会总有一天会和你不期而遇。</p>
 <p>相信总有一天，你会感激正在努力的自己！</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -155,6 +159,9 @@
 <h2 id="美中不足"><a href="#美中不足" class="headerlink" title="美中不足"></a>美中不足</h2><p><code>Wireshark</code> 只能查看封包，而不能修改封包的内容，或者发送封包。</p>
 <p>对于 HTTP、HTTPS 网络封包，<code>Wireshark</code> 都可以捕获， 但不能直接解密 HTTPS，所以想使用 <code>Wireshark</code> 来分析 HTTPS 包中的内容，需要去额外配置，较麻烦，后续研究再分享给大家。</p>
 <p>所以建议大家，分析 HTTP/HTTPS 去使用各自平台上面的其他工具， 如 <code>Fiddler</code> 和 <code>Charles</code> 等优秀的抓包工具。</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -267,6 +274,9 @@
 <p>例如下面的错误：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[error] </div><div class="line">61016#0: *1 kevent() reported that connect() failed (61: Connection refused) while connecting to upstream, </div><div class="line">client: 127.0.0.1, </div><div class="line">server: localhost, </div><div class="line">request: &quot;GET /3.php HTTP/1.1&quot;, </div><div class="line">upstream: &quot;fastcgi://127.0.0.1:9000&quot;, </div><div class="line">host: &quot;localhost:8080&quot;</div></pre></td></tr></table></figure>
 <p>最终，我修改了 <code>/private/etc/php-fpm.d/www.conf</code> 中端口为 <code>9000</code>（我之前将该端口修改了其他的），重启 <code>php-fpm</code> 解决问题。 </p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -340,6 +350,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">	&lt;h1&gt;Hi, mark, Apache server works!&lt;/h1&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
 <p>在浏览器中输入 <code>http://localhost/mark.html</code>, 可以看到对应的输出.</p>
 <p>如果嫌配置 <code>Sites</code> 目录麻烦, 可以使用这种方式, 直接拷贝对应的文件或者目录放到 <code>/Library/WebServer/Documents</code> 中, 只不过需要 root 权限罢了.</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
@@ -418,6 +431,9 @@
 <p>移除的示例代码如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidDisappear:(BOOL)animated &#123;</div><div class="line">    </div><div class="line">    [super viewDidDisappear:animated];</div><div class="line">    </div><div class="line">    // 取消线程</div><div class="line">    // 实际业务场景中自行决定 canCancel 的设置, 这里只是示例</div><div class="line">    BOOL canCancel = YES;</div><div class="line">    if (canCancel) &#123;</div><div class="line">        [[self permanentThread] cancel];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 停止常驻线程</div><div class="line">    &#123;</div><div class="line">        self.stopLoopRunning = YES;</div><div class="line">        </div><div class="line">        // 移除 port</div><div class="line">        // 如果是用 timer 的方式的常驻线程, 可以 invalid 对应的 timer</div><div class="line">        [self.threadRunLoop removePort:self.threadPort forMode:NSRunLoopCommonModes];</div><div class="line">        </div><div class="line">        // 停止 RunLoop</div><div class="line">        if (nil != self.threadRunLoop) &#123;</div><div class="line">            CFRunLoopStop([self.threadRunLoop getCFRunLoop]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>离开页面后, 可以发现 <code>NSLog(@&quot;--- asyncRun ----&quot;);</code> 停止了打印, 并且当前的 Controller 也 dealloc 了.</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>

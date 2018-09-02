@@ -88,10 +88,12 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="概要下面两篇文章:  常驻线程是一种什么体验  NSTimer 实现常驻线程的问题   都是在 iOS 平台上如何利用 RunLoop 的特性实现常驻线程. 可能你看到本篇文章的标题 移除常驻线程, 有点不理解甚至觉得作者是不是有点神经病, 都已经需要常驻线程了, 为什么还要去退出呢? 实际应用场景中的确几乎遇不到这种情况, 所以, 本篇只是从技术的角度给大家分享 RunLoop 其他的一些知识点">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-01T15:30:28.115Z">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2018-09-02T04:55:07.905Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RunLoop: 移除常驻线程">
 <meta name="twitter:description" content="概要下面两篇文章:  常驻线程是一种什么体验  NSTimer 实现常驻线程的问题   都是在 iOS 平台上如何利用 RunLoop 的特性实现常驻线程. 可能你看到本篇文章的标题 移除常驻线程, 有点不理解甚至觉得作者是不是有点神经病, 都已经需要常驻线程了, 为什么还要去退出呢? 实际应用场景中的确几乎遇不到这种情况, 所以, 本篇只是从技术的角度给大家分享 RunLoop 其他的一些知识点">
+<meta name="twitter:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
 
 
 
@@ -413,6 +415,9 @@
 <p>移除的示例代码如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidDisappear:(BOOL)animated &#123;</div><div class="line">    </div><div class="line">    [super viewDidDisappear:animated];</div><div class="line">    </div><div class="line">    // 取消线程</div><div class="line">    // 实际业务场景中自行决定 canCancel 的设置, 这里只是示例</div><div class="line">    BOOL canCancel = YES;</div><div class="line">    if (canCancel) &#123;</div><div class="line">        [[self permanentThread] cancel];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 停止常驻线程</div><div class="line">    &#123;</div><div class="line">        self.stopLoopRunning = YES;</div><div class="line">        </div><div class="line">        // 移除 port</div><div class="line">        // 如果是用 timer 的方式的常驻线程, 可以 invalid 对应的 timer</div><div class="line">        [self.threadRunLoop removePort:self.threadPort forMode:NSRunLoopCommonModes];</div><div class="line">        </div><div class="line">        // 停止 RunLoop</div><div class="line">        if (nil != self.threadRunLoop) &#123;</div><div class="line">            CFRunLoopStop([self.threadRunLoop getCFRunLoop]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>离开页面后, 可以发现 <code>NSLog(@&quot;--- asyncRun ----&quot;);</code> 停止了打印, 并且当前的 Controller 也 dealloc 了.</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
       
     </div>

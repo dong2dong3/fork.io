@@ -89,7 +89,8 @@
 <meta property="og:description" content="配置 php7 + Nginx之前为了配合完成一个项目（PHP 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 PHP 版本已经是 7.1 了，于是就开始使用系统自带的 PHP 版本了。 1php -v 显示 PHP 版本信息，如下： 123PHP 7.1.16 (cli) (built: Apr  1 2018 13:14:42) ( NTS">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/08/19/1.jpg">
-<meta property="og:updated_time" content="2018-08-27T16:19:09.721Z">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2018-09-02T04:54:14.766Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置 php7 + Nginx">
 <meta name="twitter:description" content="配置 php7 + Nginx之前为了配合完成一个项目（PHP 版本为5.6），在本机搭建了 php56 的环境，后面自己系统（macos）升级了，发现系统自带的 PHP 版本已经是 7.1 了，于是就开始使用系统自带的 PHP 版本了。 1php -v 显示 PHP 版本信息，如下： 123PHP 7.1.16 (cli) (built: Apr  1 2018 13:14:42) ( NTS">
@@ -449,6 +450,9 @@
 <p>例如下面的错误：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[error] </div><div class="line">61016#0: *1 kevent() reported that connect() failed (61: Connection refused) while connecting to upstream, </div><div class="line">client: 127.0.0.1, </div><div class="line">server: localhost, </div><div class="line">request: &quot;GET /3.php HTTP/1.1&quot;, </div><div class="line">upstream: &quot;fastcgi://127.0.0.1:9000&quot;, </div><div class="line">host: &quot;localhost:8080&quot;</div></pre></td></tr></table></figure>
 <p>最终，我修改了 <code>/private/etc/php-fpm.d/www.conf</code> 中端口为 <code>9000</code>（我之前将该端口修改了其他的），重启 <code>php-fpm</code> 解决问题。 </p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
       
     </div>
