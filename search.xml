@@ -34,11 +34,11 @@
 <h2 id="显示域名"><a href="#显示域名" class="headerlink" title="显示域名"></a>显示域名</h2><p>如果你经常使用 <code>Charles</code> 抓包，就可以发现 <code>Charles</code> 展示的请求中都是以域名来显示的，但是在 <code>Wireshark</code> 都是显示 ip 地址，或许因此感到不适，那么，<code>Wireshark</code> 能否展示域名呢？</p>
 <p><code>Wireshark</code> 是可以像 <code>Charles</code> 那样展示域名的，只是它默认显示 ip 地址罢了。</p>
 <p>打开 Preferences，如图：<br><img src="/upload/images/2018/09/01/8.jpg" alt=""><br><img src="/upload/images/2018/09/01/9.jpg" alt=""></p>
-<p>这样 <code>Wireshark</code> 的显示就是另一番景象了，不信，你看下图：<br><img src="/upload/images/2018/09/01/10.jpg" alt=""></p>
+<p>这样 <code>Wireshark</code> 的显示就是另一番景象了如下图所示：<br><img src="/upload/images/2018/09/01/10.jpg" alt=""></p>
 <p>当然，你也看出来了，过滤条件还是可以使用的。</p>
 <p>你还可以使用其他的过滤条件，如下面的一些过滤条件，能帮你快速定位你要的数据。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">http.host == &quot;veryitman.com&quot;</div><div class="line"></div><div class="line">http.host contains &quot;veryitman.com&quot;</div><div class="line"></div><div class="line">http contains &quot;HTTP/1.1 200 OK&quot;</div></pre></td></tr></table></figure>
-<p>扫描关注它，你我就多一个朋友</p>
+<p>扫码关注，你我就各多一个朋友~</p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
