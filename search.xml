@@ -78,6 +78,9 @@
 <p>1.HTTP/2 支持明文 HTTP 传输，而 SPDY 强制使用 HTTPS。这一点 HTTP/2 相对人性化一些。</p>
 <p>2.HTTP/2 会对请求头和响应头做压缩以提升请求性能，HTTP/2 消息头的压缩算法不同于 SPDY。 HTTP/2 采用 <a href="http://http2.github.io/http2-spec/compression.html" target="_blank" rel="noopener">HPACK</a>，SPDY 采用的 <a href="http://zh.wikipedia.org/wiki/DEFLATE" target="_blank" rel="noopener">DEFLATE</a> 算法。</p>
 <p>HTTP/2 支持所有的 HTTP 1.1 的核心特征，其提供了 HTTP 语义的传输优化，并且在各方面做到更高效。HTTP/2 的头信息是一个彻底的二进制协议，头信息和数据体都是二进制，并且统称为帧（frame），即头信息帧和数据帧。对 HTTP/2 感兴趣的可以看一下 <a href="https://www.jianshu.com/p/40378501d1fc" target="_blank" rel="noopener">HTTP2 协议初识</a> 这篇文章。</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 ]]></content>
       
         <categories>
