@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/09/16/HTTP-%E6%BC%94%E8%BF%9B%E5%8F%B2/</loc>
+    
+    <lastmod>2018-09-16T15:00:56.238Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/09/09/Wireshark-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-TCP-%E4%B8%89%E6%AC%A1%E6%8C%A5%E6%89%8B/</loc>
     
-    <lastmod>2018-09-10T15:44:51.483Z</lastmod>
+    <lastmod>2018-09-10T16:03:35.725Z</lastmod>
     
   </url>
   
