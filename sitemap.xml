@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/09/25/iOS-%E9%A1%B9%E7%9B%AE-%E6%89%93%E9%80%A0%E6%9C%AC%E5%9C%B0-pod-%E5%BA%93/</loc>
+    
+    <lastmod>2018-09-20T16:02:41.553Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/11/08/Cocoapods-%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</loc>
+    
+    <lastmod>2018-09-20T15:55:40.466Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/11/08/Mac-install-Cocoapods/</loc>
+    
+    <lastmod>2018-09-20T15:55:29.383Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/11/01/Cocoapods-%E7%AE%A1%E7%90%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</loc>
     
-    <lastmod>2018-09-20T08:35:42.819Z</lastmod>
+    <lastmod>2018-09-20T15:55:04.846Z</lastmod>
     
   </url>
   
@@ -100,13 +121,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/11/08/Mac-install-Cocoapods/</loc>
-    
-    <lastmod>2018-09-01T03:10:40.987Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2017/02/08/ATS-HTTPS-%E8%AE%A4%E8%AF%81/</loc>
     
     <lastmod>2018-08-30T15:42:30.930Z</lastmod>
@@ -124,13 +138,6 @@
     <loc>http://yoursite.com/2017/08/07/iOS-APNs-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/</loc>
     
     <lastmod>2018-08-27T15:08:18.746Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/11/08/Cocoapods-%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</loc>
-    
-    <lastmod>2018-08-22T16:05:02.724Z</lastmod>
     
   </url>
   
@@ -593,13 +600,6 @@
     <loc>http://yoursite.com/2016/10/06/RN-%E4%BD%BF%E7%94%A8-Mobx/</loc>
     
     <lastmod>2017-10-28T14:27:21.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/09/25/iOS-%E9%A1%B9%E7%9B%AE-%E6%89%93%E9%80%A0%E6%9C%AC%E5%9C%B0-pod-%E5%BA%93/</loc>
-    
-    <lastmod>2017-10-28T14:25:41.000Z</lastmod>
     
   </url>
   
