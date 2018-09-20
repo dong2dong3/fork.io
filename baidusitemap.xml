@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/11/01/Cocoapods-%E7%AE%A1%E7%90%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</loc>
+    <lastmod>2018-09-20T16:05:45.234Z</lastmod>
+    <data>
+        <display>
+        <title>Cocoapods 管理开源项目</title>
+        <pubTime>2016-11-01T14:33:21.000Z</pubTime>
+        
+        <tag>iOS cocoapods</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/09/25/iOS-%E9%A1%B9%E7%9B%AE-%E6%89%93%E9%80%A0%E6%9C%AC%E5%9C%B0-pod-%E5%BA%93/</loc>
     <lastmod>2018-09-20T16:02:41.553Z</lastmod>
     <data>
@@ -57,26 +77,6 @@
            
              
               <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/11/01/Cocoapods-%E7%AE%A1%E7%90%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</loc>
-    <lastmod>2018-09-20T15:55:04.846Z</lastmod>
-    <data>
-        <display>
-        <title>Cocoapods 管理开源项目</title>
-        <pubTime>2016-11-01T14:33:21.000Z</pubTime>
-        
-        <tag>iOS cocoapods</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
           
         </display>
     </data>

@@ -5339,11 +5339,8 @@
     <entry>
       <title><![CDATA[Cocoapods 管理开源项目]]></title>
       <url>/2016/11/01/Cocoapods-%E7%AE%A1%E7%90%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
-      <content type="html"><![CDATA[<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ol>
-<li>创建或者已经有了 github 账号.</li>
-<li>了解和熟悉如何在 github 上面创建 Repository.</li>
-<li>安装了 Cocoapods.</li>
-</ol>
+      <content type="html"><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在进行下面工作之前，请确保你做了下面三件事情：</p>
+<p><strong>1. 创建或者已经有了 github 账号.</strong><br><strong>2. 了解和熟悉如何在 github 上面创建 Repository.</strong><br><strong>3. MacOS 上面安装了 Cocoapods.</strong></p>
 <p>如果你还没有使用 Cocoapods, 建议看看 <a href="http://www.veryitman.com/2016/11/08/Mac-install-Cocoapods/" target="_blank" rel="noopener">Mac OSX 10.11.1+ 安装 Cocoapods</a> 这篇博客.</p>
 <p>在博客 <a href="http://www.veryitman.com/2016/09/25/iOS-%E9%A1%B9%E7%9B%AE-%E6%89%93%E9%80%A0%E6%9C%AC%E5%9C%B0-pod-%E5%BA%93/" target="_blank" rel="noopener">iOS 项目: 打造本地 pod 库</a> 里面有介绍如何打造本地的 pod 库，不需要借助任何仓库就可以完成，操作简单，适合项目组内使用。</p>
 <p>今天给大家分享如何将代码开源并放到 pod 库中，供别人使用。这种方式属于打造公共（Public repo）仓库， 任何人都可以搜索到你贡献的库并使用你的库。后面会跟大家分享如何打造私有（Private repo），敬请期待。</p>
