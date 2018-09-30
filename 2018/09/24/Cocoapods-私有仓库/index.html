@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/24/7.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/24/8.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2018-09-24T15:15:33.720Z">
+<meta property="og:updated_time" content="2018-09-30T12:42:53.187Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cocoapods: 私有仓库">
 <meta name="twitter:description" content="使用场景在我之前的博客中分享了几篇关于 Cocoapods 的文章（文末有链接），今天分享另外一个主题即如何创建你自己的私有仓库以及如何使用私有仓库。 为什么会有这种需求呢？ 开发组内或者公司内，不希望把一些核心的公用代码给到外界使用（不开源），但是这些代码基本很稳定很成熟，可以做成组件给到其他人或者组内使用。 那么，就可以使用 Cocoapods 来创建自己的私有仓库，让大家共享代码，也是组件化">
@@ -422,7 +422,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">Pod::Spec.new do |s|</div><div class="line">  s.name             = &apos;CoreHTTP&apos;</div><div class="line">  s.version          = &apos;0.1.0&apos;</div><div class="line">  s.summary          = &apos;CoreHTTP for create private pod, it is a demo only.&apos;</div><div class="line">  s.description      = &lt;&lt;-DESC</div><div class="line">                       The project of CoreHTTP is a private pod, it is a demo only.</div><div class="line">                       DESC</div><div class="line"></div><div class="line">  s.homepage         = &apos;https://github.com/veryitman/iOS_private_lib.git&apos;</div><div class="line">  s.license          = &#123; :type =&gt; &apos;MIT&apos;, :file =&gt; &apos;LICENSE&apos; &#125;</div><div class="line">  s.author           = &#123; &apos;veryitman@126.com&apos; =&gt; &apos;veryitman@126.com&apos; &#125;</div><div class="line">  s.platform         = :ios, &quot;7.0&quot;</div><div class="line">  s.source           = &#123; :git =&gt; &apos;https://github.com/veryitman/iOS_private_lib.git&apos;, :tag =&gt; s.version.to_s &#125;</div><div class="line"></div><div class="line">  s.ios.deployment_target = &apos;8.0&apos;</div><div class="line"></div><div class="line">  s.source_files = &apos;CoreHTTP/Classes/**/*&apos;</div><div class="line">  s.requires_arc = true</div><div class="line">end</div></pre></td></tr></table></figure>
 <p>这里需要注意，如果 <code>s.source_files</code> 写的不对，会报下面的错误。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- ERROR | [iOS] file patterns: The `source_files` pattern did not match any file.</div></pre></td></tr></table></figure>
-<p><code>CoreHTTP</code> 的名字必须是你代码存放的文件夹名，而且这个文件件要与 <code>podspec</code> 文件在同一级文件目录下，从上面截图的目录结构可以看出。这里我折腾了蛮久，最后思考和参考了自己之前的开源项目管理博客，才解决这个问题。</p>
+<p><code>CoreHTTP</code> 的名字必须是你代码存放的文件夹名，而且这个文件件要与 <code>podspec</code> 文件在同一级文件目录下，从上面截图的目录结构可以看出。</p>
+<p>另外一个提示的错误点，可能是因为空目录的问题造成的，如果这样的话，可以在各个文件夹下面创建 <code>.gitkeep</code> 文件，该文件的作用是为了提交空文件夹，因为 git 默认是不会添加空文件夹到仓库的。</p>
+<p>创建 <code>.gitkeep</code> 文件的命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd 文件夹下</div><div class="line"></div><div class="line">touch .gitkeep</div></pre></td></tr></table></figure>
+<p>这里我折腾了蛮久，最后思考和参考了自己之前的开源项目管理博客，才解决这个问题。</p>
 <p><strong>4. 检查和验证本地 podspec 文件</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd CoreHTTP </div><div class="line"></div><div class="line">pod lib lint CoreHTTP.podspec</div></pre></td></tr></table></figure>
 <p>验证通过会显示如下图所示的成功提示<br><img src="/upload/images/2018/09/24/6.jpg" alt="1"></p>
@@ -435,8 +439,8 @@
 <p><strong>6. 给版本添加 tag</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd ~/workspace/iOS_private_lib</div><div class="line"></div><div class="line">git tag 0.1.0 -m "Add lib and example project."</div><div class="line"></div><div class="line">git push --tags</div></pre></td></tr></table></figure>
 <p><strong>7. 进行远程验证</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd ~/workspace/iOS_private_lib</div><div class="line"></div><div class="line">pod spec lint CoreHTTP/CoreHTTP.podspec --verbose --use-libraries</div></pre></td></tr></table></figure>
-<p><strong>注意：</strong><code>--verbose</code> 选项是为了看编译和验证信息，<code>--use-libraries</code> 是为了能支持 i386 架构，如果不加此参数，私有库无法通过验证。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd ~/workspace/iOS_private_lib</div><div class="line"></div><div class="line">pod spec lint CoreHTTP/CoreHTTP.podspec --verbose --use-libraries --allow-warnings</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong><code>--verbose</code> 选项是为了看编译和验证信息，<code>--use-libraries</code> 是为了能支持 i386 架构，如果不加此参数，私有库无法通过验证，<code>--allow-warnings</code> 参数是允许有警告。</p>
 <p>验证成功的示意图：<br><img src="/upload/images/2018/09/24/7.jpg" alt="1"></p>
 <h2 id="提交私有-podspec"><a href="#提交私有-podspec" class="headerlink" title="提交私有 podspec"></a>提交私有 podspec</h2><p><strong>1. 向本地的 cocoapods 仓库添加私有 Spec Repo</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd ~/workspace/iOS_private_lib</div><div class="line"></div><div class="line">pod repo add PrivateSpec https://github.com/veryitman/private_spec_repo.git</div></pre></td></tr></table></figure>
@@ -446,7 +450,7 @@
 <p>可以看到已经成功添加本地 repo 中，其他 master 是 cocoapods 官方公开的源，其他为私有源。如下图所示：<br><img src="/upload/images/2018/09/24/8.jpg" alt="1"></p>
 <p><strong>2. 向私有的 Spec Repo 中提交 podspec</strong></p>
 <p>下面的 <code>PrivateSpec</code> 是与上面的名称对应的。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd ~/workspace/iOS_private_lib</div><div class="line"></div><div class="line">pod repo push PrivateSpec ./CoreHTTP/CoreHTTP.podspec --verbose --use-libraries</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd ~/workspace/iOS_private_lib</div><div class="line"></div><div class="line">pod repo push PrivateSpec ./CoreHTTP/CoreHTTP.podspec --verbose --use-libraries --allow-warnings</div></pre></td></tr></table></figure>
 <p>这里要注意，添加私有库和之前博文 <a href="http://www.veryitman.com/2016/11/01/Cocoapods-%E7%AE%A1%E7%90%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" target="_blank" rel="noopener">Cocoapods 管理开源项目</a> 中提到的 <code>pod trunk push</code> 是不一样的操作。</p>
 <h2 id="使用私有库"><a href="#使用私有库" class="headerlink" title="使用私有库"></a>使用私有库</h2><p><strong>1. 搜索库</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod search CoreHTTP</div></pre></td></tr></table></figure>
