@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="veryitman">
 <meta property="og:description" content="需求对于一些大工程, 整个 svn 仓库文件过大(动辄几十个G的都有)，不想把整个 checkout 下来，但是又想维持整个目录结构以方便后续使用，那么可以使用 Subversion1.5 之后的 --depth 参数来只 checkout 需要的子目录. 如果只想把 svn 仓库里面某个文件 checkout 到本地, 不想 checkout 整个目录, 如何操作呢? 实施假设需要 checko">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-06T09:26:43.225Z">
+<meta property="og:updated_time" content="2018-10-06T09:33:31.647Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVN 检出文件">
 <meta name="twitter:description" content="需求对于一些大工程, 整个 svn 仓库文件过大(动辄几十个G的都有)，不想把整个 checkout 下来，但是又想维持整个目录结构以方便后续使用，那么可以使用 Subversion1.5 之后的 --depth 参数来只 checkout 需要的子目录. 如果只想把 svn 仓库里面某个文件 checkout 到本地, 不想 checkout 整个目录, 如何操作呢? 实施假设需要 checko">
@@ -393,11 +393,11 @@
 <p>如果只想把 svn 仓库里面某个文件 checkout 到本地, 不想 checkout 整个目录, 如何操作呢?</p>
 <h2 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h2><p>假设需要 checkout 出来的文件是 <code>ReadMe.md</code>, 其 svn 地址是: <code>http://svn.xxx.com/path/ReadMe.md</code>，其上级目录的远程地址是 <code>http://svn.xxx.com/path</code>.</p>
 <p><strong>注意</strong>：以下出现 <code>svn co</code> 就是 <code>svn checkout</code> 的缩写.</p>
-<h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><p>大部分人都会在第一时间想到如下的操作:</p>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>大部分人都会在第一时间想到如下的操作:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn co http://svn.xxx.com/path/ReadMe.md</div></pre></td></tr></table></figure>
 <p>实际上这样操作会报错的, 报错信息大概意思是 <code>不可以 checkout 一个文件, 只能 checkout 目录</code>。</p>
 <p>所以，该方案不可行。</p>
-<h4 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h4><p><strong>第一步: checkout 目录</strong></p>
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p><strong>第一步: checkout 目录</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn co --depth=empty http://svn.xxx.com/path/ ./</div></pre></td></tr></table></figure>
 <blockquote>
 <p><code>./</code> 表示当前目录，<code>--depth=empty</code> 表示检出空目录。</p>
@@ -409,7 +409,7 @@
 </blockquote>
 <p>修改文件后, 也可以直接提交到 svn 仓库. 使用如下命令:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn ci ReadMe.md -m &quot;update.&quot;</div></pre></td></tr></table></figure>
-<h4 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h4><p>使用 <code>svn export</code> 命令将文件导出，然后将 <code>svn import</code> 命令导入文件到 svn 仓库。</p>
+<h3 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h3><p>使用 <code>svn export</code> 命令将文件导出，然后将 <code>svn import</code> 命令导入文件到 svn 仓库。</p>
 <p>一般临时想 checkout 一个文件，就会使用 <code>方案三</code>, 比较正式的操作，我会选择 <code>方案二</code>，因为 <code>方案二</code> 这样既可在不增加磁盘大小的情况下保持 svn 仓库的目录结构，又可以任意 checkout 文件。</p>
 <h2 id="稀疏目录"><a href="#稀疏目录" class="headerlink" title="稀疏目录"></a>稀疏目录</h2><p>上面的 <code>方案二</code>，其实就是 svn 的一种稀疏检出的操作。</p>
 <blockquote>
@@ -646,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实施"><span class="nav-number">2.</span> <span class="nav-text">实施</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方案一"><span class="nav-number">2.0.1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案二"><span class="nav-number">2.0.2.</span> <span class="nav-text">方案二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案三"><span class="nav-number">2.0.3.</span> <span class="nav-text">方案三</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稀疏目录"><span class="nav-number">3.</span> <span class="nav-text">稀疏目录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实施"><span class="nav-number">2.</span> <span class="nav-text">实施</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案一"><span class="nav-number">2.1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二"><span class="nav-number">2.2.</span> <span class="nav-text">方案二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案三"><span class="nav-number">2.3.</span> <span class="nav-text">方案三</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稀疏目录"><span class="nav-number">3.</span> <span class="nav-text">稀疏目录</span></a></li></ol></div>
             
 
           </div>

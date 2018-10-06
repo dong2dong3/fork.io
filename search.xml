@@ -9,11 +9,11 @@
 <p>如果只想把 svn 仓库里面某个文件 checkout 到本地, 不想 checkout 整个目录, 如何操作呢?</p>
 <h2 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h2><p>假设需要 checkout 出来的文件是 <code>ReadMe.md</code>, 其 svn 地址是: <code>http://svn.xxx.com/path/ReadMe.md</code>，其上级目录的远程地址是 <code>http://svn.xxx.com/path</code>.</p>
 <p><strong>注意</strong>：以下出现 <code>svn co</code> 就是 <code>svn checkout</code> 的缩写.</p>
-<h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><p>大部分人都会在第一时间想到如下的操作:</p>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>大部分人都会在第一时间想到如下的操作:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn co http://svn.xxx.com/path/ReadMe.md</div></pre></td></tr></table></figure>
 <p>实际上这样操作会报错的, 报错信息大概意思是 <code>不可以 checkout 一个文件, 只能 checkout 目录</code>。</p>
 <p>所以，该方案不可行。</p>
-<h4 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h4><p><strong>第一步: checkout 目录</strong></p>
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p><strong>第一步: checkout 目录</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn co --depth=empty http://svn.xxx.com/path/ ./</div></pre></td></tr></table></figure>
 <blockquote>
 <p><code>./</code> 表示当前目录，<code>--depth=empty</code> 表示检出空目录。</p>
@@ -25,7 +25,7 @@
 </blockquote>
 <p>修改文件后, 也可以直接提交到 svn 仓库. 使用如下命令:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn ci ReadMe.md -m &quot;update.&quot;</div></pre></td></tr></table></figure>
-<h4 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h4><p>使用 <code>svn export</code> 命令将文件导出，然后将 <code>svn import</code> 命令导入文件到 svn 仓库。</p>
+<h3 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h3><p>使用 <code>svn export</code> 命令将文件导出，然后将 <code>svn import</code> 命令导入文件到 svn 仓库。</p>
 <p>一般临时想 checkout 一个文件，就会使用 <code>方案三</code>, 比较正式的操作，我会选择 <code>方案二</code>，因为 <code>方案二</code> 这样既可在不增加磁盘大小的情况下保持 svn 仓库的目录结构，又可以任意 checkout 文件。</p>
 <h2 id="稀疏目录"><a href="#稀疏目录" class="headerlink" title="稀疏目录"></a>稀疏目录</h2><p>上面的 <code>方案二</code>，其实就是 svn 的一种稀疏检出的操作。</p>
 <blockquote>
