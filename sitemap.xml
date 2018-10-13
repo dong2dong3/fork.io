@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/10/13/macOS-%E4%B8%AD%E7%A5%9E%E7%A7%98%E7%9A%84-GCC/</loc>
+    
+    <lastmod>2018-10-13T15:50:27.534Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/</loc>
+    
+    <lastmod>2018-10-13T15:46:31.139Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</loc>
     
-    <lastmod>2018-10-12T16:09:07.463Z</lastmod>
+    <lastmod>2018-10-13T15:46:23.285Z</lastmod>
     
   </url>
   
@@ -250,13 +264,6 @@
     <loc>http://yoursite.com/2017/10/08/GCC-%E9%9D%99%E6%80%81%E5%BA%93/</loc>
     
     <lastmod>2018-04-13T15:40:07.898Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/</loc>
-    
-    <lastmod>2018-04-13T15:39:56.938Z</lastmod>
     
   </url>
   
