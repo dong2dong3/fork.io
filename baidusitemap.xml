@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/04/05/OC-RunTime-%E6%80%BB%E7%BB%93%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
+    <lastmod>2018-10-21T08:57:19.546Z</lastmod>
+    <data>
+        <display>
+        <title>OC-RunTime: 总结消息转发中用到的知识点</title>
+        <pubTime>2018-04-05T05:50:52.000Z</pubTime>
+        
+        <tag>iOS RunTime MessageForward</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/10/13/macOS-%E4%B8%AD%E7%A5%9E%E7%A7%98%E7%9A%84-GCC/</loc>
     <lastmod>2018-10-13T15:50:27.534Z</lastmod>
     <data>
@@ -632,26 +652,6 @@
         <pubTime>2018-05-05T16:32:09.000Z</pubTime>
         
         <tag>RunLoop 常驻线程</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/04/05/OC-RunTime-%E6%80%BB%E7%BB%93%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
-    <lastmod>2018-04-22T14:45:25.245Z</lastmod>
-    <data>
-        <display>
-        <title>OC-RunTime: 总结消息转发中用到的知识点</title>
-        <pubTime>2018-04-05T05:50:52.000Z</pubTime>
-        
-        <tag>iOS RunTime MessageForward</tag>
          
          
            
