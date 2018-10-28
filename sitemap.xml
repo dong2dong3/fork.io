@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2018-10-28T13:23:04.843Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/10/28/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</loc>
     
-    <lastmod>2018-10-28T09:06:39.573Z</lastmod>
+    <lastmod>2018-10-28T13:20:11.520Z</lastmod>
     
   </url>
   
@@ -376,13 +383,6 @@
     <loc>http://yoursite.com/2018/02/22/NSLog-%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA-NSInteger-NSUInteger/</loc>
     
     <lastmod>2018-02-22T05:56:11.483Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2018-02-16T15:37:13.219Z</lastmod>
     
   </url>
   

@@ -80,22 +80,22 @@
 
 
 
-<meta name="description" content="组件之间通信我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)各自实现各自的职责即可，各个组件之间松耦合增强了软件设计的弹性。 路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。">
+<meta name="description" content="组件间通信，我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)实现各自的职责即可，组件间的松耦合性增强了软件设计的弹性和高可用性。 路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。">
 <meta name="keywords" content="架构 模块化 组件化 Observer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="观察者模式">
 <meta property="og:url" content="http://yoursite.com/2018/10/28/观察者模式/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="组件之间通信我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)各自实现各自的职责即可，各个组件之间松耦合增强了软件设计的弹性。 路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。">
+<meta property="og:description" content="组件间通信，我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)实现各自的职责即可，组件间的松耦合性增强了软件设计的弹性和高可用性。 路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/10/28/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/10/28/2.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/10/28/3.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2018-10-28T09:06:39.573Z">
+<meta property="og:updated_time" content="2018-10-28T13:20:11.520Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="观察者模式">
-<meta name="twitter:description" content="组件之间通信我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)各自实现各自的职责即可，各个组件之间松耦合增强了软件设计的弹性。 路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。">
+<meta name="twitter:description" content="组件间通信，我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)实现各自的职责即可，组件间的松耦合性增强了软件设计的弹性和高可用性。 路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2018/10/28/1.jpg">
 
 
@@ -394,7 +394,7 @@
       
 
       
-        <p>组件之间通信我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)各自实现各自的职责即可，各个组件之间松耦合增强了软件设计的弹性。</p>
+        <p>组件间通信，我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)实现各自的职责即可，组件间的松耦合性增强了软件设计的弹性和高可用性。</p>
 <p>路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。</p>
 <blockquote>
 <p>武林至尊，宝刀屠龙，号令天下，莫敢不从，倚天不出，谁与争锋?</p>
@@ -402,7 +402,7 @@
 <p>在说观察者模式之前，先介绍一下 iOS 中的代理(delegate).</p>
 <h2 id="代理-delegate"><a href="#代理-delegate" class="headerlink" title="代理 delegate"></a>代理 delegate</h2><p>在 iOS 中，代理(delegate)的本质是 protocol，类似 java 中的 Interface，一般用来处理 <code>一对一</code> 的关系，如下图所示：</p>
 <p><img src="/upload/images/2018/10/28/1.jpg" alt=""></p>
-<p>下面模拟一下，使用 <code>Bank</code> 对象和 <code>BankDelegate</code> 代理来模拟这种模式。<code>Bank</code> 有变动的时候，通过 <code>notifyAccount</code> 来授权 <code>onAccountChanged</code> 通知用户。</p>
+<p>下面的例子模拟了调用和实现过程，使用 <code>Bank</code> 对象和 <code>BankDelegate</code> 代理来模拟这种模式。<code>Bank</code> 有变动的时候，通过 <code>notifyAccount</code> 来授权 <code>onAccountChanged</code> 通知用户。</p>
 <p><strong>BankDelegate.h</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@protocol BankDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">- (void)onAccountChanged:(NSUInteger)account;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
 <p><strong>Bank.h</strong></p>
@@ -413,12 +413,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad</div><div class="line">&#123;</div><div class="line">    [super viewDidLoad];</div><div class="line"></div><div class="line">    Bank *bank = [Bank new];</div><div class="line">    bank.delegate = self;</div><div class="line">    [bank notifyAccount];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)onAccountChanged:(NSUInteger)account</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;Bank tell me that account is changed. %zd&quot;, account);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>当然，delegate 也可以做到 <code>一对多</code>，改造一下 <code>Bank</code> 就可以实现。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@interface Bank : NSObject</div><div class="line"></div><div class="line">- (void)addBankDelegate:(id&lt;BankDelegate&gt;)delegate;</div><div class="line"></div><div class="line">- (void)notifyAccount;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>内部使用数组将 <code>addBankDelegate</code> 得到的 <code>delegate</code> 存起来，<code>notifyAccount</code> 中就可以全部通知了。</p>
+<p><code>Bank</code> 内部使用数组将 <code>addBankDelegate</code> 得到的 <code>delegate</code> 存起来，<code>notifyAccount</code> 中就可以进行通知了。</p>
 <figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Bank *bank = [Bank new];</div><div class="line"><span class="comment">// 模拟添加多个 delegate</span></div><div class="line">[bank addBankDelegate:<span class="keyword">self</span>];</div><div class="line">[bank addBankDelegate:<span class="keyword">self</span>];</div><div class="line">[bank notifyAccount];</div></pre></td></tr></table></figure>
-<h2 id="观察者"><a href="#观察者" class="headerlink" title="观察者"></a>观察者</h2><p>理解了 delegate，观察者就很好理解了。</p>
-<p>观察者模式，当一个对象改变状态时，他的所有依赖着都会收到通知并自动更新。</p>
+<h2 id="观察者"><a href="#观察者" class="headerlink" title="观察者"></a>观察者</h2><p>理解了 delegate，观察者模式就很好理解了。</p>
+<p>当一个对象改变状态时，它的所有依赖着都会收到通知并自动更新，这是观察者模式的常规定义。</p>
 <p>观察者模式是一种 <code>一对多</code> 的设计模式，如下图所示：<br><img src="/upload/images/2018/10/28/2.jpg" alt=""></p>
-<p>继续上面的例子，使用 <code>Bank</code> 对象和 <code>BankDelegate</code> 来模拟这种模式，<code>Bank</code> 有变动的时候，通过 <code>notifyAccount</code> 来授权 <code>onAccountChanged</code> 通知所有用户。</p>
+<p>继续上面的例子，使用 <code>Bank</code> 对象和 <code>BankDelegate</code> 来模拟这种模式，<code>Bank</code> 有变动的时候，通过 <code>notifyAccount</code> 来授权 <code>onAccountChanged</code> 通知所有注册了 <code>BankDelegate</code> 的用户。</p>
 <p><strong>Talk is cheap. Show me the code</strong></p>
 <p><strong>BankDelegate.h</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@protocol BankDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">- (void)onAccountChanged:(NSUInteger)account;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
@@ -428,10 +428,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">- (void)notifyAccount</div><div class="line">&#123;</div><div class="line">    for (id&lt;BankDelegate&gt; delegate in self.delegates) &#123;</div><div class="line">        if ([delegate respondsToSelector:@selector(onAccountChanged:)]) &#123;</div><div class="line">            [delegate onAccountChanged:100];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)addBankObserver:(id&lt;BankDelegate&gt;)delegate</div><div class="line">&#123;</div><div class="line">    if (nil == delegate) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    [self.delegates addObject:delegate];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)removeBankObserver:(id&lt;BankDelegate&gt;)delegate</div><div class="line">&#123;</div><div class="line">    if (self.delegates.count &gt; 0) &#123;</div><div class="line">        [self.delegates removeObject:delegate];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>调用者</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad</div><div class="line">&#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    </div><div class="line">    [self registerObserver];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)onAccountChanged:(NSUInteger)account</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;Bank tell me that account is changed. %zd&quot;, account);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)registerObserver</div><div class="line">&#123;</div><div class="line">    Bank *bank = [Bank new];</div><div class="line">    [bank addBankObserver:self];</div><div class="line">    [bank addBankObserver:self];</div><div class="line">    [bank notifyAccount];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>看到这里，你应该发现 delegate 的设计其实就是观察者的一种设计手段，它本身也是观察者模式。</p>
+<p>看到这里，你应该发现 delegate 的设计其实就是观察者的一种设计手段而已，它本身也是观察者模式。</p>
 <p>在 iOS 中，除了 delegate，还有很多这种设计模式的体现，如 KVO、Notification、Observer、Block 等。</p>
-<h2 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h2><p>上面说到的观察者模式，观察者对被观察者(Bank)是有感知的，至少需要实现对应的 <code>BankDelegate</code>. 二者之间还是是有一定的耦合度。</p>
-<p>那么，有没有一种方法再来降低这种耦合呢？</p>
+<h2 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h2><p>观察者模式中观察者对被观察者(Bank)是有感知的，至少需要实现对应的 <code>BankDelegate</code>，二者之间还是是有一定的耦合度。</p>
+<p>那么，有没有一种方法再来降低这种耦合，让双方都不用去关心对方的存在呢？发布-订阅模式是一个不错的选择。</p>
 <p>发布-订阅本质也是观察者模式，但是他更加的松耦合，发布者和订阅者都不用清楚对方，全部由订阅中心做处理，这样耦合度就几乎没有了。</p>
 <p>如图展示发布-订阅模式：<br><img src="/upload/images/2018/10/28/3.jpg" alt=""></p>
 <p>在 iOS 中，Notification 就是发布-订阅模式的一种实现，NSNotificationCenter 就类似订阅中心。</p>
@@ -441,7 +441,7 @@
 <p>设计模式是一种设计思想，在观察者模式基础上你可以衍生更多的设计模式和更多的设计思想。模式的实现手段可以多样化，没有最好只有更好，就好比 MVC、MVP、MVVM 等，你说它们是设计模式也好，是设计思路也罢，关键是利用它们有没有解决业务需求，为了模式而模式的设计华而不实！</p>
 <p>个人觉得，发布-订阅模式只是观察者模式的一种实现手段，它本质还是观察者模式。</p>
 <hr>
-<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><strong>扫码关注，期待与你的交流~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
       
