@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/10/28/2.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/10/28/3.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2018-10-28T13:20:11.520Z">
+<meta property="og:updated_time" content="2018-10-28T13:24:55.443Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="观察者模式">
 <meta name="twitter:description" content="组件间通信，我会优先使用路由的通信方式(iOS中需要用到 runtime，Android 中需要用到反射和注解)，组件之间按照路由协议(类似 url)实现各自的职责即可，组件间的松耦合性增强了软件设计的弹性和高可用性。 路由结合观察者模式，可以让你的组件设计更上一层楼。路由可以解决单向调用的问题，让组件之间无需知道对方是否存在。观察者模式可以让调用者(使用你框架的)可以很方便的知道组件的内部事件。">
@@ -415,7 +415,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@interface Bank : NSObject</div><div class="line"></div><div class="line">- (void)addBankDelegate:(id&lt;BankDelegate&gt;)delegate;</div><div class="line"></div><div class="line">- (void)notifyAccount;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
 <p><code>Bank</code> 内部使用数组将 <code>addBankDelegate</code> 得到的 <code>delegate</code> 存起来，<code>notifyAccount</code> 中就可以进行通知了。</p>
 <figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Bank *bank = [Bank new];</div><div class="line"><span class="comment">// 模拟添加多个 delegate</span></div><div class="line">[bank addBankDelegate:<span class="keyword">self</span>];</div><div class="line">[bank addBankDelegate:<span class="keyword">self</span>];</div><div class="line">[bank notifyAccount];</div></pre></td></tr></table></figure>
-<h2 id="观察者"><a href="#观察者" class="headerlink" title="观察者"></a>观察者</h2><p>理解了 delegate，观察者模式就很好理解了。</p>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>理解了 delegate，观察者模式就很好理解了。</p>
 <p>当一个对象改变状态时，它的所有依赖着都会收到通知并自动更新，这是观察者模式的常规定义。</p>
 <p>观察者模式是一种 <code>一对多</code> 的设计模式，如下图所示：<br><img src="/upload/images/2018/10/28/2.jpg" alt=""></p>
 <p>继续上面的例子，使用 <code>Bank</code> 对象和 <code>BankDelegate</code> 来模拟这种模式，<code>Bank</code> 有变动的时候，通过 <code>notifyAccount</code> 来授权 <code>onAccountChanged</code> 通知所有注册了 <code>BankDelegate</code> 的用户。</p>
@@ -665,7 +665,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理-delegate"><span class="nav-number">1.</span> <span class="nav-text">代理 delegate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者"><span class="nav-number">2.</span> <span class="nav-text">观察者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布-订阅模式"><span class="nav-number">3.</span> <span class="nav-text">发布-订阅模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#争论"><span class="nav-number">4.</span> <span class="nav-text">争论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理-delegate"><span class="nav-number">1.</span> <span class="nav-text">代理 delegate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者模式"><span class="nav-number">2.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布-订阅模式"><span class="nav-number">3.</span> <span class="nav-text">发布-订阅模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#争论"><span class="nav-number">4.</span> <span class="nav-text">争论</span></a></li></ol></div>
             
 
           </div>
