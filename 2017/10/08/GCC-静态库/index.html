@@ -1,4 +1,966 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="GCC 编译器 静态库,"><meta name="description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会"><meta name="keywords" content="GCC 编译器 静态库"><meta property="og:type" content="article"><meta property="og:title" content="GCC: 静态库"><meta property="og:url" content="http://yoursite.com/2017/10/08/GCC-静态库/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2017/10/08/1.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2017/10/08/2.jpg"><meta property="og:updated_time" content="2018-04-13T15:40:07.898Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="GCC: 静态库"><meta name="twitter:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会"><meta name="twitter:image" content="http://yoursite.com/upload/images/2017/10/08/1.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2017/10/08/GCC-静态库/"><title>GCC: 静态库 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/GCC-静态库/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">GCC: 静态库</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T22:12:35+08:00">2017-10-08</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2017/10/08/GCC-静态库/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2017/10/08/GCC-静态库/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 <a href="http://www.veryitman.com/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">GCC: 编译C语言的流程</a> 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜.</p><p>本篇博文用到的一些基础知识点:</p><p><strong>1.GCC</strong></p><p>gcc -c 选项含义:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Only run preprocess, compile, and assemble steps</div></pre></td></tr></table></figure><p>是 <code>-c</code> 选项只是进行了预处理, 编译, 汇编的阶段, 不会进行链接的操作.</p><p><strong>2.静态库</strong></p><p>Linux 上的静态库，本质是一些目标文件的归档文件.</p><p><strong>3.静态库和共享库区别</strong></p><p>[1].使用共享库可以节省内存.</p><blockquote><p>比如 libc，系统中几乎所有的进程都映射 libc 到自己的进程地址空间，而 libc 的只读部分在物理内存中只需要存在一份，就可以被所有进程共享，这就是“共享库”这个名称的由来了.</p></blockquote><p>[2].使用共享库可以很方便地升级库文件而不需要重新编译应用程序.</p><p>[3].共享库占用更少的体积.</p><blockquote><p>在运行时做动态链接.而在链接静态库时, 链接器会把静态库中的目标文件取出来和可执行文件真正链接在一起.</p></blockquote><h2 id="创建步骤"><a href="#创建步骤" class="headerlink" title="创建步骤"></a>创建步骤</h2><p>创建静态库的步骤如下:</p><p>[1]. 写源文件.<br>[2]. 通过 gcc -c x.c 生成目标文件.<br>[2]. 归档. 用 ar 归档目标文件，生成静态库.<br>[3]. 写头文件, 便于使用者知道怎么使用该静态库.</p><p>使用静态库时，在源码中包含对应的头文件，链接时记得链接自己的库.</p><p>下面结合具体例子, 展开讲.</p><h2 id="写源文件"><a href="#写源文件" class="headerlink" title="写源文件"></a>写源文件</h2><p>目录结构<br><img src="/upload/images/2017/10/08/1.jpg" alt="1"></p><p>示例文件都是很简单的代码, 附录可以查看完整示例.</p><h2 id="生成目标文件"><a href="#生成目标文件" class="headerlink" title="生成目标文件"></a>生成目标文件</h2><p>将 libs 目录下面的(c)源文件进行预处理, 编译和汇编.<br>注意这里没有进行链接.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -c libs/person.c libs/eat.c libs/play.c libs/sleep.c</div></pre></td></tr></table></figure><p>执行城后, 会生成对应的 .o 文件.</p><h2 id="归档"><a href="#归档" class="headerlink" title="归档"></a>归档</h2><p><code>libperson.a</code> 是要生成的库文件.</p><p>库文件都以 lib 开头, 静态库以. a 为后缀. 所以一般是 lib+ 名字.a</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ar rs libperson.a person.o sleep.o play.o eat.o</div></pre></td></tr></table></figure><p>ar: 类似于 tar, 用来对文件进行库打包.</p><p>r 选项: 将其后面的文件列表添加到文件包(libperson.a)中, 如果 libperson.a 不存在就创建它, 如果 libperson.a 已经存在且里面有同名的目标文件就进行替换操作.</p><p>s 选项: 为静态库创建索引.这个索引会被链接器使用.</p><blockquote><p>ranlib 命令也可以为静态库创建索引. 所以上面的命令可以等效为下面的两个命令.</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ar r libperson.a person.o sleep.o play.o eat.o</div><div class="line">ranlib libperson.a</div></pre></td></tr></table></figure><h2 id="写头文件"><a href="#写头文件" class="headerlink" title="写头文件"></a>写头文件</h2><p>写一个 person.h 文件, 便于调用者查看库如何使用.</p><p>person.h</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#ifndef _PERSON_H</div><div class="line">#define _PERSON_H</div><div class="line">extern void init(int pUid);</div><div class="line">extern void eat();</div><div class="line">extern void play();</div><div class="line">extern void sleep();</div><div class="line">#endif</div></pre></td></tr></table></figure><p>使用静态库</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc main.c -L. -lperson -Ilibs -o main</div></pre></td></tr></table></figure><p>-L 选项: 告诉编译器去哪里找库文件, 这里的 _L. 表示在当前目录.<br>如果不用 -L 选项, 即使库文件在当前目录, 编译器也不会去找, 所以该选项不能少.</p><p>报错信息如下:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ld: library not found for -lperson</div><div class="line">clang: error: linker command failed with exit code 1 (use -v to see invocation)</div></pre></td></tr></table></figure><p>-lperson: 告诉编译器要链接 libperson.a 库.</p><p>-I: 告诉编译器到哪里找头文件.<br>如果不指定头文件的查找目录, 也会报错:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">main.c:2:10: fatal error: &apos;person.h&apos; file not found</div><div class="line">#include &quot;person.h&quot;</div><div class="line">         ^~~~~~~~~~</div><div class="line">1 error generated.</div></pre></td></tr></table></figure><p>此时的目录结构:<br><img src="/upload/images/2017/10/08/2.jpg" alt="1"></p><p>链接成功后, 可以执行生成的 main (可执行)文件.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./main</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">uid: 101 eating</div><div class="line">uid: 101 playing</div><div class="line">uid: 101 has sleep</div></pre></td></tr></table></figure><h2 id="有趣的实验"><a href="#有趣的实验" class="headerlink" title="有趣的实验"></a>有趣的实验</h2><p>猜想一下如果有两个库一个是共享库, 一个是静态库, 而且二者除了后缀不一样, 名字都一样如 libperson.a 和 libperson.so, 那么调用方如何来选择对应的库文件呢?</p><p>我们把 GCC: 共享库 里面生成的共享库 libperson.so 放到当前的目录, 重新编译链接 main.c 文件.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc main.c -L. -lperson -Ilibs -o main</div></pre></td></tr></table></figure><p>再次执行 ./main, 得到结果是这样的:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">From sharedlib.uid: 101 eating</div><div class="line">From sharedlib.uid: 101 playing</div><div class="line">From sharedlib.uid: 101 has sleep</div></pre></td></tr></table></figure><p>以上的结果, 说明链接器会优先选择共享库其次才是静态库.</p><blockquote><p>Linux(MacOS 也一样) 的 GCC 默认链接动态库，只有当动态库不存在时，才去链接静态库.<br>若是需要强制指定静态库需要指定选项 -static.但是在 MacOS 上面不支持该选项.</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -static main.c -L. -lperson -Ilibs -o main</div></pre></td></tr></table></figure><h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>示例完整代码</p><blockquote><p>main.c</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &quot;person.h&quot;</div><div class="line">int main() &#123;</div><div class="line">    init(101);</div><div class="line">    eat();</div><div class="line">    play();</div><div class="line">    sleep();</div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>person.h</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#ifndef _PERSON_H</div><div class="line">#define _PERSON_H</div><div class="line">extern void init(int pUid);</div><div class="line">extern void eat();</div><div class="line">extern void play();</div><div class="line">extern void sleep();</div><div class="line">#endif</div></pre></td></tr></table></figure><blockquote><p>person.c</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int uid;</div><div class="line">void init(int pUid) &#123;</div><div class="line">    uid = pUid;</div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>eat.c</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void eat() &#123;</div><div class="line">    printf(&quot;uid: %i eating\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>play.c</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void play() &#123;</div><div class="line">    printf(&quot;uid: %i playing\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>sleep.c</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void sleep() &#123;</div><div class="line">    printf(&quot;uid: %i has sleep\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="GCC-系列博文"><a href="#GCC-系列博文" class="headerlink" title="GCC 系列博文"></a>GCC 系列博文</h2><p><a href="http://www.veryitman.com/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">GCC: 编译 C 语言的流程</a></p><p><a href="http://www.veryitman.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/" target="_blank" rel="noopener">GCC: Homebrew 安装 GCC 和 Binutils</a></p><p><a href="http://www.veryitman.com/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/" target="_blank" rel="noopener">GCC: 共享库</a></p><p><a href="http://www.veryitman.com/2017/10/08/GCC-%E9%9D%99%E6%80%81%E5%BA%93/" target="_blank" rel="noopener">GCC: 静态库</a></p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/GCC-编译器-静态库/" rel="tag"><i class="fa fa-tag"></i> GCC 编译器 静态库</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2017/10/07/GCC-共享库/" rel="next" title="GCC: 共享库"><i class="fa fa-chevron-left"></i> GCC: 共享库</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2018/02/02/Hi-2018-我又来了/" rel="prev" title="Hi 2018, 我又来了">Hi 2018, 我又来了<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">89</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">65</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建步骤"><span class="nav-number">2.</span> <span class="nav-text">创建步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写源文件"><span class="nav-number">3.</span> <span class="nav-text">写源文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成目标文件"><span class="nav-number">4.</span> <span class="nav-text">生成目标文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档"><span class="nav-number">5.</span> <span class="nav-text">归档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写头文件"><span class="nav-number">6.</span> <span class="nav-text">写头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有趣的实验"><span class="nav-number">7.</span> <span class="nav-text">有趣的实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">8.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-系列博文"><span class="nav-number">9.</span> <span class="nav-text">GCC 系列博文</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2018</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="GCC 编译器 静态库," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会">
+<meta name="keywords" content="GCC 编译器 静态库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCC: 静态库">
+<meta property="og:url" content="http://yoursite.com/2017/10/08/GCC-静态库/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2017/10/08/1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2017/10/08/2.jpg">
+<meta property="og:updated_time" content="2018-04-13T15:40:07.898Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GCC: 静态库">
+<meta name="twitter:description" content="概要如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 GCC: 编译C语言的流程 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜. 本篇博文用到的一些基础知识点: 1.GCC gcc -c 选项含义: 1Only run preprocess, compile, and assemble steps 是 -c 选项只是进行了预处理, 编译, 汇编的阶段, 不会">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2017/10/08/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/08/GCC-静态库/"/>
+
+
+
+
+
+  <title>GCC: 静态库 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/GCC-静态库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GCC: 静态库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T22:12:35+08:00">
+                2017-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/08/GCC-静态库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/10/08/GCC-静态库/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>如果你对 GCC 的编译 C语言的流程不清楚, 建议在阅读本文之前先去看一下 <a href="http://www.veryitman.com/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">GCC: 编译C语言的流程</a> 这篇文章, 篇幅短小精悍, 阅读后, 至少可以扫扫盲😜.</p>
+<p>本篇博文用到的一些基础知识点:</p>
+<p><strong>1.GCC</strong></p>
+<p>gcc -c 选项含义:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Only run preprocess, compile, and assemble steps</div></pre></td></tr></table></figure>
+<p>是 <code>-c</code> 选项只是进行了预处理, 编译, 汇编的阶段, 不会进行链接的操作.</p>
+<p><strong>2.静态库</strong></p>
+<p>Linux 上的静态库，本质是一些目标文件的归档文件.</p>
+<p><strong>3.静态库和共享库区别</strong></p>
+<p>[1].使用共享库可以节省内存.</p>
+<blockquote>
+<p>比如 libc，系统中几乎所有的进程都映射 libc 到自己的进程地址空间，而 libc 的只读部分在物理内存中只需要存在一份，就可以被所有进程共享，这就是“共享库”这个名称的由来了.</p>
+</blockquote>
+<p>[2].使用共享库可以很方便地升级库文件而不需要重新编译应用程序.</p>
+<p>[3].共享库占用更少的体积.</p>
+<blockquote>
+<p>在运行时做动态链接.而在链接静态库时, 链接器会把静态库中的目标文件取出来和可执行文件真正链接在一起.</p>
+</blockquote>
+<h2 id="创建步骤"><a href="#创建步骤" class="headerlink" title="创建步骤"></a>创建步骤</h2><p>创建静态库的步骤如下:</p>
+<p>[1]. 写源文件.<br>[2]. 通过 gcc -c x.c 生成目标文件.<br>[2]. 归档. 用 ar 归档目标文件，生成静态库.<br>[3]. 写头文件, 便于使用者知道怎么使用该静态库.</p>
+<p>使用静态库时，在源码中包含对应的头文件，链接时记得链接自己的库.</p>
+<p>下面结合具体例子, 展开讲.</p>
+<h2 id="写源文件"><a href="#写源文件" class="headerlink" title="写源文件"></a>写源文件</h2><p>目录结构<br><img src="/upload/images/2017/10/08/1.jpg" alt="1"></p>
+<p>示例文件都是很简单的代码, 附录可以查看完整示例.</p>
+<h2 id="生成目标文件"><a href="#生成目标文件" class="headerlink" title="生成目标文件"></a>生成目标文件</h2><p>将 libs 目录下面的(c)源文件进行预处理, 编译和汇编.<br>注意这里没有进行链接.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -c libs/person.c libs/eat.c libs/play.c libs/sleep.c</div></pre></td></tr></table></figure>
+<p>执行城后, 会生成对应的 .o 文件.</p>
+<h2 id="归档"><a href="#归档" class="headerlink" title="归档"></a>归档</h2><p><code>libperson.a</code> 是要生成的库文件.</p>
+<p>库文件都以 lib 开头, 静态库以. a 为后缀. 所以一般是 lib+ 名字.a</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ar rs libperson.a person.o sleep.o play.o eat.o</div></pre></td></tr></table></figure>
+<p>ar: 类似于 tar, 用来对文件进行库打包.</p>
+<p>r 选项: 将其后面的文件列表添加到文件包(libperson.a)中, 如果 libperson.a 不存在就创建它, 如果 libperson.a 已经存在且里面有同名的目标文件就进行替换操作.</p>
+<p>s 选项: 为静态库创建索引.这个索引会被链接器使用.</p>
+<blockquote>
+<p>ranlib 命令也可以为静态库创建索引. 所以上面的命令可以等效为下面的两个命令.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ar r libperson.a person.o sleep.o play.o eat.o</div><div class="line">ranlib libperson.a</div></pre></td></tr></table></figure>
+<h2 id="写头文件"><a href="#写头文件" class="headerlink" title="写头文件"></a>写头文件</h2><p>写一个 person.h 文件, 便于调用者查看库如何使用.</p>
+<p>person.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#ifndef _PERSON_H</div><div class="line">#define _PERSON_H</div><div class="line">extern void init(int pUid);</div><div class="line">extern void eat();</div><div class="line">extern void play();</div><div class="line">extern void sleep();</div><div class="line">#endif</div></pre></td></tr></table></figure>
+<p>使用静态库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc main.c -L. -lperson -Ilibs -o main</div></pre></td></tr></table></figure>
+<p>-L 选项: 告诉编译器去哪里找库文件, 这里的 _L. 表示在当前目录.<br>如果不用 -L 选项, 即使库文件在当前目录, 编译器也不会去找, 所以该选项不能少.</p>
+<p>报错信息如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ld: library not found for -lperson</div><div class="line">clang: error: linker command failed with exit code 1 (use -v to see invocation)</div></pre></td></tr></table></figure>
+<p>-lperson: 告诉编译器要链接 libperson.a 库.</p>
+<p>-I: 告诉编译器到哪里找头文件.<br>如果不指定头文件的查找目录, 也会报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">main.c:2:10: fatal error: &apos;person.h&apos; file not found</div><div class="line">#include &quot;person.h&quot;</div><div class="line">         ^~~~~~~~~~</div><div class="line">1 error generated.</div></pre></td></tr></table></figure>
+<p>此时的目录结构:<br><img src="/upload/images/2017/10/08/2.jpg" alt="1"></p>
+<p>链接成功后, 可以执行生成的 main (可执行)文件.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./main</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">uid: 101 eating</div><div class="line">uid: 101 playing</div><div class="line">uid: 101 has sleep</div></pre></td></tr></table></figure>
+<h2 id="有趣的实验"><a href="#有趣的实验" class="headerlink" title="有趣的实验"></a>有趣的实验</h2><p>猜想一下如果有两个库一个是共享库, 一个是静态库, 而且二者除了后缀不一样, 名字都一样如 libperson.a 和 libperson.so, 那么调用方如何来选择对应的库文件呢?</p>
+<p>我们把 GCC: 共享库 里面生成的共享库 libperson.so 放到当前的目录, 重新编译链接 main.c 文件.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc main.c -L. -lperson -Ilibs -o main</div></pre></td></tr></table></figure>
+<p>再次执行 ./main, 得到结果是这样的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">From sharedlib.uid: 101 eating</div><div class="line">From sharedlib.uid: 101 playing</div><div class="line">From sharedlib.uid: 101 has sleep</div></pre></td></tr></table></figure>
+<p>以上的结果, 说明链接器会优先选择共享库其次才是静态库.</p>
+<blockquote>
+<p>Linux(MacOS 也一样) 的 GCC 默认链接动态库，只有当动态库不存在时，才去链接静态库.<br>若是需要强制指定静态库需要指定选项 -static.但是在 MacOS 上面不支持该选项.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -static main.c -L. -lperson -Ilibs -o main</div></pre></td></tr></table></figure>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>示例完整代码</p>
+<blockquote>
+<p>main.c</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &quot;person.h&quot;</div><div class="line">int main() &#123;</div><div class="line">    init(101);</div><div class="line">    eat();</div><div class="line">    play();</div><div class="line">    sleep();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>person.h</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#ifndef _PERSON_H</div><div class="line">#define _PERSON_H</div><div class="line">extern void init(int pUid);</div><div class="line">extern void eat();</div><div class="line">extern void play();</div><div class="line">extern void sleep();</div><div class="line">#endif</div></pre></td></tr></table></figure>
+<blockquote>
+<p>person.c</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int uid;</div><div class="line">void init(int pUid) &#123;</div><div class="line">    uid = pUid;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>eat.c</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void eat() &#123;</div><div class="line">    printf(&quot;uid: %i eating\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>play.c</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void play() &#123;</div><div class="line">    printf(&quot;uid: %i playing\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>sleep.c</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">extern int uid;</div><div class="line">void sleep() &#123;</div><div class="line">    printf(&quot;uid: %i has sleep\n&quot;, uid);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="GCC-系列博文"><a href="#GCC-系列博文" class="headerlink" title="GCC 系列博文"></a>GCC 系列博文</h2><p><a href="http://www.veryitman.com/2017/10/03/GCC-%E7%BC%96%E8%AF%91C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%B5%81%E7%A8%8B/" target="_blank" rel="noopener">GCC: 编译 C 语言的流程</a></p>
+<p><a href="http://www.veryitman.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/" target="_blank" rel="noopener">GCC: Homebrew 安装 GCC 和 Binutils</a></p>
+<p><a href="http://www.veryitman.com/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/" target="_blank" rel="noopener">GCC: 共享库</a></p>
+<p><a href="http://www.veryitman.com/2017/10/08/GCC-%E9%9D%99%E6%80%81%E5%BA%93/" target="_blank" rel="noopener">GCC: 静态库</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GCC-编译器-静态库/" rel="tag"><i class="fa fa-tag"></i> GCC 编译器 静态库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/07/GCC-共享库/" rel="next" title="GCC: 共享库">
+                <i class="fa fa-chevron-left"></i> GCC: 共享库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/Hi-2018-我又来了/" rel="prev" title="Hi 2018, 我又来了">
+                Hi 2018, 我又来了 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建步骤"><span class="nav-number">2.</span> <span class="nav-text">创建步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写源文件"><span class="nav-number">3.</span> <span class="nav-text">写源文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成目标文件"><span class="nav-number">4.</span> <span class="nav-text">生成目标文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档"><span class="nav-number">5.</span> <span class="nav-text">归档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写头文件"><span class="nav-number">6.</span> <span class="nav-text">写头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有趣的实验"><span class="nav-number">7.</span> <span class="nav-text">有趣的实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">8.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-系列博文"><span class="nav-number">9.</span> <span class="nav-text">GCC 系列博文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1275,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
