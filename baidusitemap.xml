@@ -3,6 +3,26 @@
 
 
     
+  <url>
+    <loc>http://yoursite.com/2018/10/13/macOS-%E4%B8%AD%E7%A5%9E%E7%A7%98%E7%9A%84-GCC/</loc>
+    <lastmod>2018-11-18T05:28:02.485Z</lastmod>
+    <data>
+        <display>
+        <title>macOS 中神秘的 GCC</title>
+        <pubTime>2018-10-13T15:41:06.000Z</pubTime>
+        
+        <tag>gcc g++ clang clang++ cc</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://yoursite.com/2018/10/28/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</loc>
@@ -38,26 +58,6 @@
            
              
               <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/10/13/macOS-%E4%B8%AD%E7%A5%9E%E7%A7%98%E7%9A%84-GCC/</loc>
-    <lastmod>2018-10-13T15:50:27.534Z</lastmod>
-    <data>
-        <display>
-        <title>macOS 中神秘的 GCC</title>
-        <pubTime>2018-10-13T15:41:06.000Z</pubTime>
-        
-        <tag>gcc g++ clang clang++ cc</tag>
-         
-         
-           
-             
-              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
           
         </display>
     </data>
