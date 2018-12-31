@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/12/31/%E5%86%8D%E8%A7%81-2016/</loc>
+    <lastmod>2018-12-31T07:19:04.978Z</lastmod>
+    <data>
+        <display>
+        <title>再见 2016</title>
+        <pubTime>2016-12-31T15:04:52.000Z</pubTime>
+        
+        <tag>随笔</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/12/30/NSString%E3%80%81NSMutableString-%E5%8F%AF%E5%8F%98%E4%B8%8E%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/</loc>
     <lastmod>2018-12-30T08:42:13.706Z</lastmod>
     <data>
@@ -1620,26 +1640,6 @@
            
              
               <breadCrumb title="ReactNative" url="http://yoursite.com/categories/ReactNative/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/12/11/%E5%86%8D%E8%A7%81-2016/</loc>
-    <lastmod>2017-11-19T14:18:25.318Z</lastmod>
-    <data>
-        <display>
-        <title>再见 2016</title>
-        <pubTime>2016-12-11T15:04:52.000Z</pubTime>
-        
-        <tag>随笔</tag>
-         
-         
-           
-             
-              <breadCrumb title="随笔" url="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/"/>
           
         </display>
     </data>
