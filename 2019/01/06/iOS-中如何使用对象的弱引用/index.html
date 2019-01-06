@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="简介在开发中，我们可能会有这样的场景，有些对象我暂时保存起来，可能后面会用到，也有可能不会使用，但是我们又不想去管理他们的生命周期，如果它们能够自己被销毁就很省事，这时候我们只要保存对象的弱引用就可以了。 下面结合一些实际例子，跟大家聊聊如何在 iOS 开发中保持对对象的弱引用，而不是强引用。 NSObject retainCount在 iOS 中创建一个对象，该对象的引用计数就会加1，例如下面的">
+<meta name="description" content="简介我们都知道使用 UIImage imageNamed 创建的 UIImage 对象会被持有(强引用)，如果图片太大会占用内存，损耗 APP 的性能，影响用户体验，如果能改造对其的强引用变为弱引用就可以解决问题。 我们可能会有类似上面的场景，有些对象暂时保存起来，可能后面会用到，也有可能不会使用，但是又不想去管理它们的生命周期，如果它们能够自己被销毁就很省事，不需要去关心这些对象到底耗费了多少内">
 <meta name="keywords" content="weak strong NSPointerArray">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 中如何使用对象的弱引用">
 <meta property="og:url" content="http://yoursite.com/2019/01/06/iOS-中如何使用对象的弱引用/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="简介在开发中，我们可能会有这样的场景，有些对象我暂时保存起来，可能后面会用到，也有可能不会使用，但是我们又不想去管理他们的生命周期，如果它们能够自己被销毁就很省事，这时候我们只要保存对象的弱引用就可以了。 下面结合一些实际例子，跟大家聊聊如何在 iOS 开发中保持对对象的弱引用，而不是强引用。 NSObject retainCount在 iOS 中创建一个对象，该对象的引用计数就会加1，例如下面的">
+<meta property="og:description" content="简介我们都知道使用 UIImage imageNamed 创建的 UIImage 对象会被持有(强引用)，如果图片太大会占用内存，损耗 APP 的性能，影响用户体验，如果能改造对其的强引用变为弱引用就可以解决问题。 我们可能会有类似上面的场景，有些对象暂时保存起来，可能后面会用到，也有可能不会使用，但是又不想去管理它们的生命周期，如果它们能够自己被销毁就很省事，不需要去关心这些对象到底耗费了多少内">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/01/06/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-01-06T10:18:12.863Z">
+<meta property="og:updated_time" content="2019-01-06T13:14:42.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 中如何使用对象的弱引用">
-<meta name="twitter:description" content="简介在开发中，我们可能会有这样的场景，有些对象我暂时保存起来，可能后面会用到，也有可能不会使用，但是我们又不想去管理他们的生命周期，如果它们能够自己被销毁就很省事，这时候我们只要保存对象的弱引用就可以了。 下面结合一些实际例子，跟大家聊聊如何在 iOS 开发中保持对对象的弱引用，而不是强引用。 NSObject retainCount在 iOS 中创建一个对象，该对象的引用计数就会加1，例如下面的">
+<meta name="twitter:description" content="简介我们都知道使用 UIImage imageNamed 创建的 UIImage 对象会被持有(强引用)，如果图片太大会占用内存，损耗 APP 的性能，影响用户体验，如果能改造对其的强引用变为弱引用就可以解决问题。 我们可能会有类似上面的场景，有些对象暂时保存起来，可能后面会用到，也有可能不会使用，但是又不想去管理它们的生命周期，如果它们能够自己被销毁就很省事，不需要去关心这些对象到底耗费了多少内">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/01/06/1.jpg">
 
 
@@ -407,8 +407,9 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在开发中，我们可能会有这样的场景，有些对象我暂时保存起来，可能后面会用到，也有可能不会使用，但是我们又不想去管理他们的生命周期，如果它们能够自己被销毁就很省事，这时候我们只要保存对象的弱引用就可以了。</p>
-<p>下面结合一些实际例子，跟大家聊聊如何在 iOS 开发中保持对对象的弱引用，而不是强引用。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>我们都知道使用 <code>UIImage imageNamed</code> 创建的 <code>UIImage</code> 对象会被持有(强引用)，如果图片太大会占用内存，损耗 APP 的性能，影响用户体验，如果能改造对其的强引用变为弱引用就可以解决问题。</p>
+<p>我们可能会有类似上面的场景，有些对象暂时保存起来，可能后面会用到，也有可能不会使用，但是又不想去管理它们的生命周期，如果它们能够自己被销毁就很省事，不需要去关心这些对象到底耗费了多少内存。</p>
+<p>今天跟大家聊聊如何在 iOS 开发中保持对对象的弱引用而不是强引用，希望看完之后，能帮助到大家去解决实际问题。</p>
 <h2 id="NSObject-retainCount"><a href="#NSObject-retainCount" class="headerlink" title="NSObject retainCount"></a>NSObject retainCount</h2><p>在 iOS 中创建一个对象，该对象的引用计数就会加1，例如下面的例子：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSObject</span> *obj = [<span class="built_in">NSObject</span> alloc] init];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj retain count: %zd"</span>, [obj retainCount]);</div></pre></td></tr></table></figure>
 <p>上面的例子输出是1，当然在 ARC 下是无法使用 <code>retainCount</code> 这个方法的，只有在非 ARC 条件下才可以，如果要运行上面的例子，对应的文件需要设置为 <code>-fno-objc-arc</code>.</p>
@@ -451,7 +452,7 @@
 <p>在文件中使用，示例如下：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// retainCount -&gt; 1</span></div><div class="line">MZDog *dog = [MZDog new];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"dog: %@"</span>, dog);</div><div class="line">    </div><div class="line"><span class="built_in">NSMutableArray</span> *array = [<span class="built_in">NSMutableArray</span> arrayWithCapacity:<span class="number">1</span>];</div><div class="line"><span class="comment">// 弱引用</span></div><div class="line">[array mz_weak_addObject:dog];</div><div class="line">    </div><div class="line"><span class="comment">// 此时 dog 的引用计数还是1</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"dog: %@"</span>, dog);</div></pre></td></tr></table></figure>
 <p>依次类推，对于其他集合类 <code>NSDictionary</code>、<code>NSSet</code> 都可以实现。当然实现方式不止这一种，这里只是举了一个 <code>NSValue</code> 包装对象来实现的例子。</p>
-<p>当然你也可以使用 <code>NSProxy</code> 或者 <code>block</code> 来解除对对象的强引用。关于 <code>block</code> 的解除方法，可以参考开源项目 <a href="https://github.com/Magic-Unique/HXImage/blob/master/description.md#%E6%96%B9%E6%A1%88%E4%BA%8C%E4%B9%8B-%E5%BC%B1%E5%BC%95%E7%94%A8%E5%AD%97%E5%85%B8" target="_blank" rel="noopener">HXImage</a>，另外开源项目 <a href="https://github.com/ibireme/YYKit/blob/master/YYKit/Utility/YYWeakProxy.m" target="_blank" rel="noopener">YYWeakProxy</a> 里面使用了 <code>NSProxy</code> 来解除强引用。</p>
+<p>当然你也可以使用 <code>NSProxy</code> 或者 <code>block</code> 来解除对对象的强引用。关于 <code>block</code> 的解除方法，可以参考开源项目 <a href="https://github.com/Magic-Unique/HXImage/blob/master/Plan%20B/WeakReference.m" target="_blank" rel="noopener">HXImage</a>，另外开源项目 <a href="https://github.com/ibireme/YYKit/blob/master/YYKit/Utility/YYWeakProxy.m" target="_blank" rel="noopener">YYWeakProxy</a> 里面使用了 <code>NSProxy</code> 来解除强引用。</p>
 <p>那么，除了上面提到的方法，系统类库中有没有现成的类呢？聪明的你一定猜到了，一定有！</p>
 <p>是的，往下看。。。</p>
 <h2 id="NSPointerArray、NSMapTable、NSHashTable"><a href="#NSPointerArray、NSMapTable、NSHashTable" class="headerlink" title="NSPointerArray、NSMapTable、NSHashTable"></a>NSPointerArray、NSMapTable、NSHashTable</h2><p>集合类 <code>NSArray</code>、<code>NSDictionary</code> 和 <code>NSSet</code> 以及其对应的可变版本，都可以用来存储 OC对象的, 但是对其中的对象都是强引用的。</p>
