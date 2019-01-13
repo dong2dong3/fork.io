@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2019/01/13/macOS%E4%B8%8B%E7%94%9F%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2md5/</loc>
+    <lastmod>2019-01-13T11:50:49.608Z</lastmod>
+    <data>
+        <display>
+        <title>macOS下生成字符串md5</title>
+        <pubTime>2019-01-13T06:52:17.000Z</pubTime>
+        
+        <tag>macOS string md5</tag>
+         
+         
+           
+             
+              <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2019/01/13/%E9%9B%86%E5%90%88%E5%AF%B9%E8%B1%A1%E5%8F%AF%E5%8F%98%E4%B8%8E%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/</loc>
     <lastmod>2019-01-13T11:30:18.219Z</lastmod>
     <data>
@@ -17,26 +37,6 @@
            
              
               <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2019/01/13/macOS%E4%B8%8B%E7%94%9F%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2md5/</loc>
-    <lastmod>2019-01-13T07:10:37.117Z</lastmod>
-    <data>
-        <display>
-        <title>macOS下生成字符串md5</title>
-        <pubTime>2019-01-13T06:52:17.000Z</pubTime>
-        
-        <tag>macOS string md5</tag>
-         
-         
-           
-             
-              <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
           
         </display>
     </data>
