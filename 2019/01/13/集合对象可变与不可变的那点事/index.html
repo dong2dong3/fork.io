@@ -104,7 +104,7 @@
 <meta property="og:description" content="简介在文章 NSString NSMutableString 可变与不可变的那些事儿 分享了关于 NSString 和 NSMutableString 与 copy 以及 mutableCopy 之间的点滴。 今天跟大家分享一下集合类数据的可变与不可变性，再结合 copy 以及 mutableCopy 说一说注意事项。如果你仔细看过 NSString NSMutableString 可变与不可变的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-01-13T11:30:18.219Z">
+<meta property="og:updated_time" content="2019-01-29T11:21:48.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集合对象可变与不可变的那点事">
 <meta name="twitter:description" content="简介在文章 NSString NSMutableString 可变与不可变的那些事儿 分享了关于 NSString 和 NSMutableString 与 copy 以及 mutableCopy 之间的点滴。 今天跟大家分享一下集合类数据的可变与不可变性，再结合 copy 以及 mutableCopy 说一说注意事项。如果你仔细看过 NSString NSMutableString 可变与不可变的">
@@ -441,7 +441,7 @@
 <p>根据上面示例分析结果可以看出，在属性中，如果使用 <code>strong</code> 修饰不可变数组，那么在使用过程中(被可变数组赋值)该不可变数组有可能会变为可变数组。如果使用 <code>copy</code> 修饰可变数组，那么在使用过程中（被不可变数组赋值）该可变数组有可能变为不可变数组。</p>
 <p><strong>小结 3：</strong></p>
 <p>当修饰可变类型的属性时，如 <code>NSMutableArray</code>、<code>NSMutableDictionary</code>、<code>NSMutableSet</code> 等集合类型时，用 <code>strong</code> 修饰。</p>
-<p>当修饰不可变类型的属性时，如 <code>NSArray</code>、<code>NSDictionary</code>、、<code>NSSet</code> 等集合类型时，用 <code>copy</code> 修饰。</p>
+<p>当修饰不可变类型的属性时，如 <code>NSArray</code>、<code>NSDictionary</code>、<code>NSSet</code> 等集合类型时，用 <code>copy</code> 修饰。</p>
 <p>大家如果有兴趣可以参考文章 <a href="http://www.veryitman.com/2018/12/30/NSString%E3%80%81NSMutableString-%E5%8F%AF%E5%8F%98%E4%B8%8E%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" target="_blank" rel="noopener">NSString NSMutableString 可变与不可变的那些事儿</a>  的做法来验证上面的理论知识。</p>
 <h2 id="实际案例分析"><a href="#实际案例分析" class="headerlink" title="实际案例分析"></a>实际案例分析</h2><p>再给大家举个实际的开发案例，我们需要定时上报目采集APP的数据，这个需求看起来是没有任何难度的。</p>
 <p>我们使用代码来模拟一下上报数据的这个过程。</p>
