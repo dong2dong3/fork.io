@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/4.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/5.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-01-29T13:45:43.216Z">
+<meta property="og:updated_time" content="2019-01-29T13:50:03.628Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Class、isa、元类">
 <meta name="twitter:description" content="声明本文的所涉及到的源码是 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 Class我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。 看一下 NSObject 的声明，在头文件中，如下图所示： 123456@interface NSObject &amp;lt;NSObject&amp;gt; &amp;#123;#pra">
@@ -421,11 +421,13 @@
 <p>在上面的文件中可以看到 <code>Class</code> 的定义，如下代码：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_object *<span class="keyword">id</span>;</div></pre></td></tr></table></figure>
 <p>可以看出 <code>Class</code> 是一个指向 <code>objc_class</code> 的结构体指针，<code>Objective-C</code> 中的类是由 <code>Class</code> 类型来表示的，它实际上是一个指向 <code>objc_class</code> 结构体的指针。</p>
-<p>在下面的头文件中看一下 <code>objc_class</code> 的定义，如下：<br><img src="/upload/images/2019/01/29/3.jpg" alt=""></p>
+<p>在下面的头文件中看一下 <code>objc_class</code> 的定义，如下：</p>
+<p><img src="/upload/images/2019/01/29/3.jpg" alt=""></p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_class : objc_object &#123;</div><div class="line">    <span class="comment">// Class ISA;</span></div><div class="line">    Class superclass;</div><div class="line">    cache_t cache;             <span class="comment">// formerly cache pointer and vtable</span></div><div class="line">    class_data_bits_t bits;    <span class="comment">// class_rw_t * plus custom rr/alloc flags</span></div><div class="line">    </div><div class="line">    <span class="comment">// ....</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>可以看出，<code>objc_class</code> 用来描述OC中的类，而 <code>objc_object</code> 用来描述OC中的对象，类(objc_class)其实也是一个对象(objc_object)，另外 <code>id</code> 是代表对象的，它是指向 <code>objc_object</code> 的结构体指针，它的存在可以让我们实现类似于C++中泛型的一些操作。该类型的对象可以转换为任何一种对象，有点类似于C语言中 <code>void *</code> 指针类型的作用。</p>
 <p>这里要注意，<code>objc_class</code> 的定义在 <code>objc-runtime-old.h</code>中和 <code>objc-runtime-new.h</code> 中的不一样。这里以 <code>objc-runtime-new.h</code> 为主，建议可以看看 <a href="http://www.veryitman.com/2019/01/28/%E8%A2%AB%E8%AF%AF%E8%A7%A3%E7%9A%84-objc-class/" target="_blank" rel="noopener">被误解的 objc_class</a> 这篇文章。</p>
-<p>再来看一下 <code>objc_object</code>，如下图所示：<br><img src="/upload/images/2019/01/29/4.jpg" alt=""></p>
+<p>再来看一下 <code>objc_object</code>，如下图所示：</p>
+<p><img src="/upload/images/2019/01/29/4.jpg" alt=""></p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_object &#123;</div><div class="line">private:</div><div class="line">    isa_t isa;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>objc_object</code> 是一个结构体，里面有个私有成员变量 <code>isa</code> 是 <code>isa_t</code> 类型的。</p>
 <p>而 <code>isa_t</code> 是一个 union 类型的，如下代码：</p>
