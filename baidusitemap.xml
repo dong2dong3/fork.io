@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</loc>
+    <lastmod>2019-02-05T13:25:31.471Z</lastmod>
+    <data>
+        <display>
+        <title>GCC: Homebrew 安装 GCC 和 Binutils</title>
+        <pubTime>2017-10-07T14:03:29.000Z</pubTime>
+        
+        <tag>brew GCC C 编译器</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2019/01/30/%E8%87%B4%E7%BB%93%E5%A9%9A8%E5%91%A8%E5%B9%B4/</loc>
     <lastmod>2019-02-05T13:19:19.101Z</lastmod>
     <data>
@@ -433,26 +453,6 @@
         <pubTime>2017-10-07T15:11:04.000Z</pubTime>
         
         <tag>GCC 编译器 共享库</tag>
-         
-         
-           
-             
-              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</loc>
-    <lastmod>2018-10-13T15:46:23.285Z</lastmod>
-    <data>
-        <display>
-        <title>GCC: Homebrew 安装 GCC 和 Binutils</title>
-        <pubTime>2017-10-07T14:03:29.000Z</pubTime>
-        
-        <tag>GCC C 编译器</tag>
          
          
            

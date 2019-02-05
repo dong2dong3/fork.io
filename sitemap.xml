@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</loc>
+    
+    <lastmod>2019-02-05T13:25:31.471Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/01/30/%E8%87%B4%E7%BB%93%E5%A9%9A8%E5%91%A8%E5%B9%B4/</loc>
     
     <lastmod>2019-02-05T13:19:19.101Z</lastmod>
@@ -159,13 +166,6 @@
     <loc>http://yoursite.com/2017/10/07/GCC-%E5%85%B1%E4%BA%AB%E5%BA%93/</loc>
     
     <lastmod>2018-10-13T15:46:31.139Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</loc>
-    
-    <lastmod>2018-10-13T15:46:23.285Z</lastmod>
     
   </url>
   
