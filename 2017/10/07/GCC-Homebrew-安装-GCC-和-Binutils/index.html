@@ -104,7 +104,7 @@
 <meta property="og:description" content="文章背景前段时间，有个博客上面的小伙伴给我发来邮件，问我关于 GCC 相关的知识，对于 GCC 我也只是凭着之前的了解，回复他了。书到用时方恨少呀！ 这位小伙伴还在读大学，自学能力比较强，自己出了完成课时之外，还会在网上找资料自学。 我记得自己在大学的时候，对 GCC 一窍不通，只知道 Turbo-C 和那些被强制记住的关键字。 最后告诉他, 我会坚持把自己以前学习过相关 GCC 的知识，以博客的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-02-05T14:14:09.543Z">
+<meta property="og:updated_time" content="2019-02-08T05:29:30.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GCC: Homebrew 安装 GCC 和 Binutils">
 <meta name="twitter:description" content="文章背景前段时间，有个博客上面的小伙伴给我发来邮件，问我关于 GCC 相关的知识，对于 GCC 我也只是凭着之前的了解，回复他了。书到用时方恨少呀！ 这位小伙伴还在读大学，自学能力比较强，自己出了完成课时之外，还会在网上找资料自学。 我记得自己在大学的时候，对 GCC 一窍不通，只知道 Turbo-C 和那些被强制记住的关键字。 最后告诉他, 我会坚持把自己以前学习过相关 GCC 的知识，以博客的">
@@ -410,12 +410,17 @@
 <p>这位小伙伴还在读大学，自学能力比较强，自己出了完成课时之外，还会在网上找资料自学。</p>
 <p>我记得自己在大学的时候，对 GCC 一窍不通，只知道 Turbo-C 和那些被强制记住的关键字。</p>
 <p>最后告诉他, 我会坚持把自己以前学习过相关 GCC 的知识，以博客的形式输出。于是。就有了 <a href="http://www.veryitman.com/categories/C-C/" target="_blank" rel="noopener">GCC 系列</a> 的文章，希望能够帮到大家。</p>
-<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>这篇博客主要分享 MacOS 下安装 GCC 和 Binutils 工具。</p>
-<p>MacOS 下输入 <code>gcc -v</code>, 其实是链接指向了 LLVM 编译器, 不是 GNU 的 GCC.</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>这篇博客主要分享 macOS 下安装 GCC 和 Binutils 工具。</p>
+<p>macOS 终端下输入 <code>gcc -v</code>, 其实是链接指向了 LLVM 编译器, 不是 GNU 的 GCC.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include/c++/4.2.1</div><div class="line">Apple LLVM version 9.0.0 (clang-900.0.37)</div><div class="line">Target: x86_64-apple-darwin16.7.0</div><div class="line">Thread model: posix</div><div class="line">InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin</div></pre></td></tr></table></figure>
 <h2 id="安装-GCC"><a href="#安装-GCC" class="headerlink" title="安装 GCC"></a>安装 GCC</h2><p>关于 GCC, 可以参考 <a href="https://zh.wikipedia.org/wiki/GCC" target="_blank" rel="noopener">维基百科</a>.</p>
 <p>执行下面命令, 即可开始安装:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">brew tap homebrew/versions</div><div class="line"></div><div class="line">brew install gcc49</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew tap homebrew/versions</div></pre></td></tr></table></figure>
+<p>然后搜索 <code>gcc</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew search gcc</div></pre></td></tr></table></figure>
+<p>搜索结果中会显示 gcc 的版本，可以选择安装一个，建议安装最新版。</p>
+<p>这里以安装 gcc49 为例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install gcc49</div></pre></td></tr></table></figure>
 <p>brew 会自动为你安装相关依赖，如 gmp4、mpfr2、libmpc08、isl011、cloog018.</p>
 <p>这里安装需要等待一段时间…</p>
 <p>看到下面的内容, 表示安装完毕.</p>
@@ -435,7 +440,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/Cellar/binutils/2.25/bin</div></pre></td></tr></table></figure>
 <p>可以看到你需要的工具:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">gaddr2line</div><div class="line">gar</div><div class="line">gc++filt</div><div class="line">gcoffdump</div><div class="line">gdlltool</div><div class="line">gdllwrap</div><div class="line">gelfedit</div><div class="line">gnlmconv</div><div class="line">gnm</div><div class="line">gobjcopy</div><div class="line">gobjdump</div><div class="line">granlib</div><div class="line">greadelf</div><div class="line">gsize</div><div class="line">gsrconv</div><div class="line">gstrings</div><div class="line">gstrip</div><div class="line">gsysdump</div><div class="line">gwindmc</div><div class="line">gwindres</div></pre></td></tr></table></figure>
-<h2 id="个人感受"><a href="#个人感受" class="headerlink" title="个人感受"></a>个人感受</h2><p>在 MacOS 上面，即使安装了 GNU 的 GCC，也没有在 Linux 上面用的那么爽，很多 GCC 的命令选项在 MacOS 上面无法使用，但不得不承认 LLVM 是比较优秀的编译器。</p>
+<h2 id="个人感受"><a href="#个人感受" class="headerlink" title="个人感受"></a>个人感受</h2><p>在 macOS 上面，即使安装了 GNU 的 GCC，也没有在 Linux 上面用的那么爽，很多 GCC 的命令选项在 macOS 上面无法使用，但不得不承认 LLVM 是比较优秀的编译器。</p>
 <h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>gcc-4.9 编译报错，报错内容如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">main.c:<span class="number">9</span>:<span class="number">19</span>: fatal error: stdio.h: No such file <span class="keyword">or</span> directory</div><div class="line"> <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">                   ^</div><div class="line">compilation terminated.</div></pre></td></tr></table></figure>
 <p>卸载 <code>gcc</code> 重新安装最新版本的 <code>gcc</code> 即可，命令如下：</p>
@@ -602,7 +607,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-count">101</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -624,7 +629,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
