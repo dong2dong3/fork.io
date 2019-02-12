@@ -95,21 +95,21 @@
 
 
 
-<meta name="description" content="这个事情要从编译一个简单的代码开始说起。  gcc 和 g++ 的区别gcc 是 GCC 中的 GUN C Compiler，C 编译器。 g++ 是 GCC 中的 GUN C++ Compiler，C++编译器。 就本质而言，gcc 和 g++ 并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的 GUN 编译器而已。 gcc 与 g++ 都可以编译 C">
+<meta name="description" content="这个事情，要从编译一个简单的代码开始说起。  gcc 和 g++ 的区别gcc 是 GCC 中的 GUN C Compiler，C 编译器。 g++ 是 GCC 中的 GUN C++ Compiler，C++编译器。 就本质而言，gcc 和 g++ 并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的 GUN 编译器而已。 gcc 与 g++ 都可以编译">
 <meta name="keywords" content="gcc g++ clang clang++ cc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="macOS 中神秘的 GCC">
 <meta property="og:url" content="http://yoursite.com/2018/10/13/macOS-中神秘的-GCC/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="这个事情要从编译一个简单的代码开始说起。  gcc 和 g++ 的区别gcc 是 GCC 中的 GUN C Compiler，C 编译器。 g++ 是 GCC 中的 GUN C++ Compiler，C++编译器。 就本质而言，gcc 和 g++ 并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的 GUN 编译器而已。 gcc 与 g++ 都可以编译 C">
+<meta property="og:description" content="这个事情，要从编译一个简单的代码开始说起。  gcc 和 g++ 的区别gcc 是 GCC 中的 GUN C Compiler，C 编译器。 g++ 是 GCC 中的 GUN C++ Compiler，C++编译器。 就本质而言，gcc 和 g++ 并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的 GUN 编译器而已。 gcc 与 g++ 都可以编译">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/10/13/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/10/13/2.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2018-11-18T05:28:02.485Z">
+<meta property="og:updated_time" content="2019-02-12T02:08:14.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macOS 中神秘的 GCC">
-<meta name="twitter:description" content="这个事情要从编译一个简单的代码开始说起。  gcc 和 g++ 的区别gcc 是 GCC 中的 GUN C Compiler，C 编译器。 g++ 是 GCC 中的 GUN C++ Compiler，C++编译器。 就本质而言，gcc 和 g++ 并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的 GUN 编译器而已。 gcc 与 g++ 都可以编译 C">
+<meta name="twitter:description" content="这个事情，要从编译一个简单的代码开始说起。  gcc 和 g++ 的区别gcc 是 GCC 中的 GUN C Compiler，C 编译器。 g++ 是 GCC 中的 GUN C++ Compiler，C++编译器。 就本质而言，gcc 和 g++ 并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的 GUN 编译器而已。 gcc 与 g++ 都可以编译">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2018/10/13/1.jpg">
 
 
@@ -408,13 +408,13 @@
       
 
       
-        <p>这个事情要从编译一个简单的代码开始说起。</p>
+        <p>这个事情，要从编译一个简单的代码开始说起。</p>
 <hr>
 <h2 id="gcc-和-g-的区别"><a href="#gcc-和-g-的区别" class="headerlink" title="gcc 和 g++ 的区别"></a>gcc 和 g++ 的区别</h2><p><code>gcc</code> 是 GCC 中的 GUN C Compiler，C 编译器。</p>
 <p><code>g++</code> 是 GCC 中的 GUN C++ Compiler，C++编译器。</p>
 <p>就本质而言，<code>gcc</code> 和 <code>g++</code> 并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的 GUN 编译器而已。</p>
 <p><code>gcc</code> 与 <code>g++</code> 都可以编译 C 和 C++ 文件，只是处理方式不同。 可以参考 <a href="https://www.cnblogs.com/wb118115/p/5969775.html" target="_blank" rel="noopener">GCC的gcc和g++区别</a> 这篇文章。</p>
-<h2 id="交换变量-指针"><a href="#交换变量-指针" class="headerlink" title="交换变量-指针"></a>交换变量-指针</h2><p>下面这段代码很简单，利用 C 指针实现交换两个变量的目的。</p>
+<h2 id="交换变量：用指针"><a href="#交换变量：用指针" class="headerlink" title="交换变量：用指针"></a>交换变量：用指针</h2><p>下面这段代码很简单，利用 C 指针实现交换两个变量的目的。</p>
 <p><strong>源文件：mz_swap.c</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 使用指针的方式交换两个变量</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">mz_swap</span><span class="params">(<span class="keyword">int</span> *ap, <span class="keyword">int</span> *bp)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> xp = <span class="number">901</span>;</div><div class="line">    <span class="keyword">int</span> yp = <span class="number">902</span>;</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"--Before-- xp = %i, yp = %i\n"</span>, xp, yp);</div><div class="line">    </div><div class="line">    mz_swap(&amp;xp, &amp;yp);</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"--After--- xp = %i, yp = %i\n"</span>, xp, yp);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">mz_swap</span><span class="params">(<span class="keyword">int</span> *ap, <span class="keyword">int</span> *bp)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == ap || <span class="literal">NULL</span> == bp) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> tp = *ap;</div><div class="line"></div><div class="line">    *ap = *bp;</div><div class="line"></div><div class="line">    *bp = tp;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>在 macOS 下使用 <code>gcc</code> 编译 <code>mz_swap.c</code>，产生可执行文件 <code>exec_main.out</code>，如下操作：</p>
@@ -426,7 +426,7 @@
 <p>报出如下警告，该警告的意思是在 C++ 模式下强制编译 C 文件，这里可以不予理会。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clang: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]</div></pre></td></tr></table></figure>
 <p>虽然有警告，但是编译可以产生可执行文件 <code>exec_main.out</code> 且可以正常执行的，执行结果跟上面一样。</p>
-<h2 id="交换变量-引用"><a href="#交换变量-引用" class="headerlink" title="交换变量-引用"></a>交换变量-引用</h2><p>大家都知道，C 没有 <code>引用</code> 这个概念，而 C++ 是有 <code>引用</code> 概念的，可以在此了解 <a href="http://www.runoob.com/cplusplus/cpp-references.html" target="_blank" rel="noopener">C++ 引用</a>.</p>
+<h2 id="交换变量：用引用"><a href="#交换变量：用引用" class="headerlink" title="交换变量：用引用"></a>交换变量：用引用</h2><p>大家都知道，C 没有 <code>引用</code> 这个概念，而 C++ 是有 <code>引用</code> 概念的，可以在此了解 <a href="http://www.runoob.com/cplusplus/cpp-references.html" target="_blank" rel="noopener">C++ 引用</a>.</p>
 <p>试一下使用 <code>gcc</code> 编译使用 <code>引用</code> 方式编写的 C 代码，按照说法，<code>gcc</code> 是无法编译通过的。</p>
 <p><strong>源文件：mz_swap_ref.c</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 使用引用的方式交换两个变量</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">mz_swap_ref</span><span class="params">(<span class="keyword">int</span> &amp;ap, <span class="keyword">int</span> &amp;bp)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> xp = <span class="number">901</span>;</div><div class="line">    <span class="keyword">int</span> yp = <span class="number">902</span>;</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"--Before-- xp = %i, yp = %i\n"</span>, xp, yp);</div><div class="line"></div><div class="line">    mz_swap_ref(xp, yp);</div><div class="line">    </div><div class="line">    <span class="built_in">printf</span>(<span class="string">"--After--- xp = %i, yp = %i\n"</span>, xp, yp);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">mz_swap_ref</span><span class="params">(<span class="keyword">int</span> &amp;ap, <span class="keyword">int</span> &amp;bp)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> tp = ap;</div><div class="line"></div><div class="line">    ap = bp;</div><div class="line"></div><div class="line">    bp = tp;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -456,9 +456,9 @@
 <p>二者都在 <code>/usr/bin/</code> 目录下：<br><img src="/upload/images/2018/10/13/2.jpg" alt="1"></p>
 <p>其实在 macOS 中 <code>cc</code> 编译器也指向 <code>clang</code>。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面的例子，我们至少可以学到如下几点知识：</p>
-<p><strong>1. C 语言规范中没有 <code>引用</code> 的概念，使用 C 编译器无法使其编译通过，但是使用 C++ 编译器是可以编译通过的。这是因为各自的编译器是遵循语言规范的。</strong></p>
-<p><strong>2. macOS 中的 <code>gcc</code> 和 <code>g++</code> 苹果开发者们并没有去改造和重写它们，只是分别指向 <code>clang</code> 和 <code>clang++</code> 编译器。</strong></p>
-<p><strong>3. 如果不想使用 macOS 中的 <code>gcc</code> 和 <code>g++</code>，就需要自己重新安装 GNU 的，安装和使用方法已经在博客中有说明。</strong></p>
+<p><strong>1、C 语言规范中没有 <code>引用</code> 的概念，使用 C 编译器无法使其编译通过，但是使用 C++ 编译器是可以编译通过的。这是因为各自的编译器是遵循语言规范的。</strong></p>
+<p><strong>2、macOS 中的 <code>gcc</code> 和 <code>g++</code> 苹果开发者们并没有去改造和重写它们，只是分别指向 <code>clang</code> 和 <code>clang++</code> 编译器。</strong></p>
+<p><strong>3、如果不想使用 macOS 中的 <code>gcc</code> 和 <code>g++</code>，就需要自己重新安装 GNU 的编译套件，安装和使用方法已经在博客中有说明。</strong></p>
 <hr>
 <p><strong>扫码关注，你我就各多一个朋友~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
@@ -688,7 +688,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-和-g-的区别"><span class="nav-number">1.</span> <span class="nav-text">gcc 和 g++ 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换变量-指针"><span class="nav-number">2.</span> <span class="nav-text">交换变量-指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换变量-引用"><span class="nav-number">3.</span> <span class="nav-text">交换变量-引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc、g-和-clang-的关系"><span class="nav-number">4.</span> <span class="nav-text">gcc、g++ 和 clang 的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-和-g-的区别"><span class="nav-number">1.</span> <span class="nav-text">gcc 和 g++ 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换变量：用指针"><span class="nav-number">2.</span> <span class="nav-text">交换变量：用指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换变量：用引用"><span class="nav-number">3.</span> <span class="nav-text">交换变量：用引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc、g-和-clang-的关系"><span class="nav-number">4.</span> <span class="nav-text">gcc、g++ 和 clang 的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

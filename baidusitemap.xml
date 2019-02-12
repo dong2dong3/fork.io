@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</loc>
+    <lastmod>2019-02-12T02:12:35.705Z</lastmod>
+    <data>
+        <display>
+        <title>GCC: Homebrew 安装 GCC 和 Binutils</title>
+        <pubTime>2017-10-07T14:03:29.000Z</pubTime>
+        
+        <tag>brew GCC C 编译器</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2018/10/13/macOS-%E4%B8%AD%E7%A5%9E%E7%A7%98%E7%9A%84-GCC/</loc>
+    <lastmod>2019-02-12T02:08:14.072Z</lastmod>
+    <data>
+        <display>
+        <title>macOS 中神秘的 GCC</title>
+        <pubTime>2018-10-13T15:41:06.000Z</pubTime>
+        
+        <tag>gcc g++ clang clang++ cc</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2019/01/29/Class%E3%80%81isa%E3%80%81%E5%85%83%E7%B1%BB/</loc>
     <lastmod>2019-02-08T09:21:59.989Z</lastmod>
     <data>
@@ -32,26 +72,6 @@
         <pubTime>2019-02-08T05:31:43.000Z</pubTime>
         
         <tag>gcc macOS struct</tag>
-         
-         
-           
-             
-              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/10/07/GCC-Homebrew-%E5%AE%89%E8%A3%85-GCC-%E5%92%8C-Binutils/</loc>
-    <lastmod>2019-02-08T05:29:30.089Z</lastmod>
-    <data>
-        <display>
-        <title>GCC: Homebrew 安装 GCC 和 Binutils</title>
-        <pubTime>2017-10-07T14:03:29.000Z</pubTime>
-        
-        <tag>brew GCC C 编译器</tag>
          
          
            
@@ -437,26 +457,6 @@
            
              
               <breadCrumb title="Philosophy" url="http://yoursite.com/categories/Philosophy/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/10/13/macOS-%E4%B8%AD%E7%A5%9E%E7%A7%98%E7%9A%84-GCC/</loc>
-    <lastmod>2018-11-18T05:28:02.485Z</lastmod>
-    <data>
-        <display>
-        <title>macOS 中神秘的 GCC</title>
-        <pubTime>2018-10-13T15:41:06.000Z</pubTime>
-        
-        <tag>gcc g++ clang clang++ cc</tag>
-         
-         
-           
-             
-              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
           
         </display>
     </data>
