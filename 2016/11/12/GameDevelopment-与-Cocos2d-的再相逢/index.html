@@ -1,4 +1,902 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="Cocos2d Game,"><meta name="description" content="认识 Cocos2d相信很多人听说过 cocos2d-x 这个引擎, 但听过 cocos2d-objc 的人应该不多. cocos2d-objc 是 cocos 系列的 objective-c 版本.开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍). 欣赏一下 cocos2d-objc 的 logo, 如图: 如果你对 OC 版感兴趣, 可以通过博文 coc"><meta name="keywords" content="Cocos2d Game"><meta property="og:type" content="article"><meta property="og:title" content="GameDevelopment: 与 Cocos2d 的再相逢"><meta property="og:url" content="http://yoursite.com/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="认识 Cocos2d相信很多人听说过 cocos2d-x 这个引擎, 但听过 cocos2d-objc 的人应该不多. cocos2d-objc 是 cocos 系列的 objective-c 版本.开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍). 欣赏一下 cocos2d-objc 的 logo, 如图: 如果你对 OC 版感兴趣, 可以通过博文 coc"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2016/11/12/1.png"><meta property="og:image" content="http://yoursite.com/upload/images/2016/11/12/2.png"><meta property="og:updated_time" content="2018-03-27T15:22:48.061Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="GameDevelopment: 与 Cocos2d 的再相逢"><meta name="twitter:description" content="认识 Cocos2d相信很多人听说过 cocos2d-x 这个引擎, 但听过 cocos2d-objc 的人应该不多. cocos2d-objc 是 cocos 系列的 objective-c 版本.开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍). 欣赏一下 cocos2d-objc 的 logo, 如图: 如果你对 OC 版感兴趣, 可以通过博文 coc"><meta name="twitter:image" content="http://yoursite.com/upload/images/2016/11/12/1.png"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/"><title>GameDevelopment: 与 Cocos2d 的再相逢 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">GameDevelopment: 与 Cocos2d 的再相逢</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T22:53:56+08:00">2016-11-12</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="认识-Cocos2d"><a href="#认识-Cocos2d" class="headerlink" title="认识 Cocos2d"></a>认识 Cocos2d</h2><p>相信很多人听说过 cocos2d-x 这个引擎, 但听过 <a href="http://cocos2d-objc.org/" target="_blank" rel="noopener">cocos2d-objc</a> 的人应该不多.</p><p>cocos2d-objc 是 cocos 系列的 objective-c 版本.<br>开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍).</p><p>欣赏一下 cocos2d-objc 的 logo, 如图:<br><img src="/upload/images/2016/11/12/1.png" alt="1"></p><p>如果你对 OC 版感兴趣, 可以通过博文 <a href="http://blog.csdn.net/veryitman/article/details/44993643" target="_blank" rel="noopener">coco2d-iphone: 环境搭建</a> 去了解.</p><p>cocos2d-x 目前支持 JavaScript, lua, c++ 等主流语言来开发.<br>cocos 还在迅猛发展中, 不断的完善开发工具, 广大游戏开发者依然热力贡献, 程序猿们在游戏的战场挥洒青春.</p><p>现在 cocos 的开发者会得到更多的支持.</p><p>下面给张图来展示 cocos 家族及其发展:<br><img src="/upload/images/2016/11/12/2.png" alt="1"></p><h2 id="由-libgdx-转向-Cocos2d"><a href="#由-libgdx-转向-Cocos2d" class="headerlink" title="由 libgdx 转向 Cocos2d"></a>由 libgdx 转向 Cocos2d</h2><p>几年前, 那个时候还在开发棋牌游戏, 当时自己也是刚刚接触游戏开发这个「高逼格」的行业, 之前自己是个纯 App 开发者.</p><p>内心还是蛮激动的, 心想可能要走上人生巅峰了…</p><p>棋牌游戏, 当时使用的是 java 的游戏引擎 <a href="https://libgdx.badlogicgames.com/" target="_blank" rel="noopener">libgdx</a> 0.X.X 的版本, 该引擎和 Android 基本也是无缝连接, Api 设计的很好.</p><p>现在 libgdx 也发展到了1.6.x 版本了, 工具也完善了很多.</p><p>虽然 libgdx 也可以跨平台, 但是最终我们还是选择了 cocos2d-x 来移植该游戏.其中原因是因为 cocos2d-x 太火了, 人也好找.</p><p>改为 cocos2d-x 的版本之后, 我就被安排到了另外一个项目, 也是一个棋牌游戏, 该游戏现在在腾讯的微信游戏里面运营.</p><p>这个游戏是 cocos2d-objc 的引擎写的, 自己也不会 objc, 于是硬着头皮学习, 很快的就上手了这个项目.写的也是风生水起.</p><p>cocos2d-objc, 现在也支持跨平台, 并且有 xcode 的插件, 可以在 xcode 里面写 Android 的代码, 调试开发等.</p><p>因为接触 cocos2d, 后面就直接开搞 iOS 开发了.</p><h2 id="再次使用-Cocos2d"><a href="#再次使用-Cocos2d" class="headerlink" title="再次使用 Cocos2d"></a>再次使用 Cocos2d</h2><p>互联网 IT 业的发展, 刺激了各个行业的发展, 也促进和激发了新生的技术, 在这个行业, 每个人都能体会 <code>活到老学到老</code> 这句话的含义.</p><p>这两年, HTML5 的发展, 让很多程序员重新认识了 JavaScript 的重要性. 特别是最近 ReactNative 的发展, jsPacth 的开源, 微信小程序的推出, 让 JavaScript 火得不要不要的.</p><p>说实话, 是时候开始学习前端相关的技术了, 至少你需要去了解.</p><p>cocos2d-js 的发展, 给 HTML 游戏开发带来了很多便利. 最近我们需要开发 H5 的游戏, 直接拿起 coco2d-x(支持 JavaScript) 就撸起.</p><p>去 <a href="https://github.com/cocos2d/cocos2d-x" target="_blank" rel="noopener">GitHub</a> 上面直接 clone 最新版就可以, 按照 README.md 来搭建环境就好了.</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这篇博客也是有感而发, 没有实质性的内容.</p><p>主要目的是想告诉大家, 技术的发展日新月异, 想在这里大展拳脚, 你需要保持一颗年轻的心, 不怕苦, 勇往直前的精神.</p><p>我们需要学习的技术有很多, 我认为, 要根据项目本身的发展来适度的学习, 切记盲目的学习, 学习一门新技术之后, 要及时的运用在项目当中, 并分享给你身边的人.</p><blockquote><p>不拒绝不排斥新技术, 坚持学习和乐于分享, 应该是必备的技能.</p></blockquote></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Cocos2d-Game/" rel="tag"><i class="fa fa-tag"></i> Cocos2d Game</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2016/11/08/Mac-install-Cocoapods/" rel="next" title="Mac install Cocoapods"><i class="fa fa-chevron-left"></i> Mac install Cocoapods</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2016/11/26/Mac-配置-JDK1-8/" rel="prev" title="Mac 配置 JDK1.8">Mac 配置 JDK1.8<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">102</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">77</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#认识-Cocos2d"><span class="nav-number">1.</span> <span class="nav-text">认识 Cocos2d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#由-libgdx-转向-Cocos2d"><span class="nav-number">2.</span> <span class="nav-text">由 libgdx 转向 Cocos2d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再次使用-Cocos2d"><span class="nav-number">3.</span> <span class="nav-text">再次使用 Cocos2d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Cocos2d Game," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="认识 Cocos2d相信很多人听说过 cocos2d-x 这个引擎, 但听过 cocos2d-objc 的人应该不多. cocos2d-objc 是 cocos 系列的 objective-c 版本.开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍). 欣赏一下 cocos2d-objc 的 logo, 如图: 如果你对 OC 版感兴趣, 可以通过博文 coc">
+<meta name="keywords" content="Cocos2d Game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GameDevelopment: 与 Cocos2d 的再相逢">
+<meta property="og:url" content="http://yoursite.com/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="认识 Cocos2d相信很多人听说过 cocos2d-x 这个引擎, 但听过 cocos2d-objc 的人应该不多. cocos2d-objc 是 cocos 系列的 objective-c 版本.开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍). 欣赏一下 cocos2d-objc 的 logo, 如图: 如果你对 OC 版感兴趣, 可以通过博文 coc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2016/11/12/1.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2016/11/12/2.png">
+<meta property="og:updated_time" content="2018-03-27T15:22:48.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GameDevelopment: 与 Cocos2d 的再相逢">
+<meta name="twitter:description" content="认识 Cocos2d相信很多人听说过 cocos2d-x 这个引擎, 但听过 cocos2d-objc 的人应该不多. cocos2d-objc 是 cocos 系列的 objective-c 版本.开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍). 欣赏一下 cocos2d-objc 的 logo, 如图: 如果你对 OC 版感兴趣, 可以通过博文 coc">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2016/11/12/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/"/>
+
+
+
+
+
+  <title>GameDevelopment: 与 Cocos2d 的再相逢 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GameDevelopment: 与 Cocos2d 的再相逢</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T22:53:56+08:00">
+                2016-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index">
+                    <span itemprop="name">Game</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2016/11/12/GameDevelopment-与-Cocos2d-的再相逢/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="认识-Cocos2d"><a href="#认识-Cocos2d" class="headerlink" title="认识 Cocos2d"></a>认识 Cocos2d</h2><p>相信很多人听说过 cocos2d-x 这个引擎, 但听过 <a href="http://cocos2d-objc.org/" target="_blank" rel="noopener">cocos2d-objc</a> 的人应该不多.</p>
+<p>cocos2d-objc 是 cocos 系列的 objective-c 版本.<br>开发语言是 OC.在 iOS 上面使用该版本的引擎, 基本是无缝连接(写的没有什么障碍).</p>
+<p>欣赏一下 cocos2d-objc 的 logo, 如图:<br><img src="/upload/images/2016/11/12/1.png" alt="1"></p>
+<p>如果你对 OC 版感兴趣, 可以通过博文 <a href="http://blog.csdn.net/veryitman/article/details/44993643" target="_blank" rel="noopener">coco2d-iphone: 环境搭建</a> 去了解.</p>
+<p>cocos2d-x 目前支持 JavaScript, lua, c++ 等主流语言来开发.<br>cocos 还在迅猛发展中, 不断的完善开发工具, 广大游戏开发者依然热力贡献, 程序猿们在游戏的战场挥洒青春.</p>
+<p>现在 cocos 的开发者会得到更多的支持.</p>
+<p>下面给张图来展示 cocos 家族及其发展:<br><img src="/upload/images/2016/11/12/2.png" alt="1"></p>
+<h2 id="由-libgdx-转向-Cocos2d"><a href="#由-libgdx-转向-Cocos2d" class="headerlink" title="由 libgdx 转向 Cocos2d"></a>由 libgdx 转向 Cocos2d</h2><p>几年前, 那个时候还在开发棋牌游戏, 当时自己也是刚刚接触游戏开发这个「高逼格」的行业, 之前自己是个纯 App 开发者.</p>
+<p>内心还是蛮激动的, 心想可能要走上人生巅峰了…</p>
+<p>棋牌游戏, 当时使用的是 java 的游戏引擎 <a href="https://libgdx.badlogicgames.com/" target="_blank" rel="noopener">libgdx</a> 0.X.X 的版本, 该引擎和 Android 基本也是无缝连接, Api 设计的很好.</p>
+<p>现在 libgdx 也发展到了1.6.x 版本了, 工具也完善了很多.</p>
+<p>虽然 libgdx 也可以跨平台, 但是最终我们还是选择了 cocos2d-x 来移植该游戏.其中原因是因为 cocos2d-x 太火了, 人也好找.</p>
+<p>改为 cocos2d-x 的版本之后, 我就被安排到了另外一个项目, 也是一个棋牌游戏, 该游戏现在在腾讯的微信游戏里面运营.</p>
+<p>这个游戏是 cocos2d-objc 的引擎写的, 自己也不会 objc, 于是硬着头皮学习, 很快的就上手了这个项目.写的也是风生水起.</p>
+<p>cocos2d-objc, 现在也支持跨平台, 并且有 xcode 的插件, 可以在 xcode 里面写 Android 的代码, 调试开发等.</p>
+<p>因为接触 cocos2d, 后面就直接开搞 iOS 开发了.</p>
+<h2 id="再次使用-Cocos2d"><a href="#再次使用-Cocos2d" class="headerlink" title="再次使用 Cocos2d"></a>再次使用 Cocos2d</h2><p>互联网 IT 业的发展, 刺激了各个行业的发展, 也促进和激发了新生的技术, 在这个行业, 每个人都能体会 <code>活到老学到老</code> 这句话的含义.</p>
+<p>这两年, HTML5 的发展, 让很多程序员重新认识了 JavaScript 的重要性. 特别是最近 ReactNative 的发展, jsPacth 的开源, 微信小程序的推出, 让 JavaScript 火得不要不要的.</p>
+<p>说实话, 是时候开始学习前端相关的技术了, 至少你需要去了解.</p>
+<p>cocos2d-js 的发展, 给 HTML 游戏开发带来了很多便利. 最近我们需要开发 H5 的游戏, 直接拿起 coco2d-x(支持 JavaScript) 就撸起.</p>
+<p>去 <a href="https://github.com/cocos2d/cocos2d-x" target="_blank" rel="noopener">GitHub</a> 上面直接 clone 最新版就可以, 按照 README.md 来搭建环境就好了.</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这篇博客也是有感而发, 没有实质性的内容.</p>
+<p>主要目的是想告诉大家, 技术的发展日新月异, 想在这里大展拳脚, 你需要保持一颗年轻的心, 不怕苦, 勇往直前的精神.</p>
+<p>我们需要学习的技术有很多, 我认为, 要根据项目本身的发展来适度的学习, 切记盲目的学习, 学习一门新技术之后, 要及时的运用在项目当中, 并分享给你身边的人.</p>
+<blockquote>
+<p>不拒绝不排斥新技术, 坚持学习和乐于分享, 应该是必备的技能.</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Cocos2d-Game/" rel="tag"><i class="fa fa-tag"></i> Cocos2d Game</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/08/Mac-install-Cocoapods/" rel="next" title="Mac install Cocoapods">
+                <i class="fa fa-chevron-left"></i> Mac install Cocoapods
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/26/Mac-配置-JDK1-8/" rel="prev" title="Mac 配置 JDK1.8">
+                Mac 配置 JDK1.8 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#认识-Cocos2d"><span class="nav-number">1.</span> <span class="nav-text">认识 Cocos2d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#由-libgdx-转向-Cocos2d"><span class="nav-number">2.</span> <span class="nav-text">由 libgdx 转向 Cocos2d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再次使用-Cocos2d"><span class="nav-number">3.</span> <span class="nav-text">再次使用 Cocos2d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1211,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
