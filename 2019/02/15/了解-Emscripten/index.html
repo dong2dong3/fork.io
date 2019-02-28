@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/02/15/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/02/15/2.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-02-17T08:59:18.677Z">
+<meta property="og:updated_time" content="2019-02-28T12:36:00.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解 Emscripten">
 <meta name="twitter:description" content="Emscripten 是什么？Emscripten 是一个 开源的编译器，可以将 C/C++ 的代码编译后高效运行在现代浏览器上面。Emscripten 的底层是基于 LLVM 编译器的，可以查看其开源的 emscripten llvm 和 emscripten clang。 下图是其编译 C/C++ 的代码的流程图： 官网 对 Emscripten 的定义：  Emscripten is a t">
@@ -452,7 +452,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv)</span> </span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Emscripten show in browser...\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>使用 <code>emcc</code> 编译，如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">emcc main.c -s WASM=<span class="number">1</span> -o mz.html</div></pre></td></tr></table></figure>
-<p>这里一定要注意 <code>WASM=1</code> 这个选项，否则生成的格式</p>
+<p>这里要注意 <code>WASM=1</code> 这个选项，现在新版 SDK 默认 <code>WASM=1</code> 了，如果不想生成 <code>.wasm</code> 这个文件，需要指定 <code>WASM=0</code> 选项。</p>
 <p>生成另外三个文件如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mz.html  mz.js  mz.wasm</div></pre></td></tr></table></figure>
 <p>简单介绍一下这三个文件</p>
