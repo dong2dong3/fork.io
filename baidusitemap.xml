@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2019/03/02/Emscripten%EF%BC%9AJS-%E8%B0%83%E7%94%A8-C%E3%80%81C/</loc>
+    <lastmod>2019-03-02T07:20:46.595Z</lastmod>
+    <data>
+        <display>
+        <title>Emscripten：JS 调用 C、C++</title>
+        <pubTime>2019-03-02T07:18:04.000Z</pubTime>
+        
+        <tag>Emscripten wasm JavaScript</tag>
+         
+         
+           
+             
+              <breadCrumb title="C/C++" url="http://yoursite.com/categories/C-C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2019/02/15/%E4%BA%86%E8%A7%A3-Emscripten/</loc>
     <lastmod>2019-02-28T12:36:00.111Z</lastmod>
     <data>
