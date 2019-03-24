@@ -1,4 +1,942 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="元类 isa class meta-class,"><meta name="description" content="声明本文的所涉及到的源码是 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 Class我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。 看一下 NSObject 的声明，在头文件中，如下图所示： 123456@interface NSObject &amp;lt;NSObject&amp;gt; &amp;#123;#pra"><meta name="keywords" content="元类 isa class meta-class"><meta property="og:type" content="article"><meta property="og:title" content="Class、isa、元类"><meta property="og:url" content="http://yoursite.com/2019/01/29/Class、isa、元类/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="声明本文的所涉及到的源码是 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 Class我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。 看一下 NSObject 的声明，在头文件中，如下图所示： 123456@interface NSObject &amp;lt;NSObject&amp;gt; &amp;#123;#pra"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/1.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/2.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/3.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/4.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/5.jpg"><meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg"><meta property="og:updated_time" content="2019-02-23T10:14:41.309Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Class、isa、元类"><meta name="twitter:description" content="声明本文的所涉及到的源码是 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 Class我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。 看一下 NSObject 的声明，在头文件中，如下图所示： 123456@interface NSObject &amp;lt;NSObject&amp;gt; &amp;#123;#pra"><meta name="twitter:image" content="http://yoursite.com/upload/images/2019/01/29/1.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2019/01/29/Class、isa、元类/"><title>Class、isa、元类 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/29/Class、isa、元类/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Class、isa、元类</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-29T21:39:05+08:00">2019-01-29</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2019/01/29/Class、isa、元类/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2019/01/29/Class、isa、元类/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本文的所涉及到的源码是 <a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">objc4</a> 源码，截止到写本文最新的是 <code>objc4-750</code> 这个版本。</p><h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。</p><p>看一下 <code>NSObject</code> 的声明，在头文件中，如下图所示：<br><img src="/upload/images/2019/01/29/1.jpg" alt=""></p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSObject</span> &lt;<span class="title">NSObject</span>&gt; </span>&#123;</div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wobjc-interface-ivars"</span></span></div><div class="line">    Class isa  OBJC_ISA_AVAILABILITY;</div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看到：<br>1、<code>NSObject</code> 是实现了 <code>&lt;NSObject&gt;</code> 协议的。<br>2、<code>NSObject</code> 中有 <code>Class</code> 类型的 <code>isa</code> 成员变量，外界是无法访问的，另外 <code>isa</code> 指针可能在将来也会被隐藏起来(OBJC_ISA_AVAILABILITY标示了)。</p><p>继续看一下 <code>Class</code> 到底是什么？</p><p><img src="/upload/images/2019/01/29/2.jpg" alt=""></p><p>在上面的文件中可以看到 <code>Class</code> 的定义，如下代码：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_object *<span class="keyword">id</span>;</div></pre></td></tr></table></figure><p>可以看出 <code>Class</code> 是一个指向 <code>objc_class</code> 的结构体指针，<code>Objective-C</code> 中的类是由 <code>Class</code> 类型来表示的，它实际上是一个指向 <code>objc_class</code> 结构体的指针。</p><p>在下面的头文件中看一下 <code>objc_class</code> 的定义，如下：</p><p><img src="/upload/images/2019/01/29/3.jpg" alt=""></p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_class : objc_object &#123;</div><div class="line">    <span class="comment">// Class ISA;</span></div><div class="line">    Class superclass;</div><div class="line">    cache_t cache;             <span class="comment">// formerly cache pointer and vtable</span></div><div class="line">    class_data_bits_t bits;    <span class="comment">// class_rw_t * plus custom rr/alloc flags</span></div><div class="line">    </div><div class="line">    <span class="comment">// ....</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看出，<code>objc_class</code> 用来描述OC中的类，而 <code>objc_object</code> 用来描述OC中的对象，类(objc_class)其实也是一个对象(objc_object)，另外 <code>id</code> 是代表对象的，它是指向 <code>objc_object</code> 的结构体指针，它的存在可以让我们实现类似于C++中泛型的一些操作。该类型的对象可以转换为任何一种对象，有点类似于C语言中 <code>void *</code> 指针类型的作用。</p><p>这里要注意，<code>objc_class</code> 的定义在 <code>objc-runtime-old.h</code>中和 <code>objc-runtime-new.h</code> 中的不一样。这里以 <code>objc-runtime-new.h</code> 为主，建议可以看看 <a href="http://www.veryitman.com/2019/01/28/%E8%A2%AB%E8%AF%AF%E8%A7%A3%E7%9A%84-objc-class/" target="_blank" rel="noopener">被误解的 objc_class</a> 这篇文章。</p><p>再来看一下 <code>objc_object</code>，如下图所示：</p><p><img src="/upload/images/2019/01/29/4.jpg" alt=""></p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_object &#123;</div><div class="line">private:</div><div class="line">    isa_t isa;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p><code>objc_object</code> 是一个结构体，里面有个私有成员变量 <code>isa</code> 是 <code>isa_t</code> 类型的。</p><p>而 <code>isa_t</code> 是一个 union 类型的，如下代码：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">union</span> isa_t &#123;</div><div class="line">    isa_t() &#123; &#125;</div><div class="line">    isa_t(uintptr_t value) : bits(value) &#123; &#125;</div><div class="line"></div><div class="line">    Class cls;</div><div class="line">    uintptr_t bits;</div><div class="line"><span class="meta">#if defined(ISA_BITFIELD)</span></div><div class="line">    <span class="keyword">struct</span> &#123;</div><div class="line">        ISA_BITFIELD;  <span class="comment">// defined in isa.h</span></div><div class="line">    &#125;;</div><div class="line"><span class="meta">#endif</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure><p>总之在OC中，类也是一个对象称之为类对象，根据凡是对象都有自己的类的原理，那么类对象的肯定存在自己的类，这个类就是元类(meta-class)。</p><h2 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h2><p>在说元类之前，先看一下下面的例子，创建一个 <code>NSMutableDictionary</code> 实例对象 <code>dict</code>，即向 <code>NSMutableDictionary</code> 发送 <code>alloc</code> 和 <code>init</code> 消息。</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableDictionary</span> *dict = [[<span class="built_in">NSMutableDictionary</span> alloc] init];</div></pre></td></tr></table></figure><p>上面代码的大概执行流程如下几个步骤：</p><p><strong>1</strong>、先执行 <code>[NSMutableDictionary alloc]</code>，但是 <code>NSMutableDictionary</code> 没有 <code>+alloc</code> 方法，于是再去父类<code>NSObject</code> 中查找该方法。</p><p><strong>2</strong>、<code>NSObject</code> 响应 <code>+alloc</code> 方法，开始检测 <code>NSMutableDictionary</code> 类，并根据其所需的内存空间大小开始分配内存空间，然后把 <code>isa</code> 指针指向 <code>NSMutableDictionary</code> 类。同时，<code>+alloc</code> 也被加进 cache 列表里面。</p><p><strong>3</strong>、接着，执行 <code>-init</code> 方法，如果 <code>NSMutableDictionary</code> 响应该方法，则直接将其加入 <code>cache</code>，如果不响应，则去父类查找。</p><p><strong>4</strong>、在后期的操作中，如果再以 <code>[[NSMutableDictionary alloc] init]</code> 这种方式来创建字典对象，则会直接从 cache 中取出相应的方法，直接调用。</p><p>上面是创建一个实例对象的大致流程，接下来我们说说元类。</p><p><strong>元类简单来说就是类对象的类。</strong>类描述的是对象，那么元类描述的就是Class类对象的类。元类定义了类的行为（类方法），在平时开发时，meta-class 基本是用不着接触的，但最好还是要知道它的存在，这样可以更好的理解OC的设计。</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableDictionary</span> *tDatas = [<span class="built_in">NSMutableDictionary</span> dictionaryWithCapacity:<span class="number">5</span>];</div></pre></td></tr></table></figure><p>拿上面的示例来说，向 <code>NSMutableDictionary</code> 发送 <code>dictionaryWithCapacity</code> 这个消息的时候，Runtime 会在这个类的 meta-class 的方法列表中查找，通过 SEL 找到后取出方法中的 IMP 函数入口指针，并执行该方法，如果找不到就进行消息转发的流程中，最终可能会导致 Crash，消息转发的原理和机制可以参考 <a href="http://www.veryitman.com/categories/iOS/page/2/" target="_blank" rel="noopener">消息机制</a> 这几篇文章。</p><p>元类保存了类方法的列表。当一个类方法被调用时，元类会首先查找它本身是否有该类方法的实现，如果没有则该元类会向它的父类查找该方法，直到一直找到继承链的头。</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class object_getClass(<span class="keyword">id</span> obj);</div></pre></td></tr></table></figure><p><code>object_getClass</code> 可以获取一个对象的 class object，其源码实现如下：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Class object_getClass(<span class="keyword">id</span> obj)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (obj) <span class="keyword">return</span> obj-&gt;getIsa();</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> Nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>举个例子吧，示例如下：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSObject</span> *obj = [<span class="built_in">NSObject</span> new];</div><div class="line">Class obj1 = object_getClass(obj);</div><div class="line">Class obj2 = object_getClass([<span class="built_in">NSObject</span> <span class="keyword">class</span>]);</div><div class="line">Class obj3 = objc_getMetaClass(<span class="string">"NSObject"</span>);</div><div class="line">Class obj4 = object_getClass(obj1);</div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *name = [<span class="built_in">NSStringFromClass</span>(obj1) UTF8String];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name: %s"</span>, name); <span class="comment">//name: NSObject</span></div><div class="line">Class obj5 = objc_getMetaClass(name);</div><div class="line">Class obj6 = objc_getClass(name);</div><div class="line">    </div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj : %@, -&gt;%p: "</span>, obj,  obj);</div><div class="line">    </div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj1: %@, -&gt;%p: "</span>, obj1, obj1);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj2: %@, -&gt;%p: "</span>, obj2, obj2);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj3: %@, -&gt;%p: "</span>, obj3, obj3);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj4: %@, -&gt;%p: "</span>, obj4, obj4);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj5: %@, -&gt;%p: "</span>, obj5, obj5);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj6: %@, -&gt;%p: "</span>, obj6, obj6);</div></pre></td></tr></table></figure><p>打印结果如下：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">obj : &lt;<span class="built_in">NSObject</span>: <span class="number">0x600002b19d70</span>&gt;, -&gt;<span class="number">0x600002b19d70</span>:</div><div class="line">obj1: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bf38</span>:</div><div class="line">obj2: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj3: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj4: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj5: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj6: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bf38</span>:</div></pre></td></tr></table></figure><p>可以看出，obj 是一个实例对象，obj1和obj6是一个 class object，其二者地址也一致，obj2、obj3、obj4 和 obj5 都获取到的是元类。</p><p>通过类对象调用的 <code>object_getClass</code> 得到的是该类对象的 meta-class，如 obj2 和 obj4，而通过实例对象调用的<code>object_getClass</code> 得到的是该实例对象的类对象，如 obj1，<code>objc_getClass</code> 这个方法获取是实例对象的类对象，与<code>object_getClass</code> 还是有点不一样的。而 <code>objc_getMetaClass</code> 可以直接获取 meta-class，如 obj3。</p><p><strong>总之:</strong><br>1、<code>objc_getClass</code> 参数是类名的字符串，返回的就是这个类的类对象。<br>2、<code>object_getClass</code> 参数是 <code>id</code> 类型，它返回的是这个 <code>id</code> 的 <code>isa</code> 指针所指向的Class；如果传参是Class，则返回该Class的meta-class。</p><p>在 <strong>NSObject.mm</strong> 中，可以看到 self 和 class 方法都要实例和类方法，class 方法返回的都是类对象。</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">id</span>)<span class="keyword">self</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">id</span>)<span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)<span class="keyword">self</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (Class)<span class="keyword">class</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (Class)<span class="keyword">class</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> object_getClass(<span class="keyword">self</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>所以，无论是类还是实例调用 class 方法，返回的都是同一个 class object，举例：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Class objClz1 = [<span class="built_in">NSObject</span> <span class="keyword">class</span>];</div><div class="line">Class objClz2 = [[[<span class="built_in">NSObject</span> alloc] init] <span class="keyword">class</span>];</div><div class="line">    </div><div class="line"><span class="keyword">if</span> (objClz1 == objClz2) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"objClz1: %@, -&gt;%p"</span>, objClz1, objClz1);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>输出结果是：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">objClz1: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10fa30f38</span></div></pre></td></tr></table></figure><h2 id="isa"><a href="#isa" class="headerlink" title="isa"></a>isa</h2><p>下面的例子来源自 <a href="http://zziking.github.io/ios/2016/02/08/Objective-C_Runtime_1_The_object_model.html" target="_blank" rel="noopener">这里</a>，感谢 kingizz’s blog，代码中 <code>Son</code> 是 <code>Father</code> 的子类，而 <code>Father</code> 是 <code>NSObject</code> 的子类。</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Father</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Son</span> : <span class="title">Father</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure><p>我们结合下面这个图来理解一下，子类、父类、元类以及 isa 指针。</p><p><img src="/upload/images/2019/01/29/5.jpg" alt=""></p><p>一个实例对象的 <code>isa</code> 指向对象所属的类，这个类的 <code>isa</code> 指向这个类的元类，而这个元类的 <code>isa</code> 又指向 <code>NSObject</code> 的元类，<code>NSObject</code> 的元类的 <code>isa</code> 指向其本身，最终形成形成一个完美的闭环。</p><p>在OC中，所有的对象都有一个 <code>isa</code> 指针，指向对象所属的类，类也是一个对象，类对象的 <code>isa</code> 指针指向类的元类。</p><h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p>1、<a href="https://tingxins.com/2017/05/metaclass-class-relationship/" target="_blank" rel="noopener">Objective-C 中的对象、类、元类</a></p><p>2、<a href="http://zziking.github.io/ios/2016/02/08/Objective-C_Runtime_1_The_object_model.html" target="_blank" rel="noopener">Objective-C Runtime(一)对象模型及类与元类</a></p><p>3、<a href="http://www.veryitman.com/2019/01/28/%E8%A2%AB%E8%AF%AF%E8%A7%A3%E7%9A%84-objc-class/" target="_blank" rel="noopener">被误解的 objc_class</a></p><hr><p><strong>扫码关注，期待与你的交流~</strong></p><p><img src="/upload/me/qrcode_wx.jpg" alt=""></p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/元类-isa-class-meta-class/" rel="tag"><i class="fa fa-tag"></i> 元类 isa class meta-class</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/01/28/被误解的-objc-class/" rel="next" title="被误解的 objc_class"><i class="fa fa-chevron-left"></i> 被误解的 objc_class</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2019/01/30/致结婚8周年/" rel="prev" title="致结婚8周年">致结婚8周年<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">109</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">83</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class"><span class="nav-number">2.</span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元类"><span class="nav-number">3.</span> <span class="nav-text">元类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isa"><span class="nav-number">4.</span> <span class="nav-text">isa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="元类 isa class meta-class," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="声明本文的所涉及到的源码是 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 Class我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。 看一下 NSObject 的声明，在头文件中，如下图所示： 123456@interface NSObject &amp;lt;NSObject&amp;gt; &amp;#123;#pra">
+<meta name="keywords" content="元类 isa class meta-class">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class、isa、元类">
+<meta property="og:url" content="http://yoursite.com/2019/01/29/Class、isa、元类/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="声明本文的所涉及到的源码是 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 Class我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。 看一下 NSObject 的声明，在头文件中，如下图所示： 123456@interface NSObject &amp;lt;NSObject&amp;gt; &amp;#123;#pra">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/2.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/3.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/4.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/01/29/5.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-02-23T10:14:41.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Class、isa、元类">
+<meta name="twitter:description" content="声明本文的所涉及到的源码是 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 Class我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。 看一下 NSObject 的声明，在头文件中，如下图所示： 123456@interface NSObject &amp;lt;NSObject&amp;gt; &amp;#123;#pra">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/01/29/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/29/Class、isa、元类/"/>
+
+
+
+
+
+  <title>Class、isa、元类 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/29/Class、isa、元类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Class、isa、元类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-29T21:39:05+08:00">
+                2019-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/29/Class、isa、元类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/01/29/Class、isa、元类/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本文的所涉及到的源码是 <a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">objc4</a> 源码，截止到写本文最新的是 <code>objc4-750</code> 这个版本。</p>
+<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>我们在学习面向对象的学习中，接触最多的就是类，那么在OC类是由Class类型来表示的，Class是用C的数据结构来表示的。</p>
+<p>看一下 <code>NSObject</code> 的声明，在头文件中，如下图所示：<br><img src="/upload/images/2019/01/29/1.jpg" alt=""></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSObject</span> &lt;<span class="title">NSObject</span>&gt; </span>&#123;</div><div class="line"><span class="meta">#pragma clang diagnostic push</span></div><div class="line"><span class="meta">#pragma clang diagnostic ignored <span class="meta-string">"-Wobjc-interface-ivars"</span></span></div><div class="line">    Class isa  OBJC_ISA_AVAILABILITY;</div><div class="line"><span class="meta">#pragma clang diagnostic pop</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到：<br>1、<code>NSObject</code> 是实现了 <code>&lt;NSObject&gt;</code> 协议的。<br>2、<code>NSObject</code> 中有 <code>Class</code> 类型的 <code>isa</code> 成员变量，外界是无法访问的，另外 <code>isa</code> 指针可能在将来也会被隐藏起来(OBJC_ISA_AVAILABILITY标示了)。</p>
+<p>继续看一下 <code>Class</code> 到底是什么？</p>
+<p><img src="/upload/images/2019/01/29/2.jpg" alt=""></p>
+<p>在上面的文件中可以看到 <code>Class</code> 的定义，如下代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_object *<span class="keyword">id</span>;</div></pre></td></tr></table></figure>
+<p>可以看出 <code>Class</code> 是一个指向 <code>objc_class</code> 的结构体指针，<code>Objective-C</code> 中的类是由 <code>Class</code> 类型来表示的，它实际上是一个指向 <code>objc_class</code> 结构体的指针。</p>
+<p>在下面的头文件中看一下 <code>objc_class</code> 的定义，如下：</p>
+<p><img src="/upload/images/2019/01/29/3.jpg" alt=""></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_class : objc_object &#123;</div><div class="line">    <span class="comment">// Class ISA;</span></div><div class="line">    Class superclass;</div><div class="line">    cache_t cache;             <span class="comment">// formerly cache pointer and vtable</span></div><div class="line">    class_data_bits_t bits;    <span class="comment">// class_rw_t * plus custom rr/alloc flags</span></div><div class="line">    </div><div class="line">    <span class="comment">// ....</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出，<code>objc_class</code> 用来描述OC中的类，而 <code>objc_object</code> 用来描述OC中的对象，类(objc_class)其实也是一个对象(objc_object)，另外 <code>id</code> 是代表对象的，它是指向 <code>objc_object</code> 的结构体指针，它的存在可以让我们实现类似于C++中泛型的一些操作。该类型的对象可以转换为任何一种对象，有点类似于C语言中 <code>void *</code> 指针类型的作用。</p>
+<p>这里要注意，<code>objc_class</code> 的定义在 <code>objc-runtime-old.h</code>中和 <code>objc-runtime-new.h</code> 中的不一样。这里以 <code>objc-runtime-new.h</code> 为主，建议可以看看 <a href="http://www.veryitman.com/2019/01/28/%E8%A2%AB%E8%AF%AF%E8%A7%A3%E7%9A%84-objc-class/" target="_blank" rel="noopener">被误解的 objc_class</a> 这篇文章。</p>
+<p>再来看一下 <code>objc_object</code>，如下图所示：</p>
+<p><img src="/upload/images/2019/01/29/4.jpg" alt=""></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_object &#123;</div><div class="line">private:</div><div class="line">    isa_t isa;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>objc_object</code> 是一个结构体，里面有个私有成员变量 <code>isa</code> 是 <code>isa_t</code> 类型的。</p>
+<p>而 <code>isa_t</code> 是一个 union 类型的，如下代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">union</span> isa_t &#123;</div><div class="line">    isa_t() &#123; &#125;</div><div class="line">    isa_t(uintptr_t value) : bits(value) &#123; &#125;</div><div class="line"></div><div class="line">    Class cls;</div><div class="line">    uintptr_t bits;</div><div class="line"><span class="meta">#if defined(ISA_BITFIELD)</span></div><div class="line">    <span class="keyword">struct</span> &#123;</div><div class="line">        ISA_BITFIELD;  <span class="comment">// defined in isa.h</span></div><div class="line">    &#125;;</div><div class="line"><span class="meta">#endif</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>总之在OC中，类也是一个对象称之为类对象，根据凡是对象都有自己的类的原理，那么类对象的肯定存在自己的类，这个类就是元类(meta-class)。</p>
+<h2 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h2><p>在说元类之前，先看一下下面的例子，创建一个 <code>NSMutableDictionary</code> 实例对象 <code>dict</code>，即向 <code>NSMutableDictionary</code> 发送 <code>alloc</code> 和 <code>init</code> 消息。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableDictionary</span> *dict = [[<span class="built_in">NSMutableDictionary</span> alloc] init];</div></pre></td></tr></table></figure>
+<p>上面代码的大概执行流程如下几个步骤：</p>
+<p><strong>1</strong>、先执行 <code>[NSMutableDictionary alloc]</code>，但是 <code>NSMutableDictionary</code> 没有 <code>+alloc</code> 方法，于是再去父类<code>NSObject</code> 中查找该方法。</p>
+<p><strong>2</strong>、<code>NSObject</code> 响应 <code>+alloc</code> 方法，开始检测 <code>NSMutableDictionary</code> 类，并根据其所需的内存空间大小开始分配内存空间，然后把 <code>isa</code> 指针指向 <code>NSMutableDictionary</code> 类。同时，<code>+alloc</code> 也被加进 cache 列表里面。</p>
+<p><strong>3</strong>、接着，执行 <code>-init</code> 方法，如果 <code>NSMutableDictionary</code> 响应该方法，则直接将其加入 <code>cache</code>，如果不响应，则去父类查找。</p>
+<p><strong>4</strong>、在后期的操作中，如果再以 <code>[[NSMutableDictionary alloc] init]</code> 这种方式来创建字典对象，则会直接从 cache 中取出相应的方法，直接调用。</p>
+<p>上面是创建一个实例对象的大致流程，接下来我们说说元类。</p>
+<p><strong>元类简单来说就是类对象的类。</strong>类描述的是对象，那么元类描述的就是Class类对象的类。元类定义了类的行为（类方法），在平时开发时，meta-class 基本是用不着接触的，但最好还是要知道它的存在，这样可以更好的理解OC的设计。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableDictionary</span> *tDatas = [<span class="built_in">NSMutableDictionary</span> dictionaryWithCapacity:<span class="number">5</span>];</div></pre></td></tr></table></figure>
+<p>拿上面的示例来说，向 <code>NSMutableDictionary</code> 发送 <code>dictionaryWithCapacity</code> 这个消息的时候，Runtime 会在这个类的 meta-class 的方法列表中查找，通过 SEL 找到后取出方法中的 IMP 函数入口指针，并执行该方法，如果找不到就进行消息转发的流程中，最终可能会导致 Crash，消息转发的原理和机制可以参考 <a href="http://www.veryitman.com/categories/iOS/page/2/" target="_blank" rel="noopener">消息机制</a> 这几篇文章。</p>
+<p>元类保存了类方法的列表。当一个类方法被调用时，元类会首先查找它本身是否有该类方法的实现，如果没有则该元类会向它的父类查找该方法，直到一直找到继承链的头。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class object_getClass(<span class="keyword">id</span> obj);</div></pre></td></tr></table></figure>
+<p><code>object_getClass</code> 可以获取一个对象的 class object，其源码实现如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Class object_getClass(<span class="keyword">id</span> obj)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (obj) <span class="keyword">return</span> obj-&gt;getIsa();</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> Nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>举个例子吧，示例如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSObject</span> *obj = [<span class="built_in">NSObject</span> new];</div><div class="line">Class obj1 = object_getClass(obj);</div><div class="line">Class obj2 = object_getClass([<span class="built_in">NSObject</span> <span class="keyword">class</span>]);</div><div class="line">Class obj3 = objc_getMetaClass(<span class="string">"NSObject"</span>);</div><div class="line">Class obj4 = object_getClass(obj1);</div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *name = [<span class="built_in">NSStringFromClass</span>(obj1) UTF8String];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name: %s"</span>, name); <span class="comment">//name: NSObject</span></div><div class="line">Class obj5 = objc_getMetaClass(name);</div><div class="line">Class obj6 = objc_getClass(name);</div><div class="line">    </div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj : %@, -&gt;%p: "</span>, obj,  obj);</div><div class="line">    </div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj1: %@, -&gt;%p: "</span>, obj1, obj1);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj2: %@, -&gt;%p: "</span>, obj2, obj2);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj3: %@, -&gt;%p: "</span>, obj3, obj3);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj4: %@, -&gt;%p: "</span>, obj4, obj4);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj5: %@, -&gt;%p: "</span>, obj5, obj5);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"obj6: %@, -&gt;%p: "</span>, obj6, obj6);</div></pre></td></tr></table></figure>
+<p>打印结果如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">obj : &lt;<span class="built_in">NSObject</span>: <span class="number">0x600002b19d70</span>&gt;, -&gt;<span class="number">0x600002b19d70</span>:</div><div class="line">obj1: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bf38</span>:</div><div class="line">obj2: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj3: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj4: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj5: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bee8</span>:</div><div class="line">obj6: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10c96bf38</span>:</div></pre></td></tr></table></figure>
+<p>可以看出，obj 是一个实例对象，obj1和obj6是一个 class object，其二者地址也一致，obj2、obj3、obj4 和 obj5 都获取到的是元类。</p>
+<p>通过类对象调用的 <code>object_getClass</code> 得到的是该类对象的 meta-class，如 obj2 和 obj4，而通过实例对象调用的<code>object_getClass</code> 得到的是该实例对象的类对象，如 obj1，<code>objc_getClass</code> 这个方法获取是实例对象的类对象，与<code>object_getClass</code> 还是有点不一样的。而 <code>objc_getMetaClass</code> 可以直接获取 meta-class，如 obj3。</p>
+<p><strong>总之:</strong><br>1、<code>objc_getClass</code> 参数是类名的字符串，返回的就是这个类的类对象。<br>2、<code>object_getClass</code> 参数是 <code>id</code> 类型，它返回的是这个 <code>id</code> 的 <code>isa</code> 指针所指向的Class；如果传参是Class，则返回该Class的meta-class。</p>
+<p>在 <strong>NSObject.mm</strong> 中，可以看到 self 和 class 方法都要实例和类方法，class 方法返回的都是类对象。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">id</span>)<span class="keyword">self</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">id</span>)<span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)<span class="keyword">self</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (Class)<span class="keyword">class</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (Class)<span class="keyword">class</span> </div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> object_getClass(<span class="keyword">self</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以，无论是类还是实例调用 class 方法，返回的都是同一个 class object，举例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Class objClz1 = [<span class="built_in">NSObject</span> <span class="keyword">class</span>];</div><div class="line">Class objClz2 = [[[<span class="built_in">NSObject</span> alloc] init] <span class="keyword">class</span>];</div><div class="line">    </div><div class="line"><span class="keyword">if</span> (objClz1 == objClz2) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"objClz1: %@, -&gt;%p"</span>, objClz1, objClz1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果是：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">objClz1: <span class="built_in">NSObject</span>, -&gt;<span class="number">0x10fa30f38</span></div></pre></td></tr></table></figure>
+<h2 id="isa"><a href="#isa" class="headerlink" title="isa"></a>isa</h2><p>下面的例子来源自 <a href="http://zziking.github.io/ios/2016/02/08/Objective-C_Runtime_1_The_object_model.html" target="_blank" rel="noopener">这里</a>，感谢 kingizz’s blog，代码中 <code>Son</code> 是 <code>Father</code> 的子类，而 <code>Father</code> 是 <code>NSObject</code> 的子类。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Father</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Son</span> : <span class="title">Father</span></span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>我们结合下面这个图来理解一下，子类、父类、元类以及 isa 指针。</p>
+<p><img src="/upload/images/2019/01/29/5.jpg" alt=""></p>
+<p>一个实例对象的 <code>isa</code> 指向对象所属的类，这个类的 <code>isa</code> 指向这个类的元类，而这个元类的 <code>isa</code> 又指向 <code>NSObject</code> 的元类，<code>NSObject</code> 的元类的 <code>isa</code> 指向其本身，最终形成形成一个完美的闭环。</p>
+<p>在OC中，所有的对象都有一个 <code>isa</code> 指针，指向对象所属的类，类也是一个对象，类对象的 <code>isa</code> 指针指向类的元类。    </p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p>1、<a href="https://tingxins.com/2017/05/metaclass-class-relationship/" target="_blank" rel="noopener">Objective-C 中的对象、类、元类</a></p>
+<p>2、<a href="http://zziking.github.io/ios/2016/02/08/Objective-C_Runtime_1_The_object_model.html" target="_blank" rel="noopener">Objective-C Runtime(一)对象模型及类与元类</a></p>
+<p>3、<a href="http://www.veryitman.com/2019/01/28/%E8%A2%AB%E8%AF%AF%E8%A7%A3%E7%9A%84-objc-class/" target="_blank" rel="noopener">被误解的 objc_class</a> </p>
+<hr>
+<p><strong>扫码关注，期待与你的交流~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/元类-isa-class-meta-class/" rel="tag"><i class="fa fa-tag"></i> 元类 isa class meta-class</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/28/被误解的-objc-class/" rel="next" title="被误解的 objc_class">
+                <i class="fa fa-chevron-left"></i> 被误解的 objc_class
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/30/致结婚8周年/" rel="prev" title="致结婚8周年">
+                致结婚8周年 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class"><span class="nav-number">2.</span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元类"><span class="nav-number">3.</span> <span class="nav-text">元类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isa"><span class="nav-number">4.</span> <span class="nav-text">isa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1251,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
