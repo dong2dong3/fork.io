@@ -1,4 +1,932 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="PHP MySql nginx php-fpm,"><meta name="description" content="简介在博客 PHP 开发准备 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP"><meta name="keywords" content="PHP MySql nginx php-fpm"><meta property="og:type" content="article"><meta property="og:title" content="安装 PHP 遇到的问题"><meta property="og:url" content="http://yoursite.com/2017/02/02/安装-PHP-遇到的问题/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="简介在博客 PHP 开发准备 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP"><meta property="og:locale" content="zh-Hans"><meta property="og:updated_time" content="2018-08-19T08:32:04.018Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="安装 PHP 遇到的问题"><meta name="twitter:description" content="简介在博客 PHP 开发准备 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2017/02/02/安装-PHP-遇到的问题/"><title>安装 PHP 遇到的问题 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/02/安装-PHP-遇到的问题/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">安装 PHP 遇到的问题</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-02T23:59:49+08:00">2017-02-02</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Server/" itemprop="url" rel="index"><span itemprop="name">Server</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2017/02/02/安装-PHP-遇到的问题/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2017/02/02/安装-PHP-遇到的问题/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在博客 <a href="http://www.veryitman.com/2017/02/02/PHP-%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87/" target="_blank" rel="noopener">PHP 开发准备</a> 介绍了安装并部署 PHP 程序到 Nginx.</p><p>今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等.</p><h2 id="pecl-安装"><a href="#pecl-安装" class="headerlink" title="pecl 安装"></a>pecl 安装</h2><blockquote><p>PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP 的 CPAN.</p><p>PECL (PHP Extension Community Library)，PHP 的扩展库，它提供了一系列已知的扩展库，由 C++ 等其他语言编写而成，以 .so 形式出现，.so 为共享库, 是 shared object, 用于动态连接的, 和 dll 差不多，为比 PEAR 更快，但是与 PEAR 不同的是，PECL 需要在服务器上配置并被注册到主机中.</p><p>最直接的表述: PEAR 是 PHP 的上层扩展，PECL 是 PHP 的底层扩展.</p></blockquote><p>下面说如何安装 pecl 和 pear.</p><p>1.下载 pear</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -O http://pear.php.net/go-pear.phar</div></pre></td></tr></table></figure><p>2.安装 pear</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo php -d detect_unicode=0 go-pear.phar</div></pre></td></tr></table></figure><p>3.执行以上命令后会进行安装过程，会有一些配置选项</p><p>输入1，回车，配置 pear 路径为：<code>/usr/local/pear</code><br>输入4，回车，配置命令路径为：<code>/usr/local/bin</code></p><p>4.回车两次，其他让其默认，安装完成.</p><p>5.可以通过命令检查 pear 是否安装成功</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pear version</div></pre></td></tr></table></figure><p>或者执行:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pecl version</div></pre></td></tr></table></figure><p>可以看到类似信息:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">PEAR Version: 1.10.1</div><div class="line">PHP Version: 5.6.27</div><div class="line">Zend Engine Version: 2.6.0</div></pre></td></tr></table></figure><h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><h4 id="MySQL-操作"><a href="#MySQL-操作" class="headerlink" title="MySQL 操作"></a>MySQL 操作</h4><p>基本操作：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql.server start #启动</div><div class="line">mysql.server stop  #停止</div><div class="line">mysql -u root -p   #用 user 和 pwd 连接</div><div class="line">php-fpm 相关操作</div></pre></td></tr></table></figure><p>1.运行 php-fpm</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo php-fpm -D</div></pre></td></tr></table></figure><p>2.关闭 php-fpm</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo killall php-fpm</div></pre></td></tr></table></figure><p>3.查看 php-fpm 运行状态</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo lsof -Pni4 | grep LISTEN | grep php</div></pre></td></tr></table></figure><p>可以看到 (fpm 默认在 9000 端口)</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">php-fpm  84200   root  8u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div><div class="line">php-fpm  84201   _www  0u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div><div class="line">php-fpm  84202   _www  0u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div><div class="line">php-fpm  84203   _www  0u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div></pre></td></tr></table></figure><p>4.php-fpm 开机启动</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -sfv /usr/local/opt/php56/*.plist ~/Library/LaunchAgents</div><div class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php56.plist</div></pre></td></tr></table></figure><h4 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h4><p>1.测试配置是否有语法错误</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -t</div></pre></td></tr></table></figure><p>2.启动 nginx</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nginx</div></pre></td></tr></table></figure><p>3.重新加载配置|重启|停止|退出 nginx</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s reload|reopen|stop|quit</div></pre></td></tr></table></figure><p>4.开机启动：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents</div><div class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</div></pre></td></tr></table></figure><p>5.nginx 监听 80 端口：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo chown root:wheel /usr/local/Cellar/nginx/1.6.0_1/bin/nginx</div><div class="line">sudo chmod u+s /usr/local/Cellar/nginx/1.6.0_1/bin/nginx</div></pre></td></tr></table></figure><h2 id="常用目录"><a href="#常用目录" class="headerlink" title="常用目录"></a>常用目录</h2><p>因为使用了 Homebrew 安装的 PHP, 配置文件的目录不是常规的 /etc</p><p>这里有几个目录需要知道, 如下:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/private/etc</div><div class="line">/usr/local/etc/php/5.6</div><div class="line">/usr/local/var/www</div></pre></td></tr></table></figure><h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>1.执行 sudo php-fpm -D 报 php56-intl/intl.so 加载问题</p><p>warning 的内容大致如下:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NOTICE: PHP message: PHP Warning:  PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found in Unknown on line 0</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;b&gt;Warning&lt;/b&gt;:  PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found in &lt;b&gt;Unknown&lt;/b&gt; on line &lt;b&gt;0&lt;/b&gt;&lt;br /&gt;</div><div class="line">Unknown(0) : Warning - PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found</div><div class="line">[31-Dec-2016 22:40:38] NOTICE: PHP message: PHP Warning:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in Unknown on line 0</div></pre></td></tr></table></figure><p>解决方案: 执行下面的命令, 即可解决.方案来源 <a href="https://github.com/Homebrew/homebrew-php/issues/2544" target="_blank" rel="noopener">Github</a>.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew reinstall --build-from-source php56-intl</div></pre></td></tr></table></figure><p>2.执行 sudo php-fpm -D 报 PHP Startup: mcrypt: Unable to initialize module</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">31-Dec-2016 22:56:51] NOTICE: PHP message: PHP Warning:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in Unknown on line 0</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;b&gt;Warning&lt;/b&gt;:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in &lt;b&gt;Unknown&lt;/b&gt; on line &lt;b&gt;0&lt;/b&gt;&lt;br /&gt;</div><div class="line">Unknown(0) : Warning - PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div></pre></td></tr></table></figure><p>解决方案:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew reinstall --build-from-source php56-intl</div></pre></td></tr></table></figure><p>3.连接 mysql</p><p>使用 <code>mysql -u root -p</code> 连接 mysql, 提示 Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock 错误.</p><p>解决方案: 启动 mysql</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql.server start</div></pre></td></tr></table></figure><p>重新连接即可.</p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/PHP-MySql-nginx-php-fpm/" rel="tag"><i class="fa fa-tag"></i> PHP MySql nginx php-fpm</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2017/02/02/PHP-开发准备/" rel="next" title="PHP 开发准备"><i class="fa fa-chevron-left"></i> PHP 开发准备</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2017/02/05/RN-Yarn/" rel="prev" title="RN: Yarn">RN: Yarn<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">110</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">83</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pecl-安装"><span class="nav-number">2.</span> <span class="nav-text">pecl 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作"><span class="nav-number">3.</span> <span class="nav-text">常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-操作"><span class="nav-number">3.0.1.</span> <span class="nav-text">MySQL 操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx"><span class="nav-number">3.0.2.</span> <span class="nav-text">Nginx</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#常用目录"><span class="nav-number">4.</span> <span class="nav-text">常用目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到问题"><span class="nav-number">5.</span> <span class="nav-text">遇到问题</span></a></li></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PHP MySql nginx php-fpm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介在博客 PHP 开发准备 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP">
+<meta name="keywords" content="PHP MySql nginx php-fpm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装 PHP 遇到的问题">
+<meta property="og:url" content="http://yoursite.com/2017/02/02/安装-PHP-遇到的问题/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="简介在博客 PHP 开发准备 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-19T08:32:04.018Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安装 PHP 遇到的问题">
+<meta name="twitter:description" content="简介在博客 PHP 开发准备 介绍了安装并部署 PHP 程序到 Nginx. 今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等. pecl 安装 PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/02/安装-PHP-遇到的问题/"/>
+
+
+
+
+
+  <title>安装 PHP 遇到的问题 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/02/安装-PHP-遇到的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">安装 PHP 遇到的问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-02T23:59:49+08:00">
+                2017-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/02/安装-PHP-遇到的问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/02/02/安装-PHP-遇到的问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在博客 <a href="http://www.veryitman.com/2017/02/02/PHP-%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87/" target="_blank" rel="noopener">PHP 开发准备</a> 介绍了安装并部署 PHP 程序到 Nginx.</p>
+<p>今天分享在安装中遇到的问题和其他工具的安装, 以及常用的操作, 包括 MySQL, Nginx 等.</p>
+<h2 id="pecl-安装"><a href="#pecl-安装" class="headerlink" title="pecl 安装"></a>pecl 安装</h2><blockquote>
+<p>PEAR 是 PHP 扩展与应用库(PHP Extension and Application Repository) 的缩写。它是一个 PHP 扩展及应用的一个代码仓库，简单地说，PEAR 就是 PHP 的 CPAN.</p>
+<p>PECL (PHP Extension Community Library)，PHP 的扩展库，它提供了一系列已知的扩展库，由 C++ 等其他语言编写而成，以 .so 形式出现，.so 为共享库, 是 shared object, 用于动态连接的, 和 dll 差不多，为比 PEAR 更快，但是与 PEAR 不同的是，PECL 需要在服务器上配置并被注册到主机中.</p>
+<p>最直接的表述: PEAR 是 PHP 的上层扩展，PECL 是 PHP 的底层扩展.</p>
+</blockquote>
+<p>下面说如何安装 pecl 和 pear.</p>
+<p>1.下载 pear</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -O http://pear.php.net/go-pear.phar</div></pre></td></tr></table></figure>
+<p>2.安装 pear</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo php -d detect_unicode=0 go-pear.phar</div></pre></td></tr></table></figure>
+<p>3.执行以上命令后会进行安装过程，会有一些配置选项</p>
+<p>输入1，回车，配置 pear 路径为：<code>/usr/local/pear</code><br>输入4，回车，配置命令路径为：<code>/usr/local/bin</code></p>
+<p>4.回车两次，其他让其默认，安装完成.</p>
+<p>5.可以通过命令检查 pear 是否安装成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pear version</div></pre></td></tr></table></figure>
+<p>或者执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pecl version</div></pre></td></tr></table></figure>
+<p>可以看到类似信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">PEAR Version: 1.10.1</div><div class="line">PHP Version: 5.6.27</div><div class="line">Zend Engine Version: 2.6.0</div></pre></td></tr></table></figure>
+<h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><h4 id="MySQL-操作"><a href="#MySQL-操作" class="headerlink" title="MySQL 操作"></a>MySQL 操作</h4><p>基本操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql.server start #启动</div><div class="line">mysql.server stop  #停止</div><div class="line">mysql -u root -p   #用 user 和 pwd 连接</div><div class="line">php-fpm 相关操作</div></pre></td></tr></table></figure>
+<p>1.运行 php-fpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo php-fpm -D</div></pre></td></tr></table></figure>
+<p>2.关闭 php-fpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo killall php-fpm</div></pre></td></tr></table></figure>
+<p>3.查看 php-fpm 运行状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo lsof -Pni4 | grep LISTEN | grep php</div></pre></td></tr></table></figure>
+<p>可以看到 (fpm 默认在 9000 端口)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">php-fpm  84200   root  8u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div><div class="line">php-fpm  84201   _www  0u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div><div class="line">php-fpm  84202   _www  0u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div><div class="line">php-fpm  84203   _www  0u  IPv4 0x91959c43a1ea5abd  0t0  TCP 127.0.0.1:9000 (LISTEN)</div></pre></td></tr></table></figure>
+<p>4.php-fpm 开机启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -sfv /usr/local/opt/php56/*.plist ~/Library/LaunchAgents</div><div class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php56.plist</div></pre></td></tr></table></figure>
+<h4 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h4><p>1.测试配置是否有语法错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -t</div></pre></td></tr></table></figure>
+<p>2.启动 nginx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nginx</div></pre></td></tr></table></figure>
+<p>3.重新加载配置|重启|停止|退出 nginx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s reload|reopen|stop|quit</div></pre></td></tr></table></figure>
+<p>4.开机启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -sfv /usr/local/opt/nginx/*.plist ~/Library/LaunchAgents</div><div class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist</div></pre></td></tr></table></figure>
+<p>5.nginx 监听 80 端口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo chown root:wheel /usr/local/Cellar/nginx/1.6.0_1/bin/nginx</div><div class="line">sudo chmod u+s /usr/local/Cellar/nginx/1.6.0_1/bin/nginx</div></pre></td></tr></table></figure>
+<h2 id="常用目录"><a href="#常用目录" class="headerlink" title="常用目录"></a>常用目录</h2><p>因为使用了 Homebrew 安装的 PHP, 配置文件的目录不是常规的 /etc</p>
+<p>这里有几个目录需要知道, 如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/private/etc</div><div class="line">/usr/local/etc/php/5.6</div><div class="line">/usr/local/var/www</div></pre></td></tr></table></figure>
+<h2 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h2><p>1.执行 sudo php-fpm -D 报 php56-intl/intl.so 加载问题</p>
+<p>warning 的内容大致如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NOTICE: PHP message: PHP Warning:  PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found in Unknown on line 0</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;b&gt;Warning&lt;/b&gt;:  PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found in &lt;b&gt;Unknown&lt;/b&gt; on line &lt;b&gt;0&lt;/b&gt;&lt;br /&gt;</div><div class="line">Unknown(0) : Warning - PHP Startup: Unable to load dynamic library &apos;/usr/local/opt/php56-intl/intl.so&apos; - dlopen(/usr/local/opt/php56-intl/intl.so, 9): image not found</div><div class="line">[31-Dec-2016 22:40:38] NOTICE: PHP message: PHP Warning:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in Unknown on line 0</div></pre></td></tr></table></figure>
+<p>解决方案: 执行下面的命令, 即可解决.方案来源 <a href="https://github.com/Homebrew/homebrew-php/issues/2544" target="_blank" rel="noopener">Github</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew reinstall --build-from-source php56-intl</div></pre></td></tr></table></figure>
+<p>2.执行 sudo php-fpm -D 报 PHP Startup: mcrypt: Unable to initialize module</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">31-Dec-2016 22:56:51] NOTICE: PHP message: PHP Warning:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in Unknown on line 0</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;b&gt;Warning&lt;/b&gt;:  PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div><div class="line"> in &lt;b&gt;Unknown&lt;/b&gt; on line &lt;b&gt;0&lt;/b&gt;&lt;br /&gt;</div><div class="line">Unknown(0) : Warning - PHP Startup: mcrypt: Unable to initialize module</div><div class="line">Module compiled with build ID=API20131226,NTS</div><div class="line">PHP    compiled with build ID=API20131226,NTS,debug</div><div class="line">These options need to match</div></pre></td></tr></table></figure>
+<p>解决方案:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew reinstall --build-from-source php56-intl</div></pre></td></tr></table></figure>
+<p>3.连接 mysql</p>
+<p>使用 <code>mysql -u root -p</code> 连接 mysql, 提示 Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock 错误.</p>
+<p>解决方案: 启动 mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql.server start</div></pre></td></tr></table></figure>
+<p>重新连接即可.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP-MySql-nginx-php-fpm/" rel="tag"><i class="fa fa-tag"></i> PHP MySql nginx php-fpm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/02/PHP-开发准备/" rel="next" title="PHP 开发准备">
+                <i class="fa fa-chevron-left"></i> PHP 开发准备
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/05/RN-Yarn/" rel="prev" title="RN: Yarn">
+                RN: Yarn <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pecl-安装"><span class="nav-number">2.</span> <span class="nav-text">pecl 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作"><span class="nav-number">3.</span> <span class="nav-text">常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-操作"><span class="nav-number">3.0.1.</span> <span class="nav-text">MySQL 操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx"><span class="nav-number">3.0.2.</span> <span class="nav-text">Nginx</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用目录"><span class="nav-number">4.</span> <span class="nav-text">常用目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到问题"><span class="nav-number">5.</span> <span class="nav-text">遇到问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1241,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

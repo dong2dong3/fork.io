@@ -1,4 +1,923 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="macOS java enum,"><meta name="description" content="概要本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 2012年09月05日 发布到 CSDN 上面的一篇博文 Java 枚举：理解枚举本质，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。  学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！ C 枚举"><meta name="keywords" content="macOS java enum"><meta property="og:type" content="article"><meta property="og:title" content="Java 枚举的本质"><meta property="og:url" content="http://yoursite.com/2019/03/16/Java-枚举的本质/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="概要本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 2012年09月05日 发布到 CSDN 上面的一篇博文 Java 枚举：理解枚举本质，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。  学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！ C 枚举"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2019/03/16/1.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2019/03/16/2.png"><meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg"><meta property="og:updated_time" content="2019-03-16T07:46:25.357Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Java 枚举的本质"><meta name="twitter:description" content="概要本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 2012年09月05日 发布到 CSDN 上面的一篇博文 Java 枚举：理解枚举本质，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。  学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！ C 枚举"><meta name="twitter:image" content="http://yoursite.com/upload/images/2019/03/16/1.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2019/03/16/Java-枚举的本质/"><title>Java 枚举的本质 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/16/Java-枚举的本质/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Java 枚举的本质</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T15:35:40+08:00">2019-03-16</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2019/03/16/Java-枚举的本质/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2019/03/16/Java-枚举的本质/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 <code>2012年09月05日</code> 发布到 CSDN 上面的一篇博文 <a href="https://blog.csdn.net/veryitman/article/details/7945020" target="_blank" rel="noopener">Java 枚举：理解枚举本质</a>，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。</p><p><img src="/upload/images/2019/03/16/1.jpg" alt="1"></p><p>学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！</p><h2 id="C-枚举"><a href="#C-枚举" class="headerlink" title="C 枚举"></a>C 枚举</h2><p>在 C 语言中，可以这样来定义枚举，如下示例：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> color &#123;</div><div class="line">    RED=<span class="number">0</span>, GREEN, BLUE, YELLOW</div><div class="line">&#125; col;</div></pre></td></tr></table></figure><p>关键字 <code>enum</code> 定义枚举，在定义枚举的同时，声明该枚举变量 col.</p><p><strong>注意：C 语言中枚举成员的值是根据上下文自动加 1 的（GREEN = 1，BLUE = 2 等）。</strong></p><p>C 语言中 <code>switch</code> 语句支持枚举类型，如下示例：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">enum</span> color &#123;</div><div class="line">        RED=<span class="number">0</span>, GREEN, BLUE, YELLOW</div><div class="line">    &#125; col;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> cl;</div><div class="line">    </div><div class="line">    <span class="built_in">printf</span>(<span class="string">"0=red, 1=green, 2=blue, 3=yellow. seclect:\n"</span>);</div><div class="line">        </div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;cl);</div><div class="line">    </div><div class="line">    col=(<span class="keyword">enum</span> color) cl;</div><div class="line">    </div><div class="line">    <span class="keyword">switch</span>(col) &#123;</div><div class="line">        <span class="keyword">case</span> RED:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"the color is red\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> GREEN:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"the color is green\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> BLUE:</div><div class="line">             <span class="built_in">printf</span>(<span class="string">"the color is blue\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> YELLOW:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"the color is yellow\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        defalut:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"no this color\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="Java-枚举"><a href="#Java-枚举" class="headerlink" title="Java 枚举"></a>Java 枚举</h2><p>那么，Java 里面的枚举与其类似，但是又不是完全一样。Java 语言中定义枚举也是使用 <code>enum</code> 关键字，如下示例是 Java 语言的枚举：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED, GREEN, BLUE, YELLOW;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>上述定义了一个枚举类型 <code>Color</code>（可以说是类，编译之后是 Color.class）.</p><p>上面的定义，还可以改成下面的这种形式:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(), GREEN(), BLUE(), YELLOW();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>到这里你可能会觉得迷茫（如果你是初学者的话），为什么这样子也可以，why？</p><p>其实，枚举的成员就是枚举对象，只不过它们是静态常量而已。</p><p>使用 <code>javap</code> 命令（<code>javap 文件名&lt;没有后缀.class&gt;</code>）可以反编译 <code>class</code> 文件，如下：<br>​​​​<img src="/upload/images/2019/03/16/2.png" alt="1"></p><p>我们可以使用普通类来模拟枚举，下面定义一个 <code>Color</code> 类，如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Color</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color RED = <span class="keyword">new</span> Color();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color GREEN = <span class="keyword">new</span> Color();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color BLUE = <span class="keyword">new</span> Color();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color YELLOW = <span class="keyword">new</span> Color();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>结合上图反编译的结果，做一下对比，你是否看出了一点端倪（坏笑），如果没有看出来，那就接着往下看吧。</p><p>如果按照这个逻辑，是否还可以为其添加另外的构造方法？答案是肯定的！</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>), </div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    Color(String name, <span class="keyword">int</span> id) &#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    String _name;</div><div class="line">    <span class="keyword">int</span> _id;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>为 <code>Color</code> 声明了两个成员变量，并为其构造带参数的构造器。</p><p>如果你这样创建一个枚举:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">        RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>), </div><div class="line">        BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>编译器就会报错:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">The constructor EnumDemo.Color(String, int) is undefined</div></pre></td></tr></table></figure><p>到此，你应该看明白了，枚举和普通的 Java 类很像。</p><p>对于类来讲，最好将其成员变量私有化，并且为成员变量提供 <code>get</code>、<code>set</code> 方法。</p><p>按照这个原则，可以进一步写好 <code>enum Color</code>，如下示例：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    Color(String name, <span class="keyword">int</span> id) &#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _id;</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        _name = name;</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>但是 Java 设计枚举的目的是提供一组常量，方便开发者使用。如果我们冒然的提供 <code>set</code> 方法（外界可以改变其成员属性），好像有点违背了设计的初衷。</p><p>那么，我们应该舍弃 <code>set</code> 方法，保留 <code>get</code> 方法。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    Color(String name, <span class="keyword">int</span> id) &#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _id;</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>对于普通的基本类可以将其实例化，那么，能否实例化枚举呢？</p><p>在回答这个问题之前，先来看看 <code>Color.class</code> 文件:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _id;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Color</span><span class="params">(String name, <span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>._name = name;</div><div class="line">        <span class="keyword">this</span>._id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看出，编译器淘气的为其构造方法加上了 <code>private</code>，那么也就是说，我们无法实例化枚举。</p><p>所有枚举类都继承了 <code>Enum</code> 类的方法，包括 <code>toString</code>、<code>equals</code>、<code>hashcode</code> 等方法。因为 <code>equals</code>、<code>hashcode</code> 方法是 <code>final</code> 的，所以不可以被枚举重写（只可以继承），但可以重写 <code>toString</code> 方法。</p><p><strong>文末的附录中提供了 <code>Enum</code> 的源码，有兴趣可以查看阅读！</strong></p><p>那么，使用 Java 的类来模拟一下枚举，大概是这个样子：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> mark.demo;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Color</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color RED = <span class="keyword">new</span> Color(<span class="string">"red color"</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color GREEN = <span class="keyword">new</span> Color(<span class="string">"green color"</span>, <span class="number">1</span>);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color BLUE = <span class="keyword">new</span> Color(<span class="string">"blue color"</span>, <span class="number">2</span>);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color YELLOW = <span class="keyword">new</span> Color(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> _id;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Color</span><span class="params">(String name, <span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Color&gt; <span class="title">values</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;Color&gt; list = <span class="keyword">new</span> ArrayList&lt;Color&gt;();</div><div class="line">        list.add(RED);</div><div class="line">        list.add(GREEN);</div><div class="line">        list.add(BLUE);</div><div class="line">        list.add(YELLOW);</div><div class="line">        <span class="keyword">return</span> list;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"the color _name="</span> + _name + <span class="string">", _id="</span> + _id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><strong>Enum.java</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> java.lang;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InvalidObjectException;</div><div class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</div><div class="line"><span class="keyword">import</span> java.io.ObjectStreamException;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * This is the common base class of all Java language enumeration types.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span>  Josh Bloch</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span>  Neal Gafter</span></div><div class="line"><span class="comment"> * <span class="doctag">@version</span> %I%, %G%</span></div><div class="line"><span class="comment"> * <span class="doctag">@since</span>   1.5</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Enum</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Enum</span>&lt;<span class="title">E</span>&gt;&gt;</span></div><div class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">E</span>&gt;, <span class="title">Serializable</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * The name of this enum constant, as declared in the enum declaration.</span></div><div class="line"><span class="comment">     * Most programmers should use the &#123;<span class="doctag">@link</span> #toString&#125; method rather than</span></div><div class="line"><span class="comment">     * accessing this field.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the name of this enum constant, exactly as declared in its</span></div><div class="line"><span class="comment">     * enum declaration.</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * &lt;b&gt;Most programmers should use the &#123;<span class="doctag">@link</span> #toString&#125; method in</span></div><div class="line"><span class="comment">     * preference to this one, as the toString method may return</span></div><div class="line"><span class="comment">     * a more user-friendly name.&lt;/b&gt;  This method is designed primarily for</span></div><div class="line"><span class="comment">     * use in specialized situations where correctness depends on getting the</span></div><div class="line"><span class="comment">     * exact name, which will not vary from release to release.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the name of this enum constant</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">name</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * The ordinal of this enumeration constant (its position</span></div><div class="line"><span class="comment">     * in the enum declaration, where the initial constant is assigned</span></div><div class="line"><span class="comment">     * an ordinal of zero).</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * Most programmers will have no use for this field.  It is designed</span></div><div class="line"><span class="comment">     * for use by sophisticated enum-based data structures, such as</span></div><div class="line"><span class="comment">     * &#123;<span class="doctag">@link</span> java.util.EnumSet&#125; and &#123;<span class="doctag">@link</span> java.util.EnumMap&#125;.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> ordinal;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the ordinal of this enumeration constant (its position</span></div><div class="line"><span class="comment">     * in its enum declaration, where the initial constant is assigned</span></div><div class="line"><span class="comment">     * an ordinal of zero).</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * Most programmers will have no use for this method.  It is</span></div><div class="line"><span class="comment">     * designed for use by sophisticated enum-based data structures, such</span></div><div class="line"><span class="comment">     * as &#123;<span class="doctag">@link</span> java.util.EnumSet&#125; and &#123;<span class="doctag">@link</span> java.util.EnumMap&#125;.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the ordinal of this enumeration constant</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">ordinal</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> ordinal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Sole constructor.  Programmers cannot invoke this constructor.</span></div><div class="line"><span class="comment">     * It is for use by code emitted by the compiler in response to</span></div><div class="line"><span class="comment">     * enum type declarations.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> name - The name of this enum constant, which is the identifier</span></div><div class="line"><span class="comment">     *               used to declare it.</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> ordinal - The ordinal of this enumeration constant (its position</span></div><div class="line"><span class="comment">     *         in the enum declaration, where the initial constant is assigned</span></div><div class="line"><span class="comment">     *         an ordinal of zero).</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">Enum</span><span class="params">(String name, <span class="keyword">int</span> ordinal)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.ordinal = ordinal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the name of this enum constant, as contained in the</span></div><div class="line"><span class="comment">     * declaration.  This method may be overridden, though it typically</span></div><div class="line"><span class="comment">     * isn't necessary or desirable.  An enum type should override this</span></div><div class="line"><span class="comment">     * method when a more "programmer-friendly" string form exists.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the name of this enum constant</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns true if the specified object is equal to this</span></div><div class="line"><span class="comment">     * enum constant.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> other the object to be compared for equality with this object.</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span>  true if the specified object is equal to this</span></div><div class="line"><span class="comment">     *          enum constant.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object other)</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>==other;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns a hash code for this enum constant.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> a hash code for this enum constant.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.hashCode();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Throws CloneNotSupportedException.  This guarantees that enums</span></div><div class="line"><span class="comment">     * are never cloned, which is necessary to preserve their "singleton"</span></div><div class="line"><span class="comment">     * status.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> (never returns)</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> CloneNotSupportedException();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Compares this enum with the specified object for order.  Returns a</span></div><div class="line"><span class="comment">     * negative integer, zero, or a positive integer as this object is less</span></div><div class="line"><span class="comment">     * than, equal to, or greater than the specified object.</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * Enum constants are only comparable to other enum constants of the</span></div><div class="line"><span class="comment">     * same enum type.  The natural order implemented by this</span></div><div class="line"><span class="comment">     * method is the order in which the constants are declared.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(E o)</span> </span>&#123;</div><div class="line">    Enum other = (Enum)o;</div><div class="line">    Enum self = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">if</span> (self.getClass() != other.getClass() &amp;&amp; <span class="comment">// optimization</span></div><div class="line">      self.getDeclaringClass() != other.getDeclaringClass())</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ClassCastException();</div><div class="line">        <span class="keyword">return</span> self.ordinal - other.ordinal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the Class object corresponding to this enum constant's</span></div><div class="line"><span class="comment">     * enum type.  Two enum constants e1 and  e2 are of the</span></div><div class="line"><span class="comment">     * same enum type if and only if</span></div><div class="line"><span class="comment">     *   e1.getDeclaringClass() == e2.getDeclaringClass().</span></div><div class="line"><span class="comment">     * (The value returned by this method may differ from the one returned</span></div><div class="line"><span class="comment">     * by the &#123;<span class="doctag">@link</span> Object#getClass&#125; method for enum constants with</span></div><div class="line"><span class="comment">     * constant-specific class bodies.)</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the Class object corresponding to this enum constant's</span></div><div class="line"><span class="comment">     *     enum type</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Class&lt;E&gt; <span class="title">getDeclaringClass</span><span class="params">()</span> </span>&#123;</div><div class="line">        Class clazz = getClass();</div><div class="line">        Class zuper = clazz.getSuperclass();</div><div class="line">        <span class="keyword">return</span> (zuper == Enum.class) ? clazz : zuper;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the enum constant of the specified enum type with the</span></div><div class="line"><span class="comment">     * specified name.  The name must match exactly an identifier used</span></div><div class="line"><span class="comment">     * to declare an enum constant in this type.  (Extraneous whitespace</span></div><div class="line"><span class="comment">     * characters are not permitted.) </span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> enumType the &lt;tt&gt;Class&lt;/tt&gt; object of the enum type from which</span></div><div class="line"><span class="comment">     *      to return a constant</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> name the name of the constant to return</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the enum constant of the specified enum type with the</span></div><div class="line"><span class="comment">     *      specified name</span></div><div class="line"><span class="comment">     * <span class="doctag">@throws</span> IllegalArgumentException if the specified enum type has</span></div><div class="line"><span class="comment">     *         no constant with the specified name, or the specified</span></div><div class="line"><span class="comment">     *         class object does not represent an enum type</span></div><div class="line"><span class="comment">     * <span class="doctag">@throws</span> NullPointerException if &lt;tt&gt;enumType&lt;/tt&gt; or &lt;tt&gt;name&lt;/tt&gt;</span></div><div class="line"><span class="comment">     *         is null</span></div><div class="line"><span class="comment">     * <span class="doctag">@since</span> 1.5</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Enum&lt;T&gt;&gt; <span class="function">T <span class="title">valueOf</span><span class="params">(Class&lt;T&gt; enumType,</span></span></div><div class="line"><span class="function"><span class="params">                                                String name)</span> </span>&#123;</div><div class="line">        T result = enumType.enumConstantDirectory().get(name);</div><div class="line">        <span class="keyword">if</span> (result != <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">if</span> (name == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Name is null"</span>);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">            <span class="string">"No enum const "</span> + enumType +<span class="string">"."</span> + name);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">      * prevent default deserialization</span></div><div class="line"><span class="comment">      */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream in)</span> <span class="keyword">throws</span> IOException,</span></div><div class="line"><span class="function">        ClassNotFoundException </span>&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidObjectException(<span class="string">"can't deserialize enum"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObjectNoData</span><span class="params">()</span> <span class="keyword">throws</span> ObjectStreamException </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InvalidObjectException(<span class="string">"can't deserialize enum"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * enum classes cannot have finalize methods.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> </span>&#123; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><hr><p><strong>扫码关注，你我就各多一个朋友~</strong></p><p><img src="/upload/me/qrcode_wx.jpg" alt=""></p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/macOS-java-enum/" rel="tag"><i class="fa fa-tag"></i> macOS java enum</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/03/10/json-c/" rel="next" title="json-c"><i class="fa fa-chevron-left"></i> json-c</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2019/03/24/Follow-your-heart/" rel="prev" title="Follow your heart">Follow your heart<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">110</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">83</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-枚举"><span class="nav-number">2.</span> <span class="nav-text">C 枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-枚举"><span class="nav-number">3.</span> <span class="nav-text">Java 枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="macOS java enum," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概要本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 2012年09月05日 发布到 CSDN 上面的一篇博文 Java 枚举：理解枚举本质，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。  学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！ C 枚举">
+<meta name="keywords" content="macOS java enum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 枚举的本质">
+<meta property="og:url" content="http://yoursite.com/2019/03/16/Java-枚举的本质/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="概要本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 2012年09月05日 发布到 CSDN 上面的一篇博文 Java 枚举：理解枚举本质，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。  学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！ C 枚举">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/03/16/1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/03/16/2.png">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-03-16T07:46:25.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 枚举的本质">
+<meta name="twitter:description" content="概要本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 2012年09月05日 发布到 CSDN 上面的一篇博文 Java 枚举：理解枚举本质，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。  学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！ C 枚举">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/03/16/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/16/Java-枚举的本质/"/>
+
+
+
+
+
+  <title>Java 枚举的本质 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/16/Java-枚举的本质/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 枚举的本质</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T15:35:40+08:00">
+                2019-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/16/Java-枚举的本质/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/03/16/Java-枚举的本质/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>本文跟大家一起探讨一下 Java 枚举的本质，这篇文章的内容是我在 <code>2012年09月05日</code> 发布到 CSDN 上面的一篇博文 <a href="https://blog.csdn.net/veryitman/article/details/7945020" target="_blank" rel="noopener">Java 枚举：理解枚举本质</a>，虽然已经不在 CSDN 上面耕耘了，但偶尔也会去看看朋友们的留言，毕竟感情在那里！今天偶然看到有小伙伴评论这篇文章，一时兴起就想再次分享给大家。</p>
+<p><img src="/upload/images/2019/03/16/1.jpg" alt="1"></p>
+<p>学习编程语言，会用只是最基本的要求，了解和熟悉其实现、运行机制才使得你有别于常人！</p>
+<h2 id="C-枚举"><a href="#C-枚举" class="headerlink" title="C 枚举"></a>C 枚举</h2><p>在 C 语言中，可以这样来定义枚举，如下示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> color &#123;</div><div class="line">    RED=<span class="number">0</span>, GREEN, BLUE, YELLOW</div><div class="line">&#125; col;</div></pre></td></tr></table></figure>
+<p>关键字 <code>enum</code> 定义枚举，在定义枚举的同时，声明该枚举变量 col.</p>
+<p><strong>注意：C 语言中枚举成员的值是根据上下文自动加 1 的（GREEN = 1，BLUE = 2 等）。</strong></p>
+<p>C 语言中 <code>switch</code> 语句支持枚举类型，如下示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">enum</span> color &#123;</div><div class="line">        RED=<span class="number">0</span>, GREEN, BLUE, YELLOW</div><div class="line">    &#125; col;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> cl;</div><div class="line">    </div><div class="line">    <span class="built_in">printf</span>(<span class="string">"0=red, 1=green, 2=blue, 3=yellow. seclect:\n"</span>);</div><div class="line">        </div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;cl);</div><div class="line">    </div><div class="line">    col=(<span class="keyword">enum</span> color) cl;</div><div class="line">    </div><div class="line">    <span class="keyword">switch</span>(col) &#123;</div><div class="line">        <span class="keyword">case</span> RED:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"the color is red\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> GREEN:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"the color is green\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> BLUE:</div><div class="line">             <span class="built_in">printf</span>(<span class="string">"the color is blue\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> YELLOW:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"the color is yellow\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        defalut:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"no this color\n"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Java-枚举"><a href="#Java-枚举" class="headerlink" title="Java 枚举"></a>Java 枚举</h2><p>那么，Java 里面的枚举与其类似，但是又不是完全一样。Java 语言中定义枚举也是使用 <code>enum</code> 关键字，如下示例是 Java 语言的枚举：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED, GREEN, BLUE, YELLOW;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述定义了一个枚举类型 <code>Color</code>（可以说是类，编译之后是 Color.class）.</p>
+<p>上面的定义，还可以改成下面的这种形式:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(), GREEN(), BLUE(), YELLOW();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>到这里你可能会觉得迷茫（如果你是初学者的话），为什么这样子也可以，why？</p>
+<p>其实，枚举的成员就是枚举对象，只不过它们是静态常量而已。</p>
+<p>使用 <code>javap</code> 命令（<code>javap 文件名&lt;没有后缀.class&gt;</code>）可以反编译 <code>class</code> 文件，如下：<br>​​​​<img src="/upload/images/2019/03/16/2.png" alt="1"></p>
+<p>我们可以使用普通类来模拟枚举，下面定义一个 <code>Color</code> 类，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Color</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color RED = <span class="keyword">new</span> Color();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color GREEN = <span class="keyword">new</span> Color();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color BLUE = <span class="keyword">new</span> Color();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color YELLOW = <span class="keyword">new</span> Color();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结合上图反编译的结果，做一下对比，你是否看出了一点端倪（坏笑），如果没有看出来，那就接着往下看吧。</p>
+<p>如果按照这个逻辑，是否还可以为其添加另外的构造方法？答案是肯定的！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>), </div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    Color(String name, <span class="keyword">int</span> id) &#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    String _name;</div><div class="line">    <span class="keyword">int</span> _id;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为 <code>Color</code> 声明了两个成员变量，并为其构造带参数的构造器。</p>
+<p>如果你这样创建一个枚举:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">        RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>), </div><div class="line">        BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译器就会报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">The constructor EnumDemo.Color(String, int) is undefined</div></pre></td></tr></table></figure>
+<p>到此，你应该看明白了，枚举和普通的 Java 类很像。</p>
+<p>对于类来讲，最好将其成员变量私有化，并且为成员变量提供 <code>get</code>、<code>set</code> 方法。</p>
+<p>按照这个原则，可以进一步写好 <code>enum Color</code>，如下示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    Color(String name, <span class="keyword">int</span> id) &#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _id;</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        _name = name;</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是 Java 设计枚举的目的是提供一组常量，方便开发者使用。如果我们冒然的提供 <code>set</code> 方法（外界可以改变其成员属性），好像有点违背了设计的初衷。</p>
+<p>那么，我们应该舍弃 <code>set</code> 方法，保留 <code>get</code> 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    Color(String name, <span class="keyword">int</span> id) &#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _id;</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于普通的基本类可以将其实例化，那么，能否实例化枚举呢？</p>
+<p>在回答这个问题之前，先来看看 <code>Color.class</code> 文件:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), GREEN(<span class="string">"green color"</span>, <span class="number">1</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _id;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Color</span><span class="params">(String name, <span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>._name = name;</div><div class="line">        <span class="keyword">this</span>._id = id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出，编译器淘气的为其构造方法加上了 <code>private</code>，那么也就是说，我们无法实例化枚举。</p>
+<p>所有枚举类都继承了 <code>Enum</code> 类的方法，包括 <code>toString</code>、<code>equals</code>、<code>hashcode</code> 等方法。因为 <code>equals</code>、<code>hashcode</code> 方法是 <code>final</code> 的，所以不可以被枚举重写（只可以继承），但可以重写 <code>toString</code> 方法。</p>
+<p><strong>文末的附录中提供了 <code>Enum</code> 的源码，有兴趣可以查看阅读！</strong></p>
+<p>那么，使用 Java 的类来模拟一下枚举，大概是这个样子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> mark.demo;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Color</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color RED = <span class="keyword">new</span> Color(<span class="string">"red color"</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color GREEN = <span class="keyword">new</span> Color(<span class="string">"green color"</span>, <span class="number">1</span>);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color BLUE = <span class="keyword">new</span> Color(<span class="string">"blue color"</span>, <span class="number">2</span>);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Color YELLOW = <span class="keyword">new</span> Color(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> _id;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Color</span><span class="params">(String name, <span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Color&gt; <span class="title">values</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;Color&gt; list = <span class="keyword">new</span> ArrayList&lt;Color&gt;();</div><div class="line">        list.add(RED);</div><div class="line">        list.add(GREEN);</div><div class="line">        list.add(BLUE);</div><div class="line">        list.add(YELLOW);</div><div class="line">        <span class="keyword">return</span> list;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"the color _name="</span> + _name + <span class="string">", _id="</span> + _id;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><strong>Enum.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> java.lang;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InvalidObjectException;</div><div class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</div><div class="line"><span class="keyword">import</span> java.io.ObjectStreamException;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * This is the common base class of all Java language enumeration types.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span>  Josh Bloch</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span>  Neal Gafter</span></div><div class="line"><span class="comment"> * <span class="doctag">@version</span> %I%, %G%</span></div><div class="line"><span class="comment"> * <span class="doctag">@since</span>   1.5</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Enum</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Enum</span>&lt;<span class="title">E</span>&gt;&gt;</span></div><div class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">E</span>&gt;, <span class="title">Serializable</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * The name of this enum constant, as declared in the enum declaration.</span></div><div class="line"><span class="comment">     * Most programmers should use the &#123;<span class="doctag">@link</span> #toString&#125; method rather than</span></div><div class="line"><span class="comment">     * accessing this field.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the name of this enum constant, exactly as declared in its</span></div><div class="line"><span class="comment">     * enum declaration.</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * &lt;b&gt;Most programmers should use the &#123;<span class="doctag">@link</span> #toString&#125; method in</span></div><div class="line"><span class="comment">     * preference to this one, as the toString method may return</span></div><div class="line"><span class="comment">     * a more user-friendly name.&lt;/b&gt;  This method is designed primarily for</span></div><div class="line"><span class="comment">     * use in specialized situations where correctness depends on getting the</span></div><div class="line"><span class="comment">     * exact name, which will not vary from release to release.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the name of this enum constant</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">name</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * The ordinal of this enumeration constant (its position</span></div><div class="line"><span class="comment">     * in the enum declaration, where the initial constant is assigned</span></div><div class="line"><span class="comment">     * an ordinal of zero).</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * Most programmers will have no use for this field.  It is designed</span></div><div class="line"><span class="comment">     * for use by sophisticated enum-based data structures, such as</span></div><div class="line"><span class="comment">     * &#123;<span class="doctag">@link</span> java.util.EnumSet&#125; and &#123;<span class="doctag">@link</span> java.util.EnumMap&#125;.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> ordinal;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the ordinal of this enumeration constant (its position</span></div><div class="line"><span class="comment">     * in its enum declaration, where the initial constant is assigned</span></div><div class="line"><span class="comment">     * an ordinal of zero).</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * Most programmers will have no use for this method.  It is</span></div><div class="line"><span class="comment">     * designed for use by sophisticated enum-based data structures, such</span></div><div class="line"><span class="comment">     * as &#123;<span class="doctag">@link</span> java.util.EnumSet&#125; and &#123;<span class="doctag">@link</span> java.util.EnumMap&#125;.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the ordinal of this enumeration constant</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">ordinal</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> ordinal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Sole constructor.  Programmers cannot invoke this constructor.</span></div><div class="line"><span class="comment">     * It is for use by code emitted by the compiler in response to</span></div><div class="line"><span class="comment">     * enum type declarations.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> name - The name of this enum constant, which is the identifier</span></div><div class="line"><span class="comment">     *               used to declare it.</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> ordinal - The ordinal of this enumeration constant (its position</span></div><div class="line"><span class="comment">     *         in the enum declaration, where the initial constant is assigned</span></div><div class="line"><span class="comment">     *         an ordinal of zero).</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">Enum</span><span class="params">(String name, <span class="keyword">int</span> ordinal)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.ordinal = ordinal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the name of this enum constant, as contained in the</span></div><div class="line"><span class="comment">     * declaration.  This method may be overridden, though it typically</span></div><div class="line"><span class="comment">     * isn't necessary or desirable.  An enum type should override this</span></div><div class="line"><span class="comment">     * method when a more "programmer-friendly" string form exists.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the name of this enum constant</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns true if the specified object is equal to this</span></div><div class="line"><span class="comment">     * enum constant.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> other the object to be compared for equality with this object.</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span>  true if the specified object is equal to this</span></div><div class="line"><span class="comment">     *          enum constant.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object other)</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>==other;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns a hash code for this enum constant.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> a hash code for this enum constant.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.hashCode();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Throws CloneNotSupportedException.  This guarantees that enums</span></div><div class="line"><span class="comment">     * are never cloned, which is necessary to preserve their "singleton"</span></div><div class="line"><span class="comment">     * status.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> (never returns)</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> CloneNotSupportedException();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Compares this enum with the specified object for order.  Returns a</span></div><div class="line"><span class="comment">     * negative integer, zero, or a positive integer as this object is less</span></div><div class="line"><span class="comment">     * than, equal to, or greater than the specified object.</span></div><div class="line"><span class="comment">     * </span></div><div class="line"><span class="comment">     * Enum constants are only comparable to other enum constants of the</span></div><div class="line"><span class="comment">     * same enum type.  The natural order implemented by this</span></div><div class="line"><span class="comment">     * method is the order in which the constants are declared.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(E o)</span> </span>&#123;</div><div class="line">    Enum other = (Enum)o;</div><div class="line">    Enum self = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">if</span> (self.getClass() != other.getClass() &amp;&amp; <span class="comment">// optimization</span></div><div class="line">      self.getDeclaringClass() != other.getDeclaringClass())</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ClassCastException();</div><div class="line">        <span class="keyword">return</span> self.ordinal - other.ordinal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the Class object corresponding to this enum constant's</span></div><div class="line"><span class="comment">     * enum type.  Two enum constants e1 and  e2 are of the</span></div><div class="line"><span class="comment">     * same enum type if and only if</span></div><div class="line"><span class="comment">     *   e1.getDeclaringClass() == e2.getDeclaringClass().</span></div><div class="line"><span class="comment">     * (The value returned by this method may differ from the one returned</span></div><div class="line"><span class="comment">     * by the &#123;<span class="doctag">@link</span> Object#getClass&#125; method for enum constants with</span></div><div class="line"><span class="comment">     * constant-specific class bodies.)</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the Class object corresponding to this enum constant's</span></div><div class="line"><span class="comment">     *     enum type</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Class&lt;E&gt; <span class="title">getDeclaringClass</span><span class="params">()</span> </span>&#123;</div><div class="line">        Class clazz = getClass();</div><div class="line">        Class zuper = clazz.getSuperclass();</div><div class="line">        <span class="keyword">return</span> (zuper == Enum.class) ? clazz : zuper;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Returns the enum constant of the specified enum type with the</span></div><div class="line"><span class="comment">     * specified name.  The name must match exactly an identifier used</span></div><div class="line"><span class="comment">     * to declare an enum constant in this type.  (Extraneous whitespace</span></div><div class="line"><span class="comment">     * characters are not permitted.) </span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> enumType the &lt;tt&gt;Class&lt;/tt&gt; object of the enum type from which</span></div><div class="line"><span class="comment">     *      to return a constant</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> name the name of the constant to return</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the enum constant of the specified enum type with the</span></div><div class="line"><span class="comment">     *      specified name</span></div><div class="line"><span class="comment">     * <span class="doctag">@throws</span> IllegalArgumentException if the specified enum type has</span></div><div class="line"><span class="comment">     *         no constant with the specified name, or the specified</span></div><div class="line"><span class="comment">     *         class object does not represent an enum type</span></div><div class="line"><span class="comment">     * <span class="doctag">@throws</span> NullPointerException if &lt;tt&gt;enumType&lt;/tt&gt; or &lt;tt&gt;name&lt;/tt&gt;</span></div><div class="line"><span class="comment">     *         is null</span></div><div class="line"><span class="comment">     * <span class="doctag">@since</span> 1.5</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Enum&lt;T&gt;&gt; <span class="function">T <span class="title">valueOf</span><span class="params">(Class&lt;T&gt; enumType,</span></span></div><div class="line"><span class="function"><span class="params">                                                String name)</span> </span>&#123;</div><div class="line">        T result = enumType.enumConstantDirectory().get(name);</div><div class="line">        <span class="keyword">if</span> (result != <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">if</span> (name == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Name is null"</span>);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">            <span class="string">"No enum const "</span> + enumType +<span class="string">"."</span> + name);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">      * prevent default deserialization</span></div><div class="line"><span class="comment">      */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream in)</span> <span class="keyword">throws</span> IOException,</span></div><div class="line"><span class="function">        ClassNotFoundException </span>&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidObjectException(<span class="string">"can't deserialize enum"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObjectNoData</span><span class="params">()</span> <span class="keyword">throws</span> ObjectStreamException </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InvalidObjectException(<span class="string">"can't deserialize enum"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * enum classes cannot have finalize methods.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> </span>&#123; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/macOS-java-enum/" rel="tag"><i class="fa fa-tag"></i> macOS java enum</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/10/json-c/" rel="next" title="json-c">
+                <i class="fa fa-chevron-left"></i> json-c
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/24/Follow-your-heart/" rel="prev" title="Follow your heart">
+                Follow your heart <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-枚举"><span class="nav-number">2.</span> <span class="nav-text">C 枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-枚举"><span class="nav-number">3.</span> <span class="nav-text">Java 枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1232,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
