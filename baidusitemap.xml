@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/11/26/Mac-%E9%85%8D%E7%BD%AE-Tomcat8/</loc>
+    <lastmod>2019-03-30T05:38:02.213Z</lastmod>
+    <data>
+        <display>
+        <title>Mac 配置 Tomcat8</title>
+        <pubTime>2016-11-26T15:02:10.000Z</pubTime>
+        
+        <tag>Tomcat Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Server" url="http://yoursite.com/categories/Server/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2019/01/30/%E8%87%B4%E7%BB%93%E5%A9%9A8%E5%91%A8%E5%B9%B4/</loc>
     <lastmod>2019-03-25T15:12:55.780Z</lastmod>
     <data>
@@ -2020,26 +2040,6 @@
            
              
               <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/11/26/Mac-%E9%85%8D%E7%BD%AE-Tomcat8/</loc>
-    <lastmod>2017-11-19T14:07:04.767Z</lastmod>
-    <data>
-        <display>
-        <title>Mac 配置 Tomcat8</title>
-        <pubTime>2016-11-26T15:02:10.000Z</pubTime>
-        
-        <tag>Tomcat Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://yoursite.com/categories/Java/"/>
           
         </display>
     </data>

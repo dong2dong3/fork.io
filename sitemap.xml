@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/11/26/Mac-%E9%85%8D%E7%BD%AE-Tomcat8/</loc>
+    
+    <lastmod>2019-03-30T05:38:02.213Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/01/30/%E8%87%B4%E7%BB%93%E5%A9%9A8%E5%91%A8%E5%B9%B4/</loc>
     
     <lastmod>2019-03-25T15:12:55.780Z</lastmod>
@@ -726,13 +733,6 @@
     <loc>http://yoursite.com/2016/11/26/Mac-%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8-infer/</loc>
     
     <lastmod>2017-11-19T14:14:41.638Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/11/26/Mac-%E9%85%8D%E7%BD%AE-Tomcat8/</loc>
-    
-    <lastmod>2017-11-19T14:07:04.767Z</lastmod>
     
   </url>
   
