@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/6.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/7.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2018-09-23T15:13:24.219Z">
+<meta property="og:updated_time" content="2019-03-31T06:12:39.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wireshark: 简单分析 TCP 三次挥手">
 <meta name="twitter:description" content="话说握手你要是开发人员，相信你一定听说过 TCP（Transmission Control Protocol 传输控制协议）或是 TCP 握手的说法。 所谓握手，通俗来讲就是通信双方协商在后续通信过程中需要使用的通信信息的过程。TCP 为了建立可靠的连接需要三次握手，后续给大家分享 TLS 为了实现加密、校验、身份认证同样需要握手的过程。 TCP 三次握手可以使用下图来表达： 本篇给大家分享如何使">
@@ -443,8 +443,8 @@
 <p>第三次，客户端请求服务器，客户端会发送一个 [ACK] 包，序列号是 1，Ack 是 1（Seq=1，Ack=1）来回复服务器。</p>
 <p>简单的画一个草图，如下：<br><img src="/upload/images/2018/09/09/6.jpg" alt=""></p>
 <p><strong>这个过程，简单描述为下面三个步骤：</strong></p>
-<p>1.发送方给接收方发送 SYN 信号<br>2.接收方确认并回复给发送方 SYN/ACK 信号<br>3.发送方给接收方发送确认 ACK 信号</p>
-<p>上面这个步骤，建议感兴趣的朋友实际操作一下。</p>
+<p>1.发送方给接收方发送 SYN 信号，此时发送方处于 <code>SYN_SEND</code> 状态。<br>2.接收方确认并回复给发送方 SYN/ACK 信号，此时接收方处于 <code>SYN_RCVD</code> 状态。<br>3.发送方给接收方发送确认 ACK 信号，发送完毕后，发送方(客户端)进入 <code>ESTABLISHED</code> 状态，当接收端(服务端)接收到这个包时，也进入 <code>ESTABLISHED</code> 状态，TCP 握手结束。</p>
+<p>上面的步骤，建议感兴趣的朋友去实际操作一下。</p>
 <h2 id="为什么是三次握手"><a href="#为什么是三次握手" class="headerlink" title="为什么是三次握手"></a>为什么是三次握手</h2><p>回头再来想一想，TCP 的连接为什么需要三次握手呢，为什么不是一次，两次呢？一次不就挺好吗，三次是不是有点多此一举了？</p>
 <p>TCP 协议不是一个人定出来的而是一群人拟定的，设计三次握手固然有它的意义，是经过精心设计且在性能和效率上面衡量过的。</p>
 <p>在知乎 <a href="https://www.zhihu.com/question/24853633" target="_blank" rel="noopener">TCP 为什么是三次握手，而不是两次或四次？</a> 上面有不错的答案，虽然有些回答比较搞笑，但是很好理解，比如这位仁兄：<br><img src="/upload/images/2018/09/09/7.jpg" alt=""></p>
