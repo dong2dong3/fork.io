@@ -1,4 +1,911 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="C char strlen sizeof,"><meta name="description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 默认会在末尾增加&apos;\0&apos;char greeting[] = &quot;Hello&quot;;// 默认会在末尾增加&apos;\0&apos;c"><meta name="keywords" content="C char strlen sizeof"><meta property="og:type" content="article"><meta property="og:title" content="不见得你会计算C字符串长度"><meta property="og:url" content="http://yoursite.com/2019/03/07/不见得你会计算C字符串长度/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 默认会在末尾增加&apos;\0&apos;char greeting[] = &quot;Hello&quot;;// 默认会在末尾增加&apos;\0&apos;c"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2019/03/07/1.jpg"><meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg"><meta property="og:updated_time" content="2019-03-09T14:20:00.515Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="不见得你会计算C字符串长度"><meta name="twitter:description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 默认会在末尾增加&apos;\0&apos;char greeting[] = &quot;Hello&quot;;// 默认会在末尾增加&apos;\0&apos;c"><meta name="twitter:image" content="http://yoursite.com/upload/images/2019/03/07/1.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2019/03/07/不见得你会计算C字符串长度/"><title>不见得你会计算C字符串长度 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/不见得你会计算C字符串长度/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">不见得你会计算C字符串长度</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T23:19:38+08:00">2019-03-07</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2019/03/07/不见得你会计算C字符串长度/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2019/03/07/不见得你会计算C字符串长度/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="C-字符串"><a href="#C-字符串" class="headerlink" title="C 字符串"></a>C 字符串</h2><p>在 C 语言中，字符串实际上是使用字符 <code>&#39;\0&#39;</code> 终止的一维字符数组。</p><p>以下几种方式表示的都是 C 字符串的正确表达方式。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> greeting[<span class="number">6</span>] = &#123;<span class="string">'H'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 默认会在末尾增加'\0'</span></div><div class="line"><span class="keyword">char</span> greeting[] = <span class="string">"Hello"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 默认会在末尾增加'\0'</span></div><div class="line"><span class="keyword">char</span> *greeting = <span class="string">"Hello"</span>;</div></pre></td></tr></table></figure><p>看下面另外一种声明方式：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> greeting[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting: %s\n"</span>, greeting);</div></pre></td></tr></table></figure><p>输出结果：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">greeting: hello\<span class="number">376</span></div></pre></td></tr></table></figure><p>这个结果在不同编译器下面可能还会不一样，总之输出都不是我们想要的结果。这种方式创建的字符串没有 <code>&#39;\0&#39;</code>，不算是真正的 C 字符串，所以建议大家在声明 C 字符串的时候使用字符指针（char *）的方式。</p><p><code>string.h</code> 里面声明了很多关于操作 C 字符串的库函数。</p><h2 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h2><p>在说如何计算字符串长度之前，我们先来看一个例子。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> *greeting1 = <span class="string">"hello"</span>;</div><div class="line"><span class="keyword">char</span> greeting2[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting3[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting4[] = <span class="string">"hello"</span>;</div><div class="line">    </div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting1 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting1), <span class="built_in">strlen</span>(greeting1));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting2 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting2), <span class="built_in">strlen</span>(greeting2));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting3 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting3), <span class="built_in">strlen</span>(greeting3));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting4 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting4), <span class="built_in">strlen</span>(greeting4));</div></pre></td></tr></table></figure><p>如果你能说出上面 <code>printf</code> 的结果，基本上关于计算字符串长度的问题就迎刃而解了。</p><p>上面例子的输出结果如下所示：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">greeting1 sizeOf: 8, strlen: 5</div><div class="line">greeting2 sizeOf: 5, strlen: 7</div><div class="line">greeting3 sizeOf: 6, strlen: 5</div><div class="line">greeting4 sizeOf: 6, strlen: 5</div></pre></td></tr></table></figure><p>如果输出结果令你无法相信，可以选择继续往下看或者你自己写代码试试。</p><h2 id="sizeof、strlen"><a href="#sizeof、strlen" class="headerlink" title="sizeof、strlen"></a>sizeof、strlen</h2><p>在 <a href="https://linux.die.net/man/3/strlen" target="_blank" rel="noopener">linux.die</a> 可以查到 strlen 的说明，如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Synopsis:</div><div class="line">#include &lt;string.h&gt;</div><div class="line">size_t strlen(const char *s);</div><div class="line"></div><div class="line">Description:</div><div class="line">The strlen() function calculates the length of the string s, excluding the terminating null byte (aq\0aq).</div><div class="line"></div><div class="line">Return Value:</div><div class="line">The strlen() function returns the number of bytes in the string s.</div></pre></td></tr></table></figure><p>函数 <code>strlen</code> 返回字符串里的字符数，不包括终止字符 <code>&#39;\0&#39;</code>，这里注意 <code>strlen</code> 是一个 C 的函数，而 <code>sizeof</code> 只是一个操作符。</p><p>我们知道，<code>sizeof</code> 操作符的参数可以是数组、指针、类型、对象、函数等，函数 <code>strlen</code> 的参数只能是字符串。</p><p>对于 <code>sizeof</code>， 其参数不同时，其返回的值也不一样，如下：</p><p>1、数组：编译时分配的数组空间大小；<br>2、指针：存储该指针所用的空间大小(32位机器上是4，64位机器上是8)；<br>3、类型：该类型所占的空间大小；<br>4、对象：对象的实际占用空间大小(这个指的是在 C++ 中)；<br>5、函数：函数的返回类型所占的空间大小。函数的返回类型不能是void 类型；</p><p>那我们再回头看看上面的例子，我把要说明的写在注释上面了。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 注意这里是指针</span></div><div class="line"><span class="keyword">char</span> *greeting1 = <span class="string">"hello"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 没有结束符 '\0'，其 strlen 结果不确定</span></div><div class="line"><span class="keyword">char</span> greeting2[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"></div><div class="line"><span class="keyword">char</span> greeting3[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting4[] = <span class="string">"hello"</span>;</div><div class="line">    </div><div class="line"><span class="comment">/* 结果是 8、5 */</span></div><div class="line"><span class="comment">/* greeting1是指针，sizeOf计算的是其存储该指针所用的空间大小，因为我使用的是64位 macOS，所以输出是8 */</span></div><div class="line"><span class="comment">/*strlen 计算的是字符个数但是不包括结束符 '\0'*/</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting1 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting1), <span class="built_in">strlen</span>(greeting1));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 5、7 */</span></div><div class="line"><span class="comment">/* sizeof 计算的是编译时分配的数组空间大小，这里是5 */</span></div><div class="line"><span class="comment">/* greeting2没有结束符，strlen 的计算结果不确定 */</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting2 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting2), <span class="built_in">strlen</span>(greeting2));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 6、5 */</span></div><div class="line"><span class="comment">/* sizeof 计算的是编译时分配的数组空间大小，这里是6，因为多了结束符 */</span></div><div class="line"><span class="comment">/*strlen 计算的是字符个数但是不包括结束符 '\0'*/</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting3 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting3), <span class="built_in">strlen</span>(greeting3));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 6、5，这里类似上面的情况，不再赘述 */</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting4 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting4), <span class="built_in">strlen</span>(greeting4));</div></pre></td></tr></table></figure><p><strong>小结</strong>：</p><p>1、<code>sizeof</code> 是一个操作符，而 <code>strlen</code> 是 C 语言的库函数。</p><p>2、<code>sizeof</code> 的参数可以是任意数据类型或者表达式，而 <code>strlen</code> 只能以结尾为 <code>&#39;\0&#39;</code> 的字符串作参数。</p><p>3、<code>sizeof</code> 的结果在编译时就计算出了，而 <code>strlen</code> 必须在运行时才能计算出来。</p><p>4、<code>sizeof</code> 计算数据类型占内存的大小，<code>strlen</code> 计算字符串实际长度，要记住 <code>strlen</code> 计算出来的结果不包括结束符 <code>&#39;\0&#39;</code>。</p><p>5、<code>sizeof</code> 反应的并非真实字符串长度而是所占空间大小，所以<code>memset</code> 初始化字符串的时候用 <code>sizeof</code> 较好。</p><p>6、系统函数返回值是 <code>char *</code> (字符指针)类型的会在末尾加上结束符 <code>&#39;\0&#39;</code>。</p><p>我们还需要注意一点，<code>strlen</code> 函数，当数组名作为参数传入时，实际上数组就退化成指针了。举个例子，如下图所示：</p><p><img src="/upload/images/2019/03/07/1.jpg" alt=""></p><p>可以看出传入进来的参数会被退化为指针。</p><hr><p><strong>扫码关注，你我就各多一个朋友~</strong></p><p><img src="/upload/me/qrcode_wx.jpg" alt=""></p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/C-char-strlen-sizeof/" rel="tag"><i class="fa fa-tag"></i> C char strlen sizeof</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/03/03/iOS-使用-libcurl/" rel="next" title="iOS 使用 libcurl"><i class="fa fa-chevron-left"></i> iOS 使用 libcurl</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2019/03/10/json-c/" rel="prev" title="json-c">json-c<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">111</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">84</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-字符串"><span class="nav-number">1.</span> <span class="nav-text">C 字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串长度"><span class="nav-number">2.</span> <span class="nav-text">字符串长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sizeof、strlen"><span class="nav-number">3.</span> <span class="nav-text">sizeof、strlen</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C char strlen sizeof," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 默认会在末尾增加&apos;\0&apos;char greeting[] = &quot;Hello&quot;;// 默认会在末尾增加&apos;\0&apos;c">
+<meta name="keywords" content="C char strlen sizeof">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不见得你会计算C字符串长度">
+<meta property="og:url" content="http://yoursite.com/2019/03/07/不见得你会计算C字符串长度/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 默认会在末尾增加&apos;\0&apos;char greeting[] = &quot;Hello&quot;;// 默认会在末尾增加&apos;\0&apos;c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/03/07/1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-03-09T14:20:00.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="不见得你会计算C字符串长度">
+<meta name="twitter:description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 默认会在末尾增加&apos;\0&apos;char greeting[] = &quot;Hello&quot;;// 默认会在末尾增加&apos;\0&apos;c">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/03/07/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/07/不见得你会计算C字符串长度/"/>
+
+
+
+
+
+  <title>不见得你会计算C字符串长度 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/不见得你会计算C字符串长度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">不见得你会计算C字符串长度</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T23:19:38+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/07/不见得你会计算C字符串长度/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/03/07/不见得你会计算C字符串长度/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="C-字符串"><a href="#C-字符串" class="headerlink" title="C 字符串"></a>C 字符串</h2><p>在 C 语言中，字符串实际上是使用字符 <code>&#39;\0&#39;</code> 终止的一维字符数组。</p>
+<p>以下几种方式表示的都是 C 字符串的正确表达方式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> greeting[<span class="number">6</span>] = &#123;<span class="string">'H'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 默认会在末尾增加'\0'</span></div><div class="line"><span class="keyword">char</span> greeting[] = <span class="string">"Hello"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 默认会在末尾增加'\0'</span></div><div class="line"><span class="keyword">char</span> *greeting = <span class="string">"Hello"</span>;</div></pre></td></tr></table></figure>
+<p>看下面另外一种声明方式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> greeting[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting: %s\n"</span>, greeting);</div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">greeting: hello\<span class="number">376</span></div></pre></td></tr></table></figure>
+<p>这个结果在不同编译器下面可能还会不一样，总之输出都不是我们想要的结果。这种方式创建的字符串没有 <code>&#39;\0&#39;</code>，不算是真正的 C 字符串，所以建议大家在声明 C 字符串的时候使用字符指针（char *）的方式。</p>
+<p><code>string.h</code> 里面声明了很多关于操作 C 字符串的库函数。</p>
+<h2 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h2><p>在说如何计算字符串长度之前，我们先来看一个例子。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> *greeting1 = <span class="string">"hello"</span>;</div><div class="line"><span class="keyword">char</span> greeting2[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting3[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting4[] = <span class="string">"hello"</span>;</div><div class="line">    </div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting1 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting1), <span class="built_in">strlen</span>(greeting1));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting2 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting2), <span class="built_in">strlen</span>(greeting2));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting3 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting3), <span class="built_in">strlen</span>(greeting3));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting4 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting4), <span class="built_in">strlen</span>(greeting4));</div></pre></td></tr></table></figure>
+<p>如果你能说出上面 <code>printf</code> 的结果，基本上关于计算字符串长度的问题就迎刃而解了。</p>
+<p>上面例子的输出结果如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">greeting1 sizeOf: 8, strlen: 5</div><div class="line">greeting2 sizeOf: 5, strlen: 7</div><div class="line">greeting3 sizeOf: 6, strlen: 5</div><div class="line">greeting4 sizeOf: 6, strlen: 5</div></pre></td></tr></table></figure>
+<p>如果输出结果令你无法相信，可以选择继续往下看或者你自己写代码试试。</p>
+<h2 id="sizeof、strlen"><a href="#sizeof、strlen" class="headerlink" title="sizeof、strlen"></a>sizeof、strlen</h2><p>在 <a href="https://linux.die.net/man/3/strlen" target="_blank" rel="noopener">linux.die</a> 可以查到 strlen 的说明，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Synopsis:</div><div class="line">#include &lt;string.h&gt;</div><div class="line">size_t strlen(const char *s);</div><div class="line"></div><div class="line">Description:</div><div class="line">The strlen() function calculates the length of the string s, excluding the terminating null byte (aq\0aq).</div><div class="line"></div><div class="line">Return Value:</div><div class="line">The strlen() function returns the number of bytes in the string s.</div></pre></td></tr></table></figure>
+<p>函数 <code>strlen</code> 返回字符串里的字符数，不包括终止字符 <code>&#39;\0&#39;</code>，这里注意 <code>strlen</code> 是一个 C 的函数，而 <code>sizeof</code> 只是一个操作符。</p>
+<p>我们知道，<code>sizeof</code> 操作符的参数可以是数组、指针、类型、对象、函数等，函数 <code>strlen</code> 的参数只能是字符串。</p>
+<p>对于 <code>sizeof</code>， 其参数不同时，其返回的值也不一样，如下：</p>
+<p>1、数组：编译时分配的数组空间大小；<br>2、指针：存储该指针所用的空间大小(32位机器上是4，64位机器上是8)；<br>3、类型：该类型所占的空间大小；<br>4、对象：对象的实际占用空间大小(这个指的是在 C++ 中)；<br>5、函数：函数的返回类型所占的空间大小。函数的返回类型不能是void 类型；</p>
+<p>那我们再回头看看上面的例子，我把要说明的写在注释上面了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 注意这里是指针</span></div><div class="line"><span class="keyword">char</span> *greeting1 = <span class="string">"hello"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 没有结束符 '\0'，其 strlen 结果不确定</span></div><div class="line"><span class="keyword">char</span> greeting2[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"></div><div class="line"><span class="keyword">char</span> greeting3[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting4[] = <span class="string">"hello"</span>;</div><div class="line">    </div><div class="line"><span class="comment">/* 结果是 8、5 */</span></div><div class="line"><span class="comment">/* greeting1是指针，sizeOf计算的是其存储该指针所用的空间大小，因为我使用的是64位 macOS，所以输出是8 */</span></div><div class="line"><span class="comment">/*strlen 计算的是字符个数但是不包括结束符 '\0'*/</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting1 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting1), <span class="built_in">strlen</span>(greeting1));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 5、7 */</span></div><div class="line"><span class="comment">/* sizeof 计算的是编译时分配的数组空间大小，这里是5 */</span></div><div class="line"><span class="comment">/* greeting2没有结束符，strlen 的计算结果不确定 */</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting2 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting2), <span class="built_in">strlen</span>(greeting2));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 6、5 */</span></div><div class="line"><span class="comment">/* sizeof 计算的是编译时分配的数组空间大小，这里是6，因为多了结束符 */</span></div><div class="line"><span class="comment">/*strlen 计算的是字符个数但是不包括结束符 '\0'*/</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting3 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting3), <span class="built_in">strlen</span>(greeting3));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 6、5，这里类似上面的情况，不再赘述 */</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting4 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting4), <span class="built_in">strlen</span>(greeting4));</div></pre></td></tr></table></figure>
+<p><strong>小结</strong>：</p>
+<p>1、<code>sizeof</code> 是一个操作符，而 <code>strlen</code> 是 C 语言的库函数。</p>
+<p>2、<code>sizeof</code> 的参数可以是任意数据类型或者表达式，而 <code>strlen</code> 只能以结尾为 <code>&#39;\0&#39;</code> 的字符串作参数。</p>
+<p>3、<code>sizeof</code> 的结果在编译时就计算出了，而 <code>strlen</code> 必须在运行时才能计算出来。</p>
+<p>4、<code>sizeof</code> 计算数据类型占内存的大小，<code>strlen</code> 计算字符串实际长度，要记住 <code>strlen</code> 计算出来的结果不包括结束符 <code>&#39;\0&#39;</code>。</p>
+<p>5、<code>sizeof</code> 反应的并非真实字符串长度而是所占空间大小，所以<code>memset</code> 初始化字符串的时候用 <code>sizeof</code> 较好。</p>
+<p>6、系统函数返回值是 <code>char *</code> (字符指针)类型的会在末尾加上结束符 <code>&#39;\0&#39;</code>。</p>
+<p>我们还需要注意一点，<code>strlen</code> 函数，当数组名作为参数传入时，实际上数组就退化成指针了。举个例子，如下图所示：</p>
+<p><img src="/upload/images/2019/03/07/1.jpg" alt=""></p>
+<p>可以看出传入进来的参数会被退化为指针。</p>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C-char-strlen-sizeof/" rel="tag"><i class="fa fa-tag"></i> C char strlen sizeof</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/03/iOS-使用-libcurl/" rel="next" title="iOS 使用 libcurl">
+                <i class="fa fa-chevron-left"></i> iOS 使用 libcurl
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/10/json-c/" rel="prev" title="json-c">
+                json-c <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-字符串"><span class="nav-number">1.</span> <span class="nav-text">C 字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串长度"><span class="nav-number">2.</span> <span class="nav-text">字符串长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sizeof、strlen"><span class="nav-number">3.</span> <span class="nav-text">sizeof、strlen</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1220,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

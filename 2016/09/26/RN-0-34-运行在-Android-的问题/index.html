@@ -1,4 +1,918 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="Android ReactNative,"><meta name="description" content="今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑. 想看看运行效果怎么样?! 适合读者 有 Android 开发基础. 会使用 Android Studio. 初级 React Native 的开发者.  开发环境和工具 Android Studio 2.2 ReactNative 0.34 Android 模拟器 Mac 操作系统  预期效果不出所料, 真的不能一帆风顺的 Ru"><meta name="keywords" content="Android ReactNative"><meta property="og:type" content="article"><meta property="og:title" content="RN: 0.34 运行在 Android 的问题"><meta property="og:url" content="http://yoursite.com/2016/09/26/RN-0-34-运行在-Android-的问题/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑. 想看看运行效果怎么样?! 适合读者 有 Android 开发基础. 会使用 Android Studio. 初级 React Native 的开发者.  开发环境和工具 Android Studio 2.2 ReactNative 0.34 Android 模拟器 Mac 操作系统  预期效果不出所料, 真的不能一帆风顺的 Ru"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2016/9/26/rn_and_eff_01.png"><meta property="og:updated_time" content="2017-11-18T14:51:38.956Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="RN: 0.34 运行在 Android 的问题"><meta name="twitter:description" content="今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑. 想看看运行效果怎么样?! 适合读者 有 Android 开发基础. 会使用 Android Studio. 初级 React Native 的开发者.  开发环境和工具 Android Studio 2.2 ReactNative 0.34 Android 模拟器 Mac 操作系统  预期效果不出所料, 真的不能一帆风顺的 Ru"><meta name="twitter:image" content="http://yoursite.com/upload/images/2016/9/26/rn_and_eff_01.png"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2016/09/26/RN-0-34-运行在-Android-的问题/"><title>RN: 0.34 运行在 Android 的问题 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/26/RN-0-34-运行在-Android-的问题/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">RN: 0.34 运行在 Android 的问题</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-26T21:03:37+08:00">2016-09-26</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ReactNative/" itemprop="url" rel="index"><span itemprop="name">ReactNative</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2016/09/26/RN-0-34-运行在-Android-的问题/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2016/09/26/RN-0-34-运行在-Android-的问题/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><p>今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑.</p><p>想看看运行效果怎么样?!</p><h2 id="适合读者"><a href="#适合读者" class="headerlink" title="适合读者"></a>适合读者</h2><ul><li>有 Android 开发基础.</li><li>会使用 Android Studio.</li><li>初级 React Native 的开发者.</li></ul><h2 id="开发环境和工具"><a href="#开发环境和工具" class="headerlink" title="开发环境和工具"></a>开发环境和工具</h2><ul><li>Android Studio 2.2</li><li>ReactNative 0.34</li><li>Android 模拟器</li><li>Mac 操作系统</li></ul><h2 id="预期效果"><a href="#预期效果" class="headerlink" title="预期效果"></a>预期效果</h2><p>不出所料, 真的不能一帆风顺的 Run.</p><p>在我的博客 ReactNative: 不一样的 HelloWorld 中展示了 RN 在 iOS 上面的运行情况.</p><p>今天还是这个例子, 部署和运行到 Android 上面.</p><p>效果如下:<br><img src="/upload/images/2016/9/26/rn_and_eff_01.png" alt="1"></p><p>在这个过程中, 遇到几个问题.</p><p>特此记录.</p><h2 id="问题描述和解决"><a href="#问题描述和解决" class="headerlink" title="问题描述和解决"></a>问题描述和解决</h2><h3 id="问题1-直接运行-crash"><a href="#问题1-直接运行-crash" class="headerlink" title="问题1: 直接运行 crash"></a>问题1: 直接运行 crash</h3><p>log 描述(部分)</p><blockquote><p>E/AndroidRuntime: FATAL EXCEPTION: main<br>Process: com.mzrntutorial, PID: 5849<br>java.lang.RuntimeException:<br>Unable to start activity ComponentInfo{com.mzrntutorial/com.mzrntutorial.MainActivity}: java.lang.ClassCastException: android.app.Application cannot be cast to com.facebook.react.ReactApplication<br>at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2416)<br>at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2476)</p></blockquote><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案:"></a>解决方案:</h3><p>Manifest.xml 配置 Application 名称</p><p>android:name=”.MainApplication”</p><h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2:"></a>问题2:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">could not get batchedbridge make sure your bundle is packaged correctly</div></pre></td></tr></table></figure><p>解决问题1后, 再次运行, 会报问题2.<br>该问题是因为没有启动本地的 server.</p><p>使用 Xcode 可以自动运行本地 server.<br>可以参考博客 React Native 如何启动 local server</p><h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案:"></a>解决方案:</h3><p>手动启动 server.</p><p>cd 项目根目录</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">react-native start</div></pre></td></tr></table></figure><h3 id="问题3"><a href="#问题3" class="headerlink" title="问题3:"></a>问题3:</h3><blockquote><p>模拟器没有 menu 按键, 无法 Reload</p></blockquote><p>这个其实不是什么大问题, 但是对于初学者, 也算是一个问题.</p><p>新版的 Android SDK 创建的模拟器没有 menu 按键了</p><h3 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案:"></a>解决方案:</h3><p>连续按两次字母 r 即可刷新.</p><p>这些问题, FB 后面肯定会解决的.<br>阿门!</p><h2 id="附录-代码"><a href="#附录-代码" class="headerlink" title="附录(代码)"></a>附录(代码)</h2><p>index.ios.js</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;getPlatformString, isIOS&#125; from &apos;./js/Generals/Utils/IDSRNPlatformUtil&apos;;</div><div class="line">import MZButton from &apos;./js/ReactUIKit/MZButton&apos;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View,</div><div class="line">  Platform,</div><div class="line">  TouchableOpacity,</div><div class="line">  TouchableHighlight</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">// 调用其他模块方法</div><div class="line">var os = getPlatformString();</div><div class="line">var iosPlatform = isIOS();//when run on &apos;ios&apos; true</div><div class="line">class MZRNTutorial extends Component &#123;</div><div class="line">  constructor(props)</div><div class="line">  &#123;</div><div class="line">      super(props);</div><div class="line">      this.state = &#123;status:1&#125;;</div><div class="line">  &#125;</div><div class="line">  customPressHandler = () =&gt; &#123;</div><div class="line">      alert(&apos;当前状态: &apos; + this.state.status);</div><div class="line">      this.state.status = 2;</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    console.log(&apos;render ...&apos;);</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;styles.container&#125;&gt;</div><div class="line">        &lt;Text style=&#123;styles.welcome&#125;&gt;</div><div class="line">          Near use React Native!</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          To get started, edit index.android.js</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          Press &apos;R&apos; twice to reload,&#123;&apos;\n&apos;&#125;</div><div class="line">          or shake for dev menu</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &#123;/* 显示当前平台信息*/&#125;</div><div class="line">        &lt;Text style=&#123;styles.welcome&#125;&gt;</div><div class="line">            current os: &#123;Platform.OS&#125;</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &#123;/*</div><div class="line">        &lt;TouchableOpacity</div><div class="line">            style=&#123;styles.button&#125;</div><div class="line">            onPress=&#123;this.customPressHandler&#125;</div><div class="line">            &gt;</div><div class="line">            &lt;Text style=&#123;styles.buttonText&#125;&gt;确定&lt;/Text&gt;</div><div class="line">        &lt;/TouchableOpacity&gt;</div><div class="line">        */&#125;</div><div class="line">        &lt;MZButton text=&quot;确定?&quot; bgColor=&quot;green&quot; dianjishijian=&#123;()=&gt;&#123;alert(&apos;居然点击确定?!&apos;)&#125;&#125;&gt;</div><div class="line">        &lt;/MZButton&gt;</div><div class="line">      &lt;/View&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  button: &#123;</div><div class="line">    height: 40,</div><div class="line">    width: 150,</div><div class="line">    borderRadius: 20,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;green&apos;,</div><div class="line">    overflow: &apos;hidden&apos;</div><div class="line">  &#125;,</div><div class="line">  buttonText: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;white&apos;</div><div class="line">  &#125;,</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    alignItems: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;#F5FCFF&apos;,</div><div class="line">  &#125;,</div><div class="line">  welcome: &#123;</div><div class="line">    fontSize: 20,</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    margin: 10,</div><div class="line">  &#125;,</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#333333&apos;,</div><div class="line">    marginBottom: 5,</div><div class="line">  &#125;,</div><div class="line">  flowRight: &#123;</div><div class="line">   flexDirection: &apos;row&apos;,</div><div class="line">   alignItems: &apos;center&apos;,</div><div class="line">   alignSelf: &apos;stretch&apos;</div><div class="line"> &#125;,</div><div class="line">&#125;);</div><div class="line">AppRegistry.registerComponent(&apos;MZRNTutorial&apos;, () =&gt; MZRNTutorial);</div></pre></td></tr></table></figure><p>MZButton.js</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View,</div><div class="line">  Platform,</div><div class="line">  TouchableOpacity</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">//-----------------------------------------------------</div><div class="line">//外部使用该模块, ES6需要使用关键字 export default</div><div class="line">//-----------------------------------------------------</div><div class="line">export default class MZButton extends Component</div><div class="line">&#123;</div><div class="line">    constructor(props)</div><div class="line">    &#123;</div><div class="line">        super(props);</div><div class="line">        this.state = &#123;status:1&#125;;</div><div class="line">    &#125;</div><div class="line">    costumPressHandler = () =&gt; &#123;</div><div class="line">        alert(&apos;当前状态:&apos; + this.state.status);</div><div class="line">        const &#123;dianjishijian&#125; = this.props;</div><div class="line">        dianjishijian();</div><div class="line">    &#125;;</div><div class="line">    // 使用属性值设置背景颜色</div><div class="line">    // style=&#123;[styles.button], &#123;backgroundColor:this.props.beijingyanse&#125;&#125;</div><div class="line">    render() &#123;</div><div class="line">        //解构</div><div class="line">        const &#123;text, bgColor&#125; = this.props;</div><div class="line">        return (</div><div class="line">            &lt;TouchableOpacity</div><div class="line">                style=&#123;[styles.button], &#123;backgroundColor:bgColor&#125;&#125;</div><div class="line">                onPress = &#123;this.costumPressHandler&#125;</div><div class="line">                &gt;</div><div class="line">                &lt;Text style=&#123;styles.buttonText&#125;&gt;</div><div class="line">                    &#123;/* 使用属性值 */&#125;</div><div class="line">                    &#123;this.props.text&#125;</div><div class="line">                &lt;/Text&gt;</div><div class="line">            &lt;/TouchableOpacity&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">    button: &#123;</div><div class="line">      height: 40,</div><div class="line">      width: 150,</div><div class="line">      borderRadius: 20,</div><div class="line">      justifyContent: &apos;center&apos;,</div><div class="line">      backgroundColor: &apos;green&apos;,</div><div class="line">      overflow: &apos;hidden&apos;</div><div class="line">    &#125;,</div><div class="line">    buttonText: &#123;</div><div class="line">      textAlign: &apos;center&apos;,</div><div class="line">      color: &apos;white&apos;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure><p>IDSRNPlatformUtil.js</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">    Platform</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">export function getPlatformString()</div><div class="line">&#123;</div><div class="line">    console.log(Platform.OS);</div><div class="line">    </div><div class="line">    return Platform.OS;</div><div class="line">&#125;</div><div class="line">export function isIOS()</div><div class="line">&#123;</div><div class="line">    return Platform.OS === &apos;ios&apos;;</div><div class="line">&#125;</div><div class="line">export function isAndroid()</div><div class="line">&#123;</div><div class="line">    return Platform.OS == &apos;android&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Android-ReactNative/" rel="tag"><i class="fa fa-tag"></i> Android ReactNative</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2016/09/25/iOS-项目-打造本地-pod-库/" rel="next" title="iOS 项目: 打造本地 pod 库"><i class="fa fa-chevron-left"></i> iOS 项目: 打造本地 pod 库</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2016/10/06/RN-使用-Mobx/" rel="prev" title="RN: 使用 Mobx">RN: 使用 Mobx<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">111</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">84</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#适合读者"><span class="nav-number">1.</span> <span class="nav-text">适合读者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发环境和工具"><span class="nav-number">2.</span> <span class="nav-text">开发环境和工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预期效果"><span class="nav-number">3.</span> <span class="nav-text">预期效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述和解决"><span class="nav-number">4.</span> <span class="nav-text">问题描述和解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-直接运行-crash"><span class="nav-number">4.1.</span> <span class="nav-text">问题1: 直接运行 crash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">4.2.</span> <span class="nav-text">解决方案:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2"><span class="nav-number">4.3.</span> <span class="nav-text">问题2:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案-1"><span class="nav-number">4.4.</span> <span class="nav-text">解决方案:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3"><span class="nav-number">4.5.</span> <span class="nav-text">问题3:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案-2"><span class="nav-number">4.6.</span> <span class="nav-text">解决方案:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录-代码"><span class="nav-number">5.</span> <span class="nav-text">附录(代码)</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android ReactNative," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑. 想看看运行效果怎么样?! 适合读者 有 Android 开发基础. 会使用 Android Studio. 初级 React Native 的开发者.  开发环境和工具 Android Studio 2.2 ReactNative 0.34 Android 模拟器 Mac 操作系统  预期效果不出所料, 真的不能一帆风顺的 Ru">
+<meta name="keywords" content="Android ReactNative">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RN: 0.34 运行在 Android 的问题">
+<meta property="og:url" content="http://yoursite.com/2016/09/26/RN-0-34-运行在-Android-的问题/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑. 想看看运行效果怎么样?! 适合读者 有 Android 开发基础. 会使用 Android Studio. 初级 React Native 的开发者.  开发环境和工具 Android Studio 2.2 ReactNative 0.34 Android 模拟器 Mac 操作系统  预期效果不出所料, 真的不能一帆风顺的 Ru">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2016/9/26/rn_and_eff_01.png">
+<meta property="og:updated_time" content="2017-11-18T14:51:38.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RN: 0.34 运行在 Android 的问题">
+<meta name="twitter:description" content="今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑. 想看看运行效果怎么样?! 适合读者 有 Android 开发基础. 会使用 Android Studio. 初级 React Native 的开发者.  开发环境和工具 Android Studio 2.2 ReactNative 0.34 Android 模拟器 Mac 操作系统  预期效果不出所料, 真的不能一帆风顺的 Ru">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2016/9/26/rn_and_eff_01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/26/RN-0-34-运行在-Android-的问题/"/>
+
+
+
+
+
+  <title>RN: 0.34 运行在 Android 的问题 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/26/RN-0-34-运行在-Android-的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RN: 0.34 运行在 Android 的问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-26T21:03:37+08:00">
+                2016-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ReactNative/" itemprop="url" rel="index">
+                    <span itemprop="name">ReactNative</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/26/RN-0-34-运行在-Android-的问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2016/09/26/RN-0-34-运行在-Android-的问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天闲来无事, 想使用 RN 工程在 Android 设备上面跑跑.</p>
+<p>想看看运行效果怎么样?!</p>
+<h2 id="适合读者"><a href="#适合读者" class="headerlink" title="适合读者"></a>适合读者</h2><ul>
+<li>有 Android 开发基础.</li>
+<li>会使用 Android Studio.</li>
+<li>初级 React Native 的开发者.</li>
+</ul>
+<h2 id="开发环境和工具"><a href="#开发环境和工具" class="headerlink" title="开发环境和工具"></a>开发环境和工具</h2><ul>
+<li>Android Studio 2.2</li>
+<li>ReactNative 0.34</li>
+<li>Android 模拟器</li>
+<li>Mac 操作系统</li>
+</ul>
+<h2 id="预期效果"><a href="#预期效果" class="headerlink" title="预期效果"></a>预期效果</h2><p>不出所料, 真的不能一帆风顺的 Run.</p>
+<p>在我的博客 ReactNative: 不一样的 HelloWorld 中展示了 RN 在 iOS 上面的运行情况.</p>
+<p>今天还是这个例子, 部署和运行到 Android 上面.</p>
+<p>效果如下:<br><img src="/upload/images/2016/9/26/rn_and_eff_01.png" alt="1"></p>
+<p>在这个过程中, 遇到几个问题.</p>
+<p>特此记录.</p>
+<h2 id="问题描述和解决"><a href="#问题描述和解决" class="headerlink" title="问题描述和解决"></a>问题描述和解决</h2><h3 id="问题1-直接运行-crash"><a href="#问题1-直接运行-crash" class="headerlink" title="问题1: 直接运行 crash"></a>问题1: 直接运行 crash</h3><p>log 描述(部分)</p>
+<blockquote>
+<p>E/AndroidRuntime: FATAL EXCEPTION: main<br>Process: com.mzrntutorial, PID: 5849<br>java.lang.RuntimeException:<br>Unable to start activity ComponentInfo{com.mzrntutorial/com.mzrntutorial.MainActivity}: java.lang.ClassCastException: android.app.Application cannot be cast to com.facebook.react.ReactApplication<br>at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2416)<br>at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2476)     </p>
+</blockquote>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案:"></a>解决方案:</h3><p>Manifest.xml 配置 Application 名称</p>
+<p>android:name=”.MainApplication”</p>
+<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2:"></a>问题2:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">could not get batchedbridge make sure your bundle is packaged correctly</div></pre></td></tr></table></figure>
+<p>解决问题1后, 再次运行, 会报问题2.<br>该问题是因为没有启动本地的 server.</p>
+<p>使用 Xcode 可以自动运行本地 server.<br>可以参考博客 React Native 如何启动 local server</p>
+<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案:"></a>解决方案:</h3><p>手动启动 server.</p>
+<p>cd 项目根目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">react-native start</div></pre></td></tr></table></figure>
+<h3 id="问题3"><a href="#问题3" class="headerlink" title="问题3:"></a>问题3:</h3><blockquote>
+<p>模拟器没有 menu 按键, 无法 Reload</p>
+</blockquote>
+<p>这个其实不是什么大问题, 但是对于初学者, 也算是一个问题.</p>
+<p>新版的 Android SDK 创建的模拟器没有 menu 按键了</p>
+<h3 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案:"></a>解决方案:</h3><p>连续按两次字母 r 即可刷新.</p>
+<p>这些问题, FB 后面肯定会解决的.<br>阿门!</p>
+<h2 id="附录-代码"><a href="#附录-代码" class="headerlink" title="附录(代码)"></a>附录(代码)</h2><p>index.ios.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;getPlatformString, isIOS&#125; from &apos;./js/Generals/Utils/IDSRNPlatformUtil&apos;;</div><div class="line">import MZButton from &apos;./js/ReactUIKit/MZButton&apos;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View,</div><div class="line">  Platform,</div><div class="line">  TouchableOpacity,</div><div class="line">  TouchableHighlight</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">// 调用其他模块方法</div><div class="line">var os = getPlatformString();</div><div class="line">var iosPlatform = isIOS();//when run on &apos;ios&apos; true</div><div class="line">class MZRNTutorial extends Component &#123;</div><div class="line">  constructor(props)</div><div class="line">  &#123;</div><div class="line">      super(props);</div><div class="line">      this.state = &#123;status:1&#125;;</div><div class="line">  &#125;</div><div class="line">  customPressHandler = () =&gt; &#123;</div><div class="line">      alert(&apos;当前状态: &apos; + this.state.status);</div><div class="line">      this.state.status = 2;</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    console.log(&apos;render ...&apos;);</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;styles.container&#125;&gt;</div><div class="line">        &lt;Text style=&#123;styles.welcome&#125;&gt;</div><div class="line">          Near use React Native!</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          To get started, edit index.android.js</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          Press &apos;R&apos; twice to reload,&#123;&apos;\n&apos;&#125;</div><div class="line">          or shake for dev menu</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &#123;/* 显示当前平台信息*/&#125;</div><div class="line">        &lt;Text style=&#123;styles.welcome&#125;&gt;</div><div class="line">            current os: &#123;Platform.OS&#125;</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &#123;/*</div><div class="line">        &lt;TouchableOpacity</div><div class="line">            style=&#123;styles.button&#125;</div><div class="line">            onPress=&#123;this.customPressHandler&#125;</div><div class="line">            &gt;</div><div class="line">            &lt;Text style=&#123;styles.buttonText&#125;&gt;确定&lt;/Text&gt;</div><div class="line">        &lt;/TouchableOpacity&gt;</div><div class="line">        */&#125;</div><div class="line">        &lt;MZButton text=&quot;确定?&quot; bgColor=&quot;green&quot; dianjishijian=&#123;()=&gt;&#123;alert(&apos;居然点击确定?!&apos;)&#125;&#125;&gt;</div><div class="line">        &lt;/MZButton&gt;</div><div class="line">      &lt;/View&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  button: &#123;</div><div class="line">    height: 40,</div><div class="line">    width: 150,</div><div class="line">    borderRadius: 20,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;green&apos;,</div><div class="line">    overflow: &apos;hidden&apos;</div><div class="line">  &#125;,</div><div class="line">  buttonText: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;white&apos;</div><div class="line">  &#125;,</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    alignItems: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;#F5FCFF&apos;,</div><div class="line">  &#125;,</div><div class="line">  welcome: &#123;</div><div class="line">    fontSize: 20,</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    margin: 10,</div><div class="line">  &#125;,</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#333333&apos;,</div><div class="line">    marginBottom: 5,</div><div class="line">  &#125;,</div><div class="line">  flowRight: &#123;</div><div class="line">   flexDirection: &apos;row&apos;,</div><div class="line">   alignItems: &apos;center&apos;,</div><div class="line">   alignSelf: &apos;stretch&apos;</div><div class="line"> &#125;,</div><div class="line">&#125;);</div><div class="line">AppRegistry.registerComponent(&apos;MZRNTutorial&apos;, () =&gt; MZRNTutorial);</div></pre></td></tr></table></figure>
+<p>MZButton.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View,</div><div class="line">  Platform,</div><div class="line">  TouchableOpacity</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">//-----------------------------------------------------</div><div class="line">//外部使用该模块, ES6需要使用关键字 export default</div><div class="line">//-----------------------------------------------------</div><div class="line">export default class MZButton extends Component</div><div class="line">&#123;</div><div class="line">    constructor(props)</div><div class="line">    &#123;</div><div class="line">        super(props);</div><div class="line">        this.state = &#123;status:1&#125;;</div><div class="line">    &#125;</div><div class="line">    costumPressHandler = () =&gt; &#123;</div><div class="line">        alert(&apos;当前状态:&apos; + this.state.status);</div><div class="line">        const &#123;dianjishijian&#125; = this.props;</div><div class="line">        dianjishijian();</div><div class="line">    &#125;;</div><div class="line">    // 使用属性值设置背景颜色</div><div class="line">    // style=&#123;[styles.button], &#123;backgroundColor:this.props.beijingyanse&#125;&#125;</div><div class="line">    render() &#123;</div><div class="line">        //解构</div><div class="line">        const &#123;text, bgColor&#125; = this.props;</div><div class="line">        return (</div><div class="line">            &lt;TouchableOpacity</div><div class="line">                style=&#123;[styles.button], &#123;backgroundColor:bgColor&#125;&#125;</div><div class="line">                onPress = &#123;this.costumPressHandler&#125;</div><div class="line">                &gt;</div><div class="line">                &lt;Text style=&#123;styles.buttonText&#125;&gt;</div><div class="line">                    &#123;/* 使用属性值 */&#125;</div><div class="line">                    &#123;this.props.text&#125;</div><div class="line">                &lt;/Text&gt;</div><div class="line">            &lt;/TouchableOpacity&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">    button: &#123;</div><div class="line">      height: 40,</div><div class="line">      width: 150,</div><div class="line">      borderRadius: 20,</div><div class="line">      justifyContent: &apos;center&apos;,</div><div class="line">      backgroundColor: &apos;green&apos;,</div><div class="line">      overflow: &apos;hidden&apos;</div><div class="line">    &#125;,</div><div class="line">    buttonText: &#123;</div><div class="line">      textAlign: &apos;center&apos;,</div><div class="line">      color: &apos;white&apos;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>IDSRNPlatformUtil.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">    Platform</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">export function getPlatformString()</div><div class="line">&#123;</div><div class="line">    console.log(Platform.OS);</div><div class="line">    </div><div class="line">    return Platform.OS;</div><div class="line">&#125;</div><div class="line">export function isIOS()</div><div class="line">&#123;</div><div class="line">    return Platform.OS === &apos;ios&apos;;</div><div class="line">&#125;</div><div class="line">export function isAndroid()</div><div class="line">&#123;</div><div class="line">    return Platform.OS == &apos;android&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-ReactNative/" rel="tag"><i class="fa fa-tag"></i> Android ReactNative</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/25/iOS-项目-打造本地-pod-库/" rel="next" title="iOS 项目: 打造本地 pod 库">
+                <i class="fa fa-chevron-left"></i> iOS 项目: 打造本地 pod 库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/06/RN-使用-Mobx/" rel="prev" title="RN: 使用 Mobx">
+                RN: 使用 Mobx <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#适合读者"><span class="nav-number">1.</span> <span class="nav-text">适合读者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发环境和工具"><span class="nav-number">2.</span> <span class="nav-text">开发环境和工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预期效果"><span class="nav-number">3.</span> <span class="nav-text">预期效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述和解决"><span class="nav-number">4.</span> <span class="nav-text">问题描述和解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-直接运行-crash"><span class="nav-number">4.1.</span> <span class="nav-text">问题1: 直接运行 crash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">4.2.</span> <span class="nav-text">解决方案:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2"><span class="nav-number">4.3.</span> <span class="nav-text">问题2:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案-1"><span class="nav-number">4.4.</span> <span class="nav-text">解决方案:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3"><span class="nav-number">4.5.</span> <span class="nav-text">问题3:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案-2"><span class="nav-number">4.6.</span> <span class="nav-text">解决方案:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录-代码"><span class="nav-number">5.</span> <span class="nav-text">附录(代码)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1227,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[oh-my-zsh 配置]]></title>
     <url>%2F2019%2F04%2F03%2Foh-my-zsh-%E9%85%8D%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[macOS 上面安装 oh-my-zsh 后，感觉敲命令更爽了，特别是在进行 git 操作的时候，很方便。 安装比较简单，可以在终端通过 curl 也可以通过 wget 方式，安装方法如下。 通过 curl 方式 1sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" 通过 wget 方式 1sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" 安装成功后，原来在系统 shell 配置的环境变量需要让 oh-my-zsh 知道，配置一下 ~/.zshrc 文件，增加下面配置就可以了。 123456789# User configurationsource ~/.bash_profilesource /etc/profile``` 配置完成后，保存文件，在终端执行：```shsource ~/.zshrc 这样之前配置的环境变量在 oh-my-zsh 下就生效了。 扫码关注，你我就各多一个朋友~]]></content>
+    <content type="text"><![CDATA[喜欢使用终端的朋友都知道在 linux、macOS 上面默认使用的是 bash shell，虽然 bash 比较强大，但是比起 zsh 还是稍逊一筹。zsh 虽然好用但配置比较复杂，于是乎 oh-my-zsh 就诞生了，它统一管理 zsh 的配置。 macOS 上面安装 oh-my-zsh 后，感觉敲命令更爽了，特别是在进行 git 操作的时候，很方便。 安装比较简单，可以在终端通过 curl 也可以通过 wget 方式，安装方法如下。 1、通过 curl 方式 1sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" 2、通过 wget 方式 1sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" oh-my-zsh 支持 linux、macOS 和 windows，但是在 linux 和 macOS 上面支持最好。 安装成功后，原来在系统 shell 配置的环境变量需要让 oh-my-zsh 知道，配置一下 ~/.zshrc 文件，增加下面配置就可以了。 123456789# User configurationsource ~/.bash_profilesource /etc/profile``` 配置完成后保存文件，在终端执行：```shsource ~/.zshrc 这样之前配置的环境变量在 oh-my-zsh 下就生效了。 oh-my-zsh 支持三方插件和主题配置，有兴趣的可以自行探索。 扫码关注，你我就各多一个朋友~]]></content>
       <categories>
         <category>MacOS</category>
       </categories>
