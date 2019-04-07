@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2019/04/03/oh-my-zsh-%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2019-04-07T03:37:12.560Z</lastmod>
+    <data>
+        <display>
+        <title>oh-my-zsh 配置</title>
+        <pubTime>2019-04-03T13:43:10.000Z</pubTime>
+        
+        <tag>zsh git tool</tag>
+         
+         
+           
+             
+              <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/06/07/iOS-%E9%80%86%E5%90%91-dumpdecrypted-%E7%A0%B8%E5%A3%B3%E8%AE%B0/</loc>
     <lastmod>2019-04-07T03:35:36.493Z</lastmod>
     <data>
@@ -97,26 +117,6 @@
            
              
               <breadCrumb title="iOS" url="http://yoursite.com/categories/iOS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2019/04/03/oh-my-zsh-%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2019-04-07T02:56:33.170Z</lastmod>
-    <data>
-        <display>
-        <title>oh-my-zsh 配置</title>
-        <pubTime>2019-04-03T13:43:10.000Z</pubTime>
-        
-        <tag>zsh git</tag>
-         
-         
-           
-             
-              <breadCrumb title="MacOS" url="http://yoursite.com/categories/MacOS/"/>
           
         </display>
     </data>
