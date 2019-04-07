@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[dumpdecrypted 砸壳：导出头文件]]></title>
+    <url>%2F2019%2F04%2F07%2Fdumpdecrypted-%E7%A0%B8%E5%A3%B3%EF%BC%9A%E5%AF%BC%E5%87%BA%E5%A4%B4%E6%96%87%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[导出头文件在 iOS 逆向: dumpdecrypted 砸壳记中已经给大家分享了对 ipa 文件如何砸壳了， 接下来就可以导出其头文件了。 这里需要用到 class-dump 工具。如果你使用 class-dump, 出现如下错误： 1Error: Cannot find offset for address 0xxxxxxxxx in stringAtAddress 报这种错误说明你即将 dump 的文件是 OC 和 Swift 混编的项目，class-dump 这个工具对它们无能为力。 还好, 伟大的程序员们给我们解决了这个问题。 去获取 class-dump 改进版 源码, 然后使用 Xcode 编译即可. 编译完成后生成的 class-dump 就可以拿来使用了. 改变其可执行的权限: 1234567chmod +x class-dump``` 查看 decrypted 文件的 arm 架构:```shclass-dump --list portkey-prod.decrypted 显示为：arm64 开始 dump: 123mkdir portkey-headerclass-dump -H portkey-prod.decrypted -o portkey-header/ 遇到问题dumpdecrypted 砸壳出现了问题, 错误信息如下: 12dyld: could not load inserted library 'dumpdecrypted.dylib' because no suitable image found. Did find:dumpdecrypted.dylib: required code signature missing for 'dumpdecrypted.dylib' 解决方案, 重新签名 dumpdecrypted 后将其拷贝到 Documents 目录. 12345## 列出可签名证书, 找到 mac 上面已经安装的证书security find-identity -v -p codesigning## 为 dumpecrypted.dylib 签名codesign --force --verify --verbose --sign "iPhone Developer: xxx xxxx (xxxxxxxxxx)" dumpdecrypted.dylib 注意：iPhone Developer: xxx xxxx (xxxxxxxxxx) 为你自己本机安装的开发者证书名称. 看到的工具 class-dump-swift 针对 Swift 的工具。这个需要自己先编译 llvm，然后才能使用. dumpdecrypted, 比较自动化的一个版本，但我使用这个没有砸壳成功(估计是需要针对这个文件进行签名)。 Clutch 越狱系列文章 iOS 逆向: dumpdecrypted 砸壳记 iOS 逆向: 砸壳 iOS 逆向: 查看系统文件目录和结构 iOS 逆向: 越狱使用 SSH dumpdecrypted 砸壳：导出头文件]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+      <tags>
+        <tag>iOS安全 越狱</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[oh-my-zsh 配置]]></title>
     <url>%2F2019%2F04%2F03%2Foh-my-zsh-%E9%85%8D%E7%BD%AE%2F</url>
     <content type="text"><![CDATA[喜欢使用终端的朋友都知道在 linux、macOS 上面默认使用的是 bash shell，虽然 bash 比较强大，但是比起 zsh 还是稍逊一筹。zsh 虽然好用但配置比较复杂，于是乎 oh-my-zsh 就诞生了，它统一管理 zsh 的配置。 macOS 上面安装 oh-my-zsh 后，感觉敲命令更爽了，特别是在进行 git 操作的时候，很方便。 安装比较简单，可以在终端通过 curl 也可以通过 wget 方式，安装方法如下。 1、通过 curl 方式 1sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" 2、通过 wget 方式 1sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" oh-my-zsh 支持 linux、macOS 和 windows，但是在 linux 和 macOS 上面支持最好。 安装成功后，原来在系统 shell 配置的环境变量需要让 oh-my-zsh 知道，配置一下 ~/.zshrc 文件，在该文件中的 User configuration 下面增加下面两行配置就可以了。 12source ~/.bash_profilesource /etc/profile 配置完成后保存文件，在终端执行： 1source ~/.zshrc 这样之前配置的环境变量在 oh-my-zsh 下就生效了。 oh-my-zsh 支持三方插件和主题配置，默认的配置已经够用了，有兴趣的可以自行探索。 扫码关注，你我就各多一个朋友~]]></content>
