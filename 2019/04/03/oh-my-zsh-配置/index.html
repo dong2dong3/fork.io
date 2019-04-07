@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/04/03/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-04-06T06:54:54.310Z">
+<meta property="og:updated_time" content="2019-04-07T02:49:56.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oh-my-zsh 配置">
 <meta name="twitter:description" content="喜欢使用终端的朋友都知道在 linux、macOS 上面默认使用的是 bash shell，虽然 bash 比较强大，但是比起 zsh 还是稍逊一筹。zsh 虽然好用但配置比较复杂，于是乎 oh-my-zsh 就诞生了，它统一管理 zsh 的配置。 macOS 上面安装 oh-my-zsh 后，感觉敲命令更爽了，特别是在进行 git 操作的时候，很方便。 安装比较简单，可以在终端通过 curl">
@@ -416,10 +416,10 @@
 <p><strong>2、通过 wget 方式</strong></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh -c <span class="string">"<span class="variable">$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></div></pre></td></tr></table></figure>
 <p><code>oh-my-zsh</code> 支持 linux、macOS 和 windows，但是在 linux 和 macOS 上面支持最好。</p>
-<p>安装成功后，原来在系统 shell 配置的环境变量需要让 <code>oh-my-zsh</code> 知道，配置一下 <code>~/.zshrc</code> 文件，增加下面配置就可以了。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># User configuration</span></div><div class="line"><span class="built_in">source</span> ~/.bash_profile</div><div class="line"><span class="built_in">source</span> /etc/profile</div><div class="line">``` </div><div class="line"></div><div class="line">配置完成后保存文件，在终端执行：</div><div class="line"></div><div class="line">```sh</div><div class="line"><span class="built_in">source</span> ~/.zshrc</div></pre></td></tr></table></figure>
+<p>安装成功后，原来在系统 shell 配置的环境变量需要让 <code>oh-my-zsh</code> 知道，配置一下 <code>~/.zshrc</code> 文件，在该文件中的 <code>User configuration</code> 下面增加下面两行配置就可以了。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> ~/.bash_profile</div><div class="line"><span class="built_in">source</span> /etc/profile</div><div class="line">``` </div><div class="line"></div><div class="line">配置完成后保存文件，在终端执行：</div><div class="line"></div><div class="line">```sh</div><div class="line"><span class="built_in">source</span> ~/.zshrc</div></pre></td></tr></table></figure>
 <p>这样之前配置的环境变量在 <code>oh-my-zsh</code> 下就生效了。</p>
-<p><code>oh-my-zsh</code> 支持三方插件和主题配置，有兴趣的可以自行探索。</p>
+<p><code>oh-my-zsh</code> 支持三方插件和主题配置，默认的配置已经够用了，有兴趣的可以自行探索。</p>
 <p><strong>扫码关注，你我就各多一个朋友~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
