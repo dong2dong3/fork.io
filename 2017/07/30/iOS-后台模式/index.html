@@ -1,4 +1,955 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="后台模式,"><meta name="description" content="应用状态来自苹果开发者文档 The App Life Cycle 的图.  下面这张图说明了应用程序的状态, 如下所示:  具体的说一下这5中状态: 1.Not running  未运行, 程序没启动或者被系统被用户杀死  2.Inactive  未激活, 程序在前台运行，不过没有接收到事件.在没有事件处理情况下程序通常停留在这个状态.  3.Active  激活, 程序在前台运行而且接收到了事件"><meta name="keywords" content="后台模式"><meta property="og:type" content="article"><meta property="og:title" content="iOS 后台模式"><meta property="og:url" content="http://yoursite.com/2017/07/30/iOS-后台模式/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="应用状态来自苹果开发者文档 The App Life Cycle 的图.  下面这张图说明了应用程序的状态, 如下所示:  具体的说一下这5中状态: 1.Not running  未运行, 程序没启动或者被系统被用户杀死  2.Inactive  未激活, 程序在前台运行，不过没有接收到事件.在没有事件处理情况下程序通常停留在这个状态.  3.Active  激活, 程序在前台运行而且接收到了事件"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2017/07/30/Background1.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2017/07/30/Background2.jpg"><meta property="og:image" content="http://yoursite.com/upload/images/2017/07/30/Background3.jpg"><meta property="og:updated_time" content="2018-02-08T15:11:37.047Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="iOS 后台模式"><meta name="twitter:description" content="应用状态来自苹果开发者文档 The App Life Cycle 的图.  下面这张图说明了应用程序的状态, 如下所示:  具体的说一下这5中状态: 1.Not running  未运行, 程序没启动或者被系统被用户杀死  2.Inactive  未激活, 程序在前台运行，不过没有接收到事件.在没有事件处理情况下程序通常停留在这个状态.  3.Active  激活, 程序在前台运行而且接收到了事件"><meta name="twitter:image" content="http://yoursite.com/upload/images/2017/07/30/Background1.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2017/07/30/iOS-后台模式/"><title>iOS 后台模式 | veryitman</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/iOS-后台模式/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">iOS 后台模式</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T21:47:15+08:00">2017-07-30</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2017/07/30/iOS-后台模式/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2017/07/30/iOS-后台模式/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="应用状态"><a href="#应用状态" class="headerlink" title="应用状态"></a>应用状态</h2><p>来自苹果开发者文档 The App Life Cycle 的图.</p><p><img src="/upload/images/2017/07/30/Background1.jpg" alt="1"></p><p>下面这张图说明了应用程序的状态, 如下所示:</p><p><img src="/upload/images/2017/07/30/Background2.jpg" alt="1"></p><p>具体的说一下这5中状态:</p><p>1.Not running</p><blockquote><p>未运行, 程序没启动或者被系统被用户杀死</p></blockquote><p>2.Inactive</p><blockquote><p>未激活, 程序在前台运行，不过没有接收到事件.<br>在没有事件处理情况下程序通常停留在这个状态.</p></blockquote><p>3.Active</p><blockquote><p>激活, 程序在前台运行而且接收到了事件.<br>这也是前台的一个正常的模式</p></blockquote><p>4.Backgroud</p><blockquote><p>后台, 程序在后台而且能执行代码，大多数程序进入这个状态后会在在这个状态上停留一会.<br>时间到之后会进入挂起状态(Suspended). 有的程序经过特殊的请求后可以长期处于 Backgroud 状态.</p></blockquote><p>5.Suspended</p><blockquote><p>挂起, 程序在后台不能执行代码.<br>系统会自动把程序变成这个状态而且不会发出通知.<br>当挂起时, 程序还是停留在内存中的, 当系统内存低时, 系统就把挂起的程序清除掉, 为前台程序提供更多的内存.</p></blockquote><p>关于 Backgroud 状态, 是我们今天要说的重点部分.</p><h2 id="多任务介绍"><a href="#多任务介绍" class="headerlink" title="多任务介绍"></a>多任务介绍</h2><p>iOS 的多任务是在 iOS4 的时候被引入的，在此之前 iOS 的 APP 都是按下 Home 键就被干掉了.<br>iOS4 虽然引入了后台和多任务，但是实际上是伪多任务，一般的 APP 后台并不能执行自己的代码，只有少数几类服务在通过注册后可以真正在后台运行，并且在提交到 AppStore 的时候也会被严格审核是否有越权行为，这种限制主要是出于对于设备的续航和安全两方面进行的考虑.之后经过iOS5 和 iOS6 的逐渐发展，后台能运行的服务的种类虽然出现了增加，但是 iOS 后台的本质并没有变化.<br>在iOS7之前，系统所接受的应用多任务可以大致分为几种：</p><ul><li>后台完成某些花费时间的特定任务.</li><li>后台播放音乐等.</li><li>位置服务.</li><li>IP电话(VOIP).</li><li>Newsstand.</li></ul><p>iOS7 后台任务申请的最长时间 10分钟.<br>iOS8+ 后台任务申请最长时间 3分钟.</p><h2 id="示例-APP-退到后台会被挂起"><a href="#示例-APP-退到后台会被挂起" class="headerlink" title="示例: APP 退到后台会被挂起"></a>示例: APP 退到后台会被挂起</h2><p>今天跟大家分享的是一般应用如何在后台延长生命周期的知识, 关于其他特殊的 App 如上面提到的5中情况, 不是今天讨论的重点.</p><p>我们先看一个例子, 例子很简单.</p><blockquote><p>这里要说明一下概念, 直接锁屏和点击 Home 键, 都会导致应用处于后台模式, 这里为了说明问题, 统一点<br>击 Home 作为代名词.</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    </div><div class="line">    [super viewDidLoad];    </div><div class="line">    </div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self</div><div class="line">                                             selector:@selector(onDidEnterBackground:)</div><div class="line">                                                 name:UIApplicationDidEnterBackgroundNotification</div><div class="line">                                               object:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)onDidEnterBackground:(NSNotification *)notification &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;App Background. Enter onDidEnterBackground.&quot;);</div><div class="line">    </div><div class="line">    int delta = 1;</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delta * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;App Background. Enter onDidEnterBackground diapatch.&quot;);</div><div class="line">        </div><div class="line">        UILocalNotification *notification = [UILocalNotification new];</div><div class="line">        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];</div><div class="line">        notification.alertBody = @&quot;走, 去high吧!&quot;;</div><div class="line">        notification.soundName = UILocalNotificationDefaultSoundName;</div><div class="line">        // 可以自定义数据</div><div class="line">        notification.userInfo = @&#123;@&quot;user_info_key&quot;: @&quot;user_info_value_json_str&quot;&#125;;</div><div class="line">        </div><div class="line">        [[UIApplication sharedApplication] scheduleLocalNotification:notification];</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p><code>UIApplicationDidEnterBackgroundNotification</code> 可以监听到用户将 APP 退到后台.</p><p>当 APP 退到后台, 会调用 onDidEnterBackground 这个方法.</p><p>在 onDidEnterBackground 这个方法中, 我故意延时执行代码, 这里使用的是 dispatch_after.</p><p>编译运行这个工程, 运行成功后, 可以点击 Home 键将应用退到后台.</p><p>可以在 Xcode 的控制台看到 App Background. Enter onDidEnterBackground. 的打印信息, 但是迟迟不见 dispatch_after 里面的代码执行.</p><p>这里说明, APP 退到后台后被系统挂起了.</p><p>另外一个例子就是使用 NSTimer, 在 APP 退到后台后, 也会被终止.</p><p>完整例子, 一会在文章后台附录给出.</p><h2 id="通过后台模式延长-APP-运行"><a href="#通过后台模式延长-APP-运行" class="headerlink" title="通过后台模式延长 APP 运行"></a>通过后台模式延长 APP 运行</h2><p>上面的例子充分说明了, 在我们没有做任何处理的情况下, iOS 系统在 APP 退到后台的情况下, 会被系统挂起, 从而终止 APP 的代码行为.</p><p>下面通过实例, 来开启后台任务, 让 APP 尽可能的延长声明周期.</p><p>在工程的基础上, 新建一个文件 <code>MZBackgroundTask</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@interface MZBackgroundTask : NSObject</div><div class="line">+ (instancetype)sharedTask;</div><div class="line">- (void)startTask;</div><div class="line">@end</div></pre></td></tr></table></figure><p>具体实现, 只给出关键代码.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">- (void)startTask &#123;</div><div class="line">    </div><div class="line">    if (![self _checkSupportBackgroundTask]) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Current device don&apos;t support backgroundTask.&quot;);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    UIApplication *application = [UIApplication sharedApplication];</div><div class="line">    </div><div class="line">    __block UIBackgroundTaskIdentifier taskId;</div><div class="line">    </div><div class="line">    /// 申请后台执行</div><div class="line">    /// 注意: 在iOS7和该版本前，后台可以用下面的的方式在后台存活5-10分钟，在iOS8及后，最多存活3分钟</div><div class="line">    &#123;</div><div class="line">        taskId = [application beginBackgroundTaskWithName:NSStringFromClass([self class]) expirationHandler:^&#123;</div><div class="line">            </div><div class="line">            MZLOG(@&quot;BackgroundTask. BackgroundTask is Over. The remained time: %f&quot;, application.backgroundTimeRemaining);</div><div class="line">            </div><div class="line">            [application endBackgroundTask:taskId];</div><div class="line">            </div><div class="line">            taskId = UIBackgroundTaskInvalid;</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (UIBackgroundTaskInvalid == taskId) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Apply backgroundTask failed.&quot;);</div><div class="line">        </div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 可以监控后台任务剩余的时间, 针对业务可以去处理</div><div class="line">    &#123;</div><div class="line">        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">            </div><div class="line">            __block NSTimeInterval remainedTime;</div><div class="line">            </div><div class="line">            while (true) &#123;</div><div class="line">                </div><div class="line">                // 剩余可以后台执行的时间</div><div class="line">                dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">                    </div><div class="line">                    // application.backgroundTimeRemaining 必须在主线程获取</div><div class="line">                    remainedTime = application.backgroundTimeRemaining;</div><div class="line">                    </div><div class="line">                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">                       </div><div class="line">                        MZLOG(@&quot;BackgroundTask. The remained time: %f&quot;, remainedTime);</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 10) &#123;</div><div class="line">                            </div><div class="line">                            // 可以告诉其他业务, 后台申请的时间即将结束了</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 2) &#123;</div><div class="line">                            </div><div class="line">                            /// 这里可以做一些清除工作</div><div class="line">                            &#123;</div><div class="line">                                // clean up</div><div class="line">                            &#125;</div><div class="line">                            </div><div class="line">                            [application endBackgroundTask:taskId];</div><div class="line">                            </div><div class="line">                            taskId = UIBackgroundTaskInvalid;</div><div class="line">                            </div><div class="line">                            return;</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        // 睡眠(延时)1s</div><div class="line">                        [NSThread sleepForTimeInterval:1.f];</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>startTask 开启后台任务.</p><p>在 AppDelegate 中, 调用这个方法.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)applicationDidEnterBackground:(UIApplication *)application &#123;</div><div class="line">    </div><div class="line">    [[MZBackgroundTask sharedTask] startTask];</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>再次运行工程, 可以根据日志看出, 之前的 dispatch_after 和 timer 可以运行了, 并且可以运行3分钟(180s).</p><p>根据 backgroundTimeRemaining 这个属性, 可以看出具体的后台可执行的剩余时间.</p><p><img src="/upload/images/2017/07/30/Background3.jpg" alt="1"></p><p>注意: 我测试的时候使用的是 iOS10 设备.</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>除了苹果规定的几种类型(如定位, 录音, VOIP 等)的应用外, 其他 APP 想申请更多的后台驻留时间, 就需要一些 <code>旁门左道</code> 的方法了.</p><p>苹果对后台操作做了这么多限制, 也是从用户的角度出发, 如安全, 省电, 省流量等.</p><p>比如, 在后台播放没有声音的音乐.</p><p>再比如, 申请定位服务的权限, 这样也可以保持 APP 在后台不被挂起.<br>但是, 依照苹果一贯的审核做法来看，如果声明了需要某项后台权限，你却没有相关实现的话，会直接被拒掉的.</p><p>这些是技术上的实现, 我没有推荐大家这么干, 现在苹果审核比以前还要严格, 大家还是悠着点干吧.如果你的 APP 不需要上架到 AppStore 的话, 就尽情的放纵吧…</p><h2 id="推荐博文"><a href="#推荐博文" class="headerlink" title="推荐博文"></a>推荐博文</h2><p>1.<a href="http://www.jianshu.com/p/50ff7a3a0fcd" target="_blank" rel="noopener">iOS实现无限后台background的方法</a></p><p>2.<a href="https://onevcat.com/2013/08/ios7-background-multitask/" target="_blank" rel="noopener">WWDC 2013 Session笔记 - iOS7中的多任务</a></p><p>iOS 在后台的时候如果不使用后台模式, socket 也会被系统关闭连接, 比如我们使用的 IM 功能.<br>使用后台模式后, 向系统申请的时间(3分钟内), socket 还是没有被关闭的, 除非断网或者被路由器给断开了, 在申请的这段时间内, socekt 还是可以使用的, 如果想持续的保持 socket 连接, 就需要去了解一下 VOIP Socket 相关的知识了, 实践过后, 分享给大家.</p><h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>下面是具体的实现代码.</p><blockquote><p>ViewController.m</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@property (nonatomic, strong) NSTimer *timer;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    </div><div class="line">    [super viewDidLoad];</div><div class="line">    </div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self</div><div class="line">                                             selector:@selector(onDidEnterBackground:)</div><div class="line">                                                 name:UIApplicationDidEnterBackgroundNotification</div><div class="line">                                               object:nil];</div><div class="line">    </div><div class="line">    // 每隔一秒执行一次</div><div class="line">    _timer = [NSTimer scheduledTimerWithTimeInterval:1</div><div class="line">                                              target:self</div><div class="line">                                            selector:@selector(onTimerDidRun:)</div><div class="line">                                            userInfo:nil repeats:YES];</div><div class="line">    </div><div class="line">    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - Callback.</div><div class="line"></div><div class="line">- (void)onTimerDidRun:(id)sender &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;App Background. Timer Running.&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)onDidEnterBackground:(NSNotification *)notification &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;App Background. Enter onDidEnterBackground.&quot;);</div><div class="line">    </div><div class="line">    int delta = 1;</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delta * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;App Background. Enter onDidEnterBackground diapatch.&quot;);</div><div class="line">        </div><div class="line">        UILocalNotification *notification = [UILocalNotification new];</div><div class="line">        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];</div><div class="line">        notification.alertBody = @&quot;走, 去high吧!&quot;;</div><div class="line">        notification.soundName = UILocalNotificationDefaultSoundName;</div><div class="line">        // 可以自定义数据</div><div class="line">        notification.userInfo = @&#123;@&quot;user_info_key&quot;: @&quot;user_info_value_json_str&quot;&#125;;</div><div class="line">        </div><div class="line">        [[UIApplication sharedApplication] scheduleLocalNotification:notification];</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - SetupViews.</div><div class="line"></div><div class="line">- (void)_setupViews &#123;</div><div class="line">    </div><div class="line">    self.view.backgroundColor = [UIColor purpleColor];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>MZBackgroundTask.m</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line">#import &quot;MZBackgroundTask.h&quot;</div><div class="line"></div><div class="line">@implementation MZBackgroundTask</div><div class="line"></div><div class="line">+ (instancetype)sharedTask &#123;</div><div class="line">    </div><div class="line">    static MZBackgroundTask *_task;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        _task = [[self alloc] init];</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    return _task;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)startTask &#123;</div><div class="line">    </div><div class="line">    if (![self _checkSupportBackgroundTask]) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Current device don&apos;t support backgroundTask.&quot;);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    UIApplication *application = [UIApplication sharedApplication];</div><div class="line">    </div><div class="line">    __block UIBackgroundTaskIdentifier taskId;</div><div class="line">    </div><div class="line">    /// 申请后台执行</div><div class="line">    /// 注意: 在iOS7和该版本前，后台可以用下面的的方式在后台存活5-10分钟，在iOS8及后，最多存活3分钟</div><div class="line">    &#123;</div><div class="line">        taskId = [application beginBackgroundTaskWithName:NSStringFromClass([self class]) expirationHandler:^&#123;</div><div class="line">            </div><div class="line">            MZLOG(@&quot;BackgroundTask. BackgroundTask is Over. The remained time: %f&quot;, application.backgroundTimeRemaining);</div><div class="line">            </div><div class="line">            [application endBackgroundTask:taskId];</div><div class="line">            </div><div class="line">            taskId = UIBackgroundTaskInvalid;</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (UIBackgroundTaskInvalid == taskId) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Apply backgroundTask failed.&quot;);</div><div class="line">        </div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 可以监控后台任务剩余的时间, 针对业务可以去处理</div><div class="line">    &#123;</div><div class="line">        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">            </div><div class="line">            __block NSTimeInterval remainedTime;</div><div class="line">            </div><div class="line">            while (true) &#123;</div><div class="line">                </div><div class="line">                // 剩余可以后台执行的时间</div><div class="line">                dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">                    </div><div class="line">                    // application.backgroundTimeRemaining 必须在主线程获取</div><div class="line">                    remainedTime = application.backgroundTimeRemaining;</div><div class="line">                    </div><div class="line">                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">                       </div><div class="line">                        MZLOG(@&quot;BackgroundTask. The remained time: %f&quot;, remainedTime);</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 10) &#123;</div><div class="line">                            </div><div class="line">                            // 可以告诉其他业务, 后台申请的时间即将结束了</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 2) &#123;</div><div class="line">                            </div><div class="line">                            /// 这里可以做一些清除工作</div><div class="line">                            &#123;</div><div class="line">                                // clean up</div><div class="line">                            &#125;</div><div class="line">                            </div><div class="line">                            [application endBackgroundTask:taskId];</div><div class="line">                            </div><div class="line">                            taskId = UIBackgroundTaskInvalid;</div><div class="line">                            </div><div class="line">                            return;</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        // 睡眠(延时)1s</div><div class="line">                        [NSThread sleepForTimeInterval:1.f];</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - Private.</div><div class="line"></div><div class="line">/**</div><div class="line"> *  当前设备是否支持后台任务.</div><div class="line"> *</div><div class="line"> *  @return YES, 支持后台任务. 否则, 不支持后台任务.</div><div class="line"> */</div><div class="line">- (BOOL)_checkSupportBackgroundTask &#123;</div><div class="line">    </div><div class="line">    SEL sel = @selector(isMultitaskingSupported);</div><div class="line">    BOOL supportBTask = [[UIDevice currentDevice] respondsToSelector:sel];</div><div class="line">    </div><div class="line">    return supportBTask;</div><div class="line">&#125;</div></pre></td></tr></table></figure></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/后台模式/" rel="tag"><i class="fa fa-tag"></i> 后台模式</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2017/07/23/使用-Charles/" rel="next" title="使用 Charles"><i class="fa fa-chevron-left"></i> 使用 Charles</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2017/08/06/iOS-APNs-远程推送/" rel="prev" title="iOS APNs: 远程推送">iOS APNs: 远程推送<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">114</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">86</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用状态"><span class="nav-number">1.</span> <span class="nav-text">应用状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务介绍"><span class="nav-number">2.</span> <span class="nav-text">多任务介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例-APP-退到后台会被挂起"><span class="nav-number">3.</span> <span class="nav-text">示例: APP 退到后台会被挂起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过后台模式延长-APP-运行"><span class="nav-number">4.</span> <span class="nav-text">通过后台模式延长 APP 运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐博文"><span class="nav-number">6.</span> <span class="nav-text">推荐博文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">7.</span> <span class="nav-text">附录</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="后台模式," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="应用状态来自苹果开发者文档 The App Life Cycle 的图.  下面这张图说明了应用程序的状态, 如下所示:  具体的说一下这5中状态: 1.Not running  未运行, 程序没启动或者被系统被用户杀死  2.Inactive  未激活, 程序在前台运行，不过没有接收到事件.在没有事件处理情况下程序通常停留在这个状态.  3.Active  激活, 程序在前台运行而且接收到了事件">
+<meta name="keywords" content="后台模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 后台模式">
+<meta property="og:url" content="http://yoursite.com/2017/07/30/iOS-后台模式/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="应用状态来自苹果开发者文档 The App Life Cycle 的图.  下面这张图说明了应用程序的状态, 如下所示:  具体的说一下这5中状态: 1.Not running  未运行, 程序没启动或者被系统被用户杀死  2.Inactive  未激活, 程序在前台运行，不过没有接收到事件.在没有事件处理情况下程序通常停留在这个状态.  3.Active  激活, 程序在前台运行而且接收到了事件">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2017/07/30/Background1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2017/07/30/Background2.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2017/07/30/Background3.jpg">
+<meta property="og:updated_time" content="2018-02-08T15:11:37.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 后台模式">
+<meta name="twitter:description" content="应用状态来自苹果开发者文档 The App Life Cycle 的图.  下面这张图说明了应用程序的状态, 如下所示:  具体的说一下这5中状态: 1.Not running  未运行, 程序没启动或者被系统被用户杀死  2.Inactive  未激活, 程序在前台运行，不过没有接收到事件.在没有事件处理情况下程序通常停留在这个状态.  3.Active  激活, 程序在前台运行而且接收到了事件">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2017/07/30/Background1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/30/iOS-后台模式/"/>
+
+
+
+
+
+  <title>iOS 后台模式 | veryitman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/iOS-后台模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 后台模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T21:47:15+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/30/iOS-后台模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/07/30/iOS-后台模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="应用状态"><a href="#应用状态" class="headerlink" title="应用状态"></a>应用状态</h2><p>来自苹果开发者文档 The App Life Cycle 的图.</p>
+<p><img src="/upload/images/2017/07/30/Background1.jpg" alt="1"></p>
+<p>下面这张图说明了应用程序的状态, 如下所示:</p>
+<p><img src="/upload/images/2017/07/30/Background2.jpg" alt="1"></p>
+<p>具体的说一下这5中状态:</p>
+<p>1.Not running</p>
+<blockquote>
+<p>未运行, 程序没启动或者被系统被用户杀死</p>
+</blockquote>
+<p>2.Inactive</p>
+<blockquote>
+<p>未激活, 程序在前台运行，不过没有接收到事件.<br>在没有事件处理情况下程序通常停留在这个状态.</p>
+</blockquote>
+<p>3.Active</p>
+<blockquote>
+<p>激活, 程序在前台运行而且接收到了事件.<br>这也是前台的一个正常的模式</p>
+</blockquote>
+<p>4.Backgroud</p>
+<blockquote>
+<p>后台, 程序在后台而且能执行代码，大多数程序进入这个状态后会在在这个状态上停留一会.<br>时间到之后会进入挂起状态(Suspended). 有的程序经过特殊的请求后可以长期处于 Backgroud 状态.</p>
+</blockquote>
+<p>5.Suspended</p>
+<blockquote>
+<p>挂起, 程序在后台不能执行代码.<br>系统会自动把程序变成这个状态而且不会发出通知.<br>当挂起时, 程序还是停留在内存中的, 当系统内存低时, 系统就把挂起的程序清除掉, 为前台程序提供更多的内存.</p>
+</blockquote>
+<p>关于 Backgroud 状态, 是我们今天要说的重点部分.</p>
+<h2 id="多任务介绍"><a href="#多任务介绍" class="headerlink" title="多任务介绍"></a>多任务介绍</h2><p>iOS 的多任务是在 iOS4 的时候被引入的，在此之前 iOS 的 APP 都是按下 Home 键就被干掉了.<br>iOS4 虽然引入了后台和多任务，但是实际上是伪多任务，一般的 APP 后台并不能执行自己的代码，只有少数几类服务在通过注册后可以真正在后台运行，并且在提交到 AppStore 的时候也会被严格审核是否有越权行为，这种限制主要是出于对于设备的续航和安全两方面进行的考虑.之后经过iOS5 和 iOS6 的逐渐发展，后台能运行的服务的种类虽然出现了增加，但是 iOS 后台的本质并没有变化.<br>在iOS7之前，系统所接受的应用多任务可以大致分为几种：</p>
+<ul>
+<li>后台完成某些花费时间的特定任务.</li>
+<li>后台播放音乐等.</li>
+<li>位置服务.</li>
+<li>IP电话(VOIP).</li>
+<li>Newsstand.</li>
+</ul>
+<p>iOS7 后台任务申请的最长时间 10分钟.<br>iOS8+ 后台任务申请最长时间 3分钟.</p>
+<h2 id="示例-APP-退到后台会被挂起"><a href="#示例-APP-退到后台会被挂起" class="headerlink" title="示例: APP 退到后台会被挂起"></a>示例: APP 退到后台会被挂起</h2><p>今天跟大家分享的是一般应用如何在后台延长生命周期的知识, 关于其他特殊的 App 如上面提到的5中情况, 不是今天讨论的重点.</p>
+<p>我们先看一个例子, 例子很简单.</p>
+<blockquote>
+<p>这里要说明一下概念, 直接锁屏和点击 Home 键, 都会导致应用处于后台模式, 这里为了说明问题, 统一点<br>击 Home 作为代名词.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    </div><div class="line">    [super viewDidLoad];    </div><div class="line">    </div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self</div><div class="line">                                             selector:@selector(onDidEnterBackground:)</div><div class="line">                                                 name:UIApplicationDidEnterBackgroundNotification</div><div class="line">                                               object:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)onDidEnterBackground:(NSNotification *)notification &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;App Background. Enter onDidEnterBackground.&quot;);</div><div class="line">    </div><div class="line">    int delta = 1;</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delta * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;App Background. Enter onDidEnterBackground diapatch.&quot;);</div><div class="line">        </div><div class="line">        UILocalNotification *notification = [UILocalNotification new];</div><div class="line">        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];</div><div class="line">        notification.alertBody = @&quot;走, 去high吧!&quot;;</div><div class="line">        notification.soundName = UILocalNotificationDefaultSoundName;</div><div class="line">        // 可以自定义数据</div><div class="line">        notification.userInfo = @&#123;@&quot;user_info_key&quot;: @&quot;user_info_value_json_str&quot;&#125;;</div><div class="line">        </div><div class="line">        [[UIApplication sharedApplication] scheduleLocalNotification:notification];</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>UIApplicationDidEnterBackgroundNotification</code> 可以监听到用户将 APP 退到后台.</p>
+<p>当 APP 退到后台, 会调用 onDidEnterBackground 这个方法.</p>
+<p>在 onDidEnterBackground 这个方法中, 我故意延时执行代码, 这里使用的是 dispatch_after.</p>
+<p>编译运行这个工程, 运行成功后, 可以点击 Home 键将应用退到后台.</p>
+<p>可以在 Xcode 的控制台看到 App Background. Enter onDidEnterBackground. 的打印信息, 但是迟迟不见 dispatch_after 里面的代码执行.</p>
+<p>这里说明, APP 退到后台后被系统挂起了.</p>
+<p>另外一个例子就是使用 NSTimer, 在 APP 退到后台后, 也会被终止.</p>
+<p>完整例子, 一会在文章后台附录给出.</p>
+<h2 id="通过后台模式延长-APP-运行"><a href="#通过后台模式延长-APP-运行" class="headerlink" title="通过后台模式延长 APP 运行"></a>通过后台模式延长 APP 运行</h2><p>上面的例子充分说明了, 在我们没有做任何处理的情况下, iOS 系统在 APP 退到后台的情况下, 会被系统挂起, 从而终止 APP 的代码行为.</p>
+<p>下面通过实例, 来开启后台任务, 让 APP 尽可能的延长声明周期.</p>
+<p>在工程的基础上, 新建一个文件 <code>MZBackgroundTask</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@interface MZBackgroundTask : NSObject</div><div class="line">+ (instancetype)sharedTask;</div><div class="line">- (void)startTask;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>具体实现, 只给出关键代码.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">- (void)startTask &#123;</div><div class="line">    </div><div class="line">    if (![self _checkSupportBackgroundTask]) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Current device don&apos;t support backgroundTask.&quot;);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    UIApplication *application = [UIApplication sharedApplication];</div><div class="line">    </div><div class="line">    __block UIBackgroundTaskIdentifier taskId;</div><div class="line">    </div><div class="line">    /// 申请后台执行</div><div class="line">    /// 注意: 在iOS7和该版本前，后台可以用下面的的方式在后台存活5-10分钟，在iOS8及后，最多存活3分钟</div><div class="line">    &#123;</div><div class="line">        taskId = [application beginBackgroundTaskWithName:NSStringFromClass([self class]) expirationHandler:^&#123;</div><div class="line">            </div><div class="line">            MZLOG(@&quot;BackgroundTask. BackgroundTask is Over. The remained time: %f&quot;, application.backgroundTimeRemaining);</div><div class="line">            </div><div class="line">            [application endBackgroundTask:taskId];</div><div class="line">            </div><div class="line">            taskId = UIBackgroundTaskInvalid;</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (UIBackgroundTaskInvalid == taskId) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Apply backgroundTask failed.&quot;);</div><div class="line">        </div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 可以监控后台任务剩余的时间, 针对业务可以去处理</div><div class="line">    &#123;</div><div class="line">        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">            </div><div class="line">            __block NSTimeInterval remainedTime;</div><div class="line">            </div><div class="line">            while (true) &#123;</div><div class="line">                </div><div class="line">                // 剩余可以后台执行的时间</div><div class="line">                dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">                    </div><div class="line">                    // application.backgroundTimeRemaining 必须在主线程获取</div><div class="line">                    remainedTime = application.backgroundTimeRemaining;</div><div class="line">                    </div><div class="line">                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">                       </div><div class="line">                        MZLOG(@&quot;BackgroundTask. The remained time: %f&quot;, remainedTime);</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 10) &#123;</div><div class="line">                            </div><div class="line">                            // 可以告诉其他业务, 后台申请的时间即将结束了</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 2) &#123;</div><div class="line">                            </div><div class="line">                            /// 这里可以做一些清除工作</div><div class="line">                            &#123;</div><div class="line">                                // clean up</div><div class="line">                            &#125;</div><div class="line">                            </div><div class="line">                            [application endBackgroundTask:taskId];</div><div class="line">                            </div><div class="line">                            taskId = UIBackgroundTaskInvalid;</div><div class="line">                            </div><div class="line">                            return;</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        // 睡眠(延时)1s</div><div class="line">                        [NSThread sleepForTimeInterval:1.f];</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>startTask 开启后台任务.</p>
+<p>在 AppDelegate 中, 调用这个方法.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)applicationDidEnterBackground:(UIApplication *)application &#123;</div><div class="line">    </div><div class="line">    [[MZBackgroundTask sharedTask] startTask];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再次运行工程, 可以根据日志看出, 之前的 dispatch_after 和 timer 可以运行了, 并且可以运行3分钟(180s).</p>
+<p>根据 backgroundTimeRemaining 这个属性, 可以看出具体的后台可执行的剩余时间.</p>
+<p><img src="/upload/images/2017/07/30/Background3.jpg" alt="1"></p>
+<p>注意: 我测试的时候使用的是 iOS10 设备.</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>除了苹果规定的几种类型(如定位, 录音, VOIP 等)的应用外, 其他 APP 想申请更多的后台驻留时间, 就需要一些 <code>旁门左道</code> 的方法了.</p>
+<p>苹果对后台操作做了这么多限制, 也是从用户的角度出发, 如安全, 省电, 省流量等.</p>
+<p>比如, 在后台播放没有声音的音乐.</p>
+<p>再比如, 申请定位服务的权限, 这样也可以保持 APP 在后台不被挂起.<br>但是, 依照苹果一贯的审核做法来看，如果声明了需要某项后台权限，你却没有相关实现的话，会直接被拒掉的.</p>
+<p>这些是技术上的实现, 我没有推荐大家这么干, 现在苹果审核比以前还要严格, 大家还是悠着点干吧.如果你的 APP 不需要上架到 AppStore 的话, 就尽情的放纵吧…</p>
+<h2 id="推荐博文"><a href="#推荐博文" class="headerlink" title="推荐博文"></a>推荐博文</h2><p>1.<a href="http://www.jianshu.com/p/50ff7a3a0fcd" target="_blank" rel="noopener">iOS实现无限后台background的方法</a></p>
+<p>2.<a href="https://onevcat.com/2013/08/ios7-background-multitask/" target="_blank" rel="noopener">WWDC 2013 Session笔记 - iOS7中的多任务</a></p>
+<p>iOS 在后台的时候如果不使用后台模式, socket 也会被系统关闭连接, 比如我们使用的 IM 功能.<br>使用后台模式后, 向系统申请的时间(3分钟内), socket 还是没有被关闭的, 除非断网或者被路由器给断开了, 在申请的这段时间内, socekt 还是可以使用的, 如果想持续的保持 socket 连接, 就需要去了解一下 VOIP Socket 相关的知识了, 实践过后, 分享给大家.</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>下面是具体的实现代码.</p>
+<blockquote>
+<p>ViewController.m</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@property (nonatomic, strong) NSTimer *timer;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    </div><div class="line">    [super viewDidLoad];</div><div class="line">    </div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self</div><div class="line">                                             selector:@selector(onDidEnterBackground:)</div><div class="line">                                                 name:UIApplicationDidEnterBackgroundNotification</div><div class="line">                                               object:nil];</div><div class="line">    </div><div class="line">    // 每隔一秒执行一次</div><div class="line">    _timer = [NSTimer scheduledTimerWithTimeInterval:1</div><div class="line">                                              target:self</div><div class="line">                                            selector:@selector(onTimerDidRun:)</div><div class="line">                                            userInfo:nil repeats:YES];</div><div class="line">    </div><div class="line">    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - Callback.</div><div class="line"></div><div class="line">- (void)onTimerDidRun:(id)sender &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;App Background. Timer Running.&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)onDidEnterBackground:(NSNotification *)notification &#123;</div><div class="line">    </div><div class="line">    MZLOG(@&quot;App Background. Enter onDidEnterBackground.&quot;);</div><div class="line">    </div><div class="line">    int delta = 1;</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delta * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;App Background. Enter onDidEnterBackground diapatch.&quot;);</div><div class="line">        </div><div class="line">        UILocalNotification *notification = [UILocalNotification new];</div><div class="line">        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];</div><div class="line">        notification.alertBody = @&quot;走, 去high吧!&quot;;</div><div class="line">        notification.soundName = UILocalNotificationDefaultSoundName;</div><div class="line">        // 可以自定义数据</div><div class="line">        notification.userInfo = @&#123;@&quot;user_info_key&quot;: @&quot;user_info_value_json_str&quot;&#125;;</div><div class="line">        </div><div class="line">        [[UIApplication sharedApplication] scheduleLocalNotification:notification];</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - SetupViews.</div><div class="line"></div><div class="line">- (void)_setupViews &#123;</div><div class="line">    </div><div class="line">    self.view.backgroundColor = [UIColor purpleColor];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>MZBackgroundTask.m</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line">#import &quot;MZBackgroundTask.h&quot;</div><div class="line"></div><div class="line">@implementation MZBackgroundTask</div><div class="line"></div><div class="line">+ (instancetype)sharedTask &#123;</div><div class="line">    </div><div class="line">    static MZBackgroundTask *_task;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        _task = [[self alloc] init];</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    return _task;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)startTask &#123;</div><div class="line">    </div><div class="line">    if (![self _checkSupportBackgroundTask]) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Current device don&apos;t support backgroundTask.&quot;);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    UIApplication *application = [UIApplication sharedApplication];</div><div class="line">    </div><div class="line">    __block UIBackgroundTaskIdentifier taskId;</div><div class="line">    </div><div class="line">    /// 申请后台执行</div><div class="line">    /// 注意: 在iOS7和该版本前，后台可以用下面的的方式在后台存活5-10分钟，在iOS8及后，最多存活3分钟</div><div class="line">    &#123;</div><div class="line">        taskId = [application beginBackgroundTaskWithName:NSStringFromClass([self class]) expirationHandler:^&#123;</div><div class="line">            </div><div class="line">            MZLOG(@&quot;BackgroundTask. BackgroundTask is Over. The remained time: %f&quot;, application.backgroundTimeRemaining);</div><div class="line">            </div><div class="line">            [application endBackgroundTask:taskId];</div><div class="line">            </div><div class="line">            taskId = UIBackgroundTaskInvalid;</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (UIBackgroundTaskInvalid == taskId) &#123;</div><div class="line">        </div><div class="line">        MZLOG(@&quot;BackgroundTask. Apply backgroundTask failed.&quot;);</div><div class="line">        </div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 可以监控后台任务剩余的时间, 针对业务可以去处理</div><div class="line">    &#123;</div><div class="line">        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">            </div><div class="line">            __block NSTimeInterval remainedTime;</div><div class="line">            </div><div class="line">            while (true) &#123;</div><div class="line">                </div><div class="line">                // 剩余可以后台执行的时间</div><div class="line">                dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">                    </div><div class="line">                    // application.backgroundTimeRemaining 必须在主线程获取</div><div class="line">                    remainedTime = application.backgroundTimeRemaining;</div><div class="line">                    </div><div class="line">                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">                       </div><div class="line">                        MZLOG(@&quot;BackgroundTask. The remained time: %f&quot;, remainedTime);</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 10) &#123;</div><div class="line">                            </div><div class="line">                            // 可以告诉其他业务, 后台申请的时间即将结束了</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        if (remainedTime &lt; 2) &#123;</div><div class="line">                            </div><div class="line">                            /// 这里可以做一些清除工作</div><div class="line">                            &#123;</div><div class="line">                                // clean up</div><div class="line">                            &#125;</div><div class="line">                            </div><div class="line">                            [application endBackgroundTask:taskId];</div><div class="line">                            </div><div class="line">                            taskId = UIBackgroundTaskInvalid;</div><div class="line">                            </div><div class="line">                            return;</div><div class="line">                        &#125;</div><div class="line">                        </div><div class="line">                        // 睡眠(延时)1s</div><div class="line">                        [NSThread sleepForTimeInterval:1.f];</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - Private.</div><div class="line"></div><div class="line">/**</div><div class="line"> *  当前设备是否支持后台任务.</div><div class="line"> *</div><div class="line"> *  @return YES, 支持后台任务. 否则, 不支持后台任务.</div><div class="line"> */</div><div class="line">- (BOOL)_checkSupportBackgroundTask &#123;</div><div class="line">    </div><div class="line">    SEL sel = @selector(isMultitaskingSupported);</div><div class="line">    BOOL supportBTask = [[UIDevice currentDevice] respondsToSelector:sel];</div><div class="line">    </div><div class="line">    return supportBTask;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后台模式/" rel="tag"><i class="fa fa-tag"></i> 后台模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/使用-Charles/" rel="next" title="使用 Charles">
+                <i class="fa fa-chevron-left"></i> 使用 Charles
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/06/iOS-APNs-远程推送/" rel="prev" title="iOS APNs: 远程推送">
+                iOS APNs: 远程推送 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">114</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用状态"><span class="nav-number">1.</span> <span class="nav-text">应用状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务介绍"><span class="nav-number">2.</span> <span class="nav-text">多任务介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例-APP-退到后台会被挂起"><span class="nav-number">3.</span> <span class="nav-text">示例: APP 退到后台会被挂起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过后台模式延长-APP-运行"><span class="nav-number">4.</span> <span class="nav-text">通过后台模式延长 APP 运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐博文"><span class="nav-number">6.</span> <span class="nav-text">推荐博文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">7.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1264,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
