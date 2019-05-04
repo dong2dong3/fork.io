@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/03/07/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-04-24T01:59:14.348Z">
+<meta property="og:updated_time" content="2019-05-04T09:12:29.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不见得你会计算C字符串长度">
 <meta name="twitter:description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 默认会在末尾增加&apos;\0&apos;char greeting[] = &quot;Hello&quot;;// 默认会在末尾增加&apos;\0&apos;c">
@@ -419,7 +419,7 @@
 <h2 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h2><p>在说如何计算字符串长度之前，我们先来看一个例子。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> *greeting1 = <span class="string">"hello"</span>;</div><div class="line"><span class="keyword">char</span> greeting2[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting3[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting4[] = <span class="string">"hello"</span>;</div><div class="line">    </div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting1 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting1), <span class="built_in">strlen</span>(greeting1));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting2 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting2), <span class="built_in">strlen</span>(greeting2));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting3 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting3), <span class="built_in">strlen</span>(greeting3));</div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting4 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting4), <span class="built_in">strlen</span>(greeting4));</div></pre></td></tr></table></figure>
 <p>如果你能说出上面 <code>printf</code> 的结果，基本上关于计算字符串长度的问题就迎刃而解了。</p>
-<p>上面例子的输出结果如下所示：</p>
+<p>按照 UTF-8 编码，上面例子的输出结果如下所示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">greeting1 sizeOf: 8, strlen: 5</div><div class="line">greeting2 sizeOf: 5, strlen: 7</div><div class="line">greeting3 sizeOf: 6, strlen: 5</div><div class="line">greeting4 sizeOf: 6, strlen: 5</div></pre></td></tr></table></figure>
 <p>如果输出结果令你无法相信，可以选择继续往下看或者你自己写代码试试。</p>
 <h2 id="sizeof、strlen"><a href="#sizeof、strlen" class="headerlink" title="sizeof、strlen"></a>sizeof、strlen</h2><p>在 <a href="https://linux.die.net/man/3/strlen" target="_blank" rel="noopener">linux.die</a> 可以查到 strlen 的说明，如下：</p>
@@ -427,7 +427,7 @@
 <p>函数 <code>strlen</code> 返回字符串里的字符数，不包括终止字符 <code>&#39;\0&#39;</code>，这里注意 <code>strlen</code> 是一个 C 的函数，而 <code>sizeof</code> 只是一个操作符。</p>
 <p>我们知道，<code>sizeof</code> 操作符的参数可以是数组、指针、类型、对象、函数等，函数 <code>strlen</code> 的参数只能是字符串。</p>
 <p>对于 <code>sizeof</code>， 其参数不同时，其返回的值也不一样，如下：</p>
-<p>1、数组：编译时分配的数组空间大小；<br>2、指针：存储该指针所用的空间大小(32位机器上是4，64位机器上是8)；<br>3、类型：该类型所占的空间大小；<br>4、对象：对象的实际占用空间大小(这个指的是在 C++ 中)；<br>5、函数：函数的返回类型所占的空间大小。函数的返回类型不能是void 类型；</p>
+<p>1、数组：编译时分配的数组空间大小；<br>2、指针：存储该指针所用的空间大小(32位机器上是4，64位机器上是8)；<br>3、类型：该类型所占的空间大小；<br>4、对象：对象的实际占用空间大小(这个指的是在 C++ 中)；<br>5、函数：函数的返回类型所占的空间大小。函数的返回类型不能是 void 类型；</p>
 <p>那我们再回头看看上面的例子，我把要说明的写在注释上面了。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 注意这里是指针</span></div><div class="line"><span class="keyword">char</span> *greeting1 = <span class="string">"hello"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 没有结束符 '\0'，其 strlen 结果不确定</span></div><div class="line"><span class="keyword">char</span> greeting2[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</div><div class="line"></div><div class="line"><span class="keyword">char</span> greeting3[] = &#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'\0'</span>&#125;;</div><div class="line"><span class="keyword">char</span> greeting4[] = <span class="string">"hello"</span>;</div><div class="line">    </div><div class="line"><span class="comment">/* 结果是 8、5 */</span></div><div class="line"><span class="comment">/* greeting1是指针，sizeOf计算的是其存储该指针所用的空间大小，因为我使用的是64位 macOS，所以输出是8 */</span></div><div class="line"><span class="comment">/*strlen 计算的是字符个数但是不包括结束符 '\0'*/</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting1 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting1), <span class="built_in">strlen</span>(greeting1));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 5、7 */</span></div><div class="line"><span class="comment">/* sizeof 计算的是编译时分配的数组空间大小，这里是5 */</span></div><div class="line"><span class="comment">/* greeting2没有结束符，strlen 的计算结果不确定 */</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting2 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting2), <span class="built_in">strlen</span>(greeting2));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 6、5 */</span></div><div class="line"><span class="comment">/* sizeof 计算的是编译时分配的数组空间大小，这里是6，因为多了结束符 */</span></div><div class="line"><span class="comment">/*strlen 计算的是字符个数但是不包括结束符 '\0'*/</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting3 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting3), <span class="built_in">strlen</span>(greeting3));</div><div class="line"></div><div class="line"><span class="comment">/* 结果是 6、5，这里类似上面的情况，不再赘述 */</span></div><div class="line"><span class="built_in">printf</span>(<span class="string">"greeting4 sizeOf: %ld, strlen: %ld\n"</span>, <span class="keyword">sizeof</span>(greeting4), <span class="built_in">strlen</span>(greeting4));</div></pre></td></tr></table></figure>
 <p><strong>小结</strong>：</p>
@@ -437,6 +437,7 @@
 <p>4、<code>sizeof</code> 计算数据类型占内存的大小，<code>strlen</code> 计算字符串实际长度，要记住 <code>strlen</code> 计算出来的结果不包括结束符 <code>&#39;\0&#39;</code>。</p>
 <p>5、<code>sizeof</code> 反应的并非真实字符串长度而是所占空间大小，所以<code>memset</code> 初始化字符串的时候用 <code>sizeof</code> 较好。</p>
 <p>6、系统函数返回值是 <code>char *</code> (字符指针)类型的会在末尾加上结束符 <code>&#39;\0&#39;</code>。</p>
+<p>7、无论是 <code>sizeof</code> 还是 <code>strlen</code> 计算结果的单位都是字节。</p>
 <p>我们还需要注意一点，<code>strlen</code> 函数，当数组名作为参数传入时，实际上数组就退化成指针了。举个例子，如下图所示：</p>
 <p><img src="/upload/images/2019/03/07/1.jpg" alt=""></p>
 <p>可以看出传入进来的参数会被退化为指针。</p>
@@ -598,7 +599,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">116</span>
+                  <span class="site-state-item-count">117</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -620,7 +621,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-count">89</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
