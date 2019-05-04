@@ -104,7 +104,7 @@
 <meta property="og:description" content="简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 calloc、realloc、reallocf、valloc 等堆内存管理函数。 void *在进行下面话题之前，我们先回忆一下 void * 是什么？ void * 表示未">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-04T14:27:17.598Z">
+<meta property="og:updated_time" content="2019-05-04T14:36:17.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="双宿双飞的 malloc 和 free">
 <meta name="twitter:description" content="简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 calloc、realloc、reallocf、valloc 等堆内存管理函数。 void *在进行下面话题之前，我们先回忆一下 void * 是什么？ void * 表示未">
@@ -499,24 +499,24 @@
 <p><code>glibc</code> 和 <code>libc</code> 都是 Linux 下的 C 函数库。<code>libc</code> 库是Linux下的ANSI C的函数库也泛指一切符合C规范的库，<code>glibc</code> 是Linux下的GNU C函数库，也是一种 <code>libc</code> 的实现。<code>glibc</code> 本身是GNU旗下的C标准库，后来逐渐成为了Linux的标准C库，而Linux下原来的标准C库Linux <code>libc</code> 逐渐不再被维护。Linux下面的标准C库不仅有这一个，如<a href="https://www.uclibc.org/" target="_blank" rel="noopener">uclibc</a>、klibc，以及上面被提到的Linux <code>libc</code>，但是 <code>glibc</code> 无疑是用得最多的，用 glibc 作为系统的C函式库，是GNU/Linux演进的一个重要里程碑，可以查看 <a href="https://en.wikipedia.org/wiki/GNU_C_Library" target="_blank" rel="noopener">维基百科</a> 对 <code>glibc</code> 的介绍。</p>
 <p>这里也说一下 <a href="https://zh.wikipedia.org/wiki/ANSI_C" target="_blank" rel="noopener">ANSI C</a> 函数库是基本的C语言函数库，包含了C语言最基本的库函数。这个库可以根据头文件划分为 15 个部分，其中包括： </p>
 <ul>
-<li><p><ctype.h>：包含用来测试某个特征字符的函数的函数原型，以及用来转换大小写字母的函数原型；</ctype.h></p>
+<li><p>文件 <ctype.h>：包含用来测试某个特征字符的函数的函数原型，以及用来转换大小写字母的函数原型；</ctype.h></p>
 </li>
-<li><p><errno.h>：定义用来报告错误条件的宏；</errno.h></p>
+<li><p>文件 <errno.h>：定义用来报告错误条件的宏；</errno.h></p>
 </li>
-<li><p><float.h>：包含系统的浮点数大小限制；</float.h></p>
+<li><p>文件 <float.h>：包含系统的浮点数大小限制；</float.h></p>
 </li>
-<li><p><math.h>：包含数学库函数的函数原型；</math.h></p>
+<li><p>文件 <math.h>：包含数学库函数的函数原型；</math.h></p>
 </li>
-<li><stddef.h>：包含执行某些计算 C 所用的常见的函数定义；</stddef.h></li>
-<li><stdio.h>：包含标准输入输出库函数的函数原型，以及他们所用的信息；</stdio.h></li>
-<li><stdlib.h>：包含数字转换到文本，以及文本转换到数字的函数原型，还有内存分配、随机数字以及其他实用函数的函数原型；</stdlib.h></li>
-<li><string.h>：包含字符串处理函数的函数原型；</string.h></li>
-<li><time.h>：包含时间和日期操作的函数原型和类型；</time.h></li>
-<li><stdarg.h>：包含函数原型和宏，用于处理未知数值和类型的函数的参数列表；</stdarg.h></li>
-<li><signal.h>：包含函数原型和宏，用于处理程序执行期间可能出现的各种条件；</signal.h></li>
-<li><setjmp.h>：包含可以绕过一般函数调用并返回序列的函数的原型，即非局部跳转；</setjmp.h></li>
-<li><locale.h>：包含函数原型和其他信息，使程序可以针对所运行的地区进行修改。地区的表示方法可以使计算机系统处理不同的数据表达约定，如全世界的日期、时间、美元数和大数字；</locale.h></li>
-<li><assert.h>：包含宏和信息，用于进行诊断，帮助程序调试；</assert.h></li>
+<li>文件 <stddef.h>：包含执行某些计算 C 所用的常见的函数定义；</stddef.h></li>
+<li>文件 <stdio.h>：包含标准输入输出库函数的函数原型，以及他们所用的信息；</stdio.h></li>
+<li>文件 <stdlib.h>：包含数字转换到文本，以及文本转换到数字的函数原型，还有内存分配、随机数字以及其他实用函数的函数原型；</stdlib.h></li>
+<li>文件 <string.h>：包含字符串处理函数的函数原型；</string.h></li>
+<li>文件 <time.h>：包含时间和日期操作的函数原型和类型；</time.h></li>
+<li>文件 <stdarg.h>：包含函数原型和宏，用于处理未知数值和类型的函数的参数列表；</stdarg.h></li>
+<li>文件 <signal.h>：包含函数原型和宏，用于处理程序执行期间可能出现的各种条件；</signal.h></li>
+<li>文件 <setjmp.h>：包含可以绕过一般函数调用并返回序列的函数的原型，即非局部跳转；</setjmp.h></li>
+<li>文件 <locale.h>：包含函数原型和其他信息，使程序可以针对所运行的地区进行修改。地区的表示方法可以使计算机系统处理不同的数据表达约定，如全世界的日期、时间、美元数和大数字；</locale.h></li>
+<li>文件 <assert.h>：包含宏和信息，用于进行诊断，帮助程序调试；</assert.h></li>
 <li>其他；</li>
 </ul>
 <p>在 <code>glibc</code> 库中可以找到 <code>malloc.c</code> 文件(路径是 <code>glibc-2.29/malloc/malloc.c</code> )，从中可以看到如下别名的定义：</p>
