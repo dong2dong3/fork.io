@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="内容简介在阅读本篇文章之前，建议大家看一下下面2篇文章：  [不见得你会计算C字符串长度][http://www.veryitman.com/2019/03/07/%E4%B8%8D%E8%A7%81%E5%BE%97%E4%BD%A0%E4%BC%9A%E8%AE%A1%E7%AE%97C%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6/] 双宿双飞的">
+<meta name="description" content="内容简介在阅读本篇文章之前，建议大家看一下下面2篇文章：  不见得你会计算C字符串长度 双宿双飞的 malloc 和 free  这篇文章主要分享两个点： 1、为什么作为局部变量的字符数组不能直接返回，而字符指针却可以? 2、当字符数组是局部变量的时候，函数如何返回它？ 3、字符数组(char [])和字符指针(char *)如何互转？ 局部变量的字符数组在C中如果我们直接返回字符数组，编译会直接">
 <meta name="keywords" content="strcpy char[]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C函数中返回字符数组">
 <meta property="og:url" content="http://yoursite.com/2019/05/10/C函数中返回字符数组/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="内容简介在阅读本篇文章之前，建议大家看一下下面2篇文章：  [不见得你会计算C字符串长度][http://www.veryitman.com/2019/03/07/%E4%B8%8D%E8%A7%81%E5%BE%97%E4%BD%A0%E4%BC%9A%E8%AE%A1%E7%AE%97C%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6/] 双宿双飞的">
+<meta property="og:description" content="内容简介在阅读本篇文章之前，建议大家看一下下面2篇文章：  不见得你会计算C字符串长度 双宿双飞的 malloc 和 free  这篇文章主要分享两个点： 1、为什么作为局部变量的字符数组不能直接返回，而字符指针却可以? 2、当字符数组是局部变量的时候，函数如何返回它？ 3、字符数组(char [])和字符指针(char *)如何互转？ 局部变量的字符数组在C中如果我们直接返回字符数组，编译会直接">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/05/10/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-10T15:08:00.299Z">
+<meta property="og:updated_time" content="2019-05-10T15:42:35.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C函数中返回字符数组">
-<meta name="twitter:description" content="内容简介在阅读本篇文章之前，建议大家看一下下面2篇文章：  [不见得你会计算C字符串长度][http://www.veryitman.com/2019/03/07/%E4%B8%8D%E8%A7%81%E5%BE%97%E4%BD%A0%E4%BC%9A%E8%AE%A1%E7%AE%97C%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6/] 双宿双飞的">
+<meta name="twitter:description" content="内容简介在阅读本篇文章之前，建议大家看一下下面2篇文章：  不见得你会计算C字符串长度 双宿双飞的 malloc 和 free  这篇文章主要分享两个点： 1、为什么作为局部变量的字符数组不能直接返回，而字符指针却可以? 2、当字符数组是局部变量的时候，函数如何返回它？ 3、字符数组(char [])和字符指针(char *)如何互转？ 局部变量的字符数组在C中如果我们直接返回字符数组，编译会直接">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/05/10/1.png">
 
 
@@ -409,8 +409,8 @@
       
         <h2 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h2><p>在阅读本篇文章之前，建议大家看一下下面2篇文章：</p>
 <ul>
-<li>[不见得你会计算C字符串长度][<a href="http://www.veryitman.com/2019/03/07/%E4%B8%8D%E8%A7%81%E5%BE%97%E4%BD%A0%E4%BC%9A%E8%AE%A1%E7%AE%97C%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6/" target="_blank" rel="noopener">http://www.veryitman.com/2019/03/07/%E4%B8%8D%E8%A7%81%E5%BE%97%E4%BD%A0%E4%BC%9A%E8%AE%A1%E7%AE%97C%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6/</a>]</li>
-<li><a href="[http://www.veryitman.com/2019/05/02/%E5%8F%8C%E5%AE%BF%E5%8F%8C%E9%A3%9E%E7%9A%84-malloc-%E5%92%8C-free/](http://www.veryitman.com/2019/05/02/双宿双飞的-malloc-和-free/">双宿双飞的 malloc 和 free</a>)</li>
+<li><a href="http://www.veryitman.com/2019/03/07/%E4%B8%8D%E8%A7%81%E5%BE%97%E4%BD%A0%E4%BC%9A%E8%AE%A1%E7%AE%97C%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6/" target="_blank" rel="noopener">不见得你会计算C字符串长度</a></li>
+<li><a href="http://www.veryitman.com/2019/05/02/%E5%8F%8C%E5%AE%BF%E5%8F%8C%E9%A3%9E%E7%9A%84-malloc-%E5%92%8C-free/" target="_blank" rel="noopener">双宿双飞的 malloc 和 free</a></li>
 </ul>
 <p>这篇文章主要分享两个点：</p>
 <p>1、为什么作为局部变量的字符数组不能直接返回，而字符指针却可以?</p>
