@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/03/07/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-06T14:54:49.602Z">
+<meta property="og:updated_time" content="2019-05-08T16:04:02.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不见得你会计算C字符串长度">
 <meta name="twitter:description" content="C 字符串在 C 语言中，字符串实际上是使用字符 &amp;#39;\0&amp;#39; 终止的一维字符数组。 以下几种方式表示的都是 C 字符串的正确表达方式。 1234567891011121314// 要以 &apos;\0&apos; 结尾char greeting[6] = &amp;#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&amp;#125;;// 要以 &apos;\0&apos; 结尾char greeting[] = &amp;">
@@ -441,8 +441,25 @@
 <p>我们还需要注意一点，<code>strlen</code> 函数，当数组名作为参数传入时，实际上数组就退化成指针了。举个例子，如下图所示：</p>
 <p><img src="/upload/images/2019/03/07/1.jpg" alt=""></p>
 <p>可以看出传入进来的参数会被退化为指针。</p>
+<h2 id="探索无止境"><a href="#探索无止境" class="headerlink" title="探索无止境"></a>探索无止境</h2><p>在文章的开始，我给出了几种 C 字符串的正确表达方式，那我们再来看另外一种。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> greeting[<span class="number">4</span>] = <span class="string">"blog"</span>;</div></pre></td></tr></table></figure>
+<p>这种方式看起来好像很完美的样子，其实是不对的，写个例子给大家，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">char</span> greeting[<span class="number">4</span>] = <span class="string">"blog"</span>;</div><div class="line">    <span class="keyword">size_t</span> len = <span class="built_in">strlen</span>(greeting);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"greeting len: %ld\n"</span>, len);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"greeting: %s\n"</span>, greeting);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译运行，结果如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">greeting len: 10</div><div class="line">greeting: blog\330\365\277\357\376</div></pre></td></tr></table></figure>
+<p>苍天呀，这结果让人无语。。。</p>
+<p>对于 <code>char greeting[4] = &quot;blog&quot;</code> 其实是定义一个长度为 4 的字符数组，但是字符串 <code>&quot;blog&quot;</code> 实际是要包括结束符 <code>\0</code> 的，也就是说下面的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> greeting[<span class="number">4</span>] = <span class="string">"blog"</span>;</div></pre></td></tr></table></figure>
+<p>本质和下面代码是一样的，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> greeting[] = &#123;<span class="string">'b'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'g'</span>&#125;;</div></pre></td></tr></table></figure>
+<p>显然是不正确的，那我们修改一下代码，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">// 注意这里是 5</span></div><div class="line">    <span class="keyword">char</span> greeting[<span class="number">5</span>] = <span class="string">"blog"</span>;</div><div class="line">    <span class="keyword">size_t</span> len = <span class="built_in">strlen</span>(greeting);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"greeting len: %ld\n"</span>, len);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"greeting: %s\n"</span>, greeting);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者这样写：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">// 这里干脆不要写数字</span></div><div class="line">    <span class="keyword">char</span> greeting[] = <span class="string">"blog"</span>;</div><div class="line">  	<span class="keyword">size_t</span> len = <span class="built_in">strlen</span>(greeting);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"greeting len: %ld\n"</span>, len);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"greeting: %s\n"</span>, greeting);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样修改后，再编译运行结果就对了，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">greeting len: <span class="number">4</span></div><div class="line">greeting: blog</div></pre></td></tr></table></figure>
 <hr>
-<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><strong>我们知道的东西是有限的，我们不知道的东西则是无穷的。</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
       
@@ -599,7 +616,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -621,7 +638,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -670,7 +687,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-字符串"><span class="nav-number">1.</span> <span class="nav-text">C 字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串长度"><span class="nav-number">2.</span> <span class="nav-text">字符串长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sizeof、strlen"><span class="nav-number">3.</span> <span class="nav-text">sizeof、strlen</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-字符串"><span class="nav-number">1.</span> <span class="nav-text">C 字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串长度"><span class="nav-number">2.</span> <span class="nav-text">字符串长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sizeof、strlen"><span class="nav-number">3.</span> <span class="nav-text">sizeof、strlen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#探索无止境"><span class="nav-number">4.</span> <span class="nav-text">探索无止境</span></a></li></ol></div>
             
 
           </div>
