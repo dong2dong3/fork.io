@@ -3,6 +3,51 @@
   
     
     <entry>
+      <title><![CDATA[macOS 生成 RSA 公钥和私钥]]></title>
+      <url>/2019/05/11/macOS-%E7%94%9F%E6%88%90-RSA-%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5/</url>
+      <content type="html"><![CDATA[<p>如果你没有安装 <code>openssl</code>，请先使用 brew 安装它。</p>
+<h2 id="生成-RSA-私钥"><a href="#生成-RSA-私钥" class="headerlink" title="生成 RSA 私钥"></a>生成 RSA 私钥</h2><p>在 macOS 终端输入下面命令，会生成1024位的私钥，如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl genrsa -out rsa_private.pem 1024</div></pre></td></tr></table></figure>
+<p>执行成功后，在当前目录会生成 <code>rsa_private.pem</code> 文件了。</p>
+<p><strong>注意：这里生成的是 <code>PKCS1</code> 格式的文件，也称之为传统的私钥格式。</strong></p>
+<h2 id="生成-RSA-公钥"><a href="#生成-RSA-公钥" class="headerlink" title="生成 RSA 公钥"></a>生成 RSA 公钥</h2><p>得到私钥后，执行如下命令可以得到公钥，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl rsa -in rsa_private.pem -out rsa_public.pem -pubout</div></pre></td></tr></table></figure>
+<p>执行成功后，在当前目录会生成 <code>rsa_public.pem</code> 的文件，这个就是公钥。</p>
+<h2 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h2><blockquote>
+<p>有些后端服务需要 <code>PKCS8</code> 格式的密钥，可以使用 openssl 工具把 <code>PKCS1</code> 和 <code>PKCS8</code> 进行互转。</p>
+</blockquote>
+<p><code>PKCS</code> 全称是 <code>Public-Key Cryptography Standards</code>，是由 RSA 实验室与其它安全系统开发商为促进公钥密码的发展而制订的一系列标准。</p>
+<p>把 RSA 私钥转 <code>PKCS1</code> 转换为 <code>PKCS8</code> 格式，执行如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl pkcs8 -topk8 -inform PEM -in rsa_private.pem -outform PEM -nocrypt -out rsa_private_pkcs8.pem</div></pre></td></tr></table></figure>
+<p>把 RSA 私钥 <code>PKCS8</code> 格式转换为 <code>PKCS1</code> 格式，执行如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl rsa -in rsa_private_pkcs8.pem -out pkcs1.pem</div></pre></td></tr></table></figure>
+<p>以上生成的 RSA(pem) 文件，可以使用 vim、vscode 等文本编辑器打开查看。</p>
+<p>无论是 <code>PKCS1</code> 还是 <code>PKCS8</code>，它们都是 PEM 编码存储的格式。</p>
+<h2 id="PEM-格式"><a href="#PEM-格式" class="headerlink" title="PEM 格式"></a>PEM 格式</h2><p>PEM 格式既是对 <a href="http://fileformats.archiveteam.org/wiki/DER" target="_blank" rel="noopener">DER</a> 编码转码为 <code>Base64</code> 字符格式，通过解码，将会还原为 DER 格式。即 PEM 是建立在 DER 编码之上的一种格式。</p>
+<p>总之，PEM 是明文格式，可以包含证书或者是密钥，其内容通常是以类似 <code>—–BEGIN …—–</code> 开头，以 <code>—–END …—–</code> 为结尾的这样的格式，如下示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">-----BEGIN RSA PRIVATE KEY-----</div><div class="line">MIICXQIBAAKBgQDX+VXh+9zZBC3jRLcLyGGygb/vuiQj13x9ElH9pQmUg29UJ0q1</div><div class="line">hcSFuoKmt4id8jyj82fI2PMISzoGucqQFm9HXIV65UcgeUx7REDhgZOBmSCWZ2lW</div><div class="line">e2Fnf/htyiy9YVEN4jL7H+b67cIcEDHgYZLtPvSZgyr0UyOMC+E40kTcnQIDAQAB</div><div class="line">AoGBAKKsYD7l6VPgrPuY31LVrJi62ComB2Cjx1WhffZR3+RoF2vImNtkB0E+2Xff</div><div class="line">l9x3/6ry1IMove3KTzadrHBZJZi1Y6lmHE95uv0O4p16ETnqvKzO8MkcH3qVQe1Z</div><div class="line">EyNd/wXr4A8DW3ZlNP/QIPOgzK949yTiP53wapiRwExEf7nhAkEA7CbbdoslRzhQ</div><div class="line">9YY1Sdbmc7NHpZdKhkgZwOVJZBoRwfHtSnFcpQUlOzLGCOxP+tGn5mpzhmpDFeUR</div><div class="line">bv7mgaQvtQJBAOogUtiJbffk0p3uu7r5nCBmC6BqbG8yVqBVk+r/gS5iHBeBQVyp</div><div class="line">FGYYLPQ9daHWluNku07MhqarPcXytEk7ekkCQDBjofK/fmsCkixNTNwNiflJUiVO</div><div class="line">W/n6CjTphslZQhIGNb5cTkSOMlvYApZPffACR+pCA9wWKBrzbkgVOTx1XUUCQQDE</div><div class="line">KJLg47wkLy6brhLss6ewqW7iV3hEfhuAOFM3WB1mvEKnGt+lf/AcXfMEK54sGzvO</div><div class="line">h2475jaG3ABkoiWVGeUpAkAgckc/Pf7KVRF/mDVruMJBbJLYL4H4s78nssFQ4d9V</div><div class="line">yXKsIM/AHUxZ5ZKiC7vtEtaGrTLAiuIuQZzBgGpSHX/e</div><div class="line">-----END RSA PRIVATE KEY-----</div></pre></td></tr></table></figure>
+<p>以下是证书文件名称，来自维基百科 <a href="https://zh.wikipedia.org/wiki/X.509" target="_blank" rel="noopener">X.509</a> 的截图。<br><img src="/upload/images/2019/05/11/1.jpg" alt=""></p>
+<hr>
+<p><strong>要始终保持学习的激情~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+]]></content>
+      
+        <categories>
+            
+            <category> MacOS </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> RSA OpenSSL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C函数中返回字符数组]]></title>
       <url>/2019/05/10/C%E5%87%BD%E6%95%B0%E4%B8%AD%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84/</url>
       <content type="html"><![CDATA[<h2 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h2><p>在阅读本篇文章之前，建议大家看一下下面2篇文章：</p>
@@ -53,13 +98,14 @@
 <p>在glibc的新版中(2.29版本)，本质是调用了函数 <code>memcpy</code>， 实现如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stddef.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">undef</span> strcpy</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> STRCPY</span></div><div class="line"><span class="meta"># <span class="meta-keyword">define</span> STRCPY strcpy</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"><span class="comment">/* Copy SRC to DEST.  */</span></div><div class="line"><span class="function"><span class="keyword">char</span> * <span class="title">STRCPY</span> <span class="params">(<span class="keyword">char</span> *dest, <span class="keyword">const</span> <span class="keyword">char</span> *src)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span> (dest, src, <span class="built_in">strlen</span> (src) + <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line">libc_hidden_builtin_def (<span class="built_in">strcpy</span>)</div></pre></td></tr></table></figure>
 <p>包括 <code>strncpy</code> 在glibc和Linux Kernel中实现也不一样，有兴趣的可以去看看源码。</p>
-<h2 id="字符数组和字符指针的互转"><a href="#字符数组和字符指针的互转" class="headerlink" title="字符数组和字符指针的互转"></a>字符数组和字符指针的互转</h2><h3 id="字符数组转字符指针即-char-转-char"><a href="#字符数组转字符指针即-char-转-char" class="headerlink" title="字符数组转字符指针即 char [] 转 char *"></a>字符数组转字符指针即 char [] 转 char *</h3><p>这种情况下，可以直接进行赋值，示例如下：</p>
+<h2 id="字符数组和字符指针的互转"><a href="#字符数组和字符指针的互转" class="headerlink" title="字符数组和字符指针的互转"></a>字符数组和字符指针的互转</h2><h3 id="char-转-char"><a href="#char-转-char" class="headerlink" title="char [] 转 char *"></a>char [] 转 char *</h3><p>这种情况下，可以直接进行赋值，示例如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">char</span> c_str_array[] = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="keyword">char</span> *p_str;</div><div class="line">    p_str = c_str_array;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"p_str: %s\n"</span>, p_str);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="字符指针转字符数组即-char-转-char"><a href="#字符指针转字符数组即-char-转-char" class="headerlink" title="字符指针转字符数组即 char * 转 char []"></a>字符指针转字符数组即 char * 转 char []</h3><p>是不是也可以直接进行赋值呢？撸段代码看看，如下：</p>
+<h3 id="char-转-char-1"><a href="#char-转-char-1" class="headerlink" title="char * 转 char []"></a>char * 转 char []</h3><p>是不是也可以直接进行赋值呢？撸段代码看看，如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">char</span> c_str_array[] = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="keyword">char</span> *p_str = <span class="string">"veryitman.com"</span>;</div><div class="line">    c_str_array = p_str;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"c_str_array: %s\n"</span>, c_str_array);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>很遗憾，编译报错，GCC编译错误截图如下：</p>
 <p><img src="/upload/images/2019/05/10/1.png" alt="1557417012236"></p>
 <p>Clang编译错误如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Array type &apos;char [14]&apos; is not assignable</div></pre></td></tr></table></figure>
 <p>可以考虑使用 <code>strncpy</code> 来实现，示例代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">char</span> c_str_array[] = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="keyword">char</span> *p_str = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="built_in">strncpy</span>(c_str_array, p_str, <span class="built_in">strlen</span>(p_str));</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"c_str_array: %s\n"</span>, c_str_array);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>时间可以改变一切，但你得做点什么！</strong></p>

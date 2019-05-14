@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/05/10/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-10T15:48:24.947Z">
+<meta property="og:updated_time" content="2019-05-14T14:25:07.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C函数中返回字符数组">
 <meta name="twitter:description" content="内容简介在阅读本篇文章之前，建议大家看一下下面2篇文章：  不见得你会计算C字符串长度 双宿双飞的 malloc 和 free  这篇文章主要分享三个点： 1、为什么作为局部变量的字符数组不能直接返回，而字符指针却可以? 2、当字符数组是局部变量的时候，函数如何返回它？ 3、字符数组(char [])和字符指针(char *)如何互转？ 局部变量的字符数组在C中如果我们直接返回字符数组，编译会直接">
@@ -455,13 +455,14 @@
 <p>在glibc的新版中(2.29版本)，本质是调用了函数 <code>memcpy</code>， 实现如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stddef.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">undef</span> strcpy</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> STRCPY</span></div><div class="line"><span class="meta"># <span class="meta-keyword">define</span> STRCPY strcpy</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"><span class="comment">/* Copy SRC to DEST.  */</span></div><div class="line"><span class="function"><span class="keyword">char</span> * <span class="title">STRCPY</span> <span class="params">(<span class="keyword">char</span> *dest, <span class="keyword">const</span> <span class="keyword">char</span> *src)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span> (dest, src, <span class="built_in">strlen</span> (src) + <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line">libc_hidden_builtin_def (<span class="built_in">strcpy</span>)</div></pre></td></tr></table></figure>
 <p>包括 <code>strncpy</code> 在glibc和Linux Kernel中实现也不一样，有兴趣的可以去看看源码。</p>
-<h2 id="字符数组和字符指针的互转"><a href="#字符数组和字符指针的互转" class="headerlink" title="字符数组和字符指针的互转"></a>字符数组和字符指针的互转</h2><h3 id="字符数组转字符指针即-char-转-char"><a href="#字符数组转字符指针即-char-转-char" class="headerlink" title="字符数组转字符指针即 char [] 转 char *"></a>字符数组转字符指针即 char [] 转 char *</h3><p>这种情况下，可以直接进行赋值，示例如下：</p>
+<h2 id="字符数组和字符指针的互转"><a href="#字符数组和字符指针的互转" class="headerlink" title="字符数组和字符指针的互转"></a>字符数组和字符指针的互转</h2><h3 id="char-转-char"><a href="#char-转-char" class="headerlink" title="char [] 转 char *"></a>char [] 转 char *</h3><p>这种情况下，可以直接进行赋值，示例如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">char</span> c_str_array[] = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="keyword">char</span> *p_str;</div><div class="line">    p_str = c_str_array;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"p_str: %s\n"</span>, p_str);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="字符指针转字符数组即-char-转-char"><a href="#字符指针转字符数组即-char-转-char" class="headerlink" title="字符指针转字符数组即 char * 转 char []"></a>字符指针转字符数组即 char * 转 char []</h3><p>是不是也可以直接进行赋值呢？撸段代码看看，如下：</p>
+<h3 id="char-转-char-1"><a href="#char-转-char-1" class="headerlink" title="char * 转 char []"></a>char * 转 char []</h3><p>是不是也可以直接进行赋值呢？撸段代码看看，如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">char</span> c_str_array[] = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="keyword">char</span> *p_str = <span class="string">"veryitman.com"</span>;</div><div class="line">    c_str_array = p_str;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"c_str_array: %s\n"</span>, c_str_array);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>很遗憾，编译报错，GCC编译错误截图如下：</p>
 <p><img src="/upload/images/2019/05/10/1.png" alt="1557417012236"></p>
 <p>Clang编译错误如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Array type &apos;char [14]&apos; is not assignable</div></pre></td></tr></table></figure>
 <p>可以考虑使用 <code>strncpy</code> 来实现，示例代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">char</span> c_str_array[] = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="keyword">char</span> *p_str = <span class="string">"veryitman.com"</span>;</div><div class="line">    <span class="built_in">strncpy</span>(c_str_array, p_str, <span class="built_in">strlen</span>(p_str));</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"c_str_array: %s\n"</span>, c_str_array);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>时间可以改变一切，但你得做点什么！</strong></p>
@@ -534,6 +535,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/11/macOS-生成-RSA-公钥和私钥/" rel="prev" title="macOS 生成 RSA 公钥和私钥">
+                macOS 生成 RSA 公钥和私钥 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -617,7 +622,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -639,7 +644,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">91</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -688,7 +693,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#内容简介"><span class="nav-number">1.</span> <span class="nav-text">内容简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部变量的字符数组"><span class="nav-number">2.</span> <span class="nav-text">局部变量的字符数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一切皆有可能"><span class="nav-number">3.</span> <span class="nav-text">一切皆有可能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符数组和字符指针的互转"><span class="nav-number">4.</span> <span class="nav-text">字符数组和字符指针的互转</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符数组转字符指针即-char-转-char"><span class="nav-number">4.1.</span> <span class="nav-text">字符数组转字符指针即 char [] 转 char *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符指针转字符数组即-char-转-char"><span class="nav-number">4.2.</span> <span class="nav-text">字符指针转字符数组即 char * 转 char []</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#内容简介"><span class="nav-number">1.</span> <span class="nav-text">内容简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部变量的字符数组"><span class="nav-number">2.</span> <span class="nav-text">局部变量的字符数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一切皆有可能"><span class="nav-number">3.</span> <span class="nav-text">一切皆有可能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符数组和字符指针的互转"><span class="nav-number">4.</span> <span class="nav-text">字符数组和字符指针的互转</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#char-转-char"><span class="nav-number">4.1.</span> <span class="nav-text">char [] 转 char *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#char-转-char-1"><span class="nav-number">4.2.</span> <span class="nav-text">char * 转 char []</span></a></li></ol></li></ol></div>
             
 
           </div>
