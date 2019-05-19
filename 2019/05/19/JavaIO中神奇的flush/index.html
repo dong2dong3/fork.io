@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 *36486 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”">
+<meta name="description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36496 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
 <meta name="keywords" content="flush OutputStream JavaSE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaIO中神奇的flush">
 <meta property="og:url" content="http://yoursite.com/2019/05/19/JavaIO中神奇的flush/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 *36486 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”">
+<meta property="og:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36496 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/05/19/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-19T05:49:02.368Z">
+<meta property="og:updated_time" content="2019-05-19T06:33:30.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaIO中神奇的flush">
-<meta name="twitter:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 *36486 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”">
+<meta name="twitter:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36496 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/05/19/1.png">
 
 
@@ -407,7 +407,7 @@
       
 
       
-        <p>这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 <em>*36486</em> 次了，有必要分享给大家。</p>
+        <p>这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 <strong>36496</strong> 次了，有必要分享给大家。</p>
 <p><img src="/upload/images/2019/05/19/1.png" alt="1"></p>
 <p>后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。</p>
 <h2 id="内容概要"><a href="#内容概要" class="headerlink" title="内容概要"></a>内容概要</h2><p>Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。</p>
@@ -416,7 +416,7 @@
 <p>关于Java的IO流的分类，可以到网上soso，今天跟大家分享一下神奇的 <code>flush</code> 方法。</p>
 <h2 id="flush-与-OutputStream"><a href="#flush-与-OutputStream" class="headerlink" title="flush 与 OutputStream"></a>flush 与 OutputStream</h2><p>该类实现了 Flushable 接口，所以重写了 flush 方法，看看 flush() 源码，会更加的让你明白：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123; &#125;</div></pre></td></tr></table></figure>
-<p>sorry，该实现为空。这里的 <code>flush</code> 居然是一个空方法，什么也没做。看清楚啊，该方法不是抽象方法，是一个实实在在的方法。除了方法体中一无所有，其它还好！看JDK的API如何解释吧！</p>
+<p>Sorry，该实现为空。这里的 <code>flush()</code> 居然是一个空方法，什么也没做。看清楚啊，该方法不是抽象方法，是一个实实在在的方法。除了方法体中一无所有，其它还好！看JDK的API如何解释吧！</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">flush </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span></div><div class="line"><span class="function">刷新此输出流并强制写出所有缓冲的输出字节。</span></div><div class="line"><span class="function">flush 的常规协定是：如果此输出流的实现已经缓冲了以前写入的任何字节，则调用此方法指示应将这些字节立即写入它们预期的目标。 </span></div><div class="line"><span class="function">如果此流的预期目标是由基础操作系统提供的一个抽象（如一个文件），则刷新此流只能保证将以前写入到流的字节传递给操作系统进行写入，但不保证能将这些字节实际写入到物理设备（如磁盘驱动器）。</span></div><div class="line"><span class="function">OutputStream 的 flush 方法不执行任何操作。</span></div><div class="line"><span class="function">指定者： 接口 Flushable 中的 flush </span></div><div class="line"><span class="function">抛出： IOException - 如果发生 I/O 错误。</span></div></pre></td></tr></table></figure>
 <p>开始，我安慰自己，该类是一个抽象类，它的子类肯定重写了该方法。</p>
 <p>好吧，<code>OutputStream</code> 的直接子类有：<code>ByteArrayOutputStream</code> 、<code>FileOutputStream</code>、<code>FilterOutputStream</code>、<code>ObjectOutputStream</code> 、<code>OutputStream</code>、<code>PipedOutputStream</code> 等几个类。</p>
