@@ -104,7 +104,7 @@
 <meta property="og:description" content="简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 calloc、realloc、reallocf、valloc 等堆内存管理函数。 void *在进行下面话题之前，我们先回忆一下 void * 是什么？ void * 表示未">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-04T14:38:22.765Z">
+<meta property="og:updated_time" content="2019-05-19T14:39:40.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="双宿双飞的 malloc 和 free">
 <meta name="twitter:description" content="简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 calloc、realloc、reallocf、valloc 等堆内存管理函数。 void *在进行下面话题之前，我们先回忆一下 void * 是什么？ void * 表示未">
@@ -495,29 +495,32 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">The valloc() function allocates size bytes of memory and returns a pointer to the allocated memory. </div><div class="line"></div><div class="line">The allocated memory is aligned on a page boundary.</div></pre></td></tr></table></figure>
 <p>说了这么多，接下来我们看一下例子，如下代码示例：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对其分配内存，这个时候pchar值是随机的垃圾值</span></div><div class="line"><span class="keyword">char</span> *pchar = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">16</span>);</div><div class="line"><span class="comment">// 手动初始化pchar的值，下面的方法则不需要</span></div><div class="line"><span class="built_in">memset</span>(pchar, <span class="number">0</span>, <span class="number">16</span>);</div><div class="line"></div><div class="line"><span class="comment">// calloc分配内存，会自动设置为0，不需要memset</span></div><div class="line"><span class="keyword">char</span> *pchar_orig = (<span class="keyword">char</span> *)<span class="built_in">calloc</span>(<span class="number">12</span>, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</div><div class="line"></div><div class="line"><span class="comment">// 在原内存基础上，在堆内存空间中连续增加内存</span></div><div class="line"><span class="comment">// 如果原内存没有连续空间可拓展，realloc会新分配一个空间，将原有内存copy到新空间，然后释放原内存  </span></div><div class="line"><span class="comment">// 注意：realloc和malloc，只分配内存不进行赋值操作</span></div><div class="line"><span class="keyword">char</span> *pchar_dest = (<span class="keyword">char</span> *)<span class="built_in">realloc</span>(pchar_orig, <span class="number">10</span>);</div><div class="line">  </div><div class="line"><span class="comment">// 相当于 malloc(60)</span></div><div class="line"><span class="keyword">char</span> *pchar_ini = (<span class="keyword">char</span> *)<span class="built_in">realloc</span>(<span class="literal">NULL</span>, <span class="number">60</span>);</div><div class="line"></div><div class="line"><span class="built_in">free</span>(pchar);</div><div class="line">pchar = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line"><span class="built_in">free</span>(pchar_orig);</div><div class="line">pchar_orig = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line"><span class="built_in">free</span>(pchar_dest);</div><div class="line">pchar_dest = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line"><span class="built_in">free</span>(pchar_ini);</div><div class="line">pchar_ini = <span class="literal">NULL</span>;</div></pre></td></tr></table></figure>
-<h2 id="glibc"><a href="#glibc" class="headerlink" title="glibc"></a>glibc</h2><p>上面说过这些内存管理函数都在头文件 <code>stdlib.h</code> 中，函数实现都在 <code>malloc.c</code> 文件中，这些都可以在C的标准库 <code>glibc</code> 中找到对应的代码，我下载的 <code>glibc</code> 是 <code>2.29</code> 这个版本。</p>
-<p><code>glibc</code> 和 <code>libc</code> 都是 Linux 下的 C 函数库。<code>libc</code> 库是Linux下的ANSI C的函数库也泛指一切符合C规范的库，<code>glibc</code> 是Linux下的GNU C函数库，也是一种 <code>libc</code> 的实现。<code>glibc</code> 本身是GNU旗下的C标准库，后来逐渐成为了Linux的标准C库，而Linux下原来的标准C库Linux <code>libc</code> 逐渐不再被维护。Linux下面的标准C库不仅有这一个，如<a href="https://www.uclibc.org/" target="_blank" rel="noopener">uclibc</a>、klibc，以及上面被提到的Linux <code>libc</code>，但是 <code>glibc</code> 无疑是用得最多的，用 glibc 作为系统的C函式库，是GNU/Linux演进的一个重要里程碑，可以查看 <a href="https://en.wikipedia.org/wiki/GNU_C_Library" target="_blank" rel="noopener">维基百科</a> 对 <code>glibc</code> 的介绍。</p>
-<p>这里也说一下 <a href="https://zh.wikipedia.org/wiki/ANSI_C" target="_blank" rel="noopener">ANSI C</a> 函数库是基本的C语言函数库，包含了C语言最基本的库函数。这个库可以根据头文件划分为 15 个部分，其中包括： </p>
+<h2 id="glibc-与-libc"><a href="#glibc-与-libc" class="headerlink" title="glibc 与 libc"></a>glibc 与 libc</h2><p>上面说过这些内存管理函数都在头文件 <code>stdlib.h</code> 中，函数实现都在 <code>malloc.c</code> 文件中，这些都可以在 <code>glibc</code> 中找到对应的代码，我下载的 <code>glibc</code> 是 <code>2.29</code> 这个版本。</p>
+<p>libc 是 <code>Stantard C Library</code> 的简称，它是符合ANSI C标准的一个标准函数库。libc库提供C语言中所使用的宏，类型的定义，字符串操作符，数学计算函数以及输入输出函数等。正如ANSI C是C语言的标准一样，libc只是一个函数库标准，每个操作系统都会按照该标准对标准库进行具体实现。通常我们所说的libc是特指某个操作系统的标准库，比如：在Linux操作系统下所说的libc即glibc。glibc是类Unix操作系统中使用最广泛的libc库，它的全称是GNU C Library.</p>
+<p><code>glibc</code>是 Linux 下的 C 函数库。<code>libc</code> 库是Linux下的ANSI C的函数库也泛指一切符合C规范的库，<code>glibc</code> 是Linux下的GNU C函数库，是一种 <code>libc</code> 的实现。<code>glibc</code> 本身是GNU旗下的C标准库，后来逐渐成为了Linux的标准C库。Linux下面的标准C库不仅有这一个，如 <a href="https://www.uclibc.org/" target="_blank" rel="noopener">uclibc</a>、klibc，但是 <code>glibc</code> 无疑是用得最多的，用 <code>glibc</code> 作为系统的C函式库，是GNU/Linux演进的一个重要里程碑，可以查看 <a href="https://en.wikipedia.org/wiki/GNU_C_Library" target="_blank" rel="noopener">维基百科</a> 对 <code>glibc</code> 的介绍。</p>
+<p>还有比如Android的Bionic库也是一种libc的实现，只是在Android上面使用罢了。Bionic是Google为Android操作系统提供的BSD标准C库的衍生库，专门为移动计算而精心设计的，针对移动设备上有限的CPU周期和可用内存进行了裁剪以提高工作效率。</p>
+<p>这里也说一下基本的C语言函数库，这个库可以根据头文件划分为 15 个部分，其中包括：</p>
 <ul>
-<li><p>文件 ctype.h：包含用来测试某个特征字符的函数的函数原型，以及用来转换大小写字母的函数原型；</p>
+<li><p>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-assert-h.html" target="_blank" rel="noopener">assert.h</a>：包含宏和信息，用于进行诊断，帮助程序调试；</p>
 </li>
-<li><p>文件 errno.h：定义用来报告错误条件的宏；</p>
+<li><p>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-ctype-h.html" target="_blank" rel="noopener">ctype.h</a>：包含用来测试某个特征字符的函数的函数原型，以及用来转换大小写字母的函数原型；</p>
 </li>
-<li><p>文件 float.h：包含系统的浮点数大小限制；</p>
+<li><p>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-errno-h.html" target="_blank" rel="noopener">errno.h</a>：定义用来报告错误条件的宏；</p>
 </li>
-<li><p>文件 math.h：包含数学库函数的函数原型；</p>
+<li><p>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-float-h.html" target="_blank" rel="noopener">float.h</a>：包含系统的浮点数大小限制；</p>
 </li>
-<li>文件 stddef.h：包含执行某些计算 C 所用的常见的函数定义；</li>
-<li>文件 stdio.h：包含标准输入输出库函数的函数原型，以及他们所用的信息；</li>
-<li>文件 stdlib.h：包含数字转换到文本，以及文本转换到数字的函数原型，还有内存分配、随机数字以及其他实用函数的函数原型；</li>
-<li>文件 string.h：包含字符串处理函数的函数原型；</li>
-<li>文件 time.h：包含时间和日期操作的函数原型和类型；</li>
-<li>文件 stdarg.h：包含函数原型和宏，用于处理未知数值和类型的函数的参数列表；</li>
-<li>文件 signal.h：包含函数原型和宏，用于处理程序执行期间可能出现的各种条件；</li>
-<li>文件 setjmp.h：包含可以绕过一般函数调用并返回序列的函数的原型，即非局部跳转；</li>
-<li>文件 locale.h：包含函数原型和其他信息，使程序可以针对所运行的地区进行修改。地区的表示方法可以使计算机系统处理不同的数据表达约定，如全世界的日期、时间、美元数和大数字；</li>
-<li>文件 assert.h：包含宏和信息，用于进行诊断，帮助程序调试；</li>
-<li>其他；</li>
+<li><p>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-math-h.html" target="_blank" rel="noopener">math.h</a>：包含数学库函数的函数原型；</p>
+</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-stddef-h.html" target="_blank" rel="noopener">stddef.h</a>：包含执行某些计算 C 所用的常见的函数定义；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-stdio-h.html" target="_blank" rel="noopener">stdio.h</a>：包含标准输入输出库函数的函数原型，以及他们所用的信息；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-stdlib-h.html" target="_blank" rel="noopener">stdlib.h</a>：包含数字转换到文本，以及文本转换到数字的函数原型，还有内存分配、随机数字以及其他实用函数的函数原型；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-string-h.html" target="_blank" rel="noopener">string.h</a>：包含字符串处理函数的函数原型；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-time-h.html" target="_blank" rel="noopener">time.h</a>：包含时间和日期操作的函数原型和类型；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-stdarg-h.html" target="_blank" rel="noopener">stdarg.h</a>：包含函数原型和宏，用于处理未知数值和类型的函数的参数列表；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-signal-h.html" target="_blank" rel="noopener">signal.h</a>：包含函数原型和宏，用于处理程序执行期间可能出现的各种条件；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-setjmp-h.html" target="_blank" rel="noopener">setjmp.h</a>：包含可以绕过一般函数调用并返回序列的函数的原型，即非局部跳转；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-locale-h.html" target="_blank" rel="noopener">locale.h</a>：包含函数原型和其他信息，使程序可以针对所运行的地区进行修改。地区的表示方法可以使计算机系统处理不同的数据表达约定，如全世界的日期、时间、美元数和大数字；</li>
+<li>文件 <a href="https://www.runoob.com/cprogramming/c-standard-library-limits-h.html" target="_blank" rel="noopener">limits.h</a>：决定了各种变量类型的各种属性。定义在该头文件中的宏限制了各种变量类型（比如 char、int 和 long）的值；</li>
 </ul>
 <p>在 <code>glibc</code> 库中可以找到 <code>malloc.c</code> 文件(路径是 <code>glibc-2.29/malloc/malloc.c</code> )，从中可以看到如下别名的定义：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">strong_alias (__libc_calloc, __calloc) weak_alias (__libc_calloc, <span class="built_in">calloc</span>)</div><div class="line">strong_alias (__libc_free, __free) strong_alias (__libc_free, <span class="built_in">free</span>)</div><div class="line">strong_alias (__libc_malloc, __malloc) strong_alias (__libc_malloc, <span class="built_in">malloc</span>)</div><div class="line">strong_alias (__libc_memalign, __memalign)</div><div class="line">weak_alias (__libc_memalign, memalign)</div><div class="line">strong_alias (__libc_realloc, __realloc) strong_alias (__libc_realloc, <span class="built_in">realloc</span>)</div><div class="line">strong_alias (__libc_valloc, __valloc) weak_alias (__libc_valloc, valloc)</div><div class="line">strong_alias (__libc_pvalloc, __pvalloc) weak_alias (__libc_pvalloc, pvalloc)</div><div class="line">strong_alias (__libc_mallinfo, __mallinfo)</div><div class="line">weak_alias (__libc_mallinfo, mallinfo)</div><div class="line">strong_alias (__libc_mallopt, __mallopt) weak_alias (__libc_mallopt, mallopt)</div></pre></td></tr></table></figure>
@@ -525,6 +528,7 @@
 <p>所以看 <code>malloc</code> 函数的源码，直接看 <code>__libc_realloc</code> 函数实现即可，看 <code>free</code> 的源码可以看 <code>__libc_free</code> 的实现。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> *</div><div class="line">__libc_realloc (<span class="keyword">void</span> *oldmem, <span class="keyword">size_t</span> bytes)</div></pre></td></tr></table></figure>
 <p>也可以在线查看 <code>glibc</code> 的源码，点击 <a href="https://code.woboq.org/userspace/glibc/" target="_blank" rel="noopener">这里</a> 前往欣赏！</p>
+<p>以后要是有人问你在哪里可以下载libc的源码，你就可以告诉他libc只是一个标准，不同的平台上面有不同的libc实现，比如glibc，bionic等。</p>
 <hr>
 <p><strong>锄禾日当午，汗滴禾下土，五一节快乐~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
@@ -754,7 +758,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#void"><span class="nav-number">2.</span> <span class="nav-text">void *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#malloc"><span class="nav-number">3.</span> <span class="nav-text">malloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#free"><span class="nav-number">4.</span> <span class="nav-text">free</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#malloc、free-小结"><span class="nav-number">5.</span> <span class="nav-text">malloc、free 小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#calloc、realloc、reallocf、valloc"><span class="nav-number">6.</span> <span class="nav-text">calloc、realloc、reallocf、valloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glibc"><span class="nav-number">7.</span> <span class="nav-text">glibc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#void"><span class="nav-number">2.</span> <span class="nav-text">void *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#malloc"><span class="nav-number">3.</span> <span class="nav-text">malloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#free"><span class="nav-number">4.</span> <span class="nav-text">free</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#malloc、free-小结"><span class="nav-number">5.</span> <span class="nav-text">malloc、free 小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#calloc、realloc、reallocf、valloc"><span class="nav-number">6.</span> <span class="nav-text">calloc、realloc、reallocf、valloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glibc-与-libc"><span class="nav-number">7.</span> <span class="nav-text">glibc 与 libc</span></a></li></ol></div>
             
 
           </div>
