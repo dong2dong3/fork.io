@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36503 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
+<meta name="description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36553 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
 <meta name="keywords" content="flush OutputStream JavaSE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaIO中神奇的flush">
 <meta property="og:url" content="http://yoursite.com/2019/05/19/JavaIO中神奇的flush/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36503 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
+<meta property="og:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36553 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/05/19/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-19T14:45:51.172Z">
+<meta property="og:updated_time" content="2019-05-28T15:13:57.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaIO中神奇的flush">
-<meta name="twitter:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36503 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
+<meta name="twitter:description" content="这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 36553 次了，有必要分享给大家。  后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。 内容概要Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。 如果你是Java初学者，我敢保证第一次接触Java的IO类，一定会 ”狂晕！”，">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/05/19/1.png">
 
 
@@ -407,7 +407,7 @@
       
 
       
-        <p>这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 <strong>36503</strong> 次了，有必要分享给大家。</p>
+        <p>这篇文章在之前已经写过，只是没有在公众号发布过。该文阅读量已经达到了 <strong>36553</strong> 次了，有必要分享给大家。</p>
 <p><img src="/upload/images/2019/05/19/1.png" alt="1"></p>
 <p>后续我会陆续的把一些大家评论比较多并且很好的知识点在公众号分享给大家，希望和大家在编程的道路上一起进步，把苦涩的日子变得有趣一点。</p>
 <h2 id="内容概要"><a href="#内容概要" class="headerlink" title="内容概要"></a>内容概要</h2><p>Java IO流的设计不得不让人拍案叫绝，佩服设计者鬼斧天工的手法。</p>
@@ -618,7 +618,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-count">123</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -629,7 +629,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -640,7 +640,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">94</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
