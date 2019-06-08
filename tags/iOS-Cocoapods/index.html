@@ -97,7 +97,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="veryitman">
-<meta property="og:url" content="http://yoursite.com/tags/iOS-cocoapods/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/iOS-Cocoapods/index.html">
 <meta property="og:site_name" content="veryitman">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/iOS-cocoapods/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/iOS-Cocoapods/"/>
 
 
 
 
 
-  <title>标签: iOS cocoapods | veryitman</title>
+  <title>标签: iOS Cocoapods | veryitman</title>
   
 
 
@@ -291,7 +291,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>iOS cocoapods<small>标签</small>
+        <h1>iOS Cocoapods<small>标签</small>
         </h1>
       </div>
 
@@ -303,37 +303,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/09/24/Cocoapods-私有仓库/" itemprop="url">
+            <a class="post-title-link" href="/2016/09/25/iOS-项目-打造本地-pod-库/" itemprop="url">
               
-                <span itemprop="name">Cocoapods: 私有仓库</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-24T22:35:04+08:00"
-              content="2018-09-24" >
-          09-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/11/01/Cocoapods-管理开源项目/" itemprop="url">
-              
-                <span itemprop="name">Cocoapods 管理开源项目</span>
+                <span itemprop="name">iOS 项目: 打造本地 pod 库</span>
               
             </a>
         
@@ -341,9 +313,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2016-11-01T22:33:21+08:00"
-              content="2016-11-01" >
-          11-01
+              datetime="2016-09-25T20:50:42+08:00"
+              content="2016-09-25" >
+          09-25
         </time>
       </div>
 
@@ -403,7 +375,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">124</span>
+                  <span class="site-state-item-count">126</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -425,7 +397,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">94</span>
+                  <span class="site-state-item-count">96</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -961,6 +933,50 @@
     }
 
     // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+ popup window;
     $('.popup-trigger').click(function(e) {
       e.stopPropagation();
       if (isfetched === false) {
