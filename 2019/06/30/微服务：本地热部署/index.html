@@ -107,11 +107,10 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/4.png">
-<meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/5.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-06-30T15:51:12.980Z">
+<meta property="og:updated_time" content="2019-07-03T14:08:56.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务：本地热部署">
 <meta name="twitter:description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码">
@@ -421,7 +420,7 @@
 <p>这两种热部署也是本地热部署，真正的远程服务器热部署方案另有方案，这个不是今天分享的点后续牵涉到部署方案再说！今天只分享如何使用 devtools 实现 Spring Boot 项目的热部署。</p>
 <h2 id="spring-boot-devtools"><a href="#spring-boot-devtools" class="headerlink" title="spring-boot-devtools"></a>spring-boot-devtools</h2><p>在 IDEA 中使用 devtools 需要修改 IDEA 的设置和工程的 pom 文件，具体操作步骤如下。</p>
 <p><strong>1、修改pom.xml文件，增加devtools</strong></p>
-<p>在pom.xml文件中的dependency下增加devtools，如下：</p>
+<p>在 <code>pom.xml</code> 文件中的 <code>dependency</code> 下增加 devtools，如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--Devtools--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>true<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>在 build 标签下增加 <code>configuration/fork</code> 配置，如果没有该项配置，devtools 不会起作用，即应用不会重启。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -429,24 +428,23 @@
 <p>在IDEA中打开 <code>File/Settings</code>，如下图所示：</p>
 <p><img src="/upload/images/2019/06/30/1.png" alt="1555860471904"></p>
 <p><strong>3、修改IDEA中的Registry</strong></p>
-<p>在IDEA中Help/Find Action…，打开下面的对话框，输入registry进行搜索，如下图：</p>
+<p>在 IDEA 中 <code>Help/Find Action...</code>，打开下面的对话框，输入registry 进行搜索，如下图：</p>
 <p><img src="/upload/images/2019/06/30/2.png" alt="1555860471904"></p>
-<p>双击Registry，出现下面弹框，如图操作，选中 <code>Compiler autoMake allow when app running</code> 即可。</p>
+<p>双击 Registry，出现下面弹框，如图操作，选中 <code>Compiler autoMake allow when app running</code> 即可。</p>
 <p><img src="/upload/images/2019/06/30/3.png" alt="1555860471904"></p>
-<p>也可以使用快捷键 <code>ctrl + shift + alt + /</code> 打开Registry，如图：</p>
+<p>也可以使用快捷键 <code>ctrl + shift + alt + /</code> 打开 Registry，如图：</p>
 <p><img src="/upload/images/2019/06/30/4.png" alt="1555860471904"></p>
 <p><strong>4、重新启动项目</strong></p>
 <p>重新运行项目进行验证。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user!"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>浏览器打开：<a href="http://localhost:8080/user" target="_blank" rel="noopener">http://localhost:8080/user</a></p>
-<p><img src="/upload/images/2019/06/30/5.png" alt="1555860471904"></p>
+<p>浏览器打开：<a href="http://localhost:8080/user" target="_blank" rel="noopener">http://localhost:8080/user</a> 可以看到效果。</p>
 <p>修改原来的 <code>user</code> 方法和增加一个 <code>user2</code> 方法，再来验证。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user, welcome!"</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user2"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user2</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user!"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>分别在浏览器打开：<a href="http://localhost:8080/user" target="_blank" rel="noopener">http://localhost:8080/user</a> 和  <a href="http://localhost:8080/user2" target="_blank" rel="noopener">http://localhost:8080/user2</a></p>
 <p><img src="/upload/images/2019/06/30/6.png" alt="1555860471904"></p>
 <p><img src="/upload/images/2019/06/30/7.png" alt="1555860471904"></p>
-<p>现在不需要重新启动、关闭这种麻烦操作了。</p>
-<p>如果你足够细心就会发现，使用 devtools 后，每次修改控制台自动的重新启动了Spring Boot项目，所以devtools是使用了重新部署的方式从而实现了热部署的功能。</p>
+<p>现在不需要在 IDEA 中重新启动、关闭这种麻烦操作了。</p>
+<p>如果你足够细心就会发现，使用 devtools 后，每次修改控制台自动的重新启动了 Spring Boot 项目，所以 devtools 是使用了重新部署的方式从而实现了热部署的功能。</p>
 <hr>
 <p><strong>改变，从你我相识开始~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
@@ -518,6 +516,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/03/微服务-立志做个伟大的项目/" rel="prev" title="微服务: 立志做个伟大的项目">
+                微服务: 立志做个伟大的项目 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -601,7 +603,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">130</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -623,7 +625,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">100</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
