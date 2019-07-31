@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-07-03T14:08:56.668Z">
+<meta property="og:updated_time" content="2019-07-31T14:38:09.251Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务：本地热部署">
 <meta name="twitter:description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码">
@@ -418,6 +418,8 @@
 <p><strong>Spring Boot Loader：真正的热部署。</strong></p>
 <p><strong>Spring Boot Devtools：重新部署来实现热部署。</strong></p>
 <p>这两种热部署也是本地热部署，真正的远程服务器热部署方案另有方案，这个不是今天分享的点后续牵涉到部署方案再说！今天只分享如何使用 devtools 实现 Spring Boot 项目的热部署。</p>
+<hr>
+<p>朋友做了一个关于 <a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">人工智能的教程</a>，教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！点 <strong><a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">这里</a></strong> 可以跳转到教程，对人工智能感兴趣的同学可以了解一下。</p>
 <h2 id="spring-boot-devtools"><a href="#spring-boot-devtools" class="headerlink" title="spring-boot-devtools"></a>spring-boot-devtools</h2><p>在 IDEA 中使用 devtools 需要修改 IDEA 的设置和工程的 pom 文件，具体操作步骤如下。</p>
 <p><strong>1、修改pom.xml文件，增加devtools</strong></p>
 <p>在 <code>pom.xml</code> 文件中的 <code>dependency</code> 下增加 devtools，如下：</p>
