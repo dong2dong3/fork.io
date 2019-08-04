@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-07-31T14:38:09.251Z">
+<meta property="og:updated_time" content="2019-08-04T14:34:17.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务：本地热部署">
 <meta name="twitter:description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码">
@@ -447,6 +447,12 @@
 <p><img src="/upload/images/2019/06/30/7.png" alt="1555860471904"></p>
 <p>现在不需要在 IDEA 中重新启动、关闭这种麻烦操作了。</p>
 <p>如果你足够细心就会发现，使用 devtools 后，每次修改控制台自动的重新启动了 Spring Boot 项目，所以 devtools 是使用了重新部署的方式从而实现了热部署的功能。</p>
+<h2 id="注意几个问题"><a href="#注意几个问题" class="headerlink" title="注意几个问题"></a>注意几个问题</h2><h4 id="1、代码修改不会立即生效"><a href="#1、代码修改不会立即生效" class="headerlink" title="1、代码修改不会立即生效"></a>1、代码修改不会立即生效</h4><p>随着工程越来越大，修改代码或者配置后需要稍等几秒钟（一般3s以内）就会自动重新启动工程，控制台就会看到日志的输出。</p>
+<h4 id="2、代码修改后控制台没有自动的重新启动工程"><a href="#2、代码修改后控制台没有自动的重新启动工程" class="headerlink" title="2、代码修改后控制台没有自动的重新启动工程"></a>2、代码修改后控制台没有自动的重新启动工程</h4><p>这个就需要按照这篇文章说的，重新检查一下如下设置：</p>
+<ul>
+<li>pom 文件，检查一下是否把必要的配置被修改了。</li>
+<li>IDE 的设置是否和本文一致。</li>
+</ul>
 <hr>
 <p><strong>改变，从你我相识开始~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
@@ -676,7 +682,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot-devtools"><span class="nav-number">2.</span> <span class="nav-text">spring-boot-devtools</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot-devtools"><span class="nav-number">2.</span> <span class="nav-text">spring-boot-devtools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意几个问题"><span class="nav-number">3.</span> <span class="nav-text">注意几个问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、代码修改不会立即生效"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、代码修改不会立即生效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、代码修改后控制台没有自动的重新启动工程"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、代码修改后控制台没有自动的重新启动工程</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
