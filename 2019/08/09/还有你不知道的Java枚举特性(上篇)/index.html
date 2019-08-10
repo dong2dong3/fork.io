@@ -84,7 +84,7 @@
 
 
 
-  <meta name="keywords" content="SpringBoot 微服务 注解," />
+  <meta name="keywords" content="java enum switch," />
 
 
 
@@ -95,23 +95,20 @@
 
 
 
-<meta name="description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符URL，Universal Resource Locator，统一资源定位符URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就">
-<meta name="keywords" content="SpringBoot 微服务 注解">
+<meta name="description" content="简介博文 Java 枚举的本质 跟大家一起学习了 Java 语言中枚举到底是什么，探索其本质和原理。用一句话来概括其本质就是：“Java 中的枚举是一个特殊的 Java 类”，有兴趣的同学可以点击了解上面那篇文章。 今天跟大家一起学习和总结一下 Java 中的枚举的其他特性和用途，由于内容较多，这次的分享分为两篇文章来写，欢迎大家拍砖、指正和交流！ 本篇主要内容：  Java switch 语句支">
+<meta name="keywords" content="java enum switch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="微服务: 学习几个容易混淆的URL注解">
-<meta property="og:url" content="http://yoursite.com/2019/08/04/微服务-学习几个容易混淆的URL注解/index.html">
+<meta property="og:title" content="还有你不知道的Java枚举特性(上篇)">
+<meta property="og:url" content="http://yoursite.com/2019/08/09/还有你不知道的Java枚举特性(上篇)/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符URL，Universal Resource Locator，统一资源定位符URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就">
+<meta property="og:description" content="简介博文 Java 枚举的本质 跟大家一起学习了 Java 语言中枚举到底是什么，探索其本质和原理。用一句话来概括其本质就是：“Java 中的枚举是一个特殊的 Java 类”，有兴趣的同学可以点击了解上面那篇文章。 今天跟大家一起学习和总结一下 Java 中的枚举的其他特性和用途，由于内容较多，这次的分享分为两篇文章来写，欢迎大家拍砖、指正和交流！ 本篇主要内容：  Java switch 语句支">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/upload/images/2019/08/04/1.png">
-<meta property="og:image" content="http://yoursite.com/upload/images/2019/08/04/2.png">
-<meta property="og:image" content="http://yoursite.com/upload/images/2019/08/04/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-08-04T05:23:40.127Z">
+<meta property="og:updated_time" content="2019-08-10T04:36:51.498Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微服务: 学习几个容易混淆的URL注解">
-<meta name="twitter:description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符URL，Universal Resource Locator，统一资源定位符URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就">
-<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/08/04/1.png">
+<meta name="twitter:title" content="还有你不知道的Java枚举特性(上篇)">
+<meta name="twitter:description" content="简介博文 Java 枚举的本质 跟大家一起学习了 Java 语言中枚举到底是什么，探索其本质和原理。用一句话来概括其本质就是：“Java 中的枚举是一个特殊的 Java 类”，有兴趣的同学可以点击了解上面那篇文章。 今天跟大家一起学习和总结一下 Java 中的枚举的其他特性和用途，由于内容较多，这次的分享分为两篇文章来写，欢迎大家拍砖、指正和交流！ 本篇主要内容：  Java switch 语句支">
+<meta name="twitter:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
 
 
 
@@ -141,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/04/微服务-学习几个容易混淆的URL注解/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/08/09/还有你不知道的Java枚举特性(上篇)/"/>
 
 
 
 
 
-  <title>微服务: 学习几个容易混淆的URL注解 | veryitman</title>
+  <title>还有你不知道的Java枚举特性(上篇) | veryitman</title>
   
 
 
@@ -310,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/04/微服务-学习几个容易混淆的URL注解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/09/还有你不知道的Java枚举特性(上篇)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="veryitman">
@@ -327,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">微服务: 学习几个容易混淆的URL注解</h1>
+          <h1 class="post-title" itemprop="name headline">还有你不知道的Java枚举特性(上篇)</h1>
         
 
         <div class="post-meta">
@@ -339,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-04T13:14:43+08:00">
-                2019-08-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-09T22:02:41+08:00">
+                2019-08-09
               </time>
             
 
@@ -362,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Server/" itemprop="url" rel="index">
-                    <span itemprop="name">Server</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -380,8 +377,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/04/微服务-学习几个容易混淆的URL注解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/08/04/微服务-学习几个容易混淆的URL注解/" itemprop="commentsCount"></span>
+                <a href="/2019/08/09/还有你不知道的Java枚举特性(上篇)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/08/09/还有你不知道的Java枚举特性(上篇)/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -409,100 +406,52 @@
       
 
       
-        <h2 id="了解-URL"><a href="#了解-URL" class="headerlink" title="了解 URL"></a>了解 URL</h2><p>首先，大家需要知道下面这三个东西的定义：</p>
-<blockquote>
-<p>URI，Universal Resource Identifier，统一资源标志符<br>URL，Universal Resource Locator，统一资源定位符<br>URN，Universal Resource Name，统一资源名称</p>
-</blockquote>
-<p>在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就是指网络地址。</p>
-<p>URL 是 URI 的子集，所有的 URL 都是 URI，但不是每个 URI 都是 URL，还有可能是 URN，他们的关系可以用下面的图来表示：</p>
-<p><img src="/upload/images/2019/08/04/1.png" alt=""></p>
-<p>换句话说，URI 分为三种，URL 或者 URN 或者是 URL 和 URI 的组合。</p>
-<p>不管怎么说，大家平时使用HTTP请求的地址基本都是称之为 URL，所以暂时不必要纠结于三者的区别之中而无法自拔，搞懂 URL 的组成部分和规范才是重点。</p>
-<p>URL 由三部分组成即资源类型、存放资源的主机域名和资源文件名。</p>
-<p>URL 的一般语法格式为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]</div></pre></td></tr></table></figure>
-<p>具体参数释义如下：</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>博文 <a href="http://www.veryitman.com/2019/03/16/Java-%E6%9E%9A%E4%B8%BE%E7%9A%84%E6%9C%AC%E8%B4%A8/" target="_blank" rel="noopener">Java 枚举的本质</a> 跟大家一起学习了 Java 语言中枚举到底是什么，探索其本质和原理。用一句话来概括其本质就是：“Java 中的枚举是一个特殊的 Java 类”，有兴趣的同学可以点击了解上面那篇文章。</p>
+<p>今天跟大家一起学习和总结一下 Java 中的枚举的其他特性和用途，由于内容较多，这次的分享分为两篇文章来写，欢迎大家拍砖、指正和交流！</p>
+<p>本篇主要内容：</p>
 <ul>
-<li><p>scheme：传送协议有些地方也写作protocol，如http、https、ftp等</p>
-</li>
-<li><p>user:password：访问资源需要的凭证信息，可省略</p>
-</li>
-<li><p>host：服务器地址，通常为域名，有时为IP地址</p>
-</li>
-<li><p>port：端口号，以数字方式表示，一般使用端口默认值80，可省略</p>
-</li>
-<li><p>path：路径，以“/”字符区别路径中的每一个目录名称</p>
-</li>
-<li><p>query：查询，GET模式的窗体参数，以“?”字符为起点，每个参数以“&amp;”隔开，再以“=”分开参数名称与数据，通常以UTF8的URL编码，避开字符冲突的问题</p>
-</li>
-<li><p>fragment：片段，以“#”字符为起点</p>
-</li>
+<li>Java switch 语句支持枚举类型以及注意事项</li>
+<li>Java 枚举的常量使用</li>
+<li>如何在自定义枚举中自定义成员变量和成员方法、静态方法</li>
+<li>Java 枚举实现接口</li>
 </ul>
-<p>常用的 URL 如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://www.veryitman.com/article/name=itman&amp;pwd=123</div><div class="line"></div><div class="line">http://www.veryitman.com/article/1/2</div></pre></td></tr></table></figure>
-<p>大部分的编程语言都会有针对 URL 处理的系统函数库，最常用的如 URLEncode、URLDecode 针对 URL 编解码的类。</p>
-<p>下面跟大家分享一下在 SpringBoot 中经常使用的 <code>RequestParam</code>、<code>PathVariable</code> 和 <code>PathParam</code> 这三个注解。</p>
-<h2 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a>@RequestParam</h2><p>注解 @RequestParam 可以从每个 HTTP Request 中获取参数，该注解支持下面四种参数：</p>
+<p>下篇主要内容：</p>
 <ul>
-<li>defaultValue 如果本次请求没有携带这个参数，或者参数为空，那么就会启用默认值</li>
-<li>name 绑定本次参数的名称，要跟 URL 上面的一样，否则会请求失败</li>
-<li>required 用来标示对应的参数是不是必须的，默认是 true，如果对某个参数做可选值可以设置该值为 false</li>
-<li>value 是 name 属性的一个别名，value 和 name 只能出现一个否则会请求报错</li>
+<li>Java 枚举是一个特殊的类，聊聊其方法的重写</li>
+<li>如何使用接口来组织 Java 枚举？</li>
+<li>JDK 数据结构中关于枚举的集合 <code>EnumSet</code> 和字典 <code>EnumMap</code></li>
 </ul>
-<p>下面是注解 @RequestParam 的源码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> org.springframework.web.bind.annotation;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Target;</div><div class="line"><span class="keyword">import</span> org.springframework.core.annotation.AliasFor;</div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.PARAMETER&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RequestParam &#123;</div><div class="line">    <span class="meta">@AliasFor</span>(<span class="string">"name"</span>)</div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line"></div><div class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</div><div class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">required</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</div><div class="line"></div><div class="line">    <span class="function">String <span class="title">defaultValue</span><span class="params">()</span> <span class="keyword">default</span> "\n\t\t\n\t\t\n\ue000\ue001\ue002\n\t\t\t\t\n"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里重点说一下 value 这个值，举个例子。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/friends"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getFrieds</span><span class="params">(@RequestParam(value = <span class="string">"page"</span>)</span> String page, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"pageSize"</span>)</span> String pageSize) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Get friend list. "</span> + <span class="string">"page: "</span> + page + <span class="string">" - pagesize: "</span> + pageSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>该方法有两个参数，分别是 <code>page</code> 和 <code>pageSize</code>，注意这里的参数 <code>pageSize</code> 是大写的，在注解 @RequestParam 中对应的 value 值也是大写的 <code>pageSize</code>，现在启动工程后，请求一下下面的地址。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?page=1&amp;pageSize=2</div></pre></td></tr></table></figure>
-<p>这个时候可以正常访问且能返回正确的结果，假如我们将 @RequestParam 中对应的 value 值改为小写的 <code>pagesize</code> 再来使用上面的地址访问呢？</p>
-<p>就会报下面的错误，如图所示：</p>
-<p><img src="/upload/images/2019/08/04/2.png" alt=""></p>
-<p>所以需要修改访问地址，即将 <code>pageSize</code> 改为 <code>pagesize</code>：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?page=1&amp;pagesize=2</div></pre></td></tr></table></figure>
-<p>那我们再思考另外一个问题，是否可以修改注解 @RequestParam 中对应的value值的 page 和 pageSize 为其他的比如 xx、yy？</p>
-<p>动手试试就知道了！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/friends"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getFrieds</span><span class="params">(@RequestParam(value = <span class="string">"xx"</span>)</span> String page, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"yy"</span>)</span> String pageSize) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Get friend list. "</span> + <span class="string">"page: "</span> + page + <span class="string">" - pagesize: "</span> + pageSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>函数本身的参数名称 page 和 pageSize 没有做任何修改，只是将注解中的修改为 <code>xx</code> 和 <code>yy</code> 了，再次访问下面的URL：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?xx=1&amp;yy=2</div></pre></td></tr></table></figure>
-<p>一如既往的正常~</p>
-<h2 id="QueryParam"><a href="#QueryParam" class="headerlink" title="@QueryParam"></a>@QueryParam</h2><p>这个跟 @RequestParam 基本一致，都是以键值对的方式来或者参数。</p>
-<p>只不过，该注解需要在 pom 文件中导入依赖，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;javax.ws.rs&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jsr311-api&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.1.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p>然后在工程类中需要导入包，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.ws.rs.QueryParam;</div></pre></td></tr></table></figure>
-<p>注解 @QueryParam 源码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> QueryParam &#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Defines the name of the HTTP query parameter whose value will be used</span></div><div class="line"><span class="comment">     * to initialize the value of the annotated method argument, class field or</span></div><div class="line"><span class="comment">     * bean property. The name is specified in decoded form, any percent encoded</span></div><div class="line"><span class="comment">     * literals within the value will not be decoded and will instead be </span></div><div class="line"><span class="comment">     * treated as literal text. E.g. if the parameter name is "a b" then the </span></div><div class="line"><span class="comment">     * value of the annotation is "a b", &lt;i&gt;not&lt;/i&gt; "a+b" or "a%20b".</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到 @QueryParam 只有 value 一个属性，value 对应的值要和函数参数保持一致，否则可能请求会得不到预期的响应结果，这个跟注解 @RequestParam 是不一样的。下面给个示例，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/friends"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getFrieds</span><span class="params">(@QueryParam(value = <span class="string">"page"</span>)</span> String page, @<span class="title">QueryParam</span><span class="params">(value = <span class="string">"pageSize"</span>)</span> String pageSize) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Get friend list. "</span> + <span class="string">"page: "</span> + page + <span class="string">" - pageSize: "</span> + pageSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在浏览器请求下面的地址即可。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?page=1&amp;pageSize=2</div></pre></td></tr></table></figure>
-<h2 id="PathVariable"><a href="#PathVariable" class="headerlink" title="@PathVariable"></a>@PathVariable</h2><p>注解 @PathVariable 与上面的刚说的注解 @RequestParam 是不同的，@PathVariable 需要从 URI 中获取参数，比如下面的例子，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/friends/&#123;page&#125;/&#123;pagesize&#125;"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getFrieds</span><span class="params">(@PathVariable(value = <span class="string">"page"</span>)</span> String page, @<span class="title">PathVariable</span><span class="params">(value = <span class="string">"pagesize"</span>)</span> String pageSize) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Get friend list. "</span> + <span class="string">"page: "</span> + page + <span class="string">" - pagesize: "</span> + pageSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在 @RequestMapping 中写了 <code>{page}/{pagesize}</code>，二者带上了 <code>{}</code> 这样 @PathVariable 才能识别。</p>
-<p>请求下面的地址，可以正常访问。</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">http://localhost:8080/friends/1/2</span></div></pre></td></tr></table></figure>
-<p>相当于 page=1，pagesize=2，所以注解 @PathVariable 是从URI 中匹配参数的，他不是以键值对方式获取对应的值。</p>
-<p>@PathVariable 源码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> org.springframework.web.bind.annotation;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Target;</div><div class="line"><span class="keyword">import</span> org.springframework.core.annotation.AliasFor;</div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.PARAMETER&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> PathVariable &#123;</div><div class="line">    <span class="meta">@AliasFor</span>(<span class="string">"name"</span>)</div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line"></div><div class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</div><div class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">required</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>有三个属性 value、name 和 required，其中 value 也是 name 的别名。</p>
-<h2 id="PathParam"><a href="#PathParam" class="headerlink" title="@PathParam"></a>@PathParam</h2><p>注解  @PathParam 源码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> javax.websocket.server;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Target;</div><div class="line"></div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.PARAMETER&#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> PathParam &#123;</div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看出，@PathVariable 和 @RequestParam 是 <code>org.springframework.x</code> 包下面的即属于spring框架，而 @PathParam 属于 <code>javax.websocket.x</code> 包下面的。</p>
-<p>注解 @PathParam 只有一个属性 value，没有其他属性了。@PathParam 里面的value对应的值一定要和函数参数名称一致（包括大小写），示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/friends"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getFrieds</span><span class="params">(@PathParam(value = <span class="string">"page"</span>)</span> String page, @<span class="title">PathParam</span><span class="params">(value = <span class="string">"pageSize"</span>)</span> String pageSize) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Get friend list. "</span> + <span class="string">"page: "</span> + page + <span class="string">" - pageSize: "</span> + pageSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在浏览器中请求下面的地址，请求和响应都是正常的。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?page=1&amp;pageSize=2</div></pre></td></tr></table></figure>
-<p>如果 @PathParam 中 value 对应的值和函数参数不一致，请求得不到预期的响应。现在修改 value 的 <code>pageSize</code> 为 <code>pagesize</code>，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/friends"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getFrieds</span><span class="params">(@PathParam(value = <span class="string">"page"</span>)</span> String page, @<span class="title">PathParam</span><span class="params">(value = <span class="string">"pagesize"</span>)</span> String pageSize) </span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="string">"Get friend list. "</span> + <span class="string">"page: "</span> + page + <span class="string">" - pageSize: "</span> + pageSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在浏览器中请求下面的地址：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?page=1&amp;pagesize=2</div></pre></td></tr></table></figure>
-<p>就会得到下面的结果，如下图所示：</p>
-<p><img src="/upload/images/2019/08/04/3.png" alt=""></p>
-<p>但是你使用 <code>http://localhost:8080/friends?page=1&amp;pageSize=2</code> 对于上面的代码请求和响应也是正常的，这就说明注解 @PathParam 中请求的 URL 参数是以函数参数为主的，他和注解 @QueryParam 、@RequestParam 都是以键值对方式获取对应的值。</p>
-<p>所以，注解 @PathParam 中 value 对应的值和函数参数尽量保持一致。</p>
+<h2 id="switch-语句支持枚举"><a href="#switch-语句支持枚举" class="headerlink" title="switch 语句支持枚举"></a>switch 语句支持枚举</h2><p>JDK1.5 才开始有枚举类型，同时可爱的 Java 组织丰富了 <code>switch</code> 语句，即支持枚举。</p>
+<p>我们还是动手写个例子~</p>
+<p>定义一个枚举 <code>Color</code>，示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    RED(<span class="string">"red color"</span>, <span class="number">0</span>), </div><div class="line">    GREEN(<span class="string">"green color"</span>, <span class="number">1</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>, <span class="number">2</span>), </div><div class="line">    YELLOW(<span class="string">"yellow color"</span>, <span class="number">3</span>);</div><div class="line"> </div><div class="line">    <span class="comment">// 构造方法</span></div><div class="line">    Color(String name, <span class="keyword">int</span> id) &#123;</div><div class="line">        _name = name;</div><div class="line">        _id = id;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _id;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _name;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _id;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Color <span class="title">getColor</span><span class="params">(<span class="keyword">int</span> max)</span> </span>&#123;</div><div class="line">        Random random = <span class="keyword">new</span> Random(System.currentTimeMillis());</div><div class="line">        <span class="keyword">int</span> num = random.nextInt(max);</div><div class="line">        <span class="keyword">switch</span> (num) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> Color.RED;</div><div class="line">        <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> Color.GREEN;</div><div class="line">        <span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">            <span class="keyword">return</span> Color.BLUE;</div><div class="line">        <span class="keyword">case</span> <span class="number">3</span>:</div><div class="line">            <span class="keyword">return</span> Color.YELLOW;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">return</span> Color.BLUE;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为枚举 <code>Color</code> 提供了一个静态方法 <code>getColor</code>，可以获取随机的颜色值。</p>
+<p>那么，可以结合 <code>switch</code> 语句这样使用，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> len = Color.values().length;</div><div class="line">    Color color = Color.getColor(len);</div><div class="line">    <span class="keyword">switch</span> (color) &#123;</div><div class="line">    <span class="keyword">case</span> RED:</div><div class="line">        System.out.println(<span class="string">"select "</span> + <span class="string">"RED"</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> GREEN:</div><div class="line">        System.out.println(<span class="string">"select "</span> + <span class="string">"GREEN"</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> BLUE:</div><div class="line">        System.out.println(<span class="string">"select "</span> + <span class="string">"BLUE"</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> YELLOW:</div><div class="line">        System.out.println(<span class="string">"select "</span> + <span class="string">"YELLOW"</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">default</span>:</div><div class="line">        System.out.println(<span class="string">"select "</span> + <span class="string">"unknow!!"</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出，<code>switch</code> 语句中条件值是 <code>Color</code> 对象。</p>
+<p>这里提醒大家要注意一个问题，如果 <code>case</code> 的条件带上类的名字，代码是无法通过编译的。如下面的代码（错误示例）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Error</span></div><div class="line"><span class="keyword">case</span> Color.RED:</div><div class="line">    System.out.println(<span class="string">"select "</span> + <span class="string">"RED"</span>);</div><div class="line">    <span class="keyword">break</span>;</div></pre></td></tr></table></figure>
+<p>编译的错误信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error: An <span class="keyword">enum</span> <span class="keyword">switch</span> <span class="keyword">case</span> label must be the unqualified name of an enumeration constant</div></pre></td></tr></table></figure>
+<p>即 <code>switch</code> <code>case</code> 语句结合枚举使用时，只能写枚举类定义的变量名称，不能加类名。</p>
+<h2 id="当常量使用"><a href="#当常量使用" class="headerlink" title="当常量使用"></a>当常量使用</h2><p>一般在 Java 中我们定义常量最常用的方式就是使用下面的方式，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_NAME_LENGTH = <span class="number">0x1112</span>;</div></pre></td></tr></table></figure>
+<p>有了枚举之后，也可以使用枚举来定义常量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">    YELLOW, BLANK, RED, GREEN</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="自定义方法、成员变量"><a href="#自定义方法、成员变量" class="headerlink" title="自定义方法、成员变量"></a>自定义方法、成员变量</h2><p>上面的例子中自定义的一个枚举 <code>Color</code>，大家可以看到可以给它添加成员变量 <code>_id</code>、<code>_name</code>，构造方法和其他方法 <code>getColor</code>（静态方法）。</p>
+<p>如果这部分很难理解，建议去阅读 <a href="http://www.veryitman.com/2019/03/16/Java-%E6%9E%9A%E4%B8%BE%E7%9A%84%E6%9C%AC%E8%B4%A8/" target="_blank" rel="noopener">Java 枚举的本质</a> 这篇文章。</p>
+<h2 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h2><p>所有的枚举类都继承自 <code>Enum</code>，因为 Java 不支持多继承，所以枚举无法继承其它类。</p>
+<p>枚举既然是和 Java 的普通类基本一样，那么，枚举当然也可以实现接口。</p>
+<p>下面是枚举 <code>Color</code> 实现接口 <code>Paint</code> 的例子，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Paint</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">setColor</span><span class="params">()</span></span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color implements Paint &#123;</div><div class="line">    RED(<span class="string">"red color"</span>),</div><div class="line">    GREEN(<span class="string">"green color"</span>),</div><div class="line">    BLUE(<span class="string">"blue color"</span>),</div><div class="line">    YELLOW(<span class="string">"yellow color"</span>);</div><div class="line"></div><div class="line">    Color(String name) &#123;</div><div class="line">        _name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String _name;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Current paint color: "</span> + _name);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>还可以采用匿名内部类的方式，让每个枚举值实现接口 <code>Paint</code> 的方法，示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color implements Paint &#123;</div><div class="line">        RED(<span class="string">"red color"</span>) &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"Current paint color: "</span> + RED._name);</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        GREEN(<span class="string">"green color"</span>) &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"Current paint color: "</span> + GREEN._name);</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        BLUE(<span class="string">"blue color"</span>) &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"Current paint color: "</span> + BLUE._name);</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        YELLOW(<span class="string">"yellow color"</span>) &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"Current paint color: "</span> + YELLOW._name);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        Color(String name) &#123;</div><div class="line">            _name = name;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> String _name;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">()</span> </span>&#123;</div><div class="line">            System.out.println(<span class="string">"Current paint color: "</span> + _name);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以写个方法测试一下，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (Color color : Color.values()) &#123;</div><div class="line">        color.setColor();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Current paint color: red color</div><div class="line">Current paint color: green color</div><div class="line">Current paint color: blue color</div><div class="line">Current paint color: yellow color</div></pre></td></tr></table></figure>
 <hr>
-<p><strong>学海无涯苦作舟~</strong></p>
+<p><strong>人生没有永远的赢家，切勿大喜大悲，要以平常心对待一切~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
       
@@ -550,7 +499,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SpringBoot-微服务-注解/" rel="tag"><i class="fa fa-tag"></i> SpringBoot 微服务 注解</a>
+            <a href="/tags/java-enum-switch/" rel="tag"><i class="fa fa-tag"></i> java enum switch</a>
           
         </div>
       
@@ -563,8 +512,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/03/微服务-立志做个伟大的项目/" rel="next" title="微服务: 立志做个伟大的项目">
-                <i class="fa fa-chevron-left"></i> 微服务: 立志做个伟大的项目
+              <a href="/2019/08/04/微服务-学习几个容易混淆的URL注解/" rel="next" title="微服务: 学习几个容易混淆的URL注解">
+                <i class="fa fa-chevron-left"></i> 微服务: 学习几个容易混淆的URL注解
               </a>
             
           </div>
@@ -572,10 +521,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/09/还有你不知道的Java枚举特性(上篇)/" rel="prev" title="还有你不知道的Java枚举特性(上篇)">
-                还有你不知道的Java枚举特性(上篇) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -730,7 +675,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解-URL"><span class="nav-number">1.</span> <span class="nav-text">了解 URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RequestParam"><span class="nav-number">2.</span> <span class="nav-text">@RequestParam</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QueryParam"><span class="nav-number">3.</span> <span class="nav-text">@QueryParam</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PathVariable"><span class="nav-number">4.</span> <span class="nav-text">@PathVariable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PathParam"><span class="nav-number">5.</span> <span class="nav-text">@PathParam</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch-语句支持枚举"><span class="nav-number">2.</span> <span class="nav-text">switch 语句支持枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当常量使用"><span class="nav-number">3.</span> <span class="nav-text">当常量使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义方法、成员变量"><span class="nav-number">4.</span> <span class="nav-text">自定义方法、成员变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现接口"><span class="nav-number">5.</span> <span class="nav-text">实现接口</span></a></li></ol></div>
             
 
           </div>
