@@ -95,22 +95,22 @@
 
 
 
-<meta name="description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符URL，Universal Resource Locator，统一资源定位符URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就">
+<meta name="description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符 URL，Universal Resource Locator，统一资源定位符 URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志">
 <meta name="keywords" content="SpringBoot 微服务 注解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务: 学习几个容易混淆的URL注解">
 <meta property="og:url" content="http://yoursite.com/2019/08/04/微服务-学习几个容易混淆的URL注解/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符URL，Universal Resource Locator，统一资源定位符URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就">
+<meta property="og:description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符 URL，Universal Resource Locator，统一资源定位符 URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/08/04/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/08/04/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/08/04/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-08-04T05:23:40.127Z">
+<meta property="og:updated_time" content="2019-08-18T13:25:14.508Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: 学习几个容易混淆的URL注解">
-<meta name="twitter:description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符URL，Universal Resource Locator，统一资源定位符URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就">
+<meta name="twitter:description" content="了解 URL首先，大家需要知道下面这三个东西的定义：  URI，Universal Resource Identifier，统一资源标志符 URL，Universal Resource Locator，统一资源定位符 URN，Universal Resource Name，统一资源名称  在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/08/04/1.png">
 
 
@@ -411,7 +411,9 @@
       
         <h2 id="了解-URL"><a href="#了解-URL" class="headerlink" title="了解 URL"></a>了解 URL</h2><p>首先，大家需要知道下面这三个东西的定义：</p>
 <blockquote>
-<p>URI，Universal Resource Identifier，统一资源标志符<br>URL，Universal Resource Locator，统一资源定位符<br>URN，Universal Resource Name，统一资源名称</p>
+<p>URI，Universal Resource Identifier，统一资源标志符</p>
+<p>URL，Universal Resource Locator，统一资源定位符</p>
+<p>URN，Universal Resource Name，统一资源名称</p>
 </blockquote>
 <p>在 WWW 上，每一信息资源都有统一的且在网上唯一的地址，该地址就叫 URL，它是 WWW 的统一资源定位标志，就是指网络地址。</p>
 <p>URL 是 URI 的子集，所有的 URL 都是 URI，但不是每个 URI 都是 URL，还有可能是 URN，他们的关系可以用下面的图来表示：</p>
@@ -440,8 +442,8 @@
 </ul>
 <p>常用的 URL 如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://www.veryitman.com/article/name=itman&amp;pwd=123</div><div class="line"></div><div class="line">http://www.veryitman.com/article/1/2</div></pre></td></tr></table></figure>
-<p>大部分的编程语言都会有针对 URL 处理的系统函数库，最常用的如 URLEncode、URLDecode 针对 URL 编解码的类。</p>
-<p>下面跟大家分享一下在 SpringBoot 中经常使用的 <code>RequestParam</code>、<code>PathVariable</code> 和 <code>PathParam</code> 这三个注解。</p>
+<p>大部分的编程语言都会有针对 URL 处理的系统函数库，最常用的如 <code>URLEncode</code>、<code>URLDecode</code> 针对 URL 编解码的类。</p>
+<p>下面跟大家分享一下在 SpringBoot 中经常使用的 <code>RequestParam</code>、<code>QueryParam</code>、<code>PathVariable</code> 和 <code>PathParam</code> 这三个注解。</p>
 <h2 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a>@RequestParam</h2><p>注解 @RequestParam 可以从每个 HTTP Request 中获取参数，该注解支持下面四种参数：</p>
 <ul>
 <li>defaultValue 如果本次请求没有携带这个参数，或者参数为空，那么就会启用默认值</li>
@@ -460,12 +462,12 @@
 <p><img src="/upload/images/2019/08/04/2.png" alt=""></p>
 <p>所以需要修改访问地址，即将 <code>pageSize</code> 改为 <code>pagesize</code>：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?page=1&amp;pagesize=2</div></pre></td></tr></table></figure>
-<p>那我们再思考另外一个问题，是否可以修改注解 @RequestParam 中对应的value值的 page 和 pageSize 为其他的比如 xx、yy？</p>
+<p>那我们再思考另外一个问题，是否可以修改注解 <code>@RequestParam</code> 中对应的value值的 page 和 pageSize 为其他的比如 xx、yy？</p>
 <p>动手试试就知道了！</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/friends"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getFrieds</span><span class="params">(@RequestParam(value = <span class="string">"xx"</span>)</span> String page, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"yy"</span>)</span> String pageSize) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Get friend list. "</span> + <span class="string">"page: "</span> + page + <span class="string">" - pagesize: "</span> + pageSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>函数本身的参数名称 page 和 pageSize 没有做任何修改，只是将注解中的修改为 <code>xx</code> 和 <code>yy</code> 了，再次访问下面的URL：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/friends?xx=1&amp;yy=2</div></pre></td></tr></table></figure>
-<p>一如既往的正常~</p>
+<p>一如既往的正常~ 所以，对于注解 <code>@RequestParam</code> 的参数，URL中对应的参数一定要和value对应。</p>
 <h2 id="QueryParam"><a href="#QueryParam" class="headerlink" title="@QueryParam"></a>@QueryParam</h2><p>这个跟 @RequestParam 基本一致，都是以键值对的方式来或者参数。</p>
 <p>只不过，该注解需要在 pom 文件中导入依赖，如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;javax.ws.rs&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jsr311-api&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.1.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
