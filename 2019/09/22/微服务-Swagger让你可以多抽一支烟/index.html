@@ -1,4 +1,954 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="SpringBoot Swagger doc,"><meta name="description" content="简介Swagger，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。 另外， Swagger 在 Github 上面是开源的。 无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。 在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测"><meta name="keywords" content="SpringBoot Swagger doc"><meta property="og:type" content="article"><meta property="og:title" content="微服务: Swagger让你可以多抽一支烟"><meta property="og:url" content="http://yoursite.com/2019/09/22/微服务-Swagger让你可以多抽一支烟/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="简介Swagger，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。 另外， Swagger 在 Github 上面是开源的。 无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。 在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/1.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/2.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/3.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/4.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/5.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/6.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/7.png"><meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg"><meta property="og:updated_time" content="2019-09-22T07:20:45.555Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="微服务: Swagger让你可以多抽一支烟"><meta name="twitter:description" content="简介Swagger，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。 另外， Swagger 在 Github 上面是开源的。 无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。 在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测"><meta name="twitter:image" content="http://yoursite.com/upload/images/2019/09/22/1.png"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2019/09/22/微服务-Swagger让你可以多抽一支烟/"><title>微服务: Swagger让你可以多抽一支烟 | veryitman</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/微服务-Swagger让你可以多抽一支烟/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">微服务: Swagger让你可以多抽一支烟</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-22T15:06:05+08:00">2019-09-22</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Server/" itemprop="url" rel="index"><span itemprop="name">Server</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2019/09/22/微服务-Swagger让你可以多抽一支烟/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2019/09/22/微服务-Swagger让你可以多抽一支烟/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://swagger.io/" target="_blank" rel="noopener">Swagger</a>，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。</p><p>另外， <a href="https://github.com/swagger-api" target="_blank" rel="noopener">Swagger</a> 在 Github 上面是开源的。</p><p>无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。</p><p>在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测试同事可以直接测试该接口。</p><p>在本篇中，跟大家分享如下内容：</p><p>1、在 SpringBoot 中项目如何集成 Swagger？</p><p>2、如何使用 Swagger，如何在不同的环境中开启和关闭 Swagger？</p><p>3、如何将同类的接口使用 Swagger 注解进行聚合？</p><p>更多关于 SpringBoot 的文章，可以点击 <a href="http://www.veryitman.com/2019/05/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0/" target="_blank" rel="noopener">微服务项目系列文章</a> 了解，完整代码示例请前往 <a href="https://github.com/veryitman/MSTutorial" target="_blank" rel="noopener">Github</a> 查看。</p><h2 id="集成-Swagger"><a href="#集成-Swagger" class="headerlink" title="集成 Swagger"></a>集成 Swagger</h2><p>在 <a href="https://mvnrepository.com/" target="_blank" rel="noopener">MavenEwpository</a> 搜索 <code>Springfox</code>，可以找到 <code>Swagger2</code> 和 <code>Swagger UI</code>，如图所示。</p><p><img src="/upload/images/2019/09/22/1.png" alt="1568529858131"></p><p>截止到目前， <code>Swagger2</code> 和 <code>Swagger UI</code> 最新版本是 <code>2.9.2</code> 版本。</p><p>修改工程的pom文件，增加 <code>Swagger2</code> 和 <code>Swagger UI</code> 的依赖，如下：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--swagger--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure><p>因为我的项目已经集成了 <code>starter-web</code>，如下 pom 文件中的 dependency：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure><p>这样默认会集成 <code>com.fasterxml.jackson.core:</code> 相关的库，不需要额外再去集成 <code>jackson-databind</code> 了，如下图所示：</p><p><img src="/upload/images/2019/09/22/2.png" alt="1568529858131"></p><p>否则你需要单独增加 <code>jackson-databind</code> 的依赖，同样的道理你可以在 <a href="https://mvnrepository.com/" target="_blank" rel="noopener">MavenEwpository</a> 搜索 <code>jackson-databind</code> 选择合适的版本即可。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure><p>工程已经集成了 <code>Swagger</code>，接下来我们看看如何使用。</p><h2 id="使用-Swagger"><a href="#使用-Swagger" class="headerlink" title="使用 Swagger"></a>使用 Swagger</h2><h4 id="1、创建Swagger配置"><a href="#1、创建Swagger配置" class="headerlink" title="1、创建Swagger配置"></a>1、创建Swagger配置</h4><p>新建一个配置类 <code>MSSwaggerConfig</code>，该文件名称和位置你可以放到你的工程的任意目录，根据自己的项目目录来放置即可。</p><p><code>MSSwaggerConfig</code> 示例代码如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableSwagger</span>2</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSwaggerConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">msblogDocket</span><span class="params">()</span> </span>&#123;</div><div class="line">        Docket docket = <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2);</div><div class="line">        String pkgName = <span class="string">"com.veryitman.springboot.controller"</span>;</div><div class="line">        <span class="keyword">return</span> docket.apiInfo(msblogAPIInfo()).select()</div><div class="line">                .apis(RequestHandlerSelectors.basePackage(pkgName))</div><div class="line">                .paths(PathSelectors.any())</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">msblogAPIInfo</span><span class="params">()</span> </span>&#123;</div><div class="line">        ApiInfoBuilder apiInfoBuilder = <span class="keyword">new</span> ApiInfoBuilder();</div><div class="line">        String apiTitle = <span class="string">"MSBlog Server API"</span>;</div><div class="line">        String apiDes = <span class="string">"API for MSBlog"</span>;</div><div class="line">        String apiVersion = <span class="string">"1.0.0"</span>;</div><div class="line">        String homePage = <span class="string">"http://veryitman.com"</span>;</div><div class="line">        String emailUrl = <span class="string">"veryitman@126.com"</span>;</div><div class="line">        Contact contact = <span class="keyword">new</span> Contact(<span class="string">"itman"</span>, homePage, emailUrl);</div><div class="line">        <span class="keyword">return</span> apiInfoBuilder.title(apiTitle).description(apiDes)</div><div class="line">                .version(apiVersion)</div><div class="line">                .contact(contact)</div><div class="line">                .license(<span class="string">"Apache 2.0"</span>)</div><div class="line">                .licenseUrl(<span class="string">"http://www.apache.org/licenses/LICENSE-2.0.html"</span>)</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>记得添加 <code>@Configuration</code>、 <code>@EnableSwagger2</code> 这两个注解。</p><p>对于 <code>apis(RequestHandlerSelectors.basePackage(pkgName))</code> 目的是只扫描指定包名下面 Controller 的 Swagger 注解，这样就不会去扫描其他包下面的类了。</p><p>对于这个配置类，主要是用来生成一些摘要信息，如图：</p><p><img src="/upload/images/2019/09/22/3.png" alt="1568529858131"></p><h4 id="2、注解-Controller"><a href="#2、注解-Controller" class="headerlink" title="2、注解 Controller"></a>2、注解 Controller</h4><p>在 <a href="http://www.veryitman.com/2019/09/15/%E5%BE%AE%E6%9C%8D%E5%8A%A1-%E7%AE%80%E5%8D%95%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E6%B3%A8%E5%86%8C%E5%92%8C%E7%99%BB%E5%BD%95/" target="_blank" rel="noopener">微服务-简单的用户名注册和登录</a> 给大家分享了如何写注册和登录的API，今天还是拿注册的例子来进行 Swagger 的演示。</p><p>下面代码是用户注册的示例代码。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"signup"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSignupController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@CrossOrigin</span>(origins = &#123;<span class="string">"*"</span>&#125;)</div><div class="line">    <span class="meta">@PostMapping</span>(value = <span class="string">"/name"</span>)</div><div class="line">    <span class="meta">@ApiOperation</span>(value = <span class="string">"用户注册"</span>, httpMethod = <span class="string">"POST"</span>, notes = <span class="string">"用户名和密码注册"</span>)</div><div class="line">    <span class="meta">@ApiImplicitParams</span>(&#123;</div><div class="line">        <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"username"</span>, value = <span class="string">"注册的用户名"</span>, required = <span class="keyword">true</span>),</div><div class="line">        <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"userpwd"</span>, value = <span class="string">"注册的密码"</span>, required = <span class="keyword">true</span>)</div><div class="line">    &#125;)</div><div class="line">    <span class="function"><span class="keyword">public</span> MSResponse <span class="title">signup</span><span class="params">(@RequestParam(value = <span class="string">"username"</span>)</span> String userName, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"userpwd"</span>)</span> String userPwd) </span>&#123;</div><div class="line">       <span class="comment">// 省略</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看到如下的注解：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ApiOperation</span>(value = <span class="string">"用户注册"</span>, httpMethod = <span class="string">"POST"</span>, notes = <span class="string">"用户名和密码注册"</span>)</div><div class="line"><span class="meta">@ApiImplicitParams</span>(&#123;</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"username"</span>, value = <span class="string">"注册的用户名"</span>, required = <span class="keyword">true</span>),</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"userpwd"</span>, value = <span class="string">"注册的密码"</span>, required = <span class="keyword">true</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure><p>这些注解就是 Swagger 的注解，<code>@ApiOperation</code> 说明了该接口的用途，<code>@ApiImplicitParams</code> 中有两个 <code>@ApiImplicitParam</code> 用来对接口的参数进行说明。</p><p>如果接口只有一个参数，可以直接使用 <code>@ApiImplicitParam</code> 注解即可。</p><h4 id="3、在线文档"><a href="#3、在线文档" class="headerlink" title="3、在线文档"></a>3、在线文档</h4><p>配置完成之后，可以启动 SpringBoot 项目，在浏览器中打开下面地址，就可以看到生成的在线文档了。</p><figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">http://localhost:8080/swagger-ui.html#/</span></div></pre></td></tr></table></figure><p><img src="/upload/images/2019/09/22/4.png" alt="1568529858131"></p><p>点击对应的 Controller 就可以看到对应接口的详细说明了，并且还可以对接口进行测试。</p><h2 id="分环境开启-Swagger"><a href="#分环境开启-Swagger" class="headerlink" title="分环境开启 Swagger"></a>分环境开启 Swagger</h2><p>在实际项目中，我们一般只会在开发和测试环境使能 Swagger，在沙盒和生成环境会关闭 Swagger，那如何控制呢？</p><p>在工程的 <code>Resources</code> 目录下面，新建几个跟环境相关的 properties 文件。</p><p>这些文件的命令要满足 <code>application-{profile}.properties</code> 的格式，其中 <code>{profile}</code> 你可以自定义名字，如下我自定义了4个环境，分别是开发、生产、沙盒和测试环境。</p><p><img src="/upload/images/2019/09/22/5.png" alt="1568529858131"></p><p>我们知道，在 <code>application-{profile}.properties</code> 中配置的选项与在 <code>application.properties</code> 中配置的选项如果名称相同，优先会使用 <code>application-{profile}.properties</code> 中配置。</p><p>在 <code>application.properties</code> 中配置如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 配置使用哪个环境</div><div class="line">spring.profiles.active=dev</div><div class="line"># 默认不启用 swagger</div><div class="line">swagger.enable=<span class="keyword">false</span></div></pre></td></tr></table></figure><p>对应的在 <code>application-dev.properties</code> 和 <code>application-test.properties</code> 中开启 swagger，如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 启用 swagger</div><div class="line">swagger.enable=<span class="keyword">true</span></div></pre></td></tr></table></figure><p>选项配置完成后，我们在代码中使用该选项，修改 <code>MSSwaggerConfig</code> 如下(只列出了修改部分的关键代码)：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableSwagger</span>2</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSwaggerConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;swagger.enable&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> enableSwagger;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">msblogDocket</span><span class="params">()</span> </span>&#123;</div><div class="line">        Docket docket = </div><div class="line">        	<span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).enable(enableSwagger);</div><div class="line">        String pkgName = <span class="string">"com.veryitman.springboot.controller"</span>;</div><div class="line">        <span class="keyword">return</span> docket.apiInfo(msblogAPIInfo())</div><div class="line">                .select()</div><div class="line">                <span class="comment">// 只扫描指定包名下面的Controller中的Swagger注解</span></div><div class="line">                .apis(RequestHandlerSelectors.basePackage(pkgName))</div><div class="line">                .paths(PathSelectors.any())</div><div class="line">                .build();</div><div class="line">    &#125;</div></pre></td></tr></table></figure><p>在下面的代码中读取配置</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;swagger.enable&#125;"</span>)</div><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> enableSwagger;</div></pre></td></tr></table></figure><p>然后调用 Docket 的 <code>enable(enableSwagger)</code> 方法来决定是否开启 Swagger，如果配置不开启，效果图如下：</p><p><img src="/upload/images/2019/09/22/6.png" alt="1568529858131"></p><p>还有其他方式来控制在不同环境下配置 Swagger 是否开启，比如可以结合注解 <code>@Profile</code> 通过不同的 profile 给 Swagger 的依赖设置不同的 scope，还可以使用注解 <code>@ConditionalOnProperty(name = &quot;swagger.enable&quot;, havingValue = &quot;true&quot;)</code>，大家自行选择适合自己项目的方案即可，目的都是一样。</p><h2 id="聚合接口"><a href="#聚合接口" class="headerlink" title="聚合接口"></a>聚合接口</h2><p>在上面实例中，我们可以看到登录和注册都属于用户模块，使用注解 <code>@API</code> 可以聚合显示这些接口。</p><p>在登录和注册的 Controller 中可以添加下面注解，从而来聚合显示接口。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Api</span>(value=<span class="string">"xxx"</span>, tags=<span class="string">"用户模块"</span>)</div></pre></td></tr></table></figure><p>注册 Controller 添加注解，如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Api</span>(value=<span class="string">"signup"</span>, tags=<span class="string">"用户模块"</span>)</div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"signup"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSignupController</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>登录 Controller 添加注解，如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Api(value=&quot;signin&quot;, tags=&quot;用户模块&quot;)</div><div class="line">@RestController</div><div class="line">@RequestMapping(value = &quot;signin&quot;)</div><div class="line">public class MSSigninController &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>显示效果如下：</p><p><img src="/upload/images/2019/09/22/7.png" alt="1568529858131"></p><hr><p><strong>你眼睛看到的不一定是事实的全部~</strong></p><p><img src="/upload/me/qrcode_wx.jpg" alt=""></p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/SpringBoot-Swagger-doc/" rel="tag"><i class="fa fa-tag"></i> SpringBoot Swagger doc</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/09/15/微服务-简单的用户名注册和登录/" rel="next" title="微服务: 简单的用户名注册和登录"><i class="fa fa-chevron-left"></i> 微服务: 简单的用户名注册和登录</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">138</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">107</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成-Swagger"><span class="nav-number">2.</span> <span class="nav-text">集成 Swagger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Swagger"><span class="nav-number">3.</span> <span class="nav-text">使用 Swagger</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、创建Swagger配置"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、创建Swagger配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、注解-Controller"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、注解 Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、在线文档"><span class="nav-number">3.0.3.</span> <span class="nav-text">3、在线文档</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#分环境开启-Swagger"><span class="nav-number">4.</span> <span class="nav-text">分环境开启 Swagger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合接口"><span class="nav-number">5.</span> <span class="nav-text">聚合接口</span></a></li></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SpringBoot Swagger doc," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介Swagger，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。 另外， Swagger 在 Github 上面是开源的。 无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。 在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测">
+<meta name="keywords" content="SpringBoot Swagger doc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务: Swagger让你可以多抽一支烟">
+<meta property="og:url" content="http://yoursite.com/2019/09/22/微服务-Swagger让你可以多抽一支烟/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="简介Swagger，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。 另外， Swagger 在 Github 上面是开源的。 无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。 在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/1.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/2.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/3.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/4.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/5.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/6.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/09/22/7.png">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-09-22T07:20:45.555Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务: Swagger让你可以多抽一支烟">
+<meta name="twitter:description" content="简介Swagger，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。 另外， Swagger 在 Github 上面是开源的。 无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。 在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/09/22/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/22/微服务-Swagger让你可以多抽一支烟/"/>
+
+
+
+
+
+  <title>微服务: Swagger让你可以多抽一支烟 | veryitman</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/微服务-Swagger让你可以多抽一支烟/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务: Swagger让你可以多抽一支烟</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-22T15:06:05+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/22/微服务-Swagger让你可以多抽一支烟/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/09/22/微服务-Swagger让你可以多抽一支烟/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://swagger.io/" target="_blank" rel="noopener">Swagger</a>，可用于生成、描述、调用和可视化 RESTful 风格接口的API，是一套规范和完整的开发框架，并且能对接口进行单独测试。</p>
+<p>另外， <a href="https://github.com/swagger-api" target="_blank" rel="noopener">Swagger</a> 在 Github 上面是开源的。</p>
+<p>无论对于后端开发，还是前端开发以及测试同事，Swagger 都可以基本满足使用需求。</p>
+<p>在 SpringBoot 中集成 Swagger，后端同事写完接口就可以自动生成API文档，可以给到前端同事看，测试同事可以直接测试该接口。</p>
+<p>在本篇中，跟大家分享如下内容：</p>
+<p>1、在 SpringBoot 中项目如何集成 Swagger？</p>
+<p>2、如何使用 Swagger，如何在不同的环境中开启和关闭 Swagger？</p>
+<p>3、如何将同类的接口使用 Swagger 注解进行聚合？</p>
+<p>更多关于 SpringBoot 的文章，可以点击 <a href="http://www.veryitman.com/2019/05/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0/" target="_blank" rel="noopener">微服务项目系列文章</a> 了解，完整代码示例请前往 <a href="https://github.com/veryitman/MSTutorial" target="_blank" rel="noopener">Github</a> 查看。</p>
+<h2 id="集成-Swagger"><a href="#集成-Swagger" class="headerlink" title="集成 Swagger"></a>集成 Swagger</h2><p>在 <a href="https://mvnrepository.com/" target="_blank" rel="noopener">MavenEwpository</a> 搜索 <code>Springfox</code>，可以找到 <code>Swagger2</code> 和 <code>Swagger UI</code>，如图所示。</p>
+<p><img src="/upload/images/2019/09/22/1.png" alt="1568529858131"></p>
+<p>截止到目前， <code>Swagger2</code> 和 <code>Swagger UI</code> 最新版本是 <code>2.9.2</code> 版本。</p>
+<p>修改工程的pom文件，增加 <code>Swagger2</code> 和 <code>Swagger UI</code> 的依赖，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--swagger--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>因为我的项目已经集成了 <code>starter-web</code>，如下 pom 文件中的 dependency：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样默认会集成 <code>com.fasterxml.jackson.core:</code> 相关的库，不需要额外再去集成 <code>jackson-databind</code> 了，如下图所示：</p>
+<p><img src="/upload/images/2019/09/22/2.png" alt="1568529858131"></p>
+<p>否则你需要单独增加 <code>jackson-databind</code> 的依赖，同样的道理你可以在  <a href="https://mvnrepository.com/" target="_blank" rel="noopener">MavenEwpository</a> 搜索 <code>jackson-databind</code> 选择合适的版本即可。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>工程已经集成了 <code>Swagger</code>，接下来我们看看如何使用。</p>
+<h2 id="使用-Swagger"><a href="#使用-Swagger" class="headerlink" title="使用 Swagger"></a>使用 Swagger</h2><h4 id="1、创建Swagger配置"><a href="#1、创建Swagger配置" class="headerlink" title="1、创建Swagger配置"></a>1、创建Swagger配置</h4><p>新建一个配置类 <code>MSSwaggerConfig</code>，该文件名称和位置你可以放到你的工程的任意目录，根据自己的项目目录来放置即可。</p>
+<p><code>MSSwaggerConfig</code> 示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableSwagger</span>2</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSwaggerConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">msblogDocket</span><span class="params">()</span> </span>&#123;</div><div class="line">        Docket docket = <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2);</div><div class="line">        String pkgName = <span class="string">"com.veryitman.springboot.controller"</span>;</div><div class="line">        <span class="keyword">return</span> docket.apiInfo(msblogAPIInfo()).select()</div><div class="line">                .apis(RequestHandlerSelectors.basePackage(pkgName))</div><div class="line">                .paths(PathSelectors.any())</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">msblogAPIInfo</span><span class="params">()</span> </span>&#123;</div><div class="line">        ApiInfoBuilder apiInfoBuilder = <span class="keyword">new</span> ApiInfoBuilder();</div><div class="line">        String apiTitle = <span class="string">"MSBlog Server API"</span>;</div><div class="line">        String apiDes = <span class="string">"API for MSBlog"</span>;</div><div class="line">        String apiVersion = <span class="string">"1.0.0"</span>;</div><div class="line">        String homePage = <span class="string">"http://veryitman.com"</span>;</div><div class="line">        String emailUrl = <span class="string">"veryitman@126.com"</span>;</div><div class="line">        Contact contact = <span class="keyword">new</span> Contact(<span class="string">"itman"</span>, homePage, emailUrl);</div><div class="line">        <span class="keyword">return</span> apiInfoBuilder.title(apiTitle).description(apiDes)</div><div class="line">                .version(apiVersion)</div><div class="line">                .contact(contact)</div><div class="line">                .license(<span class="string">"Apache 2.0"</span>)</div><div class="line">                .licenseUrl(<span class="string">"http://www.apache.org/licenses/LICENSE-2.0.html"</span>)</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>记得添加 <code>@Configuration</code>、 <code>@EnableSwagger2</code> 这两个注解。</p>
+<p>对于 <code>apis(RequestHandlerSelectors.basePackage(pkgName))</code> 目的是只扫描指定包名下面 Controller 的 Swagger 注解，这样就不会去扫描其他包下面的类了。</p>
+<p>对于这个配置类，主要是用来生成一些摘要信息，如图：</p>
+<p><img src="/upload/images/2019/09/22/3.png" alt="1568529858131"></p>
+<h4 id="2、注解-Controller"><a href="#2、注解-Controller" class="headerlink" title="2、注解 Controller"></a>2、注解 Controller</h4><p>在 <a href="http://www.veryitman.com/2019/09/15/%E5%BE%AE%E6%9C%8D%E5%8A%A1-%E7%AE%80%E5%8D%95%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E6%B3%A8%E5%86%8C%E5%92%8C%E7%99%BB%E5%BD%95/" target="_blank" rel="noopener">微服务-简单的用户名注册和登录</a> 给大家分享了如何写注册和登录的API，今天还是拿注册的例子来进行 Swagger 的演示。</p>
+<p>下面代码是用户注册的示例代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"signup"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSignupController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@CrossOrigin</span>(origins = &#123;<span class="string">"*"</span>&#125;)</div><div class="line">    <span class="meta">@PostMapping</span>(value = <span class="string">"/name"</span>)</div><div class="line">    <span class="meta">@ApiOperation</span>(value = <span class="string">"用户注册"</span>, httpMethod = <span class="string">"POST"</span>, notes = <span class="string">"用户名和密码注册"</span>)</div><div class="line">    <span class="meta">@ApiImplicitParams</span>(&#123;</div><div class="line">        <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"username"</span>, value = <span class="string">"注册的用户名"</span>, required = <span class="keyword">true</span>),</div><div class="line">        <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"userpwd"</span>, value = <span class="string">"注册的密码"</span>, required = <span class="keyword">true</span>)</div><div class="line">    &#125;)</div><div class="line">    <span class="function"><span class="keyword">public</span> MSResponse <span class="title">signup</span><span class="params">(@RequestParam(value = <span class="string">"username"</span>)</span> String userName, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"userpwd"</span>)</span> String userPwd) </span>&#123;</div><div class="line">       <span class="comment">// 省略</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到如下的注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ApiOperation</span>(value = <span class="string">"用户注册"</span>, httpMethod = <span class="string">"POST"</span>, notes = <span class="string">"用户名和密码注册"</span>)</div><div class="line"><span class="meta">@ApiImplicitParams</span>(&#123;</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"username"</span>, value = <span class="string">"注册的用户名"</span>, required = <span class="keyword">true</span>),</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"userpwd"</span>, value = <span class="string">"注册的密码"</span>, required = <span class="keyword">true</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>这些注解就是 Swagger 的注解，<code>@ApiOperation</code> 说明了该接口的用途，<code>@ApiImplicitParams</code> 中有两个 <code>@ApiImplicitParam</code> 用来对接口的参数进行说明。</p>
+<p>如果接口只有一个参数，可以直接使用 <code>@ApiImplicitParam</code> 注解即可。</p>
+<h4 id="3、在线文档"><a href="#3、在线文档" class="headerlink" title="3、在线文档"></a>3、在线文档</h4><p>配置完成之后，可以启动 SpringBoot 项目，在浏览器中打开下面地址，就可以看到生成的在线文档了。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">http://localhost:8080/swagger-ui.html#/</span></div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2019/09/22/4.png" alt="1568529858131"></p>
+<p>点击对应的 Controller 就可以看到对应接口的详细说明了，并且还可以对接口进行测试。</p>
+<h2 id="分环境开启-Swagger"><a href="#分环境开启-Swagger" class="headerlink" title="分环境开启 Swagger"></a>分环境开启 Swagger</h2><p>在实际项目中，我们一般只会在开发和测试环境使能 Swagger，在沙盒和生成环境会关闭 Swagger，那如何控制呢？</p>
+<p>在工程的 <code>Resources</code> 目录下面，新建几个跟环境相关的 properties 文件。</p>
+<p>这些文件的命令要满足 <code>application-{profile}.properties</code> 的格式，其中 <code>{profile}</code> 你可以自定义名字，如下我自定义了4个环境，分别是开发、生产、沙盒和测试环境。</p>
+<p><img src="/upload/images/2019/09/22/5.png" alt="1568529858131"></p>
+<p>我们知道，在 <code>application-{profile}.properties</code> 中配置的选项与在  <code>application.properties</code> 中配置的选项如果名称相同，优先会使用  <code>application-{profile}.properties</code> 中配置。</p>
+<p>在  <code>application.properties</code> 中配置如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 配置使用哪个环境</div><div class="line">spring.profiles.active=dev</div><div class="line"># 默认不启用 swagger</div><div class="line">swagger.enable=<span class="keyword">false</span></div></pre></td></tr></table></figure>
+<p>对应的在 <code>application-dev.properties</code> 和 <code>application-test.properties</code> 中开启 swagger，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 启用 swagger</div><div class="line">swagger.enable=<span class="keyword">true</span></div></pre></td></tr></table></figure>
+<p>选项配置完成后，我们在代码中使用该选项，修改 <code>MSSwaggerConfig</code> 如下(只列出了修改部分的关键代码)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableSwagger</span>2</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSwaggerConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;swagger.enable&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> enableSwagger;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">msblogDocket</span><span class="params">()</span> </span>&#123;</div><div class="line">        Docket docket = </div><div class="line">        	<span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).enable(enableSwagger);</div><div class="line">        String pkgName = <span class="string">"com.veryitman.springboot.controller"</span>;</div><div class="line">        <span class="keyword">return</span> docket.apiInfo(msblogAPIInfo())</div><div class="line">                .select()</div><div class="line">                <span class="comment">// 只扫描指定包名下面的Controller中的Swagger注解</span></div><div class="line">                .apis(RequestHandlerSelectors.basePackage(pkgName))</div><div class="line">                .paths(PathSelectors.any())</div><div class="line">                .build();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>在下面的代码中读取配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;swagger.enable&#125;"</span>)</div><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> enableSwagger;</div></pre></td></tr></table></figure>
+<p>然后调用 Docket 的 <code>enable(enableSwagger)</code> 方法来决定是否开启 Swagger，如果配置不开启，效果图如下：</p>
+<p><img src="/upload/images/2019/09/22/6.png" alt="1568529858131"></p>
+<p>还有其他方式来控制在不同环境下配置 Swagger 是否开启，比如可以结合注解 <code>@Profile</code> 通过不同的 profile 给 Swagger 的依赖设置不同的 scope，还可以使用注解 <code>@ConditionalOnProperty(name = &quot;swagger.enable&quot;, havingValue = &quot;true&quot;)</code>，大家自行选择适合自己项目的方案即可，目的都是一样。</p>
+<h2 id="聚合接口"><a href="#聚合接口" class="headerlink" title="聚合接口"></a>聚合接口</h2><p>在上面实例中，我们可以看到登录和注册都属于用户模块，使用注解 <code>@API</code> 可以聚合显示这些接口。</p>
+<p>在登录和注册的 Controller 中可以添加下面注解，从而来聚合显示接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Api</span>(value=<span class="string">"xxx"</span>, tags=<span class="string">"用户模块"</span>)</div></pre></td></tr></table></figure>
+<p>注册 Controller 添加注解，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Api</span>(value=<span class="string">"signup"</span>, tags=<span class="string">"用户模块"</span>)</div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"signup"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSignupController</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>登录 Controller 添加注解，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Api(value=&quot;signin&quot;, tags=&quot;用户模块&quot;)</div><div class="line">@RestController</div><div class="line">@RequestMapping(value = &quot;signin&quot;)</div><div class="line">public class MSSigninController &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>显示效果如下：</p>
+<p><img src="/upload/images/2019/09/22/7.png" alt="1568529858131"></p>
+<hr>
+<p><strong>你眼睛看到的不一定是事实的全部~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SpringBoot-Swagger-doc/" rel="tag"><i class="fa fa-tag"></i> SpringBoot Swagger doc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/15/微服务-简单的用户名注册和登录/" rel="next" title="微服务: 简单的用户名注册和登录">
+                <i class="fa fa-chevron-left"></i> 微服务: 简单的用户名注册和登录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">138</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成-Swagger"><span class="nav-number">2.</span> <span class="nav-text">集成 Swagger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Swagger"><span class="nav-number">3.</span> <span class="nav-text">使用 Swagger</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、创建Swagger配置"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、创建Swagger配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、注解-Controller"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、注解 Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、在线文档"><span class="nav-number">3.0.3.</span> <span class="nav-text">3、在线文档</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分环境开启-Swagger"><span class="nav-number">4.</span> <span class="nav-text">分环境开启 Swagger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合接口"><span class="nav-number">5.</span> <span class="nav-text">聚合接口</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1263,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

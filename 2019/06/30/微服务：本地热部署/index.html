@@ -1,4 +1,934 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="SpringBoot 微服务 热部署,"><meta name="description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码"><meta name="keywords" content="SpringBoot 微服务 热部署"><meta property="og:type" content="article"><meta property="og:title" content="微服务：本地热部署"><meta property="og:url" content="http://yoursite.com/2019/06/30/微服务：本地热部署/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/1.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/2.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/3.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/4.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/6.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/7.png"><meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg"><meta property="og:updated_time" content="2019-08-04T14:34:17.385Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="微服务：本地热部署"><meta name="twitter:description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码"><meta name="twitter:image" content="http://yoursite.com/upload/images/2019/06/30/1.png"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2019/06/30/微服务：本地热部署/"><title>微服务：本地热部署 | veryitman</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/微服务：本地热部署/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">微服务：本地热部署</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T18:50:08+08:00">2019-06-30</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Server/" itemprop="url" rel="index"><span itemprop="name">Server</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2019/06/30/微服务：本地热部署/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2019/06/30/微服务：本地热部署/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。</p><p>所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码保存后自动加载修改后的代码。</p><p>Spring Boot 提供了热部署能力。可以使用 <code>Spring Boot Loader</code> 的方式，也可以使用 <code>Spring Boot Devtools</code>的方式来进行，二者实现方式是不同的，大致总结如下：</p><p><strong>Spring Boot Loader：真正的热部署。</strong></p><p><strong>Spring Boot Devtools：重新部署来实现热部署。</strong></p><p>这两种热部署也是本地热部署，真正的远程服务器热部署方案另有方案，这个不是今天分享的点后续牵涉到部署方案再说！今天只分享如何使用 devtools 实现 Spring Boot 项目的热部署。</p><hr><p>朋友做了一个关于 <a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">人工智能的教程</a>，教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！点 <strong><a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">这里</a></strong> 可以跳转到教程，对人工智能感兴趣的同学可以了解一下。</p><h2 id="spring-boot-devtools"><a href="#spring-boot-devtools" class="headerlink" title="spring-boot-devtools"></a>spring-boot-devtools</h2><p>在 IDEA 中使用 devtools 需要修改 IDEA 的设置和工程的 pom 文件，具体操作步骤如下。</p><p><strong>1、修改pom.xml文件，增加devtools</strong></p><p>在 <code>pom.xml</code> 文件中的 <code>dependency</code> 下增加 devtools，如下：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--Devtools--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>true<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure><p>在 build 标签下增加 <code>configuration/fork</code> 配置，如果没有该项配置，devtools 不会起作用，即应用不会重启。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></div></pre></td></tr></table></figure><p><strong>2、修改IDEA编译选项</strong></p><p>在IDEA中打开 <code>File/Settings</code>，如下图所示：</p><p><img src="/upload/images/2019/06/30/1.png" alt="1555860471904"></p><p><strong>3、修改IDEA中的Registry</strong></p><p>在 IDEA 中 <code>Help/Find Action...</code>，打开下面的对话框，输入registry 进行搜索，如下图：</p><p><img src="/upload/images/2019/06/30/2.png" alt="1555860471904"></p><p>双击 Registry，出现下面弹框，如图操作，选中 <code>Compiler autoMake allow when app running</code> 即可。</p><p><img src="/upload/images/2019/06/30/3.png" alt="1555860471904"></p><p>也可以使用快捷键 <code>ctrl + shift + alt + /</code> 打开 Registry，如图：</p><p><img src="/upload/images/2019/06/30/4.png" alt="1555860471904"></p><p><strong>4、重新启动项目</strong></p><p>重新运行项目进行验证。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user!"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>浏览器打开：<a href="http://localhost:8080/user" target="_blank" rel="noopener">http://localhost:8080/user</a> 可以看到效果。</p><p>修改原来的 <code>user</code> 方法和增加一个 <code>user2</code> 方法，再来验证。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user, welcome!"</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user2"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user2</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user!"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>分别在浏览器打开：<a href="http://localhost:8080/user" target="_blank" rel="noopener">http://localhost:8080/user</a> 和 <a href="http://localhost:8080/user2" target="_blank" rel="noopener">http://localhost:8080/user2</a></p><p><img src="/upload/images/2019/06/30/6.png" alt="1555860471904"></p><p><img src="/upload/images/2019/06/30/7.png" alt="1555860471904"></p><p>现在不需要在 IDEA 中重新启动、关闭这种麻烦操作了。</p><p>如果你足够细心就会发现，使用 devtools 后，每次修改控制台自动的重新启动了 Spring Boot 项目，所以 devtools 是使用了重新部署的方式从而实现了热部署的功能。</p><h2 id="注意几个问题"><a href="#注意几个问题" class="headerlink" title="注意几个问题"></a>注意几个问题</h2><h4 id="1、代码修改不会立即生效"><a href="#1、代码修改不会立即生效" class="headerlink" title="1、代码修改不会立即生效"></a>1、代码修改不会立即生效</h4><p>随着工程越来越大，修改代码或者配置后需要稍等几秒钟（一般3s以内）就会自动重新启动工程，控制台就会看到日志的输出。</p><h4 id="2、代码修改后控制台没有自动的重新启动工程"><a href="#2、代码修改后控制台没有自动的重新启动工程" class="headerlink" title="2、代码修改后控制台没有自动的重新启动工程"></a>2、代码修改后控制台没有自动的重新启动工程</h4><p>这个就需要按照这篇文章说的，重新检查一下如下设置：</p><ul><li>pom 文件，检查一下是否把必要的配置被修改了。</li><li>IDE 的设置是否和本文一致。</li></ul><hr><p><strong>改变，从你我相识开始~</strong></p><p><img src="/upload/me/qrcode_wx.jpg" alt=""></p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/SpringBoot-微服务-热部署/" rel="tag"><i class="fa fa-tag"></i> SpringBoot 微服务 热部署</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/06/23/认知/" rel="next" title="认知"><i class="fa fa-chevron-left"></i> 认知</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2019/07/03/微服务-立志做个伟大的项目/" rel="prev" title="微服务: 立志做个伟大的项目">微服务: 立志做个伟大的项目<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">138</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">107</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot-devtools"><span class="nav-number">2.</span> <span class="nav-text">spring-boot-devtools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意几个问题"><span class="nav-number">3.</span> <span class="nav-text">注意几个问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、代码修改不会立即生效"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、代码修改不会立即生效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、代码修改后控制台没有自动的重新启动工程"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、代码修改后控制台没有自动的重新启动工程</span></a></li></ol></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SpringBoot 微服务 热部署," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码">
+<meta name="keywords" content="SpringBoot 微服务 热部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务：本地热部署">
+<meta property="og:url" content="http://yoursite.com/2019/06/30/微服务：本地热部署/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/1.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/2.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/3.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/4.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/6.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/06/30/7.png">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-08-04T14:34:17.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务：本地热部署">
+<meta name="twitter:description" content="简介在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。 所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/06/30/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/30/微服务：本地热部署/"/>
+
+
+
+
+
+  <title>微服务：本地热部署 | veryitman</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/微服务：本地热部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务：本地热部署</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T18:50:08+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/30/微服务：本地热部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/06/30/微服务：本地热部署/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在项目开发中，难免会经常修改代码来验证一些问题，如果每次修改都需要进行重新关闭、启动这样的操作会让人有点不爽，如果能实现代码的热部署就好了。</p>
+<p>所谓热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。通俗来讲，热部署就是在修改代码后，不需要重新启动服务器，就可以加载修改后的代码，看到修改后的效果。对于 IDEA 来说，热部署就是不需要反复的通过开始、停止来进行项目的启动，而是修改代码保存后自动加载修改后的代码。</p>
+<p>Spring Boot 提供了热部署能力。可以使用 <code>Spring Boot Loader</code> 的方式，也可以使用 <code>Spring Boot Devtools</code>的方式来进行，二者实现方式是不同的，大致总结如下：</p>
+<p><strong>Spring Boot Loader：真正的热部署。</strong></p>
+<p><strong>Spring Boot Devtools：重新部署来实现热部署。</strong></p>
+<p>这两种热部署也是本地热部署，真正的远程服务器热部署方案另有方案，这个不是今天分享的点后续牵涉到部署方案再说！今天只分享如何使用 devtools 实现 Spring Boot 项目的热部署。</p>
+<hr>
+<p>朋友做了一个关于 <a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">人工智能的教程</a>，教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！点 <strong><a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">这里</a></strong> 可以跳转到教程，对人工智能感兴趣的同学可以了解一下。</p>
+<h2 id="spring-boot-devtools"><a href="#spring-boot-devtools" class="headerlink" title="spring-boot-devtools"></a>spring-boot-devtools</h2><p>在 IDEA 中使用 devtools 需要修改 IDEA 的设置和工程的 pom 文件，具体操作步骤如下。</p>
+<p><strong>1、修改pom.xml文件，增加devtools</strong></p>
+<p>在 <code>pom.xml</code> 文件中的 <code>dependency</code> 下增加 devtools，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--Devtools--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>true<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在 build 标签下增加 <code>configuration/fork</code> 配置，如果没有该项配置，devtools 不会起作用，即应用不会重启。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>2、修改IDEA编译选项</strong></p>
+<p>在IDEA中打开 <code>File/Settings</code>，如下图所示：</p>
+<p><img src="/upload/images/2019/06/30/1.png" alt="1555860471904"></p>
+<p><strong>3、修改IDEA中的Registry</strong></p>
+<p>在 IDEA 中 <code>Help/Find Action...</code>，打开下面的对话框，输入registry 进行搜索，如下图：</p>
+<p><img src="/upload/images/2019/06/30/2.png" alt="1555860471904"></p>
+<p>双击 Registry，出现下面弹框，如图操作，选中 <code>Compiler autoMake allow when app running</code> 即可。</p>
+<p><img src="/upload/images/2019/06/30/3.png" alt="1555860471904"></p>
+<p>也可以使用快捷键 <code>ctrl + shift + alt + /</code> 打开 Registry，如图：</p>
+<p><img src="/upload/images/2019/06/30/4.png" alt="1555860471904"></p>
+<p><strong>4、重新启动项目</strong></p>
+<p>重新运行项目进行验证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user!"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>浏览器打开：<a href="http://localhost:8080/user" target="_blank" rel="noopener">http://localhost:8080/user</a> 可以看到效果。</p>
+<p>修改原来的 <code>user</code> 方法和增加一个 <code>user2</code> 方法，再来验证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user, welcome!"</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user2"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">user2</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Greate user!"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>分别在浏览器打开：<a href="http://localhost:8080/user" target="_blank" rel="noopener">http://localhost:8080/user</a> 和  <a href="http://localhost:8080/user2" target="_blank" rel="noopener">http://localhost:8080/user2</a></p>
+<p><img src="/upload/images/2019/06/30/6.png" alt="1555860471904"></p>
+<p><img src="/upload/images/2019/06/30/7.png" alt="1555860471904"></p>
+<p>现在不需要在 IDEA 中重新启动、关闭这种麻烦操作了。</p>
+<p>如果你足够细心就会发现，使用 devtools 后，每次修改控制台自动的重新启动了 Spring Boot 项目，所以 devtools 是使用了重新部署的方式从而实现了热部署的功能。</p>
+<h2 id="注意几个问题"><a href="#注意几个问题" class="headerlink" title="注意几个问题"></a>注意几个问题</h2><h4 id="1、代码修改不会立即生效"><a href="#1、代码修改不会立即生效" class="headerlink" title="1、代码修改不会立即生效"></a>1、代码修改不会立即生效</h4><p>随着工程越来越大，修改代码或者配置后需要稍等几秒钟（一般3s以内）就会自动重新启动工程，控制台就会看到日志的输出。</p>
+<h4 id="2、代码修改后控制台没有自动的重新启动工程"><a href="#2、代码修改后控制台没有自动的重新启动工程" class="headerlink" title="2、代码修改后控制台没有自动的重新启动工程"></a>2、代码修改后控制台没有自动的重新启动工程</h4><p>这个就需要按照这篇文章说的，重新检查一下如下设置：</p>
+<ul>
+<li>pom 文件，检查一下是否把必要的配置被修改了。</li>
+<li>IDE 的设置是否和本文一致。</li>
+</ul>
+<hr>
+<p><strong>改变，从你我相识开始~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SpringBoot-微服务-热部署/" rel="tag"><i class="fa fa-tag"></i> SpringBoot 微服务 热部署</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/23/认知/" rel="next" title="认知">
+                <i class="fa fa-chevron-left"></i> 认知
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/03/微服务-立志做个伟大的项目/" rel="prev" title="微服务: 立志做个伟大的项目">
+                微服务: 立志做个伟大的项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">138</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot-devtools"><span class="nav-number">2.</span> <span class="nav-text">spring-boot-devtools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意几个问题"><span class="nav-number">3.</span> <span class="nav-text">注意几个问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、代码修改不会立即生效"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、代码修改不会立即生效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、代码修改后控制台没有自动的重新启动工程"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、代码修改后控制台没有自动的重新启动工程</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1243,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
