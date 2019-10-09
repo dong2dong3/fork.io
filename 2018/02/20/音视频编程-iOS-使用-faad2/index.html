@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放. 在博文 音视频编程: 简单分析 WAV 文件 给大家简单的分析了一下 WAV 的数据头协议, 其实也是为了这篇博文来服务的, 所以阅读本文之前, 建议先看上文. 该系列博文:  音视频编程: 编译 faac/faad2  音视频编程: iOS 使用 faac 编码">
+<meta name="description" content="最近在看人工智能相关的知识，无意中发现了一个巨牛的 人工智能教程，分享一下给大家。 教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 这里 可以直接看教程。 简介本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放. 在博文 音视频编程: 简单分析 WAV 文件 给大家简单的分">
 <meta name="keywords" content="音视频 wav pcm faad2 aac">
 <meta property="og:type" content="article">
 <meta property="og:title" content="音视频编程: iOS 使用 faad2">
 <meta property="og:url" content="http://yoursite.com/2018/02/20/音视频编程-iOS-使用-faad2/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放. 在博文 音视频编程: 简单分析 WAV 文件 给大家简单的分析了一下 WAV 的数据头协议, 其实也是为了这篇博文来服务的, 所以阅读本文之前, 建议先看上文. 该系列博文:  音视频编程: 编译 faac/faad2  音视频编程: iOS 使用 faac 编码">
+<meta property="og:description" content="最近在看人工智能相关的知识，无意中发现了一个巨牛的 人工智能教程，分享一下给大家。 教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 这里 可以直接看教程。 简介本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放. 在博文 音视频编程: 简单分析 WAV 文件 给大家简单的分">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/02/20/11.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/02/20/22.jpg">
-<meta property="og:updated_time" content="2019-04-24T01:59:14.000Z">
+<meta property="og:updated_time" content="2019-10-09T14:10:13.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="音视频编程: iOS 使用 faad2">
-<meta name="twitter:description" content="本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放. 在博文 音视频编程: 简单分析 WAV 文件 给大家简单的分析了一下 WAV 的数据头协议, 其实也是为了这篇博文来服务的, 所以阅读本文之前, 建议先看上文. 该系列博文:  音视频编程: 编译 faac/faad2  音视频编程: iOS 使用 faac 编码">
+<meta name="twitter:description" content="最近在看人工智能相关的知识，无意中发现了一个巨牛的 人工智能教程，分享一下给大家。 教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 这里 可以直接看教程。 简介本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放. 在博文 音视频编程: 简单分析 WAV 文件 给大家简单的分">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2018/02/20/11.jpg">
 
 
@@ -417,7 +417,9 @@
       
 
       
-        <p>本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放.</p>
+        <p>最近在看人工智能相关的知识，无意中发现了一个巨牛的 <a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">人工智能教程</a>，分享一下给大家。</p>
+<p>教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 <a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">这里</a> 可以直接看教程。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本次分享使用 faad2 解码 AAC 音频文件, 将 AAC 文件转换为 WAV 文件并使用 AVAudioPlayer 进行播放.</p>
 <p>在博文 <a href="http://www.veryitman.com/2018/02/20/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90-WAV-%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">音视频编程: 简单分析 WAV 文件</a> 给大家简单的分析了一下 WAV 的数据头协议, 其实也是为了这篇博文来服务的, 所以阅读本文之前, 建议先看上文.</p>
 <p><strong>该系列博文:</strong></p>
 <ul>
@@ -432,7 +434,7 @@
 <li><p><a href="http://www.veryitman.com/2018/02/25/%E9%9F%B3%E8%A7%86%E9%A2%91%E7%BC%96%E7%A8%8B-%E6%9E%84%E5%BB%BA-nginx-%E6%8E%A8%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">音视频编程: 构建 nginx 推流服务器</a></p>
 </li>
 </ul>
-<h2 id="例子简介"><a href="#例子简介" class="headerlink" title="例子简介"></a>例子简介</h2><p>本文以一个实际的例子, 使用 faad2的各个函数来解码 AAC 数据.</p>
+<h2 id="例子介绍"><a href="#例子介绍" class="headerlink" title="例子介绍"></a>例子介绍</h2><p>本文以一个实际的例子, 使用 faad2的各个函数来解码 AAC 数据.</p>
 <p>主要有以下几个步骤:</p>
 <ul>
 <li>获取输入文件</li>
@@ -686,7 +688,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#例子简介"><span class="nav-number">1.</span> <span class="nav-text">例子简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工程实战"><span class="nav-number">2.</span> <span class="nav-text">工程实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入-faad2"><span class="nav-number">2.1.</span> <span class="nav-text">引入 faad2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码实现"><span class="nav-number">2.2.</span> <span class="nav-text">编码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#麻烦"><span class="nav-number">3.</span> <span class="nav-text">麻烦</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子介绍"><span class="nav-number">2.</span> <span class="nav-text">例子介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工程实战"><span class="nav-number">3.</span> <span class="nav-text">工程实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入-faad2"><span class="nav-number">3.1.</span> <span class="nav-text">引入 faad2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码实现"><span class="nav-number">3.2.</span> <span class="nav-text">编码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#麻烦"><span class="nav-number">4.</span> <span class="nav-text">麻烦</span></a></li></ol></div>
             
 
           </div>

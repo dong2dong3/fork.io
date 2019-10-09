@@ -95,19 +95,19 @@
 
 
 
-<meta name="description" content="简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 calloc、realloc、reallocf、valloc 等堆内存管理函数。 void *在进行下面话题之前，我们先回忆一下 void * 是什么？ void * 表示未">
+<meta name="description" content="最近在看人工智能相关的知识，无意中发现了一个巨牛的 人工智能教程，分享一下给大家。 教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 这里 可以直接看教程。  简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内">
 <meta name="keywords" content="malloc free">
 <meta property="og:type" content="article">
 <meta property="og:title" content="双宿双飞的 malloc 和 free">
 <meta property="og:url" content="http://yoursite.com/2019/05/02/双宿双飞的-malloc-和-free/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 calloc、realloc、reallocf、valloc 等堆内存管理函数。 void *在进行下面话题之前，我们先回忆一下 void * 是什么？ void * 表示未">
+<meta property="og:description" content="最近在看人工智能相关的知识，无意中发现了一个巨牛的 人工智能教程，分享一下给大家。 教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 这里 可以直接看教程。  简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-05-19T14:39:40.860Z">
+<meta property="og:updated_time" content="2019-10-09T14:10:13.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="双宿双飞的 malloc 和 free">
-<meta name="twitter:description" content="简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 calloc、realloc、reallocf、valloc 等堆内存管理函数。 void *在进行下面话题之前，我们先回忆一下 void * 是什么？ void * 表示未">
+<meta name="twitter:description" content="最近在看人工智能相关的知识，无意中发现了一个巨牛的 人工智能教程，分享一下给大家。 教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 这里 可以直接看教程。  简介函数 malloc 和 free 是一对好朋友，几乎是形影不离。有 malloc 的地方就应该有 free 的存在。 今天跟大家聊聊 malloc 和 free 这对好基友，这两个函数都是对堆内">
 <meta name="twitter:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
 
 
@@ -416,7 +416,10 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>函数 <code>malloc</code> 和 <code>free</code> 是一对好朋友，几乎是形影不离。有 <code>malloc</code> 的地方就应该有 <code>free</code> 的存在。</p>
+        <p>最近在看人工智能相关的知识，无意中发现了一个巨牛的 <a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">人工智能教程</a>，分享一下给大家。</p>
+<p>教程不仅是零基础，通俗易懂，而且非常风趣幽默，像看小说一样！觉得太牛了，所以分享给大家。点 <a href="https://www.cbedai.net/androidbluetooth" target="_blank" rel="noopener">这里</a> 可以直接看教程。</p>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>函数 <code>malloc</code> 和 <code>free</code> 是一对好朋友，几乎是形影不离。有 <code>malloc</code> 的地方就应该有 <code>free</code> 的存在。</p>
 <p>今天跟大家聊聊 <code>malloc</code> 和 <code>free</code> 这对好基友，这两个函数都是对堆内存进行管理的函数，另外还有 <code>calloc</code>、<code>realloc</code>、<code>reallocf</code>、<code>valloc</code> 等堆内存管理函数。</p>
 <h2 id="void"><a href="#void" class="headerlink" title="void *"></a>void *</h2><p>在进行下面话题之前，我们先回忆一下 <code>void *</code> 是什么？</p>
 <p><code>void *</code> 表示未确定类型的指针。C/C++规定，<code>void *</code> 类型可以强制转换为任何其它类型的指针。</p>
