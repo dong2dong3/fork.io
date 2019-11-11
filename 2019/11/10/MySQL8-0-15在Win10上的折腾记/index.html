@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/5.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-11-10T05:54:07.080Z">
+<meta property="og:updated_time" content="2019-11-11T14:47:34.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL8.0.15在Win10上的折腾记">
 <meta name="twitter:description" content="安装和配置MySQL我用 MySQL Instller 安装的MySQL，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要网络稳定，按照默认安装即可，整个安装过程还算比较顺利。但是需要设置密码，我设置的账号和密码都是 root，所以下面都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的path变量中去，如图：  系统环境变量path中加">
@@ -428,7 +428,7 @@
 <p>系统环境变量<code>path</code>中加入<code>%MySQL_Home%\bin</code> 即可。</p>
 <p>加入成功之后，就可以使用<code>mysql</code>命令了。</p>
 <p><strong>题外话</strong>，我们在命令行使用的<code>mysql</code>命令其实是对应<code>MySQL Server 8.0\bin\mysql.exe</code>，可以使用<code>where</code>命令看一下其可执行文件的位置，如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> where mysql</div><div class="line">C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">where</span> mysql</span></div><div class="line">C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe</div></pre></td></tr></table></figure>
 <p>同理， <code>mysqld</code>命令对应的是<code>mysqld.exe</code>可执行文件。</p>
 <p>查看安装的<code>mysql-server</code>版本，可以执行下面的命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql --version</div></pre></td></tr></table></figure>
@@ -453,10 +453,11 @@
 <p>看到如下提示表示启动成功，如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">TCP    0.0.0.0:3306           0.0.0.0:0              LISTENING       10344</div><div class="line">TCP    0.0.0.0:33060          0.0.0.0:0              LISTENING       10344</div><div class="line">TCP    [::]:3306              [::]:0                 LISTENING       10344</div><div class="line">TCP    [::]:33060             [::]:0                 LISTENING       10344</div><div class="line">TCP    [::1]:3306             [::1]:56962            TIME_WAIT       0</div></pre></td></tr></table></figure>
 <p>登录mysql80服务，执行如下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> mysql -uroot -proot</div><div class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</div><div class="line">ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -proot</span></div><div class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</div><div class="line">ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)</div></pre></td></tr></table></figure>
 <p>很不幸的是，登录失败（ERROR 1045）。</p>
 <p>那我们就来解决这个问题，这个版本的MySQL和之前的8.0.x版本解决方案不同，网上找过很多解决方案有修改配置文件的，忙了半天还是没有搞定，最后在StackOverflow上面找到方案，结合个人实践总结了一下，还烦请大家务必往下看。</p>
-<h2 id="解决MySQL登录受限"><a href="#解决MySQL登录受限" class="headerlink" title="解决MySQL登录受限"></a>解决MySQL登录受限</h2><p>新版本的MySQL加强了安全方便的考虑，所以使用新版本比较费劲，如果你不想折腾，可以安装MySQL的5.x版本。</p>
+<h2 id="解决MySQL登录受限"><a href="#解决MySQL登录受限" class="headerlink" title="解决MySQL登录受限"></a>解决MySQL登录受限</h2><p>在看下面内容之前，务必完成之前的步骤，否则下面的内容对你来说没有太大价值。</p>
+<p>新版本的MySQL加强了安全方便的考虑，所以使用新版本比较费劲，如果你不想折腾，可以安装MySQL的5.x版本。</p>
 <p><strong>Step-1</strong>：停止MySQL80服务</p>
 <p>使用快捷键 <code>win+R</code> 输入 <code>services.msc</code>，打开如下视图并找到MySQL80服务：</p>
 <p><img src="/upload/images/2019/11/10/2.png" alt="1568529858131"></p>
@@ -487,6 +488,10 @@
 <p>登录成功后，修改密码（永远不过期的密码）执行：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">'root'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'newpwd123'</span> <span class="keyword">PASSWORD</span> <span class="keyword">EXPIRE</span> <span class="keyword">NEVER</span>;</div></pre></td></tr></table></figure>
 <p>我把原来的密码修改为<code>newpwd123</code>，你可以根据自己的爱好设置为其他的密码。</p>
+<p>如果在此步骤出现类似下面的错误:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1290 (HY000): The MySQL server is running with the --skip-grant-tables option so it cannot execute this statement</div></pre></td></tr></table></figure>
+<p>请执行下面的SQL语句，如下命令：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure>
 <p><strong>Step-9</strong>：退出mysql，重新登录</p>
 <p>退出mysql，然后重新使用修改过的密码登录mysql，完事。</p>
 <h2 id="MySQL配置文件？"><a href="#MySQL配置文件？" class="headerlink" title="MySQL配置文件？"></a>MySQL配置文件？</h2><p>这也是个神奇的问题，最后在MySQL的官方手册里找到了Answer。</p>
@@ -502,7 +507,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">可执行文件的路径：</div><div class="line">"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe" MySQL</div></pre></td></tr></table></figure>
 <p>并没有指定配置文件，这也是为什么让大家启动的时候执行 <code>net start mysql80</code> 的原因。</p>
 <p>顺便修改一下配置文件，把默认编码改为<code>utf-8</code>，如下配置（记得是在[client]和[mysql]标签下）：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="meta">#</span> pipe=</div><div class="line"><span class="meta">#</span> socket=MYSQL</div><div class="line"><span class="meta">#</span> 设置mysql客户端连接服务端时默认使用的端口</div><div class="line">port=3306</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysql]</div><div class="line">no-beep</div><div class="line"><span class="meta">#</span> 设置默认编码</div><div class="line">default-character-set=utf8</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line"><span class="meta">#</span><span class="bash"> pipe=</span></div><div class="line"><span class="meta">#</span><span class="bash"> socket=MYSQL</span></div><div class="line"><span class="meta">#</span><span class="bash"> 设置mysql客户端连接服务端时默认使用的端口</span></div><div class="line">port=3306</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysql]</div><div class="line">no-beep</div><div class="line"><span class="meta">#</span><span class="bash"> 设置默认编码</span></div><div class="line">default-character-set=utf8</div></pre></td></tr></table></figure>
 <h2 id="还有奇葩的错误"><a href="#还有奇葩的错误" class="headerlink" title="还有奇葩的错误"></a>还有奇葩的错误</h2><blockquote>
 <p>会持续记录各种奇葩错误。</p>
 </blockquote>
