@@ -95,13 +95,13 @@
 
 
 
-<meta name="description" content="安装和配置MySQL我用 MySQL Instller 安装的MySQL，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要网络稳定，按照默认安装即可，整个安装过程还算比较顺利。但是需要设置密码，我设置的账号和密码都是 root，所以下面都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的path变量中去，如图：  系统环境变量path中加">
+<meta name="description" content="安装和配置MySQL我在Windows 10上面使用 MySQL Instller 安装的MySQL8.0.15，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要你的网络稳定，按照默认安装整个安装过程还算比较顺利。安装过程中需要设置密码，我设置的账号和密码都是 root，所以下面的操作都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的p">
 <meta name="keywords" content="MySQL Win10">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL8.0.15在Win10上的折腾记">
 <meta property="og:url" content="http://yoursite.com/2019/11/10/MySQL8-0-15在Win10上的折腾记/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="安装和配置MySQL我用 MySQL Instller 安装的MySQL，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要网络稳定，按照默认安装即可，整个安装过程还算比较顺利。但是需要设置密码，我设置的账号和密码都是 root，所以下面都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的path变量中去，如图：  系统环境变量path中加">
+<meta property="og:description" content="安装和配置MySQL我在Windows 10上面使用 MySQL Instller 安装的MySQL8.0.15，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要你的网络稳定，按照默认安装整个安装过程还算比较顺利。安装过程中需要设置密码，我设置的账号和密码都是 root，所以下面的操作都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的p">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/2.png">
@@ -109,10 +109,10 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/5.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-11-11T14:47:34.072Z">
+<meta property="og:updated_time" content="2019-11-16T08:38:55.979Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL8.0.15在Win10上的折腾记">
-<meta name="twitter:description" content="安装和配置MySQL我用 MySQL Instller 安装的MySQL，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要网络稳定，按照默认安装即可，整个安装过程还算比较顺利。但是需要设置密码，我设置的账号和密码都是 root，所以下面都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的path变量中去，如图：  系统环境变量path中加">
+<meta name="twitter:description" content="安装和配置MySQL我在Windows 10上面使用 MySQL Instller 安装的MySQL8.0.15，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要你的网络稳定，按照默认安装整个安装过程还算比较顺利。安装过程中需要设置密码，我设置的账号和密码都是 root，所以下面的操作都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的p">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/11/10/1.png">
 
 
@@ -421,8 +421,8 @@
       
 
       
-        <h2 id="安装和配置MySQL"><a href="#安装和配置MySQL" class="headerlink" title="安装和配置MySQL"></a>安装和配置MySQL</h2><p>我用 <code>MySQL Instller</code> 安装的MySQL，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。</p>
-<p>只要网络稳定，按照默认安装即可，整个安装过程还算比较顺利。但是需要设置密码，我设置的账号和密码都是 <code>root</code>，所以下面都是基于这个账号和密码进行的。</p>
+        <h2 id="安装和配置MySQL"><a href="#安装和配置MySQL" class="headerlink" title="安装和配置MySQL"></a>安装和配置MySQL</h2><p>我在Windows 10上面使用 <code>MySQL Instller</code> 安装的MySQL8.0.15，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。</p>
+<p>只要你的网络稳定，按照默认安装整个安装过程还算比较顺利。安装过程中需要设置密码，我设置的账号和密码都是 <code>root</code>，所以下面的操作都是基于这个账号和密码进行的。</p>
 <p>安装完成后，将<code>mysql server</code>的 <code>bin目录</code>加入到系统的<code>path</code>变量中去，如图：</p>
 <p><img src="/upload/images/2019/11/10/1.png" alt="1568529858131"></p>
 <p>系统环境变量<code>path</code>中加入<code>%MySQL_Home%\bin</code> 即可。</p>
@@ -443,8 +443,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Service successfully installed.</div></pre></td></tr></table></figure>
 <p>再次启动 mysql80，执行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net start mysql80</div></pre></td></tr></table></figure>
-<p><strong>注意</strong>：这里使用的是<code>mysql80</code>，这个是服务的名称，不是<code>mysql</code>，下面会讲解为什么这样做。</p>
-<p>如果出现类似 “MYSQL 服务无法启动” 的提示，可以在Windows的任务管理器中找找是否已经启动了<code>mysqld</code>服务，可以手动关闭后再来启动。如果始终启动失败，可以执行：</p>
+<p><strong>注意</strong>：这里使用的是<code>mysql80</code>，这个是服务的名称 （安装时候我设置的服务名称） ，不是<code>mysql</code>，下面会讲解为什么这样做，如果你没有这个<code>mysql80</code>服务只需要启动<code>mysql</code>服务即可。</p>
+<p>如果出现类似 “MYSQL 服务无法启动” 的提示，可以在Windows的任务管理器中找找是否已经启动了<code>mysqld</code>服务，可以手动关闭后再来启动。</p>
+<p>如果始终启动失败，可以执行下面的命令： </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --initialize</div></pre></td></tr></table></figure>
 <p>启动成功后，显示如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MySQL80 服务正在启动 .</div><div class="line">MySQL80 服务已经启动成功。</div></pre></td></tr></table></figure>
@@ -482,7 +483,7 @@
 <p>需要关闭以 <code>-console --skip-grant-tables --shared-memory</code> 启动的mysql80服务，直接在终端1中<code>ctrl+c</code>即可。</p>
 <p><strong>Step-8</strong>：启动mysql80服务</p>
 <p>使用<strong>Step-1</strong>步骤中的方式打开Windows的服务启动或者在终端1中执行<code>net start mysql80</code>启动mysql80服务。</p>
-<p><strong>Step-8</strong>： 无密码登录mysql</p>
+<p><strong>Step-9</strong>： 无密码登录mysql</p>
 <p>在步骤<strong>Step-5</strong>中已将密码置空，现在可以无密码状态登录mysql服务，输入登录命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div></pre></td></tr></table></figure>
 <p>登录成功后，修改密码（永远不过期的密码）执行：</p>
@@ -492,7 +493,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1290 (HY000): The MySQL server is running with the --skip-grant-tables option so it cannot execute this statement</div></pre></td></tr></table></figure>
 <p>请执行下面的SQL语句，如下命令：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure>
-<p><strong>Step-9</strong>：退出mysql，重新登录</p>
+<p><strong>Step-10</strong>：退出mysql，重新登录</p>
 <p>退出mysql，然后重新使用修改过的密码登录mysql，完事。</p>
 <h2 id="MySQL配置文件？"><a href="#MySQL配置文件？" class="headerlink" title="MySQL配置文件？"></a>MySQL配置文件？</h2><p>这也是个神奇的问题，最后在MySQL的官方手册里找到了Answer。</p>
 <p>在Windows系统中C盘有个隐藏的文件夹，我们来揭开它的神秘面纱。</p>
@@ -512,7 +513,7 @@
 <p>会持续记录各种奇葩错误。</p>
 </blockquote>
 <p>1、<strong>ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost’ (10061)</strong></p>
-<p>登录mysql服务，报上面的错误，说明没有启动成功mysql80服务，最大的可能是你修改了配置文件要么格式错了要么配置的东西mysql不认。</p>
+<p>登录mysql服务，报上面的错误，说明没有启动成功mysql80服务，最大的可能是你修改了配置文件要么是格式错了要么是配置的东西mysql不认。</p>
 <p>只能把配置文件修改正确才能启动服务。</p>
 <hr>
 <p><strong>我们要学会做自己精神领域内的君王，不要成为别人情绪世界里面的奴隶。</strong></p>
