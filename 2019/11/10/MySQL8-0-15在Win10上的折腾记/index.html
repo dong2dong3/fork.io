@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/5.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-11-16T08:38:55.979Z">
+<meta property="og:updated_time" content="2019-11-18T15:10:36.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL8.0.15在Win10上的折腾记">
 <meta name="twitter:description" content="安装和配置MySQL我在Windows 10上面使用 MySQL Instller 安装的MySQL8.0.15，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要你的网络稳定，按照默认安装整个安装过程还算比较顺利。安装过程中需要设置密码，我设置的账号和密码都是 root，所以下面的操作都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的p">
@@ -468,7 +468,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --console --skip-grant-tables --shared-memory</div></pre></td></tr></table></figure>
 <p>此时可以成功启动mysql80服务，但是在Windows的服务中是看不到的，不用理会。继续。</p>
 <p><strong>Step-3</strong>：启动另一个终端2</p>
-<p>上述步骤启动完成后，再用管理员身份运行另一个Windows的终端2(CMD)，记得一定要用系统自带的，Git Bash 在这步骤中不起作用。</p>
+<p>上述步骤启动完成后，再用管理员身份运行另一个Windows的终端2(CMD)，用系统自带的或者Git Bash 都可以，但是如果使用 Git Bash 的话，必须在登录mysql的时候使用 <strong>winpty</strong>（Git Bash自带的工具）命令，否则登录会卡住不动。命令使用如下：</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">winpty mysql -uroot -proot</div></pre></td></tr></table></figure>
 <p><strong>Step-4</strong>：终端登录mysql</p>
 <p>执行下面命令登录服务：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p root</div></pre></td></tr></table></figure>
