@@ -1,4 +1,1037 @@
-<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><style>.pace .pace-progress{background:#1e92fb;height:3px}.pace .pace-progress-inner{box-shadow:0 0 10px #1e92fb,0 0 5px #1e92fb}.pace .pace-activity{border-top-color:#1e92fb;border-left-color:#1e92fb}</style><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="HTTP OPTIONS CORS,"><meta name="description" content="简介我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。 123Access to XMLHttpRequest at &apos;http://www.xxx.com/yyy&apos; from origin &apos;null&apos; has been blocked by CORS policy:Response to p"><meta name="keywords" content="HTTP OPTIONS CORS"><meta property="og:type" content="article"><meta property="og:title" content="跨域和OPTIONS这对欢喜冤家"><meta property="og:url" content="http://yoursite.com/2019/08/31/跨域和OPTIONS这对欢喜冤家/index.html"><meta property="og:site_name" content="veryitman"><meta property="og:description" content="简介我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。 123Access to XMLHttpRequest at &apos;http://www.xxx.com/yyy&apos; from origin &apos;null&apos; has been blocked by CORS policy:Response to p"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/4.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/1.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/2.png"><meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/3.png"><meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg"><meta property="og:updated_time" content="2019-09-01T06:57:25.789Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="跨域和OPTIONS这对欢喜冤家"><meta name="twitter:description" content="简介我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。 123Access to XMLHttpRequest at &apos;http://www.xxx.com/yyy&apos; from origin &apos;null&apos; has been blocked by CORS policy:Response to p"><meta name="twitter:image" content="http://yoursite.com/upload/images/2019/08/31/4.png"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Mist",version:"5.1.4",sidebar:{position:"right",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/2019/08/31/跨域和OPTIONS这对欢喜冤家/"><title>跨域和OPTIONS这对欢喜冤家 | veryitman</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-right page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">veryitman</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i><br> 分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/31/跨域和OPTIONS这对欢喜冤家/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="veryitman"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="veryitman"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">跨域和OPTIONS这对欢喜冤家</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-31T11:05:40+08:00">2019-08-31</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/网络协议/" itemprop="url" rel="index"><span itemprop="name">网络协议</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/2019/08/31/跨域和OPTIONS这对欢喜冤家/#comments" itemprop="discussionUrl"><span class="post-comments-count gitment-comments-count" data-xid="/2019/08/31/跨域和OPTIONS这对欢喜冤家/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。</p><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Access to XMLHttpRequest at 'http://www.xxx.com/yyy' from origin 'null' has been blocked by CORS policy:</div><div class="line">Response to preflight request doesn't pass access control check: </div><div class="line">No 'Access-Control-Allow-Origin' header is present on the requested resource.</div></pre></td></tr></table></figure><p>如果是第一次遇到，你肯定会觉得很好奇，忍不住会去一探究竟~</p><p>还有些同事会遇到另一个神奇的错误，即发送GET或者POST请求之前，居然先给服务器发送了一个 OPTIONS 请求，让人不可思议的是这个 OPTIONS 请求是自动发的，服务器在没有任何设置的条件下直接将这个请求夭折掉，如下返回 <code>403</code> 错误，也可能是其他错误。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">OPTIONS http://www.xxx.com/yyy 403</div></pre></td></tr></table></figure><p>引起这些问题的罪魁祸首就是 <code>跨域</code> ，今天我跟大家一起以实际的例子来看看这个神奇的 <code>跨域</code> 问题。</p><p>文中使用的代码都可以在 <a href="https://github.com/veryitman/MSTutorial" target="_blank" rel="noopener">Github</a> 找到，大家根据需要自行采纳。</p><h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p>在说 <code>跨域</code> 之前，我们还是要了解一下 <code>同源策略</code> 是个什么鬼！</p><p>在百度百科里面是这样定义 <code>同源策略</code> 的，如下：</p><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。</div><div class="line"></div><div class="line">可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现。</div></pre></td></tr></table></figure><p>听起来，这玩意挺高大上的，简单理解 <code>同源策略</code> 就是一种安全策略。它是由 <a href="https://baike.baidu.com/item/Netscape/2778944" target="_blank" rel="noopener">Netscape</a> 提出的一个著名的安全策略，现在所有支持JavaScript的浏览器都会使用这个策略，也是必须遵守的一个策略。</p><p>那么 <code>同源策略</code> 中的 <code>同源</code> 是指 <code>域名</code>，<code>协议</code>，<code>端口</code> 三者必须相同，如果有任何一个不同就会引起跨域。</p><p>下表给出了相对 <code>http://a.xx.com/yy/zz.html</code> 同源检测的示例:</p><table><thead><tr><th>URL</th><th>结果</th><th>原因</th></tr></thead><tbody><tr><td><code>http://a.xxx.com/ff/other.html</code></td><td>成功</td><td>域名、协议、端口(默认80)一致</td></tr><tr><td><code>http://a.xxx.com/gg/hh/another.html</code></td><td>成功</td><td>域名、协议、端口(默认80)一致</td></tr><tr><td><code>https://a.xxx.com/secure.html</code></td><td>失败</td><td>不同协议 ( HTTPS和HTTP )</td></tr><tr><td><code>http://a.xxx.com:81/dir/etc.html</code></td><td>失败</td><td>不同端口 ( 81和80)</td></tr><tr><td><code>http://a.wpq.com/yy/other.html</code></td><td>失败</td><td>不同域名 ( xxx和wpq)</td></tr><tr><td><code>http://123.21.122.12/dir</code></td><td>失败</td><td>域名IP不等同于域名</td></tr><tr><td><code>http://xx.xxx.com/dir2/</code></td><td>失败</td><td>主域相同，子域不同</td></tr></tbody></table><p>简单来说，HTML代码运行在一个web主机上面（假设域名是 <code>http://a.xx.com/yy/zz.html</code>），而HTML代码中有需要请求服务器某个API接口（<code>http://api.user.com/name</code>）的，那么就会造成跨域问题。</p><p>同源策略会影响：</p><p>（1） Cookie、LocalStorage 和 IndexDB 无法读取。</p><p>（2） DOM 无法获得。</p><p>（3） AJAX 请求不能正常发送，有可能还会引起 OPTIONS 请求。</p><h2 id="OPTIONS请求"><a href="#OPTIONS请求" class="headerlink" title="OPTIONS请求"></a>OPTIONS请求</h2><p>大家所熟知的HTTP请求最多的应该就是GET和POST请求，这两种请求也是软件开发中用的最多的。</p><blockquote><p>GET：向特定的资源发出请求，一般对服务器来说是一个只读的请求，不会对资源进行写操作。</p><p>POST：向指定资源提交数据进行处理请求，例如提交表单或者上传文件，数据被包含在请求体（body）中，该请求可能会对服务器资源进行读写操作。</p></blockquote><p>除了这两种请求外，HTTP还有其他种类的请求，如下：</p><blockquote><p>PUT：向指定资源位置上传其最新内容，一般用于资源的整体更新，而下面的PATCH用于资源的部分更新。</p><p>DELETE：请求服务器删除所标识的资源。</p><p>HEAD：向服务器索要与GET请求相一致的响应，只不过响应体将不会被返回，可以在不必传输整个响应内容的情况下，就可以获取包含在响应消息头中的元信息。</p><p>TRACE：回显服务器收到的请求，主要用于测试或诊断。</p><p>OPTIONS：返回服务器针对特定资源所支持的HTTP请求方法。也可以利用向Web服务器发送’*’的请求来测试服务器的功能性。该请求不会修改服务器资源，相对比较安全。</p><p>CONNECT：是 <code>HTTP/1.1</code> 协议预留的，能够将连接改为管道方式的代理服务器。通常用于 SSL 加密服务器的链接与非加密的HTTP代理服务器的通信。</p><p>PATCH：是对 PUT 方法的补充，用来对已知资源进行局部更新。当资源不存在时，PATCH 会创建一个新的资源，而 PUT 只会对已存在的资源进行更新。</p></blockquote><p>其中 GET, POST 和 HEAD 方法是 HTTP1.0 定义的三种请求方法，在 HTTP1.1 又新增了六种请求方法，即 OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT 方法。如果想了解更多 HTTP 历史的朋友，可以阅读我之前的写的一篇文章 <a href="http://www.veryitman.com/2018/09/16/HTTP-%E6%BC%94%E8%BF%9B%E5%8F%B2/" target="_blank" rel="noopener">HTTP 演进史</a>，嘿哈。</p><p>再说一下 <code>OPTIONS</code> 请求，该请求与 <code>HEAD</code> 请求有点类似，一般也是用于客户端查看服务器的性能。</p><p> <code>OPTIONS</code> 方法会请求服务器返回该资源所支持的所有HTTP请求方法，该方法会用来代替资源名称，向服务器发送 <code>OPTIONS</code> 请求，可以测试服务器功能是否正常。JavaScript的<a href="http://itbilu.com/javascript/js/VkiXuUcC.html" target="_blank" rel="noopener">XMLHttpRequest</a>对象进行<code>CORS</code>跨域资源共享时，就是使用 <code>OPTIONS</code> 方法发送嗅探请求，以判断是否有对指定资源的访问权限。</p><p>那么需要满足哪些条件才会触发 <code>OPTINS</code> 请求呢？</p><h2 id="实例验证"><a href="#实例验证" class="headerlink" title="实例验证"></a>实例验证</h2><p>在没有回答上面的问题之前，我们还是来做个实验吧~</p><p>你需要将 Chrome 的审查视图打开，最好把 <code>Disable Cache</code> 也勾选上禁止 Chrome 使用网络缓存，这样才不会影响下面的实验。<br><img src="/upload/images/2019/08/31/4.png" alt=""></p><p>下面是 <code>Springboot</code> 关于登录的一个示例代码，如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</div><div class="line"></div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"signin"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSigninController</span> </span>&#123;</div><div class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/name"</span>, method = RequestMethod.GET)</div><div class="line">    <span class="function"><span class="keyword">public</span> MSResponse <span class="title">sigin</span><span class="params">(@RequestParam(value = <span class="string">"username"</span>)</span> String userName, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"userpwd"</span>)</span> String userPwd) </span>&#123;</div><div class="line">        MSResponse response = <span class="keyword">new</span> MSResponse();</div><div class="line">        MSUser user = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == userName || <span class="keyword">null</span> == userPwd || userName.length() &lt;= <span class="number">0</span> || userPwd.length() &lt;= <span class="number">0</span>) &#123;</div><div class="line">            MSResponseEnum responseEnum = MSResponseEnum.Login4SiginInvalidInfo;</div><div class="line">            response.setCode(responseEnum.getCode());</div><div class="line">            response.setMsg(responseEnum.getMsg());</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            user = MSUserUtil.createDefaultUser(userName, userPwd);</div><div class="line">            MSResponseEnum rspEnum = MSResponseEnum.SUCCESS;</div><div class="line">            response.setCode(rspEnum.getCode());</div><div class="line">            response.setMsg(rspEnum.getMsg());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        response.setResults(user);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>你大可不必去了解这个代码的具体逻辑，现在你只需要知道他是用来给JavaScript调用的一个登录API即可。</p><p>再来一个HTML文件，模拟请求登录的API，请求HTTP使用Ajax，代码如下：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">function getReq() &#123;</span></div><div class="line"><span class="undefined">	var url = "http://localhost:8080/signin/name?username=jack&amp;userpwd=123";</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">    $.ajax(&#123;</span></div><div class="line"><span class="undefined">        url: url,</span></div><div class="line"><span class="undefined">        type: 'GET',</span></div><div class="line"><span class="undefined">        dataType: 'json',</span></div><div class="line"><span class="undefined">     	&#125;).done(function (result) &#123;</span></div><div class="line"><span class="undefined">            console.log("success");</span></div><div class="line"><span class="undefined">            console.log(result);</span></div><div class="line"><span class="undefined">        &#125;).fail(function () &#123;</span></div><div class="line"><span class="undefined">        	console.log("error");</span></div><div class="line"><span class="undefined">        &#125;)</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure><p>使用Chrome浏览器直接打开这个HTML文件即可，然后启动Java服务，在浏览器中点击按钮进行GET请求。</p><p>此时请求会报下面的错误：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Access to XMLHttpRequest at 'http://localhost:8080/signin/name?username=jack&amp;userpwd=123' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</div></pre></td></tr></table></figure><p>确实是造成了跨域请求，导致请求失败。</p><p>但是令人遗憾的是并没有看到发出OPTIONS请求，使用Fiddler抓包，可以看到只有GET请求，如图所示：<br><img src="/upload/images/2019/08/31/1.png" alt=""></p><p>难道是自己写代码的姿势不对吗？！</p><p>其实，在HTML中使用HTTP请求，发生OPTIONS请求是需要几个条件的：</p><ul><li>1、必须是跨域请求</li><li>2、自定义了请求头</li><li>3、请求头中的 <code>content-type</code> 是 <code>application/x-www-form-urlencoded</code>，<code>multipart/form-data</code>，<code>text/plain</code> 之外的格式</li></ul><p>满足1和2或者满足1和3就会发生OPTIONS请求，首先我们确定了上面的示例是跨域请求，但是不满足后面的两个条件之一。</p><p>我们修改一下HTML代码增加一个 <code>content-type</code>，如下：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">function getReq() &#123;</span></div><div class="line"><span class="undefined">	var url = "http://localhost:8080/signin/name?username=jack&amp;userpwd=123";</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">    $.ajax(&#123;</span></div><div class="line"><span class="undefined">        url: url,</span></div><div class="line"><span class="undefined">        type: 'GET',</span></div><div class="line"><span class="undefined">        dataType: 'json',</span></div><div class="line"><span class="undefined">        contentType: 'application/json',</span></div><div class="line"><span class="undefined">     	&#125;).done(function (result) &#123;</span></div><div class="line"><span class="undefined">            console.log("success");</span></div><div class="line"><span class="undefined">            console.log(result);</span></div><div class="line"><span class="undefined">        &#125;).fail(function () &#123;</span></div><div class="line"><span class="undefined">        	console.log("error");</span></div><div class="line"><span class="undefined">        &#125;)</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure><p>此时在浏览器中（需要使用Chrome的审查视图）可以看到报错信息：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">OPTIONS http://localhost:8080/signin/name?username=jack&amp;userpwd=123 403</div><div class="line"></div><div class="line">Access to XMLHttpRequest at 'http://localhost:8080/signin/name?username=jack&amp;userpwd=123' from origin 'null' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.</div></pre></td></tr></table></figure><p>抓包工具中也可以看到发生了OPTIONS请求，如下图：<br><img src="/upload/images/2019/08/31/2.png" alt=""></p><p>也可以自定义Header头来进行验证，代码如下：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">function getReq() &#123;</span></div><div class="line"><span class="undefined">	var url = "http://localhost:8080/signin/name?username=jack&amp;userpwd=123";</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">    $.ajax(&#123;</span></div><div class="line"><span class="undefined">        url: url,</span></div><div class="line"><span class="undefined">        type: 'GET',</span></div><div class="line"><span class="undefined">        dataType: 'json',</span></div><div class="line"><span class="undefined">        headers: &#123;</span></div><div class="line"><span class="undefined">            token: "yu7rX98xxxx_iii^ddd",</span></div><div class="line"><span class="undefined">            userId: 123,</span></div><div class="line"><span class="undefined">            openid: 231232</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">     	&#125;).done(function (result) &#123;</span></div><div class="line"><span class="undefined">            console.log("success");</span></div><div class="line"><span class="undefined">            console.log(result);</span></div><div class="line"><span class="undefined">        &#125;).fail(function () &#123;</span></div><div class="line"><span class="undefined">        	console.log("error");</span></div><div class="line"><span class="undefined">        &#125;)</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure><p>验证结果和上面一致，也会发生OPTIONS请求。</p><h2 id="再聊OPTIONS"><a href="#再聊OPTIONS" class="headerlink" title="再聊OPTIONS"></a>再聊OPTIONS</h2><p>在 <a href="https://www.ietf.org/rfc/rfc2616.txt" target="_blank" rel="noopener">RFC2616-HTTP/1.1</a> 中关于OPTIONS有详细的描述，感兴趣的可以看一下 <code>9.2 OPTIONS</code> 小节。</p><p>OPTIONS请求方法的主要用途有两个：</p><p>1、获取服务器支持的HTTP请求方法。</p><p>2、用来检查服务器的性能，如上面例子中的AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个HTTP OPTIONS请求头，用以判断实际发送的请求是否安全。</p><p>HTTP的OPTIONS请求，有很多地方也被称之为预请求或者预检请求，换句话说就是试探性的请求不算是正式请求。</p><p>为了避免对服务器产生一些副作用，类似上面例子中的网页中的请求就会产生OPTIONS请求，也算是一种对服务器的保护。只有当服务器允许后，浏览器才会发出正式的请求，否则不发送正式请求。</p><p>我们可以使用curl模拟OPTIONS请求，例如下面请求谷歌：</p><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -i -v -X OPTIONS https://www.google.com</div></pre></td></tr></table></figure><p>可以看到请求的响应情况：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt; <span class="attr">HTTP</span>/<span class="attr">2</span> <span class="attr">405</span></span></div><div class="line">&lt; allow: GET, HEAD</div><div class="line"><span class="tag">&lt; <span class="attr">date:</span> <span class="attr">Sat</span>, <span class="attr">31</span> <span class="attr">Aug</span> <span class="attr">2019</span> <span class="attr">02:17:03</span> <span class="attr">GMT</span></span></div><div class="line">&lt; content-type: text/html; charset=UTF-8</div><div class="line"><span class="tag">&lt; <span class="attr">server:</span> <span class="attr">gws</span></span></div><div class="line">&lt; content-length: 1592</div><div class="line"><span class="tag">&lt; <span class="attr">x-xss-protection:</span> <span class="attr">0</span></span></div><div class="line">&lt; x-frame-options: SAMEORIGIN</div><div class="line"><span class="tag">&lt; <span class="attr">alt-svc:</span> <span class="attr">quic</span>=<span class="string">":443"</span>; <span class="attr">ma</span>=<span class="string">2592000;</span> <span class="attr">v</span>=<span class="string">"46,43,39"</span></span></div><div class="line">&lt;</div><div class="line">&#123; [5 bytes data]</div><div class="line">100  1592  100  1592   0   0  13606   0 --:--:-- --:-- 13606HTTP/2 405</div><div class="line">allow: GET, HEAD</div><div class="line">date: Sat, 31 Aug 2019 02:17:03 GMT</div><div class="line">content-type: text/html; charset=UTF-8</div><div class="line">server: gws</div><div class="line">content-length: 1592</div><div class="line">x-xss-protection: 0</div><div class="line">x-frame-options: SAMEORIGIN</div><div class="line">alt-svc: quic=":443"; ma=2592000; v="46,43,39"</div></pre></td></tr></table></figure><h2 id="SpringBoot解决跨域"><a href="#SpringBoot解决跨域" class="headerlink" title="SpringBoot解决跨域"></a>SpringBoot解决跨域</h2><p>解决跨越的问题，在网上有很多的路子，目前大概有下面几种解决方案，如下：</p><ul><li>JSONP<ul><li>简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。但它仅支持GET方法不支持POST等其他请求方法，而且可能会遭受XSS攻击。</li></ul></li><li>cors</li><li>postMessage</li><li>websocket</li><li>Node中间件代理</li><li>nginx反向代理</li><li>window.name+iframe</li><li>location.hash+iframe</li><li>document.domain+iframe</li></ul><p>今天我们使用SpringBoot自带的注解来解决这个问题。</p><p>在说解决方案之前，还是先了解一下CORS（Cross-origin resource sharing），其全称是”跨域资源共享”，是W3C的一个标准。</p><p>CORS允许浏览器向跨源服务器发出 XMLHttpRequest 请求，从而克服了AJAX只能同源使用的限制。</p><p>CORS需要浏览器和服务器同时支持。幸运的是目前几乎所有的浏览器都支持该功能，唯一美中不足的是IE浏览器的版本不能低于IE10。</p><p>实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。SpringBoot自带注解 <code>CrossOrigin</code> 可以用来解决跨域问题。</p><p>修改一下Controller的代码，增加 <code>CrossOrigin</code> 注解，示例代码如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@CrossOrigin</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/name"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> MSResponse <span class="title">sigin</span><span class="params">(@RequestParam(value = <span class="string">"username"</span>)</span> String userName, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"userpwd"</span>)</span> String userPwd) </span>&#123;</div><div class="line">    <span class="comment">// 省略</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>重新启动服务，抓包工具可以看到OPTIONS和GET请求都正常执行，返回码都是200。<br><img src="/upload/images/2019/08/31/3.png" alt=""></p><p>可以针对某个方法添加 <code>CrossOrigin</code> 注解，也可以对整个Controller添加该注解。</p><p>关于 <code>CrossOrigin</code> 注解，大家可以自行实践，这里不再赘述。</p><hr><p><strong>要一直在学习的路上努力~</strong></p><p><img src="/upload/me/qrcode_wx.jpg" alt=""></p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>坚持原创技术分享！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/HTTP-OPTIONS-CORS/" rel="tag"><i class="fa fa-tag"></i> HTTP OPTIONS CORS</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/08/24/跳绳的故事/" rel="next" title="跳绳的故事"><i class="fa fa-chevron-left"></i> 跳绳的故事</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2019/09/08/减少跨域中的OPTIONS请求/" rel="prev" title="减少跨域中的OPTIONS请求">减少跨域中的OPTIONS请求<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="gitment-container"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">veryitman</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">144</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">112</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/veryitman" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN"><i class="fa fa-fw fa-CSDN"></i> CSDN</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同源策略"><span class="nav-number">2.</span> <span class="nav-text">同源策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OPTIONS请求"><span class="nav-number">3.</span> <span class="nav-text">OPTIONS请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例验证"><span class="nav-number">4.</span> <span class="nav-text">实例验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再聊OPTIONS"><span class="nav-number">5.</span> <span class="nav-text">再聊OPTIONS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot解决跨域"><span class="nav-number">6.</span> <span class="nav-text">SpringBoot解决跨域</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">veryitman</span></div><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div> <span class="post-meta-divider">|</span><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_page_pv">本文阅读<span id="busuanzi_value_page_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span> <span class="post-meta-divider">|</span> <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span> <span class="post-meta-divider">|</span></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css"><script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script><style>a.gitment-editor-footer-tip{display:none}.gitment-container.gitment-footer-container{display:none}</style><script type="text/javascript">function renderGitment(){new Gitmint({id:decodeURI(window.location.pathname),owner:"veryitman",repo:"gitment-comments",lang:navigator.language||navigator.systemLanguage||navigator.userLanguage,oauth:{client_secret:"1260c6965da6716ac0755f498978eb5e2c0453b8",client_id:"842fcef1874cd7f58202"}}).render("gitment-container")}renderGitment()</script><script type="text/javascript">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTTP OPTIONS CORS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。 123Access to XMLHttpRequest at &apos;http://www.xxx.com/yyy&apos; from origin &apos;null&apos; has been blocked by CORS policy:Response to p">
+<meta name="keywords" content="HTTP OPTIONS CORS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨域和OPTIONS这对欢喜冤家">
+<meta property="og:url" content="http://yoursite.com/2019/08/31/跨域和OPTIONS这对欢喜冤家/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="简介我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。 123Access to XMLHttpRequest at &apos;http://www.xxx.com/yyy&apos; from origin &apos;null&apos; has been blocked by CORS policy:Response to p">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/4.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/1.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/2.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/3.png">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-09-01T06:57:25.789Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="跨域和OPTIONS这对欢喜冤家">
+<meta name="twitter:description" content="简介我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。 123Access to XMLHttpRequest at &apos;http://www.xxx.com/yyy&apos; from origin &apos;null&apos; has been blocked by CORS policy:Response to p">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/08/31/4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/31/跨域和OPTIONS这对欢喜冤家/"/>
+
+
+
+
+
+  <title>跨域和OPTIONS这对欢喜冤家 | veryitman</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/31/跨域和OPTIONS这对欢喜冤家/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">跨域和OPTIONS这对欢喜冤家</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-31T11:05:40+08:00">
+                2019-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络协议/" itemprop="url" rel="index">
+                    <span itemprop="name">网络协议</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/31/跨域和OPTIONS这对欢喜冤家/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/08/31/跨域和OPTIONS这对欢喜冤家/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>我相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于JavaScript代码向服务器发送了HTTP请求引起的。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Access to XMLHttpRequest at 'http://www.xxx.com/yyy' from origin 'null' has been blocked by CORS policy:</div><div class="line">Response to preflight request doesn't pass access control check: </div><div class="line">No 'Access-Control-Allow-Origin' header is present on the requested resource.</div></pre></td></tr></table></figure>
+<p>如果是第一次遇到，你肯定会觉得很好奇，忍不住会去一探究竟~</p>
+<p>还有些同事会遇到另一个神奇的错误，即发送GET或者POST请求之前，居然先给服务器发送了一个 OPTIONS 请求，让人不可思议的是这个 OPTIONS 请求是自动发的，服务器在没有任何设置的条件下直接将这个请求夭折掉，如下返回 <code>403</code> 错误，也可能是其他错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">OPTIONS http://www.xxx.com/yyy 403</div></pre></td></tr></table></figure>
+<p>引起这些问题的罪魁祸首就是 <code>跨域</code> ，今天我跟大家一起以实际的例子来看看这个神奇的 <code>跨域</code> 问题。</p>
+<p>文中使用的代码都可以在 <a href="https://github.com/veryitman/MSTutorial" target="_blank" rel="noopener">Github</a> 找到，大家根据需要自行采纳。</p>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p>在说 <code>跨域</code> 之前，我们还是要了解一下 <code>同源策略</code> 是个什么鬼！</p>
+<p>在百度百科里面是这样定义 <code>同源策略</code> 的，如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。</div><div class="line"></div><div class="line">可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现。</div></pre></td></tr></table></figure>
+<p>听起来，这玩意挺高大上的，简单理解 <code>同源策略</code> 就是一种安全策略。它是由 <a href="https://baike.baidu.com/item/Netscape/2778944" target="_blank" rel="noopener">Netscape</a> 提出的一个著名的安全策略，现在所有支持JavaScript的浏览器都会使用这个策略，也是必须遵守的一个策略。</p>
+<p>那么 <code>同源策略</code> 中的 <code>同源</code> 是指 <code>域名</code>，<code>协议</code>，<code>端口</code> 三者必须相同，如果有任何一个不同就会引起跨域。</p>
+<p>下表给出了相对 <code>http://a.xx.com/yy/zz.html</code> 同源检测的示例: </p>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>结果</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>http://a.xxx.com/ff/other.html</code></td>
+<td>成功</td>
+<td>域名、协议、端口(默认80)一致</td>
+</tr>
+<tr>
+<td><code>http://a.xxx.com/gg/hh/another.html</code></td>
+<td>成功</td>
+<td>域名、协议、端口(默认80)一致</td>
+</tr>
+<tr>
+<td><code>https://a.xxx.com/secure.html</code></td>
+<td>失败</td>
+<td>不同协议 ( HTTPS和HTTP )</td>
+</tr>
+<tr>
+<td><code>http://a.xxx.com:81/dir/etc.html</code></td>
+<td>失败</td>
+<td>不同端口 ( 81和80)</td>
+</tr>
+<tr>
+<td><code>http://a.wpq.com/yy/other.html</code></td>
+<td>失败</td>
+<td>不同域名 ( xxx和wpq)</td>
+</tr>
+<tr>
+<td><code>http://123.21.122.12/dir</code></td>
+<td>失败</td>
+<td>域名IP不等同于域名</td>
+</tr>
+<tr>
+<td><code>http://xx.xxx.com/dir2/</code></td>
+<td>失败</td>
+<td>主域相同，子域不同</td>
+</tr>
+</tbody>
+</table>
+<p>简单来说，HTML代码运行在一个web主机上面（假设域名是 <code>http://a.xx.com/yy/zz.html</code>），而HTML代码中有需要请求服务器某个API接口（<code>http://api.user.com/name</code>）的，那么就会造成跨域问题。</p>
+<p>同源策略会影响：</p>
+<p>（1） Cookie、LocalStorage 和 IndexDB 无法读取。</p>
+<p>（2） DOM 无法获得。</p>
+<p>（3） AJAX 请求不能正常发送，有可能还会引起 OPTIONS 请求。</p>
+<h2 id="OPTIONS请求"><a href="#OPTIONS请求" class="headerlink" title="OPTIONS请求"></a>OPTIONS请求</h2><p>大家所熟知的HTTP请求最多的应该就是GET和POST请求，这两种请求也是软件开发中用的最多的。</p>
+<blockquote>
+<p>GET：向特定的资源发出请求，一般对服务器来说是一个只读的请求，不会对资源进行写操作。</p>
+<p>POST：向指定资源提交数据进行处理请求，例如提交表单或者上传文件，数据被包含在请求体（body）中，该请求可能会对服务器资源进行读写操作。</p>
+</blockquote>
+<p>除了这两种请求外，HTTP还有其他种类的请求，如下：</p>
+<blockquote>
+<p>PUT：向指定资源位置上传其最新内容，一般用于资源的整体更新，而下面的PATCH用于资源的部分更新。</p>
+<p>DELETE：请求服务器删除所标识的资源。 </p>
+<p>HEAD：向服务器索要与GET请求相一致的响应，只不过响应体将不会被返回，可以在不必传输整个响应内容的情况下，就可以获取包含在响应消息头中的元信息。 </p>
+<p>TRACE：回显服务器收到的请求，主要用于测试或诊断。 </p>
+<p>OPTIONS：返回服务器针对特定资源所支持的HTTP请求方法。也可以利用向Web服务器发送’*’的请求来测试服务器的功能性。该请求不会修改服务器资源，相对比较安全。</p>
+<p>CONNECT：是 <code>HTTP/1.1</code> 协议预留的，能够将连接改为管道方式的代理服务器。通常用于 SSL 加密服务器的链接与非加密的HTTP代理服务器的通信。</p>
+<p>PATCH：是对 PUT 方法的补充，用来对已知资源进行局部更新。当资源不存在时，PATCH 会创建一个新的资源，而 PUT 只会对已存在的资源进行更新。</p>
+</blockquote>
+<p>其中 GET, POST 和 HEAD 方法是 HTTP1.0 定义的三种请求方法，在 HTTP1.1 又新增了六种请求方法，即 OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT 方法。如果想了解更多 HTTP 历史的朋友，可以阅读我之前的写的一篇文章 <a href="http://www.veryitman.com/2018/09/16/HTTP-%E6%BC%94%E8%BF%9B%E5%8F%B2/" target="_blank" rel="noopener">HTTP 演进史</a>，嘿哈。</p>
+<p>再说一下 <code>OPTIONS</code> 请求，该请求与 <code>HEAD</code> 请求有点类似，一般也是用于客户端查看服务器的性能。</p>
+<p> <code>OPTIONS</code> 方法会请求服务器返回该资源所支持的所有HTTP请求方法，该方法会用来代替资源名称，向服务器发送 <code>OPTIONS</code> 请求，可以测试服务器功能是否正常。JavaScript的<a href="http://itbilu.com/javascript/js/VkiXuUcC.html" target="_blank" rel="noopener">XMLHttpRequest</a>对象进行<code>CORS</code>跨域资源共享时，就是使用 <code>OPTIONS</code> 方法发送嗅探请求，以判断是否有对指定资源的访问权限。 </p>
+<p>那么需要满足哪些条件才会触发 <code>OPTINS</code> 请求呢？</p>
+<h2 id="实例验证"><a href="#实例验证" class="headerlink" title="实例验证"></a>实例验证</h2><p>在没有回答上面的问题之前，我们还是来做个实验吧~</p>
+<p>你需要将 Chrome 的审查视图打开，最好把 <code>Disable Cache</code> 也勾选上禁止 Chrome 使用网络缓存，这样才不会影响下面的实验。<br><img src="/upload/images/2019/08/31/4.png" alt=""></p>
+<p>下面是 <code>Springboot</code> 关于登录的一个示例代码，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</div><div class="line"></div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"signin"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSSigninController</span> </span>&#123;</div><div class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/name"</span>, method = RequestMethod.GET)</div><div class="line">    <span class="function"><span class="keyword">public</span> MSResponse <span class="title">sigin</span><span class="params">(@RequestParam(value = <span class="string">"username"</span>)</span> String userName, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"userpwd"</span>)</span> String userPwd) </span>&#123;</div><div class="line">        MSResponse response = <span class="keyword">new</span> MSResponse();</div><div class="line">        MSUser user = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == userName || <span class="keyword">null</span> == userPwd || userName.length() &lt;= <span class="number">0</span> || userPwd.length() &lt;= <span class="number">0</span>) &#123;</div><div class="line">            MSResponseEnum responseEnum = MSResponseEnum.Login4SiginInvalidInfo;</div><div class="line">            response.setCode(responseEnum.getCode());</div><div class="line">            response.setMsg(responseEnum.getMsg());</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            user = MSUserUtil.createDefaultUser(userName, userPwd);</div><div class="line">            MSResponseEnum rspEnum = MSResponseEnum.SUCCESS;</div><div class="line">            response.setCode(rspEnum.getCode());</div><div class="line">            response.setMsg(rspEnum.getMsg());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        response.setResults(user);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你大可不必去了解这个代码的具体逻辑，现在你只需要知道他是用来给JavaScript调用的一个登录API即可。</p>
+<p>再来一个HTML文件，模拟请求登录的API，请求HTTP使用Ajax，代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">function getReq() &#123;</span></div><div class="line"><span class="undefined">	var url = "http://localhost:8080/signin/name?username=jack&amp;userpwd=123";</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">    $.ajax(&#123;</span></div><div class="line"><span class="undefined">        url: url,</span></div><div class="line"><span class="undefined">        type: 'GET',</span></div><div class="line"><span class="undefined">        dataType: 'json',</span></div><div class="line"><span class="undefined">     	&#125;).done(function (result) &#123;</span></div><div class="line"><span class="undefined">            console.log("success");</span></div><div class="line"><span class="undefined">            console.log(result);</span></div><div class="line"><span class="undefined">        &#125;).fail(function () &#123;</span></div><div class="line"><span class="undefined">        	console.log("error");</span></div><div class="line"><span class="undefined">        &#125;)</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>使用Chrome浏览器直接打开这个HTML文件即可，然后启动Java服务，在浏览器中点击按钮进行GET请求。</p>
+<p>此时请求会报下面的错误：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Access to XMLHttpRequest at 'http://localhost:8080/signin/name?username=jack&amp;userpwd=123' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</div></pre></td></tr></table></figure>
+<p>确实是造成了跨域请求，导致请求失败。</p>
+<p>但是令人遗憾的是并没有看到发出OPTIONS请求，使用Fiddler抓包，可以看到只有GET请求，如图所示：<br><img src="/upload/images/2019/08/31/1.png" alt=""></p>
+<p>难道是自己写代码的姿势不对吗？！</p>
+<p>其实，在HTML中使用HTTP请求，发生OPTIONS请求是需要几个条件的：</p>
+<ul>
+<li>1、必须是跨域请求</li>
+<li>2、自定义了请求头</li>
+<li>3、请求头中的 <code>content-type</code> 是 <code>application/x-www-form-urlencoded</code>，<code>multipart/form-data</code>，<code>text/plain</code> 之外的格式</li>
+</ul>
+<p>满足1和2或者满足1和3就会发生OPTIONS请求，首先我们确定了上面的示例是跨域请求，但是不满足后面的两个条件之一。</p>
+<p>我们修改一下HTML代码增加一个 <code>content-type</code>，如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">function getReq() &#123;</span></div><div class="line"><span class="undefined">	var url = "http://localhost:8080/signin/name?username=jack&amp;userpwd=123";</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">    $.ajax(&#123;</span></div><div class="line"><span class="undefined">        url: url,</span></div><div class="line"><span class="undefined">        type: 'GET',</span></div><div class="line"><span class="undefined">        dataType: 'json',</span></div><div class="line"><span class="undefined">        contentType: 'application/json',</span></div><div class="line"><span class="undefined">     	&#125;).done(function (result) &#123;</span></div><div class="line"><span class="undefined">            console.log("success");</span></div><div class="line"><span class="undefined">            console.log(result);</span></div><div class="line"><span class="undefined">        &#125;).fail(function () &#123;</span></div><div class="line"><span class="undefined">        	console.log("error");</span></div><div class="line"><span class="undefined">        &#125;)</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>此时在浏览器中（需要使用Chrome的审查视图）可以看到报错信息：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">OPTIONS http://localhost:8080/signin/name?username=jack&amp;userpwd=123 403</div><div class="line"></div><div class="line">Access to XMLHttpRequest at 'http://localhost:8080/signin/name?username=jack&amp;userpwd=123' from origin 'null' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.</div></pre></td></tr></table></figure>
+<p>抓包工具中也可以看到发生了OPTIONS请求，如下图：<br><img src="/upload/images/2019/08/31/2.png" alt=""></p>
+<p>也可以自定义Header头来进行验证，代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">function getReq() &#123;</span></div><div class="line"><span class="undefined">	var url = "http://localhost:8080/signin/name?username=jack&amp;userpwd=123";</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">    $.ajax(&#123;</span></div><div class="line"><span class="undefined">        url: url,</span></div><div class="line"><span class="undefined">        type: 'GET',</span></div><div class="line"><span class="undefined">        dataType: 'json',</span></div><div class="line"><span class="undefined">        headers: &#123;</span></div><div class="line"><span class="undefined">            token: "yu7rX98xxxx_iii^ddd",</span></div><div class="line"><span class="undefined">            userId: 123,</span></div><div class="line"><span class="undefined">            openid: 231232</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">     	&#125;).done(function (result) &#123;</span></div><div class="line"><span class="undefined">            console.log("success");</span></div><div class="line"><span class="undefined">            console.log(result);</span></div><div class="line"><span class="undefined">        &#125;).fail(function () &#123;</span></div><div class="line"><span class="undefined">        	console.log("error");</span></div><div class="line"><span class="undefined">        &#125;)</span></div><div class="line"><span class="undefined">&#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>验证结果和上面一致，也会发生OPTIONS请求。</p>
+<h2 id="再聊OPTIONS"><a href="#再聊OPTIONS" class="headerlink" title="再聊OPTIONS"></a>再聊OPTIONS</h2><p>在 <a href="https://www.ietf.org/rfc/rfc2616.txt" target="_blank" rel="noopener">RFC2616-HTTP/1.1</a> 中关于OPTIONS有详细的描述，感兴趣的可以看一下 <code>9.2 OPTIONS</code> 小节。</p>
+<p>OPTIONS请求方法的主要用途有两个：</p>
+<p>1、获取服务器支持的HTTP请求方法。</p>
+<p>2、用来检查服务器的性能，如上面例子中的AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个HTTP OPTIONS请求头，用以判断实际发送的请求是否安全。</p>
+<p>HTTP的OPTIONS请求，有很多地方也被称之为预请求或者预检请求，换句话说就是试探性的请求不算是正式请求。</p>
+<p>为了避免对服务器产生一些副作用，类似上面例子中的网页中的请求就会产生OPTIONS请求，也算是一种对服务器的保护。只有当服务器允许后，浏览器才会发出正式的请求，否则不发送正式请求。</p>
+<p>我们可以使用curl模拟OPTIONS请求，例如下面请求谷歌：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -i -v -X OPTIONS https://www.google.com</div></pre></td></tr></table></figure>
+<p>可以看到请求的响应情况：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt; <span class="attr">HTTP</span>/<span class="attr">2</span> <span class="attr">405</span></span></div><div class="line">&lt; allow: GET, HEAD</div><div class="line"><span class="tag">&lt; <span class="attr">date:</span> <span class="attr">Sat</span>, <span class="attr">31</span> <span class="attr">Aug</span> <span class="attr">2019</span> <span class="attr">02:17:03</span> <span class="attr">GMT</span></span></div><div class="line">&lt; content-type: text/html; charset=UTF-8</div><div class="line"><span class="tag">&lt; <span class="attr">server:</span> <span class="attr">gws</span></span></div><div class="line">&lt; content-length: 1592</div><div class="line"><span class="tag">&lt; <span class="attr">x-xss-protection:</span> <span class="attr">0</span></span></div><div class="line">&lt; x-frame-options: SAMEORIGIN</div><div class="line"><span class="tag">&lt; <span class="attr">alt-svc:</span> <span class="attr">quic</span>=<span class="string">":443"</span>; <span class="attr">ma</span>=<span class="string">2592000;</span> <span class="attr">v</span>=<span class="string">"46,43,39"</span></span></div><div class="line">&lt;</div><div class="line">&#123; [5 bytes data]</div><div class="line">100  1592  100  1592   0   0  13606   0 --:--:-- --:-- 13606HTTP/2 405</div><div class="line">allow: GET, HEAD</div><div class="line">date: Sat, 31 Aug 2019 02:17:03 GMT</div><div class="line">content-type: text/html; charset=UTF-8</div><div class="line">server: gws</div><div class="line">content-length: 1592</div><div class="line">x-xss-protection: 0</div><div class="line">x-frame-options: SAMEORIGIN</div><div class="line">alt-svc: quic=":443"; ma=2592000; v="46,43,39"</div></pre></td></tr></table></figure>
+<h2 id="SpringBoot解决跨域"><a href="#SpringBoot解决跨域" class="headerlink" title="SpringBoot解决跨域"></a>SpringBoot解决跨域</h2><p>解决跨越的问题，在网上有很多的路子，目前大概有下面几种解决方案，如下：</p>
+<ul>
+<li>JSONP<ul>
+<li>简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。但它仅支持GET方法不支持POST等其他请求方法，而且可能会遭受XSS攻击。</li>
+</ul>
+</li>
+<li>cors</li>
+<li>postMessage</li>
+<li>websocket</li>
+<li>Node中间件代理</li>
+<li>nginx反向代理</li>
+<li>window.name+iframe</li>
+<li>location.hash+iframe</li>
+<li>document.domain+iframe</li>
+</ul>
+<p>今天我们使用SpringBoot自带的注解来解决这个问题。</p>
+<p>在说解决方案之前，还是先了解一下CORS（Cross-origin resource sharing），其全称是”跨域资源共享”，是W3C的一个标准。</p>
+<p>CORS允许浏览器向跨源服务器发出 XMLHttpRequest 请求，从而克服了AJAX只能同源使用的限制。</p>
+<p>CORS需要浏览器和服务器同时支持。幸运的是目前几乎所有的浏览器都支持该功能，唯一美中不足的是IE浏览器的版本不能低于IE10。</p>
+<p>实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。SpringBoot自带注解 <code>CrossOrigin</code> 可以用来解决跨域问题。</p>
+<p>修改一下Controller的代码，增加 <code>CrossOrigin</code> 注解，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@CrossOrigin</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/name"</span>, method = RequestMethod.GET)</div><div class="line"><span class="function"><span class="keyword">public</span> MSResponse <span class="title">sigin</span><span class="params">(@RequestParam(value = <span class="string">"username"</span>)</span> String userName, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"userpwd"</span>)</span> String userPwd) </span>&#123;</div><div class="line">    <span class="comment">// 省略</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>重新启动服务，抓包工具可以看到OPTIONS和GET请求都正常执行，返回码都是200。<br><img src="/upload/images/2019/08/31/3.png" alt=""></p>
+<p>可以针对某个方法添加 <code>CrossOrigin</code> 注解，也可以对整个Controller添加该注解。</p>
+<p>关于 <code>CrossOrigin</code> 注解，大家可以自行实践，这里不再赘述。</p>
+<hr>
+<p><strong>要一直在学习的路上努力~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP-OPTIONS-CORS/" rel="tag"><i class="fa fa-tag"></i> HTTP OPTIONS CORS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/跳绳的故事/" rel="next" title="跳绳的故事">
+                <i class="fa fa-chevron-left"></i> 跳绳的故事
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/08/减少跨域中的OPTIONS请求/" rel="prev" title="减少跨域中的OPTIONS请求">
+                减少跨域中的OPTIONS请求 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">145</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">113</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同源策略"><span class="nav-number">2.</span> <span class="nav-text">同源策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OPTIONS请求"><span class="nav-number">3.</span> <span class="nav-text">OPTIONS请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例验证"><span class="nav-number">4.</span> <span class="nav-text">实例验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再聊OPTIONS"><span class="nav-number">5.</span> <span class="nav-text">再聊OPTIONS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot解决跨域"><span class="nav-number">6.</span> <span class="nav-text">SpringBoot解决跨域</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
     // Popup Window;
     var isfetched = false;
     var isXml = true;
@@ -313,4 +1346,26 @@
         onPopupClose();
       }
     });
-  </script></body></html>
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
