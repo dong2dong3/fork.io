@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/24/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/24/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-11-24T02:23:21.522Z">
+<meta property="og:updated_time" content="2019-11-24T02:56:53.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="短地址原理">
 <meta name="twitter:description" content="简介一个同事遇到一个问题，他说受限于第三方的服务，自己请求所带过去的字符串因为太长，无法从第三方服务获取信息，很是苦恼😴。后来我们商量了一下，最终借鉴短地址的思想解决了问题。道理很简单，因为我们请求中的附加字符串信息第三方服务只是透传回来给我们，我们只需要把这些附加信息进行字符压缩就可以了，这样请求带过去的字符串长度就满足了要求😊。 无论是写文章还是制作一些表格的时候，我会时常用到短地址。短地">
@@ -479,7 +479,7 @@
 <figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 百度短地址</div><div class="line"><span class="attribute">https://dwz.cn/hnmau4Zs</span></div></pre></td></tr></table></figure>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 微博段地址</div><div class="line"><span class="attribute">http://1t.click/aMtD</span></div></pre></td></tr></table></figure>
 <p>可以看出百度生成较复杂，首先协议变成了 <code>HTTPS</code>，其次生成代码是 8 位（<code>hnmau4Zs</code>），而微博生成的是 4 位（<code>aMtD</code>）代码。</p>
-<p>短地址码一般都是由26个大写字母  <code>A-Z</code> 、26个小写字母 <code>a-z</code> 和10个数字  <code>0-9</code> 共62个字符随机组合而成，那么可以这样来生成短地址码，我们定义一个62进制，把这62个字符按照10进制数转成62进制数，那么就可以得到每个字符对应的62进制数了。同理，将短地址还原的时候把62进制转换位对应的10进制就可以了。</p>
+<p>短地址码一般都是由26个大写字母  <code>A-Z</code> 、26个小写字母 <code>a-z</code> 和10个数字  <code>0-9</code> 共62个字符随机组合而成，那么可以这样来生成短地址码，我们定义一个62进制，把这62个字符按照10进制数转成62进制数，那么就可以得到每个字符对应的62进制数了。同理，将短地址还原的时候把62进制转换为对应的10进制就可以了。</p>
 <p>根据上面算法，可以看出百度可以支持 62^8 个短地址，微博可以支持 62^4 个短地址。</p>
 <p>关于短地址生成的算法，大家可以用SpringBoot自己撸一个或者去网上找找别人已经实现的。</p>
 <hr>
