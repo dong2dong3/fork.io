@@ -95,23 +95,23 @@
 
 
 
-<meta name="description" content="简介本篇是 微服务系列 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。 数据库我们就选 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 Windows 10 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 MySQL8.0.15在Wi">
+<meta name="description" content="简介本篇是 微服务系列 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。 数据库我们选择 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 Windows 10 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 MySQL8.0.15在Wi">
 <meta name="keywords" content="MySQL JDBC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务: MySQL基本操作">
 <meta property="og:url" content="http://yoursite.com/2019/12/07/微服务-MySQL基本操作/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="简介本篇是 微服务系列 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。 数据库我们就选 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 Windows 10 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 MySQL8.0.15在Wi">
+<meta property="og:description" content="简介本篇是 微服务系列 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。 数据库我们选择 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 Windows 10 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 MySQL8.0.15在Wi">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/12/07/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/12/07/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/12/07/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/12/07/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-12-07T14:57:32.394Z">
+<meta property="og:updated_time" content="2019-12-08T02:45:38.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: MySQL基本操作">
-<meta name="twitter:description" content="简介本篇是 微服务系列 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。 数据库我们就选 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 Windows 10 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 MySQL8.0.15在Wi">
+<meta name="twitter:description" content="简介本篇是 微服务系列 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。 数据库我们选择 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 Windows 10 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 MySQL8.0.15在Wi">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/12/07/1.png">
 
 
@@ -421,13 +421,13 @@
 
       
         <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇是 <a href="http://www.veryitman.com/2019/05/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0/" target="_blank" rel="noopener">微服务系列</a> 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。</p>
-<p>数据库我们就选 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 <code>Windows 10</code> 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 <a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0/" target="_blank" rel="noopener">MySQL8.0.15在Win10上的折腾记</a> 这篇文章。</p>
+<p>数据库我们选择 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 <code>Windows 10</code> 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 <a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0/" target="_blank" rel="noopener">MySQL8.0.15在Win10上的折腾记</a> 这篇文章。</p>
 <p>今天主要跟大家分享如何使用 SpringBoot 结合 JDBC 连接和操作 MySQL 数据库，主要还是以实例为主。</p>
 <h2 id="JDBC、ODBC、MySQL-Connectors"><a href="#JDBC、ODBC、MySQL-Connectors" class="headerlink" title="JDBC、ODBC、MySQL Connectors"></a>JDBC、ODBC、MySQL Connectors</h2><p>在说实例之前，带大家先了解一下标题中几个名词的概念。</p>
-<p>JDBC（Java database connectivity，数据连接），是 Sun 公司编的一堆类和方法，都封装在 <code>java.sql</code> 包中，可以利用这堆类和方法来把你的 Java 程序和任意的数据库连通。即通过使用 JDBC，Java 开发人员可以将 SQL 语句传送给几乎任何一种数据库。 </p>
-<p>对应的还有 ODBC（ Open Database Connectivity， 开放数据库互连），ODBC 是 Microsoft 提出的数据库访问接口标准。开放数据库互连定义了访问数据库 API 的一个规范，Microsoft 的 ODBC 文档是用 C 语言描述的，许多实际的 ODBC 驱动程序也是用 C 语言写的。ODBC 提供了对 SQL 语言的支持，用户可以直接将 SQL 语句送给ODBC。</p>
+<p>JDBC（Java database connectivity，数据连接），是 Sun 公司编的一堆类和方法，都封装在 <code>java.sql</code> 包中，可以利用这些类和方法来把你的 Java 程序和任意的数据库连通。即通过使用 JDBC，Java 开发人员可以将 SQL 语句传送给几乎任何一种数据库。 </p>
+<p>对应的还有 ODBC（ Open Database Connectivity， 开放数据库互连），ODBC 是 Microsoft 提出的数据库访问接口标准。开放数据库互连定义了访问数据库 API 的一个规范，Microsoft 的 ODBC 文档是用 C 语言描述的，许多实际的 ODBC 驱动程序也是用 C 语言写的。ODBC 提供了对 SQL 语言的支持，用户可以直接将 SQL 语句送给 ODBC。</p>
 <p>JDBC 和 ODBC 都是用来连接数据库的启动程序，两者具有数据库独立性甚至平台无关性。</p>
-<p><a href="https://www.mysql.com/products/connector/" target="_blank" rel="noopener">MySQL Connectors</a> 是MySQL数据库的驱动（程序），有对各种语言的支持。<code>mysql-connector-java</code> 是 JDBC 的一个实现 ，用它可以连接 MySQL 系统。 </p>
+<p><a href="https://www.mysql.com/products/connector/" target="_blank" rel="noopener">MySQL Connectors</a> 是 MySQL 数据库的驱动（程序），有对各种语言的支持。<code>mysql-connector-java</code>（也称之为 Connector/J 或者 mysql-connector-jdbc） 是 MySQL-Connectors 的 Java 版本的一个实现 ，用它可以连接 MySQL 系统。 </p>
 <p>同理，还有 <code>mysql-connector-python</code>、<code>mysql-connector-c</code>、 <code>mysql-connector-ODBC</code>、<code>mysql-connector-jdbc</code> 等，如下图（来自 <a href="https://www.mysql.com/products/connector/" target="_blank" rel="noopener">MySQL Connectors</a> 官网）：</p>
 <p><img src="/upload/images/2019/12/07/1.png" alt="1568529858131"></p>
 <p>可以使用下面的图简单描述一下JDBC和数据连接的示意图，如下图：</p>
@@ -453,7 +453,7 @@
 <p>比如在 Java 代码里面插入的时间为 <code>2018-06-24 17:29:56</code>，但是在数据库里面显示的时间却为 <code>2018-06-24 09:29:56</code>，这样就有了8个小时的时差。UTC 代表的是全球标准时间 ，而我们使用的时间是北京时区也就是东八区，领先 UTC 八个小时。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 京时间东八区</div><div class="line">serverTimezone=GMT%2B8</div><div class="line"></div><div class="line">// 或者使用上海时间</div><div class="line">serverTimezone=Asia/Shanghai</div></pre></td></tr></table></figure>
 <p><strong>2、修改 MySQL 配置文件</strong></p>
-<p>我在 <code>Windows 10</code> 找到 MySQL 配置文件 <code>my.ini</code> ，如果你没有找到可以参考 <a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0/" target="_blank" rel="noopener">MySQL8.0.15在Win10上的折腾记</a> 这篇文章，非 <code>Windows</code> 系统可能配置文件时 <code>my.cnf</code>。</p>
+<p>我在 <code>Windows 10</code> 找到 MySQL 配置文件 <code>my.ini</code> ，如果你没有找到可以参考 <a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0/" target="_blank" rel="noopener">MySQL8.0.15在Win10上的折腾记</a>  这篇文章，非 <code>Windows</code> 系统可能配置文件时 <code>my.cnf</code>。</p>
 <p>在配置文件中，增加默认时区配置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">default-time-zone=&apos;+08:00&apos;</div></pre></td></tr></table></figure>
 <p>在 <code>my.ini</code> 或者 <code>my.cnf</code> 文件的 <code>[mysqld]</code> 下面增加上面配置，示例如下：</p>
@@ -468,7 +468,9 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 设置当前session时区，即时生效，但仅作用于当前session</div><div class="line"><span class="keyword">set</span> <span class="keyword">time_zone</span>=<span class="string">'+8:00'</span>;</div></pre></td></tr></table></figure>
 <p>我个人使用的是上述中的第<strong>1</strong>种方法，我也推荐大家使用这种方法，简单且无副作用。</p>
 <h2 id="万事俱备，只欠代码"><a href="#万事俱备，只欠代码" class="headerlink" title="万事俱备，只欠代码"></a>万事俱备，只欠代码</h2><p>配置完成之后，我们可以写点测试代码了。</p>
-<p>本节的代码主要集中在 <code>MSUserService</code>、<code>MSUserServiceImpl</code>、<code>MSDBTests</code> 中，大家自行 Clone 代码去看即可，我就不再占用篇幅贴代码了。其中 <code>MSDBTests</code> 主要是测试类，用来测试操作 MySQL 数据表的如创建表、查询、删除等操作。</p>
+<p>本节的代码主要集中在 <code>MSUserService</code>、<code>MSUserServiceImpl</code>、<code>MSDBTests</code> 中，其中 <code>MSUserService</code> 是接口，定义了一些数据库操作的方法，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MSUserService</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">createUser</span><span class="params">(MSUser user)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteByUid</span><span class="params">(Integer uid)</span></span>;</div><div class="line"></div><div class="line">    <span class="function">List&lt;Map&gt; <span class="title">queryUserByUid</span><span class="params">(Integer uid)</span></span>;</div><div class="line"></div><div class="line">    <span class="function">List&lt;Map&gt; <span class="title">queryUserByUserName</span><span class="params">(String userName)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteUserTable</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而 <code>MSUserServiceImpl</code> 则是  <code>MSUserService</code> 的实现类， <code>MSDBTests</code> 主要是测试类，用来测试操作 MySQL 数据表的如创建表、查询、删除等操作。大家自行 Clone 代码去看实现即可，我就不在这里占用篇幅贴代码了。</p>
 <p>在本节代码中，新增加了两个注解的使用即 <code>@Service</code> 和 <code>@Slf4j</code>，<code>@Slf4j</code> 这个注解主要用来简化使用日志。而 <code>@Service</code> 注解承担了两个职责一是 Bean 的创建，二是将一个类标识为一个服务。后续我会再深入跟大家分享  <code>@Service</code> 这个注解，目前你只需要用上它就可以了。</p>
 <p>在本节的例子中，用到的数据表（user）的数据结构大概如下：</p>
 <p><img src="/upload/images/2019/12/07/4.png" alt="1568529858131"></p>
