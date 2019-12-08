@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/12/07/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/12/07/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-12-08T02:45:38.725Z">
+<meta property="og:updated_time" content="2019-12-08T14:15:15.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: MySQL基本操作">
 <meta name="twitter:description" content="简介本篇是 微服务系列 的第 N 篇，从本篇开始我们就要接触和学习数据库相关的知识了。 数据库我们选择 MySQL 数据库，免费且资料多，大部分公司都会使用该数据库。我是在 Windows 10 上面搭建的微服务开发环境，同理，MySQL 数据库也是在这个系统上面安装的并且使用的是 MySQL8.0 版本，如果你还没有安装或者在安装 MySQL8.0 遇到问题可以参考 MySQL8.0.15在Wi">
@@ -444,7 +444,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Loading class `com.mysql.jdbc.Driver'. This is deprecated. </div><div class="line">The new driver class is `com.mysql.cj.jdbc.Driver'. </div><div class="line">The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.</div></pre></td></tr></table></figure>
 <p>意思是这个类已经过时了，请使用最新的 <code>jdbc.driver</code> 修改数据源配置，如下：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver</div></pre></td></tr></table></figure>
-<h3 id="2、spring-datasource-url-的配置"><a href="#2、spring-datasource-url-的配置" class="headerlink" title="2、spring.datasource.url 的配置"></a>2、spring.datasource.url 的配置</h3><p>如果配置为 <code>spring.datasource.url=jdbc:mysql://127.0.0.1:3306/mzc_user</code>，会一直报如下错误：</p>
+<h3 id="2、spring-datasource-url-的配置"><a href="#2、spring-datasource-url-的配置" class="headerlink" title="2、spring.datasource.url 的配置"></a>2、spring.datasource.url 的配置</h3><p>关于这个url 的配置，官方有更加详细的配置说明，可以参考 <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-jdbc-url-format.html" target="_blank" rel="noopener">Connection URL Syntax</a> 和 <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-configuration-properties.html" target="_blank" rel="noopener">Configuration Properties</a> 两篇文档。</p>
+<p>如果配置为 <code>spring.datasource.url=jdbc:mysql://127.0.0.1:3306/mzc_user</code>，会一直报如下错误：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">The server time zone value '�й���׼ʱ��' is unrecognized or represents more than one time zone. </div><div class="line">You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.</div></pre></td></tr></table></figure>
 <p>解决这个问题，有如下3种解决方案。</p>
 <p><strong>1、指定时区</strong></p>
