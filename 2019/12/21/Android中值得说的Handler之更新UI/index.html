@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="UI Handler," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在看电视剧《庆余年》，被调皮的编剧逗得爱不释手，范闲同志从“潜龙勿用”直到大殿醉酒背诵唐诗300首，让众官瞠目结舌，也算是“飞龙在天”了，这一集(第27集)看的那叫一个过瘾。尤其范闲那句“我醉欲眠君且去，去你妈的…”，差点让我喷饭。 推荐大家周末可以看看，算是休闲一下吧！ 简介个人总是感觉 UI 中更新 UI 很让人纠结！特此小结一下，算是抛砖引玉。 读这篇文章之前，假设你已经明白多线程、Ha">
+<meta name="keywords" content="UI Handler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中值得说的Handler之更新UI">
+<meta property="og:url" content="http://yoursite.com/2019/12/21/Android中值得说的Handler之更新UI/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="最近在看电视剧《庆余年》，被调皮的编剧逗得爱不释手，范闲同志从“潜龙勿用”直到大殿醉酒背诵唐诗300首，让众官瞠目结舌，也算是“飞龙在天”了，这一集(第27集)看的那叫一个过瘾。尤其范闲那句“我醉欲眠君且去，去你妈的…”，差点让我喷饭。 推荐大家周末可以看看，算是休闲一下吧！ 简介个人总是感觉 UI 中更新 UI 很让人纠结！特此小结一下，算是抛砖引玉。 读这篇文章之前，假设你已经明白多线程、Ha">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/12/21/1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2019/12/21/2.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-12-21T03:29:53.587Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中值得说的Handler之更新UI">
+<meta name="twitter:description" content="最近在看电视剧《庆余年》，被调皮的编剧逗得爱不释手，范闲同志从“潜龙勿用”直到大殿醉酒背诵唐诗300首，让众官瞠目结舌，也算是“飞龙在天”了，这一集(第27集)看的那叫一个过瘾。尤其范闲那句“我醉欲眠君且去，去你妈的…”，差点让我喷饭。 推荐大家周末可以看看，算是休闲一下吧！ 简介个人总是感觉 UI 中更新 UI 很让人纠结！特此小结一下，算是抛砖引玉。 读这篇文章之前，假设你已经明白多线程、Ha">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2019/12/21/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/21/Android中值得说的Handler之更新UI/"/>
+
+
+
+
+
+  <title>Android中值得说的Handler之更新UI | veryitman</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/21/Android中值得说的Handler之更新UI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android中值得说的Handler之更新UI</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-21T10:45:54+08:00">
+                2019-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UI/" itemprop="url" rel="index">
+                    <span itemprop="name">UI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/21/Android中值得说的Handler之更新UI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/12/21/Android中值得说的Handler之更新UI/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在看电视剧《庆余年》，被调皮的编剧逗得爱不释手，范闲同志从“潜龙勿用”直到大殿醉酒背诵唐诗300首，让众官瞠目结舌，也算是“飞龙在天”了，这一集(第27集)看的那叫一个过瘾。尤其范闲那句“我醉欲眠君且去，去你妈的…”，差点让我喷饭。</p>
+<p>推荐大家周末可以看看，算是休闲一下吧！</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>个人总是感觉 UI 中更新 UI 很让人纠结！特此小结一下，算是抛砖引玉。</p>
+<p>读这篇文章之前，假设你已经明白多线程、Handler 如何使用。</p>
+<p>在文章的最后，<strong>附录一张草图，主要用于说明 Handler、Message、MessageQueue、Looper 之间的关系。</strong></p>
+<h3 id="更新-UI"><a href="#更新-UI" class="headerlink" title="更新 UI"></a>更新 UI</h3><h3 id="1、在-onCreate-方法中开启线程更新-UI"><a href="#1、在-onCreate-方法中开启线程更新-UI" class="headerlink" title="1、在 onCreate() 方法中开启线程更新 UI"></a>1、在 onCreate() 方法中开启线程更新 UI</h3><p>直接上例子，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MasterActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123; </div><div class="line">TextView tv = <span class="keyword">null</span>; Button btn = <span class="keyword">null</span>; </div><div class="line"><span class="meta">@Override</span> </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123; </div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState); </div><div class="line">    setContentView(R.layout.main); </div><div class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + Thread.currentThread().getId()); </div><div class="line">    tv = (TextView)findViewById(R.id.text); </div><div class="line">    btn = (Button)findViewById(R.id.btn); <span class="comment">/*onCreate中开启新线程，更新UI。没有报错或者异常信息！*/</span> </div><div class="line">    Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123; </div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </div><div class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + Thread.currentThread().getId()); </div><div class="line">            tv.setText(<span class="string">"update UI is success!"</span>); </div><div class="line">            btn.setText(<span class="string">"update UI is success!"</span>); </div><div class="line">        &#125;</div><div class="line">    &#125;); </div><div class="line">    thread.start(); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>随便折腾，不会报错也不会报任何异常！</p>
+<p>以为开启的线程和 UI 线程（主线程）是同一个线程，但是很不幸，他们的线程<code>id</code>风牛马不相及！</p>
+<p>大家可以查一下 UI 源码，这个主要是因为在加载 Activity 的时候，还没有触发检查单线程的模型（即子线程不可以更新UI）。</p>
+<p>如果你不相信的话，可以在上面的线程里面 <code>while true</code>，那么一定会报错的。</p>
+<h3 id="2、在-Activity-生命周期方法中更新-UI"><a href="#2、在-Activity-生命周期方法中更新-UI" class="headerlink" title="2、在 Activity 生命周期方法中更新 UI"></a>2、在 Activity 生命周期方法中更新 UI</h3><p>如 Activity 的 onResume、onStart、反正是以 on 开头的回调方法中在非主线程中更新 UI，实例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onRestart(); <span class="comment">/*onRestart中开启新线程，更新UI*/</span></div><div class="line">    Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + Thread.currentThread().getId());</div><div class="line">            tv.setText(<span class="string">"update UI is success!"</span>);</div><div class="line">            btn.setText(<span class="string">"update UI is success!"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    thread.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不好意思，按下返回按钮在启动程序，或者按 Home 键再启动程序，就这么折腾几下，就会包异常！</p>
+<p>异常信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UI.view.ViewRoot$CalledFromWrongThreadException: </div><div class="line">Only the original thread that created a view hierarchy can touch its views.</div></pre></td></tr></table></figure>
+<p>大概意思是：只有在主线程中才可以进行更新 UI 的操作。</p>
+<p>这个时候，大家都应该想到 <code>postInvalidate()</code> 这个方法了。修改实例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestart</span><span class="params">()</span> </span>&#123; </div><div class="line">    <span class="keyword">super</span>.onRestart(); <span class="comment">/*onRestart中开启新线程，更新UI*/</span> </div><div class="line">    Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123; </div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </div><div class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + Thread.currentThread().getId()); </div><div class="line">            tv.postInvalidate(); btn.postInvalidate(); </div><div class="line">            tv.setText(<span class="string">"update UI is success!"</span>); </div><div class="line">            btn.setText(<span class="string">"update UI is success!"</span>); </div><div class="line">        &#125;</div><div class="line">    &#125;); </div><div class="line">    thread.start(); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>postInvalidate()</code> 方法，源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postInvalidate</span><span class="params">()</span> </span>&#123; </div><div class="line">    postInvalidateDelayed(<span class="number">0</span>); </div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postInvalidateDelayed</span><span class="params">(<span class="keyword">long</span> delayMilliseconds)</span> </span>&#123; </div><div class="line">    <span class="comment">// We try only with the AttachInfo because there's no point in invalidating </span></div><div class="line">    <span class="comment">// if we are not attached to our window </span></div><div class="line">    <span class="keyword">if</span> (mAttachInfo != <span class="keyword">null</span>) &#123; </div><div class="line">        Message msg = Message.obtain(); </div><div class="line">        msg.what = AttachInfo.INVALIDATE_MSG; </div><div class="line">        msg.obj = <span class="keyword">this</span>; </div><div class="line">        mAttachInfo.mHandler.sendMessageDelayed(msg, delayMilliseconds); </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出，<code>postInvalidate()</code> 本质是使用了 Handler 处理消息的机制！该方法可以在子线程中直接用来更新UI。对应的还有一个方法 <strong>invalidate()</strong>，稍候再说！</p>
+<h3 id="3、在-Button-的事件中开启线程，更新-UI"><a href="#3、在-Button-的事件中开启线程，更新-UI" class="headerlink" title="3、在 Button 的事件中开启线程，更新 UI"></a>3、在 Button 的事件中开启线程，更新 UI</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MasterActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line">    TextView tv = <span class="keyword">null</span>; Button btn = <span class="keyword">null</span>; </div><div class="line">    <span class="meta">@Override</span> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123; </div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState); </div><div class="line">        setContentView(R.layout.main); </div><div class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + Thread.currentThread().getId()); </div><div class="line">        tv = (TextView)findViewById(R.id.text); </div><div class="line">        btn = (Button)findViewById(R.id.btn); </div><div class="line">        btn.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123; </div><div class="line">            <span class="meta">@Override</span> </div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123; </div><div class="line">                Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123; </div><div class="line">                    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </div><div class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + Thread.currentThread().getId()); </div><div class="line">                    tv.setText(<span class="string">"update UI is success!"</span>); </div><div class="line">                    btn.setText(<span class="string">"update UI is success!"</span>); </div><div class="line">                &#125;</div><div class="line">            &#125;); </div><div class="line">            thread.start(); </div><div class="line">        &#125;</div><div class="line">     &#125;); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> Sorry，报错！即使你加上 <code>postInvalidate()</code> 方法，也会报这个错误。</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UI.view.ViewRoot$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.</div></pre></td></tr></table></figure>
+<p><img src="/upload/images/2019/12/21/1.jpg" alt="1"></p>
+<h3 id="4、使用-Handler-结合多线程更新-UI"><a href="#4、使用-Handler-结合多线程更新-UI" class="headerlink" title="4、使用 Handler 结合多线程更新 UI"></a>4、使用 Handler 结合多线程更新 UI</h3><p>a. 开启一个线程，在 run 方法中通知 Handler</p>
+<p>b. Handler 中使用 handleMessage 方法更新 UI</p>
+<h3 id="5、Handler-和-invalidate-方法结合多线程更新-UI"><a href="#5、Handler-和-invalidate-方法结合多线程更新-UI" class="headerlink" title="5、Handler 和 invalidate 方法结合多线程更新 UI"></a>5、Handler 和 invalidate 方法结合多线程更新 UI</h3><p>方法 <code>invalidate</code> 主要用在主线程中（即UI 线程中），<strong>不可以用于子线程。</strong>如果在子线程中需要使用 <code>postInvalidate</code> 方法。</p>
+<p>Android 的 API 有说明：</p>
+<blockquote>
+<p>public void invalidate () Since: API Level 1 Invalidate the whole view.</p>
+<p>If the view is visible, onDraw(Canvas) will be called at some point in the future.</p>
+<p>This must be called from a UI thread. To call from a non-UI thread, call postInvalidate(). </p>
+</blockquote>
+<p>看看该方法源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invalidate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (ViewDebug.TRACE_HIERARCHY) &#123;</div><div class="line">            ViewDebug.trace(<span class="keyword">this</span>, ViewDebug.HierarchyTraceType.INVALIDATE);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((mPrivateFlags &amp; (DRAWN | HAS_BOUNDS)) == (DRAWN | HAS_BOUNDS)) &#123;</div><div class="line">            mPrivateFlags &amp;= ~DRAWN &amp; ~DRAWING_CACHE_VALID;</div><div class="line">            <span class="keyword">final</span> ViewParent p = mParent;</div><div class="line">            <span class="keyword">final</span> AttachInfo ai = mAttachInfo;</div><div class="line">            <span class="keyword">if</span> (p != <span class="keyword">null</span> &amp;&amp; ai != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">final</span> Rect r = ai.mTmpInvalRect;</div><div class="line">                r.set(<span class="number">0</span>, <span class="number">0</span>, mRight - mLeft, mBottom - mTop); <span class="comment">// Don't call invalidate -- we don't want to internally scroll // our own bounds p.invalidateChild(this, r); &#125; &#125; &#125; </span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>invalidate</code> 方法如果你直接在主线程中调用，是看不到任何更新的。需要与 Handler 结合！</p>
+<p>UI 在 <code>onDraw</code> 事件处理绘图，而 <code>invalidate()</code> 函数可以再一次触发 <code>onDraw</code> 事件，然后再一次进行绘图动作。实例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MasterActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> times = <span class="number">1</span>;</div><div class="line"> </div><div class="line">    <span class="comment">/** Called when the activity is first created. */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line"> </div><div class="line">        setContentView( <span class="keyword">new</span> View(<span class="keyword">null</span>) &#123;</div><div class="line"> </div><div class="line">            Paint vPaint = <span class="keyword">new</span> Paint();  <span class="comment">//绘制样式物件</span></div><div class="line">            <span class="keyword">private</span> <span class="keyword">int</span> i = <span class="number">0</span>;           <span class="comment">//弧形角度</span></div><div class="line"> </div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span> <span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">                <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">                System.out.println(<span class="string">"this run "</span> + (times++) +<span class="string">" times!"</span>);</div><div class="line"> </div><div class="line">                <span class="comment">// 设定绘图样式</span></div><div class="line">                vPaint.setColor( <span class="number">0xff00ffff</span> ); <span class="comment">//画笔颜色</span></div><div class="line">                vPaint.setAntiAlias( <span class="keyword">true</span> );   <span class="comment">//反锯齿</span></div><div class="line">                vPaint.setStyle( Paint.Style.STROKE );</div><div class="line"> </div><div class="line">                <span class="comment">// 绘制一个弧形</span></div><div class="line">                canvas.drawArc(<span class="keyword">new</span> RectF(<span class="number">60</span>, <span class="number">120</span>, <span class="number">260</span>, <span class="number">320</span>), <span class="number">0</span>, i, <span class="keyword">true</span>, vPaint );</div><div class="line"> </div><div class="line">                <span class="comment">// 弧形角度</span></div><div class="line">                <span class="keyword">if</span>( (i+=<span class="number">10</span>) &gt; <span class="number">360</span> ) &#123;</div><div class="line">                    i = <span class="number">0</span>;</div><div class="line">                &#125;</div><div class="line"> </div><div class="line">                <span class="comment">// 重绘, 再一次执行onDraw 程序</span></div><div class="line">                invalidate();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>经过测试，发现 <code>times</code> 一直在被 <code>++</code>，说明 <code>onDraw</code> 被多次调用，并且一致在画图！</p>
+<p>Android 的 API 有时候让人看的很郁闷很无语…..关于 <code>invalidate</code> 的使用，还待探索。革命尚未成功，同志仍需努力！</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><strong>附录： Handler、Message、MessageQueue、Looper 之间的关系</strong></p>
+<p><img src="/upload/images/2019/12/21/2.jpg" alt="1"></p>
+<p><strong>这里说明</strong></p>
+<ul>
+<li><p>Looper 使用无限循环取出消息，是有 UI OS 控制的；</p>
+</li>
+<li><p>UI 线程是非安全的，即不要在子线程中更新 UI；</p>
+</li>
+<li>Looper 取出来的消息，Handler 可以通过 <code>what</code>、<code>obj</code>  等量来区别分别获取属于自己的消息，所以推荐使用这些内置变量。</li>
+</ul>
+<hr>
+<p><strong>天生我材必有用，千金散尽还复来。</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UI-Handler/" rel="tag"><i class="fa fa-tag"></i> UI Handler</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/07/微服务-MySQL基本操作/" rel="next" title="微服务: MySQL基本操作">
+                <i class="fa fa-chevron-left"></i> 微服务: MySQL基本操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">147</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">115</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://blog.csdn.net/veryitman" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更新-UI"><span class="nav-number">1.1.</span> <span class="nav-text">更新 UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、在-onCreate-方法中开启线程更新-UI"><span class="nav-number">1.2.</span> <span class="nav-text">1、在 onCreate() 方法中开启线程更新 UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、在-Activity-生命周期方法中更新-UI"><span class="nav-number">1.3.</span> <span class="nav-text">2、在 Activity 生命周期方法中更新 UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、在-Button-的事件中开启线程，更新-UI"><span class="nav-number">1.4.</span> <span class="nav-text">3、在 Button 的事件中开启线程，更新 UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、使用-Handler-结合多线程更新-UI"><span class="nav-number">1.5.</span> <span class="nav-text">4、使用 Handler 结合多线程更新 UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、Handler-和-invalidate-方法结合多线程更新-UI"><span class="nav-number">1.6.</span> <span class="nav-text">5、Handler 和 invalidate 方法结合多线程更新 UI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
