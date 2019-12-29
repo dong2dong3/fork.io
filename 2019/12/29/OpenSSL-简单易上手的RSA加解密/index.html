@@ -104,7 +104,7 @@
 <meta property="og:description" content="简介这篇文章是继 OpenSSL: 用VS2017创建C工程、OpenSSL: 完成VS2017的配置 两篇文章的第3篇，前两篇分别跟大家分享了如何在 visual studio2017 中创建C工程，配置OpenSSL的开发环境以及使用 openssl 开源库实现base64的编解码。 本篇跟大家分享如何使用  openssl 开源库实现 RSA 的加密和解密，不过这一篇是对简单的数据进行加解密">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-12-29T14:49:43.941Z">
+<meta property="og:updated_time" content="2019-12-29T15:00:46.277Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenSSL: 简单易上手的RSA加解密">
 <meta name="twitter:description" content="简介这篇文章是继 OpenSSL: 用VS2017创建C工程、OpenSSL: 完成VS2017的配置 两篇文章的第3篇，前两篇分别跟大家分享了如何在 visual studio2017 中创建C工程，配置OpenSSL的开发环境以及使用 openssl 开源库实现base64的编解码。 本篇跟大家分享如何使用  openssl 开源库实现 RSA 的加密和解密，不过这一篇是对简单的数据进行加解密">
@@ -419,7 +419,7 @@
         <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>这篇文章是继 <a href="[http://www.veryitman.com/2019/11/23/OpenSSL-%E7%94%A8VS2017%E5%88%9B%E5%BB%BAC%E5%B7%A5%E7%A8%8B/">OpenSSL: 用VS2017创建C工程</a>、<a href="http://www.veryitman.com/2019/11/23/OpenSSL-%E5%AE%8C%E6%88%90VS2017%E7%9A%84%E9%85%8D%E7%BD%AE/" target="_blank" rel="noopener">OpenSSL: 完成VS2017的配置</a> 两篇文章的第3篇，前两篇分别跟大家分享了如何在 <code>visual studio2017</code> 中创建C工程，配置OpenSSL的开发环境以及使用 <code>openssl</code> 开源库实现base64的编解码。</p>
 <p>本篇跟大家分享如何使用  <code>openssl</code> 开源库实现 RSA 的加密和解密，不过这一篇是对简单的数据进行加解密，下一篇继续跟大家分享复杂一点的 RSA 加解密过程以及实例代码。</p>
 <p>2019 即将被画上句号，自己还有很多愿望没有实现。一拿起书就感觉困，一拿起手机觉得黑夜里阳光明媚，无药可救了呀！</p>
-<h2 id="获取公、私钥"><a href="#获取公、私钥" class="headerlink" title="获取公、私钥"></a>获取公、私钥</h2><p>在 <a href="https://github.com/veryitman/c-openssl" target="_blank" rel="noopener">c-openssl</a> 获取的压缩包中，解压可以在 bin64或者bin（32位操作系统使用） 目录下面找到 <code>openssl.exe</code> 文件，双击打开即可。</p>
+<h2 id="获取公、私钥"><a href="#获取公、私钥" class="headerlink" title="获取公、私钥"></a>获取公、私钥</h2><p>在 <a href="https://www.npcglib.org/~stathis/blog/precompiled-openssl/" target="_blank" rel="noopener">precompiled-openssl</a> 获取的压缩包中，解压可以在 bin64或者bin（32位操作系统使用） 目录下面找到 <code>openssl.exe</code> 文件，双击打开即可。</p>
 <h3 id="生成私钥"><a href="#生成私钥" class="headerlink" title="生成私钥"></a>生成私钥</h3><p>执行下面代码，如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">genrsa -out rsa_private_key.pem 1024</div></pre></td></tr></table></figure>
 <p>此时在 bin64 目录下会生成 <code>rsa_private_key.pem</code> 文件，即私钥文件；</p>
