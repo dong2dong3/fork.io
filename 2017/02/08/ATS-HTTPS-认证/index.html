@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Single.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Double.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Random.png">
-<meta property="og:updated_time" content="2019-04-24T01:59:14.000Z">
+<meta property="og:updated_time" content="2020-01-12T09:10:34.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ATS: HTTPS 认证">
 <meta name="twitter:description" content="在 ATS: HTTP/HTTPS 协议介绍 中介绍了一些关于 HTTP/HTTPS 的概念以及相关的基本知识. 今天来聊聊关于 HTTPS 的认证方式和过程. 说 HTTPS 认证前, 先了解几个概念. 关于加密的几个概念1. SSL 协议加密方式 SSL 既用了对称加密, 也用了非对称加密(公钥加密).  在建立传输链路时, SSL 首先对对称加密的密钥使用公钥进行非对称加密, 链路建立好之后">
@@ -425,21 +425,25 @@
 <p>SSL 既用了对称加密, 也用了非对称加密(公钥加密).</p>
 </blockquote>
 <p>在建立传输链路时, SSL 首先对对称加密的密钥使用公钥进行非对称加密, 链路建立好之后，SSL 对传输内容使用对称加密.</p>
-<p>下面是两种加密方式的对比:</p>
-<p>1.对称加密</p>
+<p>下面是两种加密方式的对比：</p>
+<p>1、对称加密</p>
 <blockquote>
-<p>对称加密采用了对称密码编码技术，它的特点是文件加密和解密使用相同的密钥，即加密密钥也可以用作解密密钥，这种方法在密码学中叫做 <code>对称加密算法</code>，对称加密算法使用起来简单快捷，密钥较短，且破译困难，除了数据加密标准（DES），另一个对称密钥加密系统是国际数据加密算法（IDEA），它比 DES 的加密性好，而且对计算机功能要求也没有那么高.<br>IDEA 加密标准由 PGP（Pretty Good Privacy）系统使用.</p>
+<p>对称加密采用了对称密码编码技术，它的特点是文件加密和解密使用相同的密钥，即加密密钥也可以用作解密密钥，这种方法在密码学中叫做 <code>对称加密算法</code>，对称加密算法使用起来简单快捷，密钥较短，且破译困难，除了数据加密标准（DES），另一个对称密钥加密系统是国际数据加密算法（IDEA），它比 DES 的加密性好，而且对计算机功能要求也没有那么高。<br>IDEA 加密标准由 PGP（Pretty Good Privacy）系统使用。</p>
 </blockquote>
-<p>该加密方式, 速度快, 可加密内容较大, 用来加密会话过程中的消息.</p>
-<p>2.公钥加密(非对称加密)</p>
+<p>该加密方式，速度快，可加密内容较大，用来加密会话过程中的消息。</p>
+<p>2、公钥加密(非对称加密)</p>
 <blockquote>
 <p>1976年，美国学者 Dime 和 Henman 为解决信息公开传送和密钥管理问题，提出一种新的密钥交换协议，允许在不安全的媒体上的通讯双方交换信息，安全地达成一致的密钥，这就是“公开密钥系统”.<br>相对于 <code>对称加密算法</code> 这种方法也叫做 <code>非对称加密算法</code>.<br>与对称加密算法不同，非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥（privatekey）. 公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密.<br>因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。</p>
 </blockquote>
-<p>该加密方式, 速度较慢, 能提供更好的身份认证技术, 用来加密对称加密的密钥.</p>
-<h4 id="2-数字证书"><a href="#2-数字证书" class="headerlink" title="2. 数字证书"></a>2. 数字证书</h4><p>一种文件的名称，好比一个机构或人的签名，能够证明这个机构或人的真实性. 其中包含的信息，用于实现上述功能.</p>
-<h4 id="3-加密和认证"><a href="#3-加密和认证" class="headerlink" title="3. 加密和认证"></a>3. 加密和认证</h4><p>加密是指通信双方为了防止铭感信息在信道上被第三方窃听而泄漏，将明文通过加密变成密文，如果第三方无法解密的话，就算获得密文也无能为力.</p>
-<p>认证是指通信双方为了确认对方是值得信任的消息发送或接受方，而不是使用假身份的非法者，采取的确认身份的方式.</p>
-<p>只有同时进行了加密和认证才能保证通信的安全，因此在 SSL 通信协议中这两者(加密和认证)都被使用.</p>
+<p>该加密方式，速度较慢，能提供更好的身份认证技术，用来加密对称加密的密钥。</p>
+<h4 id="2-数字证书"><a href="#2-数字证书" class="headerlink" title="2. 数字证书"></a>2. 数字证书</h4><p>一种文件的名称，好比一个机构或人的签名，能够证明这个机构或人的真实性. 其中包含的信息，用于实现上述功能。</p>
+<p>CA证书是由CA（Certification Authority）机构发布的数字证书。其内容包含：电子签证机关的信息、公钥用户信息、公钥、签名和有效期。这里的公钥服务端的公钥，这里的签名是指：用hash散列函数计算公开的明文信息的信息摘要，然后采用CA的私钥对信息摘要进行加密，加密完的密文就是签名。 即：证书 =  公钥 + 签名 +申请者和颁发者的信息。 客户端中因为在操作系统中就预置了CA的公钥，所以支持解密签名（因为签名使用CA的私钥加密的）。</p>
+<p><strong>我们为什么需要 CA 认证机构颁发证书？</strong></p>
+<p>HTTP 协议被认为不安全是因为传输过程容易被监听者勾线监听、伪造服务器，而 HTTPS 协议主要解决的便是网络传输的安全性问题。</p>
+<p>首先我们假设不存在认证机构，任何人都可以制作证书，这带来的安全风险便是经典的 <a href="https://baike.baidu.com/item/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB" target="_blank" rel="noopener">中间人攻击</a>（Man-in-the-MiddleAttack，简称“MITM<em>攻击</em>”）问题。</p>
+<h4 id="3-加密和认证"><a href="#3-加密和认证" class="headerlink" title="3. 加密和认证"></a>3. 加密和认证</h4><p>加密是指通信双方为了防止铭感信息在信道上被第三方窃听而泄漏，将明文通过加密变成密文，如果第三方无法解密的话，就算获得密文也无能为力。</p>
+<p>认证是指通信双方为了确认对方是值得信任的消息发送或接受方，而不是使用假身份的非法者，采取的确认身份的方式。</p>
+<p>只有同时进行了加密和认证才能保证通信的安全，因此在 SSL 通信协议中这两者(加密和认证)都被使用。</p>
 <p>加密一般使用 <code>对称加密算法</code> 和 <code>不对称加密算法</code>，不对称加密最常见的算法就是 RSA.</p>
 <h4 id="4-消息摘要"><a href="#4-消息摘要" class="headerlink" title="4. 消息摘要"></a>4. 消息摘要</h4><p>这个技术主要是为了避免消息被篡改.</p>
 <p>消息摘要是把一段信息, 通过某种算法, 得出一串字符串.<br>这个字符串就是消息的摘要，如果消息被篡改(发生了变化), 那么摘要也一定会发生变化(如果2个不同的消息生成的摘要是一样的，那么这就叫发生了碰撞).</p>
@@ -447,10 +451,12 @@
 <p>数字证书、加密和认证、消息摘要三个技术结合起来，就是在 HTTPS 中广泛应用的证书(certificate), 证书本身携带了加密/解密的信息，并且可以标识自己的身份，也自带消息摘要.</p>
 <h2 id="HTTPS-认证方式"><a href="#HTTPS-认证方式" class="headerlink" title="HTTPS 认证方式"></a>HTTPS 认证方式</h2><p>分为单向和双向认证.</p>
 <h3 id="单向认证"><a href="#单向认证" class="headerlink" title="单向认证"></a>单向认证</h3><blockquote>
-<p>单向认证较简单, 只需要服务端校验服务端的证书的合法性.</p>
+<p>单向认证较简单, 只需要客户端校验服务端的证书的合法性即可。换句话说，只需要客户端验证SSL服务器身份，不需要服务端验证SSL客户端身份。 也就是说单向认证不需要客户端保存证书。</p>
 </blockquote>
 <p>该认证过程使用下面的流程图来表示:<br><img src="/upload/images/2017/02/08/HTTPS_Single.png" alt="1"></p>
-<h3 id="双向认证"><a href="#双向认证" class="headerlink" title="双向认证"></a>双向认证</h3><p>双向认证和单向认证原理基本一致，但是需要双方都校验对方的证书的合法性.</p>
+<h3 id="双向认证"><a href="#双向认证" class="headerlink" title="双向认证"></a>双向认证</h3><blockquote>
+<p> 双向认证和单向认证原理基本一致，但是需要双方都校验对方的证书的合法性。换句话说， 要求服务器和客户端双方都有证书，客户端需要校验服务端，服务端也需要校验客户端。 也就是说双向认证需要客户端、服务端都要保存证书。</p>
+</blockquote>
 <p>该认证过程使用下面的流程图来表示:<br><img src="/upload/images/2017/02/08/HTTPS_Double.png" alt="1"></p>
 <h3 id="随机数的产生"><a href="#随机数的产生" class="headerlink" title="随机数的产生"></a>随机数的产生</h3><p>不管是单向认证, 还是双向认证, 都有随机数的产生和发送.</p>
 <p>下图是随机数的产生流程图:<br><img src="/upload/images/2017/02/08/HTTPS_Random.png" alt="1"></p>
@@ -458,10 +464,11 @@
 <h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p><strong>推荐在线流程图工具</strong>:</p>
 <p><a href="http://www.veryitman.com/2017/02/08/www.processon.com" target="_blank" rel="noopener">ProcessOn</a>.</p>
 <p><strong>推荐博文</strong>:</p>
-<p>1.<a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="noopener">图解SSL/TLS协议</a></p>
-<p>2.<a href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html" target="_blank" rel="noopener">HTTPS的七个误解(译文)</a></p>
-<p>3.<a href="http://blog.sina.com.cn/s/blog_56d8ea900100bzpr.html" target="_blank" rel="noopener">对称加密和非对称加密介绍和区别</a></p>
-<p>本文中参考了上面文章的部分内容, 感谢这些作者.</p>
+<p>1、<a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="noopener">图解SSL/TLS协议</a></p>
+<p>2、<a href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html" target="_blank" rel="noopener">HTTPS的七个误解(译文)</a></p>
+<p>3、<a href="http://blog.sina.com.cn/s/blog_56d8ea900100bzpr.html" target="_blank" rel="noopener">对称加密和非对称加密介绍和区别</a></p>
+<p>4、<a href="https://mp.weixin.qq.com/s/LKcdq4HATB05LZUJ7beojw" target="_blank" rel="noopener">你连HTTPS 原理没搞懂，还给我讲“中间人攻击”</a></p>
+<p>本文中参考了上面文章的部分内容，感谢以上文章作者们。</p>
 
       
     </div>

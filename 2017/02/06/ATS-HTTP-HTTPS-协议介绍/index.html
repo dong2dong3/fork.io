@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="苹果在2017年要求 App 必须支持 HTTPS, 不过, 这个要求, 最后又被苹果自己延期了. 我只能说, 苹果的开发哥哥们真会玩… 该系列博客介绍 iOS 上面的 ATS 以及相关的 HTTPS 知识, 分为三篇来分享. 本篇是第一篇. 第二篇: ATS: HTTPS 认证 今天先简单了解一下 HTTPS 以及相关的知识. 相关名词先了解一下相关的常用名词. 1.HTTPHyperText">
+<meta name="description" content="苹果在2017年要求 App 必须支持 HTTPS, 不过, 这个要求, 最后又被苹果自己延期了. 我只能说, 苹果的开发哥哥们真会玩… 该系列博客介绍 iOS 上面的 ATS 以及相关的 HTTPS 知识, 分为三篇来分享. 本篇是第一篇. 第二篇: ATS: HTTPS 认证 今天先简单了解一下 HTTPS 以及相关的知识. 相关名词先了解一下相关的常用名词。 1.HTTPHyperText">
 <meta name="keywords" content="ATS HTTP HTTPS SSL TLS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ATS: HTTP&#x2F;HTTPS 协议介绍">
 <meta property="og:url" content="http://yoursite.com/2017/02/06/ATS-HTTP-HTTPS-协议介绍/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="苹果在2017年要求 App 必须支持 HTTPS, 不过, 这个要求, 最后又被苹果自己延期了. 我只能说, 苹果的开发哥哥们真会玩… 该系列博客介绍 iOS 上面的 ATS 以及相关的 HTTPS 知识, 分为三篇来分享. 本篇是第一篇. 第二篇: ATS: HTTPS 认证 今天先简单了解一下 HTTPS 以及相关的知识. 相关名词先了解一下相关的常用名词. 1.HTTPHyperText">
+<meta property="og:description" content="苹果在2017年要求 App 必须支持 HTTPS, 不过, 这个要求, 最后又被苹果自己延期了. 我只能说, 苹果的开发哥哥们真会玩… 该系列博客介绍 iOS 上面的 ATS 以及相关的 HTTPS 知识, 分为三篇来分享. 本篇是第一篇. 第二篇: ATS: HTTPS 认证 今天先简单了解一下 HTTPS 以及相关的知识. 相关名词先了解一下相关的常用名词。 1.HTTPHyperText">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/06/HTTP+SSL.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/06/tcp-ip-model.png">
-<meta property="og:updated_time" content="2019-04-24T01:59:14.000Z">
+<meta property="og:updated_time" content="2020-01-12T08:39:43.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ATS: HTTP&#x2F;HTTPS 协议介绍">
-<meta name="twitter:description" content="苹果在2017年要求 App 必须支持 HTTPS, 不过, 这个要求, 最后又被苹果自己延期了. 我只能说, 苹果的开发哥哥们真会玩… 该系列博客介绍 iOS 上面的 ATS 以及相关的 HTTPS 知识, 分为三篇来分享. 本篇是第一篇. 第二篇: ATS: HTTPS 认证 今天先简单了解一下 HTTPS 以及相关的知识. 相关名词先了解一下相关的常用名词. 1.HTTPHyperText">
+<meta name="twitter:description" content="苹果在2017年要求 App 必须支持 HTTPS, 不过, 这个要求, 最后又被苹果自己延期了. 我只能说, 苹果的开发哥哥们真会玩… 该系列博客介绍 iOS 上面的 ATS 以及相关的 HTTPS 知识, 分为三篇来分享. 本篇是第一篇. 第二篇: ATS: HTTPS 认证 今天先简单了解一下 HTTPS 以及相关的知识. 相关名词先了解一下相关的常用名词。 1.HTTPHyperText">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2017/02/06/HTTP+SSL.png">
 
 
@@ -423,26 +423,26 @@
 <p>本篇是第一篇.</p>
 <p>第二篇: <a href="http://www.veryitman.com/2017/02/08/ATS-HTTPS-%E8%AE%A4%E8%AF%81/" target="_blank" rel="noopener">ATS: HTTPS 认证</a></p>
 <p>今天先简单了解一下 HTTPS 以及相关的知识.</p>
-<h2 id="相关名词"><a href="#相关名词" class="headerlink" title="相关名词"></a>相关名词</h2><p>先了解一下相关的常用名词.</p>
-<h4 id="1-HTTP"><a href="#1-HTTP" class="headerlink" title="1.HTTP"></a>1.HTTP</h4><p>HyperText Transfer Protocol, 超文本传输协议.</p>
-<h4 id="2-HTTPS"><a href="#2-HTTPS" class="headerlink" title="2.HTTPS"></a>2.HTTPS</h4><p>Hyper Text Transfer Protocol over Secure Socket Layer, 安全的超文本传输协议.</p>
-<h4 id="3-SSL"><a href="#3-SSL" class="headerlink" title="3.SSL"></a>3.SSL</h4><p>Secure Socket Layer, 安全套接字层.</p>
-<h4 id="4-TLS"><a href="#4-TLS" class="headerlink" title="4.TLS"></a>4.TLS</h4><p>Transport Layer Security, 传输层安全.其前身就是 SSL.</p>
-<h4 id="5-ATS"><a href="#5-ATS" class="headerlink" title="5.ATS"></a>5.ATS</h4><p>App Transport Security, 应用传输安全.</p>
+<h2 id="相关名词"><a href="#相关名词" class="headerlink" title="相关名词"></a>相关名词</h2><p>先了解一下相关的常用名词。</p>
+<h4 id="1-HTTP"><a href="#1-HTTP" class="headerlink" title="1.HTTP"></a>1.HTTP</h4><p>HyperText Transfer Protocol，超文本传输协议。</p>
+<h4 id="2-HTTPS"><a href="#2-HTTPS" class="headerlink" title="2.HTTPS"></a>2.HTTPS</h4><p>Hyper Text Transfer Protocol over Secure Socket Layer，安全的超文本传输协议。</p>
+<h4 id="3-SSL"><a href="#3-SSL" class="headerlink" title="3.SSL"></a>3.SSL</h4><p>Secure Socket Layer，安全套接字层。</p>
+<h4 id="4-TLS"><a href="#4-TLS" class="headerlink" title="4.TLS"></a>4.TLS</h4><p>Transport Layer Security，传输层安全.其前身就是 SSL.</p>
+<h4 id="5-ATS"><a href="#5-ATS" class="headerlink" title="5.ATS"></a>5.ATS</h4><p>App Transport Security，应用传输安全.</p>
 <h2 id="协议介绍"><a href="#协议介绍" class="headerlink" title="协议介绍"></a>协议介绍</h2><h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>HyperText Transfer Protocol, 超文本传输协议，是互联网上使用最广泛的一种协议，所有 WWW 文件必须遵循的标准.</p>
 <p>HTTP 协议传输的数据都是未加密的, 也就是明文的, 因此使用 HTTP 协议传输隐私信息非常不安全.</p>
-<p>默认使用 TCP 端口为 80.</p>
+<p>默认使用 TCP 端口 <code>80</code>.</p>
 <h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>安全的超文本传输协议, <code>Hyper Text Transfer Protocol over Secure Socket Layer</code>, 网景公式设计了 SSL(Secure Socket Layer) 协议用于对 HTTP 协议传输的数据进行加密，保证会话过程中的安全性.</p>
-<p>默认使用 TCP 端口为 443.</p>
-<h3 id="拆分-HTTPS"><a href="#拆分-HTTPS" class="headerlink" title="拆分 HTTPS"></a>拆分 HTTPS</h3><h4 id="SSL-协议加密方式"><a href="#SSL-协议加密方式" class="headerlink" title="SSL 协议加密方式"></a>SSL 协议加密方式</h4><p>SSL 协议即用到了对称加密也用到了非对称加密(公钥加密)，在建立传输链路时，SSL 首先对对称加密的密钥使用公钥进行非对称加密，链路建立好之后，SSL 对传输内容使用对称加密.</p>
+<p>默认使用 TCP 端口 <code>443</code>.</p>
+<h3 id="拆分-HTTPS"><a href="#拆分-HTTPS" class="headerlink" title="拆分 HTTPS"></a>拆分 HTTPS</h3><h4 id="SSL-协议加密方式"><a href="#SSL-协议加密方式" class="headerlink" title="SSL 协议加密方式"></a>SSL 协议加密方式</h4><p>SSL 协议即用到了对称加密也用到了非对称加密(公钥加密)，在建立传输链路时，SSL 首先对对称加密的密钥使用公钥进行非对称加密（主要用于证书校验，CA认证机构颁发的证书），链路建立好之后，SSL 对传输内容使用对称加密.</p>
 <blockquote>
-<p>1.对称加密<br>速度高，可加密内容较大，用来加密会话过程中的消息.</p>
-<p>2.公钥加密<br>加密速度较慢，但能提供更好的身份认证技术，用来加密对称加密的密钥.</p>
+<p>1、对称加密<br>速度高，可加密内容较大，用来加密会话过程中的消息.</p>
+<p>2、公钥加密（非对称加密）<br>加密速度较慢，但能提供更好的身份认证技术，用来加密对称加密的密钥.</p>
 </blockquote>
-<h4 id="HTTP-SSL"><a href="#HTTP-SSL" class="headerlink" title="HTTP+SSL"></a>HTTP+SSL</h4><p>HTTPS, 可以看做是 HTTP+SSL, 所以重点在 SSL 上面.</p>
+<h4 id="HTTP-SSL"><a href="#HTTP-SSL" class="headerlink" title="HTTP+SSL"></a>HTTP+SSL</h4><p>HTTPS，可以看做是 HTTP+SSL，所以重点在 SSL 上面。</p>
 <h4 id="HTTPS-1"><a href="#HTTPS-1" class="headerlink" title="HTTPS"></a>HTTPS</h4><p>在 HTTP (超文本传输协议)基础上提出的一种安全的 HTTP 协议，因此可以称为安全的超文本传输协议。</p>
-<p>HTTP 协议直接放置在 TCP 协议之上，而 HTTPS 提出在 HTTP 和 TCP 中间加上一层加密层.</p>
-<p>从发送端看，这一层负责把 HTTP 的内容加密后送到下层的 TCP，从接收方看，这一层负责将 TCP 送来的数据解密还原成 HTTP 的内容.</p>
+<p>HTTP 协议直接放置在 TCP 协议之上，而 HTTPS 提出在 HTTP 和 TCP 中间加上一层加密层。</p>
+<p>从发送端看，这一层负责把 HTTP 的内容加密后送到下层的 TCP，从接收方看，这一层负责将 TCP 送来的数据解密还原成 HTTP 的内容。</p>
 <h4 id="SSL-Secure-Socket-Layer"><a href="#SSL-Secure-Socket-Layer" class="headerlink" title="SSL(Secure Socket Layer)"></a>SSL(Secure Socket Layer)</h4><p>是 Netscape 公司设计的主要用于 WEB 的安全传输协议.<br>它在 HTTPS 协议栈中负责实现上面提到的加密层.</p>
 <p>一个 HTTPS 协议栈大致是这样的：<br><img src="/upload/images/2017/02/06/HTTP+SSL.png" alt="1"></p>
 <h4 id="TLS"><a href="#TLS" class="headerlink" title="TLS"></a>TLS</h4><p>HTTPS，也称作 HTTP over TLS.</p>
@@ -454,23 +454,23 @@
 <p>其中 Handshake protocol，Change Ciper Spec protocol 和 Alert protocol 组成了 SSL Handshaking Protocols.</p>
 <p>SSL 和 TLS 的发展历史:</p>
 <blockquote>
-<p>1994年，NetScape 公司设计了 SSL 协议（Secure Sockets Layer）的 1.0 版，但是未发布.</p>
-<p>1995年，NetScape 公司发布 SSL 2.0 版，很快发现有严重漏洞.</p>
-<p>1996年，SSL 3.0 版问世，得到大规模应用.</p>
-<p>1999年，互联网标准化组织 ISOC 接替 NetScape 公司，发布了 SSL 的升级版 TLS 1.0 版.</p>
-<p>2006年和2008年，TLS 进行了两次升级，分别为 TLS 1.1 版和 TLS 1.2 版.最新的变动是2011年 TLS 1.2 的修订版.</p>
-<p>TLS 1.3 改动会比较大，目前还在草案阶段.</p>
+<p>1994年，NetScape 公司设计了 SSL 协议（Secure Sockets Layer）的 1.0 版，但是未发布。</p>
+<p>1995年，NetScape 公司发布 SSL 2.0 版，很快发现有严重漏洞。</p>
+<p>1996年，SSL 3.0 版问世，得到大规模应用。</p>
+<p>1999年，互联网标准化组织 ISOC 接替 NetScape 公司，发布了 SSL 的升级版 TLS 1.0 版。</p>
+<p>2006年和2008年，TLS 进行了两次升级，分别为 TLS 1.1 版和 TLS 1.2 版.最新的变动是2011年 TLS 1.2 的修订版。</p>
+<p>TLS 1.3 改动会比较大，目前还在草案阶段。</p>
 </blockquote>
 <h2 id="HTTP-和-HTTPS-区别"><a href="#HTTP-和-HTTPS-区别" class="headerlink" title="HTTP 和 HTTPS 区别"></a>HTTP 和 HTTPS 区别</h2><p>HTTPS 和 HTTP 的区别主要为以下四点:</p>
 <blockquote>
 <ol>
-<li><p>HTTPS 协议需要到 CA 申请证书，一般免费证书很少，需要交费.</p>
+<li><p>HTTPS 协议需要到 CA 申请证书，一般免费证书很少，需要交费。</p>
 </li>
-<li><p>HTTP 是超文本传输协议，信息是明文传输，HTTPS 则是具有安全性的 SLL/TLS 加密传输协议(非对称加密).</p>
+<li><p>HTTP 是超文本传输协议，信息是明文传输，HTTPS 则是具有安全性的 SLL/TLS 加密传输协议(非对称加密)。</p>
 </li>
 <li><p>HTTP 和 HTTPS 不同的连接方式，用的端口也不一样，前者是 80，后者是 443.</p>
 </li>
-<li><p>HTTP 的连接很简单，是无状态的；<br>HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 HTTP 协议安全.</p>
+<li><p>HTTP 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 HTTP 协议更加安全。</p>
 </li>
 </ol>
 </blockquote>
