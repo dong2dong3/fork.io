@@ -84,7 +84,7 @@
 
 
 
-  <meta name="keywords" content="Wireshark tcp ip udp http https," />
+  <meta name="keywords" content="Wireshark tcp ip udp," />
 
 
 
@@ -96,7 +96,7 @@
 
 
 <meta name="description" content="话说握手你要是开发人员，相信你一定听说过 TCP（Transmission Control Protocol 传输控制协议）或是 TCP 握手的说法。 所谓握手，通俗来讲就是通信双方协商在后续通信过程中需要使用的通信信息的过程。TCP 为了建立可靠的连接需要三次握手，后续给大家分享 TLS 为了实现加密、校验、身份认证同样需要握手的过程。 TCP 三次握手可以使用下图来表达： 本篇给大家分享如何使">
-<meta name="keywords" content="Wireshark tcp ip udp http https">
+<meta name="keywords" content="Wireshark tcp ip udp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Wireshark: 简单分析 TCP 三次挥手">
 <meta property="og:url" content="http://yoursite.com/2018/09/09/Wireshark-简单分析-TCP-三次挥手/index.html">
@@ -106,12 +106,13 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/3.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/8.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/4.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/5.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/6.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2018/09/09/7.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-04-24T01:59:14.000Z">
+<meta property="og:updated_time" content="2020-04-10T10:58:18.234Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wireshark: 简单分析 TCP 三次挥手">
 <meta name="twitter:description" content="话说握手你要是开发人员，相信你一定听说过 TCP（Transmission Control Protocol 传输控制协议）或是 TCP 握手的说法。 所谓握手，通俗来讲就是通信双方协商在后续通信过程中需要使用的通信信息的过程。TCP 为了建立可靠的连接需要三次握手，后续给大家分享 TLS 为了实现加密、校验、身份认证同样需要握手的过程。 TCP 三次握手可以使用下图来表达： 本篇给大家分享如何使">
@@ -376,8 +377,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index">
-                    <span itemprop="name">Tools</span>
+                  <a href="/categories/网络协议/" itemprop="url" rel="index">
+                    <span itemprop="name">网络协议</span>
                   </a>
                 </span>
 
@@ -432,7 +433,8 @@
 <p>其中，Seq(Sequence Number) 是 32 位的序列号，<code>Acknowledgment number</code> 称之为确认序号，也是 32 位的，但是他不是标志位 ACK，这个要区别开，当 ACK 置 1 时 <code>Acknowledgment number</code> 才有效，指接收方期待的下一个报文段的序列号。</p>
 <p>TCP 报头信息中有六个控制位(标志位)，分别是：SYN、ACK、PSH、FIN、RST 和 URG。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">SYN: 表示建立连接</div><div class="line">FIN: 表示关闭连接</div><div class="line">ACK: 表示响应</div><div class="line">PSH: 表示有数据传输</div><div class="line">RST: 表示连接重置</div><div class="line">URG: 表示紧急数据</div></pre></td></tr></table></figure>
-<p><strong>Seq 序列号有两个作用：</strong><br>第一，在 SYN 置 1 时，此为当前连接的初始序列号(Initial Sequence Number, ISN)，数据的第一个字节序号为此 ISN+1。<br>第二，在 SYN 置 0 时，为当前连接报文段的累计数据包字节数。</p>
+<p><strong>Seq 序列号有两个作用：</strong><br>第一，在 SYN 置 1 时，此为当前连接的初始序列号(Initial Sequence Number, ISN)该值是个随机值，数据的第一个字节序号为此 ISN+1。</p>
+<p>第二，在 SYN 置 0 时，为当前连接报文段的累计数据包字节数。</p>
 <p>TCP 协议设计比较复杂，其涉及的知识较多，这里大家整不明白也没有关系，并不影响你阅读下面的内容，如果对 TCP 协议本身感兴趣，可以去拜读【TCP/IP 详解，卷 1：协议】这本书。</p>
 <h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><p>每次说到网络层，就要拿出类似下面的网络模型图，OSI 将网络模型分为7层，TCP/IP 模型将网络模型分为 4 层，网络 4 层模型由 7 层模型简化合并而来，没有本质的区别，如图：<br><img src="/upload/images/2018/09/09/3.jpg" alt=""></p>
 <p>HTTP 仅仅是个协议，属于应用层的面向对象的协议，从上图可以看出 HTTP 是在 TCP 基础之上的。</p>
@@ -444,16 +446,20 @@
 <p><strong>无连接</strong>，指的是限制每次连接只处理一个请求。服务器处理完客户端的请求，并收到客户端的应答后，即断开连接。采用这种方式可以节省传输时间。<code>Keep-Alive</code> 特性不在本篇讨论范围，暂时你可以将其忽略。</p>
 <p><strong>无状态</strong>，指的是协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。即我们给服务器发送 HTTP 请求之后，服务器根据请求，会给我们发送数据过来，但是发送完，不会记录任何信息。</p>
 <p>可以利用 HTTP 的这两个特点来分析 TCP 三次握手的过程。</p>
-<h2 id="三次握手过程"><a href="#三次握手过程" class="headerlink" title="三次握手过程"></a>三次握手过程</h2><p>以 GET 请求下面地址为例，使用 <code>Wireshark</code> 抓包。</p>
+<h2 id="三次握手过程"><a href="#三次握手过程" class="headerlink" title="三次握手过程"></a>三次握手过程</h2><p>三次过程如下面草图，如下所示：</p>
+<p><img src="/upload/images/2018/09/09/8.jpg" alt=""></p>
+<p>我们用实际例子来看一下这个过程，以 GET 请求下面地址为例，使用 <code>Wireshark</code> 抓包。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.baidu.com/news/detailV3.html?id=1279391&amp;COMMON_ACCESS_TOKEN=(null)&amp;COMMON_ACCESS_TOKEN_SECRET=(null)&amp;_cT=IOS&amp;_cV=3.1.3&amp;_cA=PM</div></pre></td></tr></table></figure>
 <p>看返回结果，选中 <code>HTTP/1.1 200 OK</code> 右键, 在弹出框中选择 <code>Follow/TCP Stream</code>，如下图所示：<br><img src="/upload/images/2018/09/09/4.jpg" alt=""></p>
 <p>关闭弹出的弹窗，回到主界面，看到如下图所示的三次（红色 1、2、3处） TCP 握手过程：<br><img src="/upload/images/2018/09/09/5.jpg" alt=""></p>
-<p>第一次，请求客户端发送一个 [SYN] 包，序列号是 0（Seq=0）。</p>
-<p>第二次，服务器会发送一个 [SYN, ACK] 包，序列号是 0，ACK 是 1（Seq=0，Ack=1）。</p>
-<p>第三次，客户端请求服务器，客户端会发送一个 [ACK] 包，序列号是 1，Ack 是 1（Seq=1，Ack=1）来回复服务器。</p>
+<p>第一次，请求客户端发送一个 [SYN] 包，序列号是 0（seq=0）。</p>
+<p>第二次，服务器收到 [SYN] 包，然后会发送一个 [SYN, ACK] 包，序列号是 0，ACK 置 1（seq=0，ack=1）。</p>
+<p>第三次，客户端请求服务器，客户端会发送一个 [ACK] 包，序列号是 1，Ack 置 1（seq=1，ack=1）来回复服务器。</p>
+<p><strong>这里注意一下</strong>，大写的 <code>ACK</code> 是一个 bit 位表示确认，小写的 <code>ack</code> 是一个确认序列号，表示数值。</p>
 <p>简单的画一个草图，如下：<br><img src="/upload/images/2018/09/09/6.jpg" alt=""></p>
 <p><strong>这个过程，简单描述为下面三个步骤：</strong></p>
-<p>1.发送方给接收方发送 SYN 信号，此时发送方处于 <code>SYN_SEND</code> 状态。<br>2.接收方确认并回复给发送方 SYN/ACK 信号，此时接收方处于 <code>SYN_RCVD</code> 状态。<br>3.发送方给接收方发送确认 ACK 信号，发送完毕后，发送方(客户端)进入 <code>ESTABLISHED</code> 状态，当接收端(服务端)接收到这个包时，也进入 <code>ESTABLISHED</code> 状态，TCP 握手结束。</p>
+<p>双方在建立连接之前都处于 CLOSED 的状态。</p>
+<p>1、发送方给接收方发送 SYN 信号，此时发送方处于 <code>SYN_SENT</code> 状态。<br>2、接收方确认并回复给发送方 SYN/ACK 信号，此时接收方处于 <code>SYN_RCVD</code> 状态。<br>3、发送方给接收方发送确认 ACK 信号，发送完毕后，发送方(客户端)进入 <code>ESTABLISHED</code> 状态，当接收端(服务端)接收到这个包时，也进入 <code>ESTABLISHED</code> 状态，TCP 握手结束。</p>
 <p>上面的步骤，建议感兴趣的朋友去实际操作一下。</p>
 <h2 id="为什么是三次握手"><a href="#为什么是三次握手" class="headerlink" title="为什么是三次握手"></a>为什么是三次握手</h2><p>回头再来想一想，TCP 的连接为什么需要三次握手呢，为什么不是一次，两次呢？一次不就挺好吗，三次是不是有点多此一举了？</p>
 <p>TCP 协议不是一个人定出来的而是一群人拟定的，设计三次握手固然有它的意义，是经过精心设计且在性能和效率上面衡量过的。</p>
@@ -510,7 +516,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Wireshark-tcp-ip-udp-http-https/" rel="tag"><i class="fa fa-tag"></i> Wireshark tcp ip udp http https</a>
+            <a href="/tags/Wireshark-tcp-ip-udp/" rel="tag"><i class="fa fa-tag"></i> Wireshark tcp ip udp</a>
           
         </div>
       
@@ -619,7 +625,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -641,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">116</span>
+                  <span class="site-state-item-count">120</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

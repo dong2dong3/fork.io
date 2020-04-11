@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/11/10/5.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-11-18T15:10:36.683Z">
+<meta property="og:updated_time" content="2020-04-11T07:38:15.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL8.0.15在Win10上的折腾记">
 <meta name="twitter:description" content="安装和配置MySQL我在Windows 10上面使用 MySQL Instller 安装的MySQL8.0.15，安装完成后，启动MySQL遇到了不少问题，特此记录踩坑记。 只要你的网络稳定，按照默认安装整个安装过程还算比较顺利。安装过程中需要设置密码，我设置的账号和密码都是 root，所以下面的操作都是基于这个账号和密码进行的。 安装完成后，将mysql server的 bin目录加入到系统的p">
@@ -441,7 +441,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Install/Remove of the Service Denied!</div></pre></td></tr></table></figure>
 <p>运行成功的话，可以看到如下提示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Service successfully installed.</div></pre></td></tr></table></figure>
-<p>再次启动 mysql80，执行：</p>
+<p>再次启动 mysql80，<strong>一定要用管理员身份启动终端，否则会报 <code>发生系统错误</code> 这样的错误</strong>，执行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net start mysql80</div></pre></td></tr></table></figure>
 <p><strong>注意</strong>：这里使用的是<code>mysql80</code>，这个是服务的名称 （安装时候我设置的服务名称） ，不是<code>mysql</code>，下面会讲解为什么这样做，如果你没有这个<code>mysql80</code>服务只需要启动<code>mysql</code>服务即可。</p>
 <p>如果出现类似 “MYSQL 服务无法启动” 的提示，可以在Windows的任务管理器中找找是否已经启动了<code>mysqld</code>服务，可以手动关闭后再来启动。</p>
@@ -674,7 +674,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -696,7 +696,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">116</span>
+                  <span class="site-state-item-count">120</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
