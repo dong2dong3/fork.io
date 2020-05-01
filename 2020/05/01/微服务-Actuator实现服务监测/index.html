@@ -105,8 +105,9 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/01/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/01/2.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/01/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-05-01T07:17:01.078Z">
+<meta property="og:updated_time" content="2020-05-01T07:34:15.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: Actuator实现服务监测">
 <meta name="twitter:description" content="简介SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。 Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用状态、内存、">
@@ -460,6 +461,8 @@
 <p>另外为了安全，可以单独设置 Actuator 的管理端口并配置不对外网开放，如下配置独立的端口 <code>1102</code>，然后可以在防火墙上做下限制即 <code>1102</code> 端口仅用于内网访问即可。</p>
 <p>在 properties 中增加如下配置，如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 配置独立的端口</div><div class="line">management.server.port=1012</div></pre></td></tr></table></figure>
+<p>使用效果：</p>
+<p><img src="/upload/images/2020/05/01/3.png" alt=""></p>
 <hr>
 <p><strong>人无千日好，花无百日红，早时不算计，过后一场空。~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
