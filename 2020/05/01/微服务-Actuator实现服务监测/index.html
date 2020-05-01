@@ -95,21 +95,21 @@
 
 
 
-<meta name="description" content="简介简单一句话，SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。 Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用">
+<meta name="description" content="简介SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。 Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用状态、内存、">
 <meta name="keywords" content="SpringBoot Actuator 微服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务: Actuator实现服务监测">
 <meta property="og:url" content="http://yoursite.com/2020/05/01/微服务-Actuator实现服务监测/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="简介简单一句话，SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。 Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用">
+<meta property="og:description" content="简介SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。 Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用状态、内存、">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/01/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/01/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-05-01T03:51:53.939Z">
+<meta property="og:updated_time" content="2020-05-01T07:17:01.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: Actuator实现服务监测">
-<meta name="twitter:description" content="简介简单一句话，SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。 Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用">
+<meta name="twitter:description" content="简介SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。 Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用状态、内存、">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2020/05/01/1.png">
 
 
@@ -418,7 +418,7 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>简单一句话，SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>SpringBoot Actuator 可以帮助我们监控 SpringBoot 应用的运行情况，服务上线后如何监控和管理自己的服务是我们要考虑的一个重要问题。</p>
 <p>Actuator 是 SpringBoot 的一个附加组件（需要自己手动集成），Actuator 能帮助应用程序实现在各个环境运行时的监控。可以使用 HTTP 的各个请求路径来进行健康检查、审计、收集引用的运行情况，对于应用状态、内存、线程、堆栈等等都可以进行监控，比较全面的监控了 SpringBoot 应用的整个生命周期。对于微服务的管理十分有意义，在企业级应用中，对系统进行运行状态监控是不可或缺的。</p>
 <p>Actuator 不仅支持 HTTP 方式访问，还支持 JMX（Java Management Extensions，即Java管理扩展）、SSH、Telnet 方式访问。Actuator 还支持端点扩展，扩展 Actuator 的端点（Endpoint） 可以自定义监控指标，实现更多的运维能力。</p>
 <p>访问 spring-boot-actuator 给我们展现的是纯 JSON 格式的数据，对于非开发人员来说不够直观和不够人性化。<code>Spring Boot Admin</code> 就是用来解决这个问题的，使用 <code>Spring Boot Admin</code> 可以实现这些 JSON 接口数据的界面展现，方便运营人员查看和管理。本篇我们只学习 spring-boot-actuator 的使用，关于  <code>Spring Boot Admin</code> 下一篇再一起学习。</p>
