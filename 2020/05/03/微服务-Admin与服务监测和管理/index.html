@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-05-03T03:27:38.120Z">
+<meta property="og:updated_time" content="2020-05-03T09:18:46.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: Admin与服务监测和管理">
 <meta name="twitter:description" content="简介Spring Boot Admin 并不是 Spring Boot 官方出品的，开源地址 SpringBoot Admin，伴随着 SpringBoot 的更新，Spring Boot Admin 也做了相对应的更新。Spring Boot 推出 2.X 版本时，Spring Boot Admin 也及时进行了更新。本篇使用的就是 Spring Boot Admin 2.2.1版本，最新版本是">
@@ -425,7 +425,8 @@
       
         <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Spring Boot Admin</code> 并不是 Spring Boot 官方出品的，开源地址 <a href="https://github.com/codecentric/spring-boot-admin" target="_blank" rel="noopener">SpringBoot Admin</a>，伴随着 SpringBoot 的更新，<code>Spring Boot Admin</code> 也做了相对应的更新。Spring Boot 推出 2.X 版本时，<code>Spring Boot Admin</code> 也及时进行了更新。本篇使用的就是 <code>Spring Boot Admin</code> 2.2.1版本，最新版本是 <code>2.2.2</code>。 <code>Spring Boot Admin</code>  分为 <code>client</code> 和 <code>server</code> 端，<code>server</code> 端一般独立为一个服务，<code>client</code> 可以是你已经开发完成的服务，也可以是你即将要开发的服务。</p>
 <p>对 <code>Spring Boot Admin</code>  2.x 版本的具体的更新内容和变化感兴趣的朋友，可以参考 <a href="https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-docs/src/main/asciidoc/changes-2.x.adoc" target="_blank" rel="noopener">changes-2.x.adoc</a> 文档，这里不再赘述。</p>
-<p>继上一篇 <a href="http://www.veryitman.com/2020/05/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1-Actuator%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%B5%8B/" target="_blank" rel="noopener">微服务-Actuator实现服务监测</a>，本篇继续学习微服务的管理知识。本篇主要内容，如下：</p>
+<p>继上一篇 <a href="http://www.veryitman.com/2020/05/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1-Actuator%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%B5%8B/" target="_blank" rel="noopener">微服务-Actuator实现服务监测</a>，我们说到使用 <code>Actuator</code> 组件可以实现对服务的监测，但是这种方式没有管理界面体验很不友好。本篇继续学习关于 Admin 的知识，该组件不仅囊括了 <code>Actuator</code> 的功能，还提供了管理界面，使用起来比较方便。</p>
+<p>本篇主要内容，如下：</p>
 <ul>
 <li>通过 HTTP 方式集成和使用 <code>spring-boot-admin-server</code>；</li>
 <li>结合 <code>spring-boot-admin-client</code> 和 <code>spring-boot-security</code> 如何配置且被注册到 <code>spring-boot-admin-server</code>；</li>
@@ -473,7 +474,7 @@
 <p><img src="/upload/images/2020/05/03/6.png" alt=""></p>
 <p>这是因为没有在客户端配置进入 Admin-Server 的密码，安排上。</p>
 <p>在 <code>ms-admin-client</code>  的 properties 中配置，如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># ------------------------------------------</div><div class="line"># 配置 spring boot admin</div><div class="line"># ------------------------------------------</div><div class="line">spring.boot.admin.client.url=http://localhost:8087</div><div class="line">management.endpoint.health.show-details=always</div><div class="line"># 配置 admin server 的用户名和密码，否则注册不上</div><div class="line">spring.boot.admin.client.username=admin</div><div class="line">spring.boot.admin.client.password=admin</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># ------------------------------------------</div><div class="line"># 配置 spring boot admin</div><div class="line"># ------------------------------------------</div><div class="line">spring.boot.admin.client.url=http://localhost:8087</div><div class="line">management.endpoint.health.show-details=always</div><div class="line"># 配置 admin server 的用户名和密码，否则注册不上</div><div class="line">spring.boot.admin.discovery.instances-metadata.user.name=$&#123;spring.security.user.name&#125;</div><div class="line">spring.boot.admin.discovery.instances-metadata.user.password=$&#123;spring.security.user.password&#125;</div></pre></td></tr></table></figure>
 <p>同理，在 <code>ms-user</code> 的配置文件 properties 中也增加相关的配置即可。</p>
 <p>重新启动服务，就可以看到如下界面：</p>
 <p><img src="/upload/images/2020/05/03/7.png" alt=""></p>
