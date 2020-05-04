@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-05-03T09:18:46.656Z">
+<meta property="og:updated_time" content="2020-05-04T10:32:22.559Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: Admin与服务监测和管理">
 <meta name="twitter:description" content="简介Spring Boot Admin 并不是 Spring Boot 官方出品的，开源地址 SpringBoot Admin，伴随着 SpringBoot 的更新，Spring Boot Admin 也做了相对应的更新。Spring Boot 推出 2.X 版本时，Spring Boot Admin 也及时进行了更新。本篇使用的就是 Spring Boot Admin 2.2.1版本，最新版本是">
@@ -428,9 +428,15 @@
 <p>继上一篇 <a href="http://www.veryitman.com/2020/05/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1-Actuator%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%B5%8B/" target="_blank" rel="noopener">微服务-Actuator实现服务监测</a>，我们说到使用 <code>Actuator</code> 组件可以实现对服务的监测，但是这种方式没有管理界面体验很不友好。本篇继续学习关于 Admin 的知识，该组件不仅囊括了 <code>Actuator</code> 的功能，还提供了管理界面，使用起来比较方便。</p>
 <p>本篇主要内容，如下：</p>
 <ul>
-<li>通过 HTTP 方式集成和使用 <code>spring-boot-admin-server</code>；</li>
-<li>结合 <code>spring-boot-admin-client</code> 和 <code>spring-boot-security</code> 如何配置且被注册到 <code>spring-boot-admin-server</code>；</li>
-<li>如何将 <code>spring-boot-admin-server</code> 结合 <code>spring-boot-security</code>，实现安全管控；</li>
+<li><p>通过 HTTP 方式集成和使用 <code>spring-boot-admin-server</code>；</p>
+</li>
+<li><p>如何安全的使用 <code>spring-boot-admin</code>，这里又包含两个内容:</p>
+</li>
+<li><ul>
+<li>如何将 <code>spring-boot-admin-server</code> 结合 <code>spring-boot-security</code>，实现安全管控以及如何配置；</li>
+<li>如何将 <code>spring-boot-admin-client</code> 结合 <code>spring-boot-security</code>，实现安全管控以及如何配置；</li>
+</ul>
+</li>
 </ul>
 <p>完整工程代码，请移步 <a href="https://github.com/veryitman/MSTutorial" target="_blank" rel="noopener">Github</a> 下载。后续会结合  <code>spring-cloud</code> 中的 <code>Eureka</code> 组件再次学习和分享使用  <code>spring-boot-admin</code>。  </p>
 <h2 id="配置-Admin-Server"><a href="#配置-Admin-Server" class="headerlink" title="配置 Admin Server"></a>配置 Admin Server</h2><p>为了学习和验证 <code>Spring Boot Admin</code> 的使用，我创建了一个 <code>Admin-Server</code>工程即 <code>ms-admin</code>，创建了两个 <code>Admin-Client</code> 工程即 <code>ms-user</code> 和 <code>ms-admin-client</code>，工程结构如下图:</p>
