@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-05-04T10:32:22.559Z">
+<meta property="og:updated_time" content="2020-05-04T12:03:56.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: Admin与服务监测和管理">
 <meta name="twitter:description" content="简介Spring Boot Admin 并不是 Spring Boot 官方出品的，开源地址 SpringBoot Admin，伴随着 SpringBoot 的更新，Spring Boot Admin 也做了相对应的更新。Spring Boot 推出 2.X 版本时，Spring Boot Admin 也及时进行了更新。本篇使用的就是 Spring Boot Admin 2.2.1版本，最新版本是">
@@ -482,7 +482,8 @@
 <p>在 <code>ms-admin-client</code>  的 properties 中配置，如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># ------------------------------------------</div><div class="line"># 配置 spring boot admin</div><div class="line"># ------------------------------------------</div><div class="line">spring.boot.admin.client.url=http://localhost:8087</div><div class="line">management.endpoint.health.show-details=always</div><div class="line"># 配置 admin server 的用户名和密码，否则注册不上</div><div class="line">spring.boot.admin.discovery.instances-metadata.user.name=$&#123;spring.security.user.name&#125;</div><div class="line">spring.boot.admin.discovery.instances-metadata.user.password=$&#123;spring.security.user.password&#125;</div></pre></td></tr></table></figure>
 <p>同理，在 <code>ms-user</code> 的配置文件 properties 中也增加相关的配置即可。</p>
-<p>重新启动服务，就可以看到如下界面：</p>
+<p><strong>记得继承自 <code>WebSecurityConfigurerAdapter</code> 写一个配置类</strong>，可以参考 <a href="https://github.com/anandvarkeyphilips/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-server-with-security/src/main/java/de/codecentric/boot/admin/server/SpringBootAdminServerApplication.java" target="_blank" rel="noopener">SpringBootAdminServerApplication</a> 示例代码，不然客户端有可能无法注册成功。</p>
+<p>重新启动 <code>ms-admin</code> 服务然后登录进去再启动客户端，就可以看到如下界面：</p>
 <p><img src="/upload/images/2020/05/03/7.png" alt=""></p>
 <p>另外，Admin-Server 还可以集成 <code>spring-boot-starter-mail</code> 模块再简单的配置一下，就可以实现发送邮件的功能，这样服务的运行状态可以及时通知到对应的收件人了。</p>
 <hr>
