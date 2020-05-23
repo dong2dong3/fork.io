@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/04/14/3.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/04/14/4.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-04-24T01:59:14.000Z">
+<meta property="og:updated_time" content="2020-05-19T15:31:09.710Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反向代理">
 <meta name="twitter:description" content="本篇内容概要不知道大家有没有问过别人，或者是自己偷偷在网上搜过 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？ 总结一句话，正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。 那我们今天就来掰扯掰扯这个问题。 VPN 和正向代理小明：“你昨天看了我给你发的YouTube视频链接了吗？超级精彩哟！”。小丽：“哦，那个链接根本打不开呀，看个屁！”，小明失望的看了看">
@@ -465,7 +465,9 @@
 <p><strong>4、查看 nginx 进程</strong></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps -ef|grep nginx</div></pre></td></tr></table></figure>
 <p><strong>5、重启 nginx</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">nginx -s reload</div><div class="line">``` </div><div class="line"></div><div class="line">**6、完美停止 nginx**</div><div class="line"></div><div class="line">```sh</div><div class="line"><span class="built_in">kill</span> -QUIT `cat /var/run/nginx.pid`</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s reload</div></pre></td></tr></table></figure>
+<p><strong>6、完美停止 nginx</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">kill</span> -QUIT `cat /var/run/nginx.pid`</div></pre></td></tr></table></figure>
 <p><strong>7、快速停止 nginx</strong></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">kill</span> -TERM `cat /var/run/nginx.pid`</div></pre></td></tr></table></figure>
 <p>或者</p>
@@ -636,7 +638,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">154</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -658,7 +660,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">124</span>
+                  <span class="site-state-item-count">125</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
