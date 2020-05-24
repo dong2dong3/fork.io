@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="网上绝大多数的博客讲 objc_class 的定义，基本上都使用了下面的代码一来讲解，与 objc4 源码 objc-runtime-new.h 中关于 objc_class 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的缺少的可怜！  本文的所涉及到的 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 代码一：简洁版也称坑">
+<meta name="description" content="网上绝大多数的博客讲 objc_class 的定义，基本上都使用了下面的代码一来讲解，与 objc4 源码 objc-runtime-new.h 中关于 objc_class 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的人少的可怜！  本文的所涉及到的 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 代码一：简洁版也称坑">
 <meta name="keywords" content="iOS objc_class">
 <meta property="og:type" content="article">
 <meta property="og:title" content="被误解的 objc_class">
 <meta property="og:url" content="http://yoursite.com/2019/01/28/被误解的-objc-class/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="网上绝大多数的博客讲 objc_class 的定义，基本上都使用了下面的代码一来讲解，与 objc4 源码 objc-runtime-new.h 中关于 objc_class 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的缺少的可怜！  本文的所涉及到的 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 代码一：简洁版也称坑">
+<meta property="og:description" content="网上绝大多数的博客讲 objc_class 的定义，基本上都使用了下面的代码一来讲解，与 objc4 源码 objc-runtime-new.h 中关于 objc_class 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的人少的可怜！  本文的所涉及到的 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 代码一：简洁版也称坑">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/01/28/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2019-04-24T01:59:14.000Z">
+<meta property="og:updated_time" content="2020-05-24T02:27:54.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="被误解的 objc_class">
-<meta name="twitter:description" content="网上绝大多数的博客讲 objc_class 的定义，基本上都使用了下面的代码一来讲解，与 objc4 源码 objc-runtime-new.h 中关于 objc_class 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的缺少的可怜！  本文的所涉及到的 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 代码一：简洁版也称坑">
+<meta name="twitter:description" content="网上绝大多数的博客讲 objc_class 的定义，基本上都使用了下面的代码一来讲解，与 objc4 源码 objc-runtime-new.h 中关于 objc_class 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的人少的可怜！  本文的所涉及到的 objc4 源码，截止到写本文最新的是 objc4-750 这个版本。 代码一：简洁版也称坑">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/01/28/1.jpg">
 
 
@@ -417,7 +417,7 @@
       
 
       
-        <p>网上绝大多数的博客讲 <code>objc_class</code> 的定义，基本上都使用了下面的<strong>代码一</strong>来讲解，与 <a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">objc4</a> 源码 <code>objc-runtime-new.h</code> 中关于 <code>objc_class</code> 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的缺少的可怜！</p>
+        <p>网上绝大多数的博客讲 <code>objc_class</code> 的定义，基本上都使用了下面的<strong>代码一</strong>来讲解，与 <a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">objc4</a> 源码 <code>objc-runtime-new.h</code> 中关于 <code>objc_class</code> 中的定义完全不一样，我认真地去探究了一下，发现这个世界上实属雷同的事件还是蛮多的，老实做事做学问的人少的可怜！</p>
 <p><img src="/upload/images/2019/01/28/1.jpg" alt=""></p>
 <p>本文的所涉及到的 <a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">objc4</a> 源码，截止到写本文最新的是 <code>objc4-750</code> 这个版本。</p>
 <p><strong>代码一：简洁版也称坑货版</strong></p>
@@ -438,7 +438,7 @@
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_class : objc_object &#123;</div><div class="line">    <span class="comment">// Class ISA;</span></div><div class="line">    Class superclass;</div><div class="line">    cache_t cache;             <span class="comment">// formerly cache pointer and vtable</span></div><div class="line">    class_data_bits_t bits;    <span class="comment">// class_rw_t * plus custom rr/alloc flags</span></div><div class="line">    </div><div class="line">    <span class="comment">// ....</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> objc_object &#123;</div><div class="line">private:</div><div class="line">    isa_t isa;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">union</span> isa_t &#123;</div><div class="line">    isa_t() &#123; &#125;</div><div class="line">    isa_t(uintptr_t value) : bits(value) &#123; &#125;</div><div class="line"></div><div class="line">    Class cls;</div><div class="line">    uintptr_t bits;</div><div class="line"><span class="meta">#if defined(ISA_BITFIELD)</span></div><div class="line">    <span class="keyword">struct</span> &#123;</div><div class="line">        ISA_BITFIELD;  <span class="comment">// defined in isa.h</span></div><div class="line">    &#125;;</div><div class="line"><span class="meta">#endif</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p><strong>无论是学知识还是做知识，老实认真应该是最基本的要求，千万不要以讹传讹，误人子弟！</strong></p>
 <hr>
-<p><strong>扫码关注，期待与你的交流~</strong></p>
+<p><strong>只要你想做，总会有办法的~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
 
       
