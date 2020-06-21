@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/08/31/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-06-21T03:33:00.796Z">
+<meta property="og:updated_time" content="2020-06-21T03:44:22.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨域和OPTIONS这对欢喜冤家">
 <meta name="twitter:description" content="简介相信做过前端开发的同事，包括做小程序或者小游戏的码友们应该都看过类似下面的错误，这个错误是由于 JavaScript 代码向服务器发送了 HTTP 请求引起的。 123Access to XMLHttpRequest at &amp;apos;http://www.xxx.com/yyy&amp;apos; from origin &amp;apos;null&amp;apos; has been blocked by C">
@@ -546,12 +546,12 @@
 <p>也可以自定义 Header 头来进行验证，代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">function getReq() &#123;</div><div class="line"> var url = &quot;http://localhost:8080/signin/name?username=jack&amp;userpwd=123&quot;;</div><div class="line"></div><div class="line">    $.ajax(&#123;</div><div class="line">        url: url,</div><div class="line">        type: &apos;GET&apos;,</div><div class="line">        dataType: &apos;json&apos;,</div><div class="line">        headers: &#123;</div><div class="line">            token: &quot;yu7rX98xxxx_iii^ddd&quot;,</div><div class="line">            userId: 123,</div><div class="line">            openid: 231232</div><div class="line">        &#125;</div><div class="line">      &#125;).done(function (result) &#123;</div><div class="line">            console.log(&quot;success&quot;);</div><div class="line">            console.log(result);</div><div class="line">        &#125;).fail(function () &#123;</div><div class="line">         console.log(&quot;error&quot;);</div><div class="line">        &#125;)</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
 <p>验证结果和上面一致，也会发生 OPTIONS 请求。</p>
-<h2 id="再聊OPTIONS"><a href="#再聊OPTIONS" class="headerlink" title="再聊OPTIONS"></a><strong>再聊OPTIONS</strong></h2><p>在 <a href="https://www.ietf.org/rfc/rfc2616.txt" target="_blank" rel="noopener">RFC2616-HTTP/1.1</a> 中关于OPTIONS有详细的描述，感兴趣的可以看一下 <code>9.2 OPTIONS</code> 小节。</p>
-<p>OPTIONS请求方法的主要用途有两个：</p>
-<p>1、获取服务器支持的HTTP请求方法。</p>
-<p>2、用来检查服务器的性能，如上面例子中的AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个HTTP OPTIONS请求头，用以判断实际发送的请求是否安全。</p>
-<p>HTTP的OPTIONS请求，有很多地方也被称之为预请求或者预检请求，换句话说就是试探性的请求不算是正式请求。</p>
-<p>为了避免对服务器产生一些副作用，类似上面例子中的网页中的请求就会产生OPTIONS请求，也算是一种对服务器的保护。只有当服务器允许后，浏览器才会发出正式的请求，否则不发送正式请求。</p>
+<h2 id="再聊OPTIONS"><a href="#再聊OPTIONS" class="headerlink" title="再聊OPTIONS"></a><strong>再聊OPTIONS</strong></h2><p>在 <a href="https://www.ietf.org/rfc/rfc2616.txt" target="_blank" rel="noopener">RFC2616-HTTP/1.1</a> 中关于 OPTIONS 有详细的描述，感兴趣的可以看一下 <code>9.2 OPTIONS</code> 小节。</p>
+<p>OPTIONS 请求方法的主要用途有两个：</p>
+<p>1、获取服务器支持的 HTTP 请求方法；</p>
+<p>2、用来检查服务器的性能，如上面例子中的AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个 HTTP OPTIONS 请求头，用以判断实际发送的请求是否安全；</p>
+<p>HTT P的 OPTIONS 请求，有很多地方也被称之为预请求或者预检请求，换句话说就是试探性的请求不算是正式请求。</p>
+<p>为了避免对服务器产生一些副作用，类似上面例子中的网页中的请求就会产生 OPTIONS 请求，也算是一种对服务器的保护。只有当服务器允许后，浏览器才会发出正式的请求，否则不发送正式请求。</p>
 <p>我们可以使用 <code>curl</code> 模拟 OPTIONS 请求，例如下面请求谷歌：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -i -v -X OPTIONS https://www.google.com</div></pre></td></tr></table></figure>
 <p>可以看到请求的响应情况：</p>
@@ -563,11 +563,11 @@
 <li>简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。但它仅支持GET方法不支持POST等其他请求方法，而且可能会遭受XSS攻击。</li>
 </ul>
 </li>
-<li>cors</li>
+<li>CORS</li>
 <li>postMessage</li>
 <li>websocket</li>
-<li>Node中间件代理</li>
-<li>nginx反向代理</li>
+<li>Node 中间件代理</li>
+<li>Nginx 反向代理</li>
 <li>window.name+iframe</li>
 <li>location.hash+iframe</li>
 <li>document.domain+iframe</li>
@@ -752,7 +752,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
