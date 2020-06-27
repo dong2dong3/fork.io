@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Single.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Double.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Random.png">
-<meta property="og:updated_time" content="2020-06-27T04:11:50.240Z">
+<meta property="og:updated_time" content="2020-06-27T08:42:19.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ATS: HTTPS 认证">
 <meta name="twitter:description" content="简介在 ATS: HTTP/HTTPS 协议介绍 中介绍了一些关于 HTTP/HTTPS 的概念以及相关的基本知识。 今天来聊聊关于 HTTPS 的认证方式和过程。 说 HTTPS 认证前，我们先了解一下几个相关概念。 关于加密的几个概念1. SSL 协议加密方式 SSL 既用了对称加密，也用了非对称加密。  在建立传输链路时, SSL 首先对对称加密的密钥使用公钥进行非对称加密，链路建立好之后，">
@@ -437,14 +437,14 @@
 </blockquote>
 <p>在建立传输链路时, SSL 首先对对称加密的密钥使用公钥进行非对称加密，链路建立好之后，SSL 对传输内容使用对称加密。</p>
 <p>下面是两种加密方式的对比：</p>
-<p>1、对称加密</p>
+<p>1.1、对称加密</p>
 <blockquote>
 <p>对称加密采用了对称密码编码技术，它的特点是文件加密和解密使用相同的密钥，即加密密钥也可以用作解密密钥，这种方法在密码学中叫做 <code>对称加密算法</code>，对称加密算法使用起来简单快捷，密钥较短，且破译困难，除了数据加密标准（DES），另一个对称密钥加密系统是国际数据加密算法（IDEA），它比 DES 的加密性好，而且对计算机功能要求也没有那么高。<br>IDEA 加密标准由 PGP（Pretty Good Privacy）系统使用。</p>
 </blockquote>
 <p>该加密方式，速度快，可加密内容较大，用来加密会话过程中的消息。</p>
-<p>2、公钥加密(非对称加密)</p>
+<p>1.2、非对称加密</p>
 <blockquote>
-<p>1976年，美国学者 Dime 和 Henman 为解决信息公开传送和密钥管理问题，提出一种新的密钥交换协议，允许在不安全的媒体上的通讯双方交换信息，安全地达成一致的密钥，这就是“公开密钥系统”.<br>相对于 <code>对称加密算法</code> 这种方法也叫做 <code>非对称加密算法</code>.<br>与对称加密算法不同，非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥（privatekey）. 公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密.<br>因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。</p>
+<p>1976年，美国学者 Dime 和 Henman 为解决信息公开传送和密钥管理问题，提出一种新的密钥交换协议，允许在不安全的媒体上的通讯双方交换信息，安全地达成一致的密钥，这就是“公开密钥系统”。<br>相对于 <code>对称加密算法</code> 这种方法也叫做 <code>非对称加密算法</code>。<br>与对称加密算法不同，非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥（privatekey）. 公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密。<br>因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。</p>
 </blockquote>
 <p>该加密方式，速度较慢，能提供更好的身份认证技术，用来加密对称加密的密钥。</p>
 <h4 id="2-数字证书"><a href="#2-数字证书" class="headerlink" title="2. 数字证书"></a>2. 数字证书</h4><p>一种文件的名称，好比一个机构或人的签名就好比一个公司的公章一样，能够证明这个机构或人的真实性，其中包含的信息，用于实现上述功能。</p>
@@ -500,7 +500,7 @@
 <p>R1：Client Random，是由客户端产生的随机数；</p>
 <p>R2：Server Random，是由服务端产生的随机数；</p>
 <p>R3：是客户端产生的且使用密钥加密的随机数，也称之为 Premaster secret；</p>
-<p>主密钥（Master Secret）是由预备主密钥 Premaster secret 即 R3、R1 和 R2 通过 PRF（PredoRandomFunction，伪随机数函数） 函数生成的，后续客户端、服务端使用的 <strong>会话密钥</strong> 则是由主密钥根据一定的算法生成的。</p>
+<p>主密钥（Master Secret）是由预备主密钥 Premaster secret 即 R3、R1 和 R2 通过 PRF（PredoRandomFunction，伪随机数函数） 函数生成的（不过在 TLS 1.3 中，不再使用 PRF 这种算法了，而是采用更标准的 HKDF 算法来进行密钥的推导），后续客户端、服务端使用的 <strong>会话密钥</strong> 则是由主密钥根据一定的算法生成的。另外要注意的是，会话密钥也会变的，只是在当前某个会话中它是不变的另外建立会话后它又改变了。</p>
 <p>随机数的产生流程图:<br><img src="/upload/images/2017/02/08/HTTPS_Random.png" alt="1"></p>
 <p>无论是单向认证还是双向认证都会生成三个随机数即上述流程中的 R1、R2、R3，根据三个随机数创建一个对称加密的秘钥。前两个随机数可以被抓包拿到，但第三个随机数已经使用非对称加密算法加密过，所以最终生成的秘钥是保密的。对称秘钥的安全靠第三个随机数的不可破解来保证。理论上来说，只要服务器的公钥足够长，那么 R3（也被称之为 <code>Premaster secret</code>） 可以保证不被破解。但是为了足够安全，可以考虑把握手阶段的算法从默认的 RSA 算法改为 <code>Diffie-Hellman</code> 算法（简称 <code>DH</code> 算法）。</p>
 <p><strong>我们思考一个问题：为何需要生成3个随机数，1个不行吗？</strong></p>
