@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Single.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Double.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2017/02/08/HTTPS_Random.png">
-<meta property="og:updated_time" content="2020-06-26T08:31:02.092Z">
+<meta property="og:updated_time" content="2020-06-27T04:11:50.240Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ATS: HTTPS 认证">
 <meta name="twitter:description" content="简介在 ATS: HTTP/HTTPS 协议介绍 中介绍了一些关于 HTTP/HTTPS 的概念以及相关的基本知识。 今天来聊聊关于 HTTPS 的认证方式和过程。 说 HTTPS 认证前，我们先了解一下几个相关概念。 关于加密的几个概念1. SSL 协议加密方式 SSL 既用了对称加密，也用了非对称加密。  在建立传输链路时, SSL 首先对对称加密的密钥使用公钥进行非对称加密，链路建立好之后，">
@@ -496,9 +496,16 @@
 <p>②、服务端响应客户端，服务端用会话密钥解密客户端发送的数据，然后用会话密钥把响应的数据加密发送给客户端；</p>
 <p>③、客户端用会话密钥解密服务端响应的数据；</p>
 <p>从上面可以看出，前4步属于双方的通信握手过程，第5步才进行真正的通信。在握手的过程中使用了<strong>非对称加密</strong>主要用于生成后续通信的密钥，在通信中使用了<strong>对称加密</strong>。</p>
-<h3 id="随机数的产生"><a href="#随机数的产生" class="headerlink" title="随机数的产生"></a>随机数的产生</h3><p>不管是单向认证，还是双向认证，都有随机数的产生和发送。</p>
+<h3 id="随机数的产生"><a href="#随机数的产生" class="headerlink" title="随机数的产生"></a>随机数的产生</h3><p>不管是单向认证，还是双向认证，都有随机数的产生和发送，其中 R1、R2 都是明文传输，只有 R3 是加密传输的。</p>
+<p>R1：Client Random，是由客户端产生的随机数；</p>
+<p>R2：Server Random，是由服务端产生的随机数；</p>
+<p>R3：是客户端产生的且使用密钥加密的随机数，也称之为 Premaster secret；</p>
+<p>主密钥（Master Secret）是由预备主密钥 Premaster secret 即 R3、R1 和 R2 通过 PRF（PredoRandomFunction，伪随机数函数） 函数生成的，后续客户端、服务端使用的 <strong>会话密钥</strong> 则是由主密钥根据一定的算法生成的。</p>
 <p>随机数的产生流程图:<br><img src="/upload/images/2017/02/08/HTTPS_Random.png" alt="1"></p>
-<p>生成对话密钥，一共生成了三个随机数即上述流程中的 R1、R2、R3，根据三个随机数创建一个对称加密的秘钥。前两个随机数可以被抓包拿到，但第三个随机数已经使用非对称加密算法加密过，所以最终生成的秘钥是保密的。对称秘钥的安全靠第三个随机数的不可破解来保证。理论上来说，只要服务器的公钥足够长，那么 R3（也被称之为 <code>Premaster secret</code>） 可以保证不被破解。但是为了足够安全，可以考虑把握手阶段的算法从默认的 RSA 算法改为 Diffie-Hellman算法（简称DH算法）。</p>
+<p>无论是单向认证还是双向认证都会生成三个随机数即上述流程中的 R1、R2、R3，根据三个随机数创建一个对称加密的秘钥。前两个随机数可以被抓包拿到，但第三个随机数已经使用非对称加密算法加密过，所以最终生成的秘钥是保密的。对称秘钥的安全靠第三个随机数的不可破解来保证。理论上来说，只要服务器的公钥足够长，那么 R3（也被称之为 <code>Premaster secret</code>） 可以保证不被破解。但是为了足够安全，可以考虑把握手阶段的算法从默认的 RSA 算法改为 <code>Diffie-Hellman</code> 算法（简称 <code>DH</code> 算法）。</p>
+<p><strong>我们思考一个问题：为何需要生成3个随机数，1个不行吗？</strong></p>
+<p>1、每个主机并不是都能产生完全的随机数的，有很多产生的随机数只是弱随机数而已，比如范围小可能被猜测，这样就不安全了；</p>
+<p>2、用3个随机数一起生成密钥能使得伪随机数更接近随机；</p>
 <p>大家可以看看 <a href="https://halfrost.com/https-key-cipher/" target="_blank" rel="noopener">TLS 中的密钥计算</a> 这篇文章，里面详细的讲解了随机数生成的原理以及不同 TLS 版本生成会话密钥的差异。</p>
 <h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p><strong>推荐在线流程图工具</strong>:</p>
 <p><a href="http://www.veryitman.com/2017/02/08/www.processon.com" target="_blank" rel="noopener">ProcessOn</a>.</p>
