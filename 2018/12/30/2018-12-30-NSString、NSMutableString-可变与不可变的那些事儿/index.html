@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NSString NSMutableString copy mutableCopy," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介这篇文章的主要包含如下内容：  可变对象和不可变对象 NSString 的 copy 和 mutableCopy NSMutableString 的 copy 和 mutableCopy property 中 copy、strong 修饰 NSString property 中 copy、strong 修饰 NSMutableString  很多 iOS 开发的朋友会争论一个问题，我用 cop">
+<meta name="keywords" content="NSString NSMutableString copy mutableCopy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSString、NSMutableString 可变与不可变的那些事儿">
+<meta property="og:url" content="http://yoursite.com/2018/12/30/2018-12-30-NSString、NSMutableString-可变与不可变的那些事儿/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="简介这篇文章的主要包含如下内容：  可变对象和不可变对象 NSString 的 copy 和 mutableCopy NSMutableString 的 copy 和 mutableCopy property 中 copy、strong 修饰 NSString property 中 copy、strong 修饰 NSMutableString  很多 iOS 开发的朋友会争论一个问题，我用 cop">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2018/12/30/1.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2018/12/30/2.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/images/2018/12/30/3.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2019-04-24T01:59:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSString、NSMutableString 可变与不可变的那些事儿">
+<meta name="twitter:description" content="简介这篇文章的主要包含如下内容：  可变对象和不可变对象 NSString 的 copy 和 mutableCopy NSMutableString 的 copy 和 mutableCopy property 中 copy、strong 修饰 NSString property 中 copy、strong 修饰 NSMutableString  很多 iOS 开发的朋友会争论一个问题，我用 cop">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2018/12/30/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/30/2018-12-30-NSString、NSMutableString-可变与不可变的那些事儿/"/>
+
+
+
+
+
+  <title>NSString、NSMutableString 可变与不可变的那些事儿 | veryitman</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/30/2018-12-30-NSString、NSMutableString-可变与不可变的那些事儿/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NSString、NSMutableString 可变与不可变的那些事儿</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-30T16:24:39+08:00">
+                2018-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/30/2018-12-30-NSString、NSMutableString-可变与不可变的那些事儿/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/12/30/2018-12-30-NSString、NSMutableString-可变与不可变的那些事儿/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>这篇文章的主要包含如下内容：</p>
+<ul>
+<li>可变对象和不可变对象</li>
+<li>NSString 的 copy 和 mutableCopy</li>
+<li>NSMutableString 的 copy 和 mutableCopy</li>
+<li>property 中 copy、strong 修饰 NSString</li>
+<li>property 中 copy、strong 修饰 NSMutableString</li>
+</ul>
+<p>很多 iOS 开发的朋友会争论一个问题，我用 <code>copy</code> 和 <code>strong</code> 来修饰 <code>NSString</code> 对象都是一样的效果，在大部分情况下，这二者确实是没有区别，但是在特殊情况下，二者截然不同，所以我们必须搞清楚里面的道道。</p>
+<p>我已经尽力简化了这篇文章的内容了，但依然需要你花个15分钟左右的时间，所以当你心情不错又没有其他事情的情况下，就可以来阅读了。</p>
+<h2 id="可变对象和不可变对象"><a href="#可变对象和不可变对象" class="headerlink" title="可变对象和不可变对象"></a>可变对象和不可变对象</h2><p>在 <code>Objective-C</code> 中最常用来处理字符串的是 <code>NSString</code> 与 <code>NSMutableString</code> 这两个类，<code>NSString</code> 被创建赋值后字符串的内容与长度不能再做动态的修改，除非重新给这个字符串赋值。而 <code>NSMutableString</code> 被创建赋值后可以动态的修改字符串的内容。</p>
+<p>那么简单来说，可变对象是指，对象的内容是可变的，例如 <code>NSMutableString</code> 对象。不可变的对象则相反，表示其内容不可变，例如 <code>NSString</code> 对象。</p>
+<p>可变与不可变是针对对象来说的。在实际开发中，要根据实际的业务场景来选择使用可变还是不可变对象。今天我们只讨论 <code>Objective-C</code> 中 <code>NSString</code> 与 <code>NSMutableString</code> 这两个类，关于其他集合类的可变与不可变特性，后面专门再来写文章分享。</p>
+<h2 id="NSString-的-copy-和-mutableCopy"><a href="#NSString-的-copy-和-mutableCopy" class="headerlink" title="NSString 的 copy 和 mutableCopy"></a>NSString 的 copy 和 mutableCopy</h2><p>在 <code>NSString.h</code> 中，我们可以看到其定义如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSString</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>, <span class="title">NSMutableCopying</span>, <span class="title">NSSecureCoding</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>NSString.h</code> 本身实现了 <code>NSCopying</code>, <code>NSMutableCopying</code> 这两个协议，协议的定义如下内容所示：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">NSCopying</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="keyword">nullable</span> <span class="built_in">NSZone</span> *)zone;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">NSMutableCopying</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)mutableCopyWithZone:(<span class="keyword">nullable</span> <span class="built_in">NSZone</span> *)zone;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>也就是说，我们可以针对 <code>NSString</code> 对象进行 <code>copy</code> 和 <code>mutableCopy</code> 的操作，妥妥的。</p>
+<p>举一个简单的栗子，示例代码如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *name = <span class="string">@"www."</span>;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name addr: %p, name content: %@"</span>, name, name);</div><div class="line">    </div><div class="line"><span class="built_in">NSString</span> *name1 = name;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name1 addr: %p, name1 content: %@"</span>, name1, name1);</div><div class="line">    </div><div class="line"><span class="built_in">NSString</span> *name2 = [name <span class="keyword">copy</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name2 addr: %p, name2 content: %@"</span>, name2, name2);</div></pre></td></tr></table></figure>
+<p>输出结果，如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">name  addr: <span class="number">0x10090ecf8</span>, name  content: www.</div><div class="line">name1 addr: <span class="number">0x10090ecf8</span>, name1 content: www.</div><div class="line">name2 addr: <span class="number">0x10090ecf8</span>, name2 content: www.</div></pre></td></tr></table></figure>
+<p>从输出结果可以看出，三个对象的内容和地址都是一样的，经过 <code>name</code> 对象 <code>copy</code> 后的 <code>name2</code> 与 <code>name</code> 还是指向同一块内存地址。</p>
+<p>在断点过程中，发现无论是 <code>name</code> 还是 <code>name1</code>、<code>name2</code> 对象，其都是 <code>ConstantString</code>，表明三者都是不可变对象，如下图所示：<br><img src="/upload/images/2018/12/30/1.jpg" alt=""></p>
+<p>从这张图也说明了一个问题，<code>NSString</code> 对象经过 <code>copy</code> 后仍然是不可变对象。</p>
+<p>紧接着，我们再来看看 <code>mutableCopy</code> 的使用情况，例子如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *name = <span class="string">@"www."</span>;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name addr: %p, name content: %@"</span>, name, name);</div><div class="line">    </div><div class="line"><span class="built_in">NSString</span> *name1 = name;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name1 addr: %p, name1 content: %@"</span>, name1, name1);</div><div class="line">    </div><div class="line"><span class="built_in">NSString</span> *name2 = [name <span class="keyword">copy</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name2 addr: %p, name2 content: %@"</span>, name2, name2);</div><div class="line">    </div><div class="line"><span class="keyword">id</span> name3 = [name mutableCopy];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name3 addr: %p, name3 content: %@"</span>, name3, name3);</div></pre></td></tr></table></figure>
+<p>对象 <code>name3</code> 是经过 <code>name</code> 对象 <code>mutableCopy</code> 后的，这个时候因为我不确定 <code>name3</code> 到底是可变的还是不可变的，所以采用了 <code>id</code> 来修饰 <code>name3</code> 对象。</p>
+<p>可以看一下输出内容：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">name  addr: <span class="number">0x104a6acf8</span>, name  content: www.</div><div class="line">name1 addr: <span class="number">0x104a6acf8</span>, name1 content: www.</div><div class="line">name2 addr: <span class="number">0x104a6acf8</span>, name2 content: www.</div><div class="line">name3 addr: <span class="number">0x1c0052cf0</span>, name3 content: www.</div></pre></td></tr></table></figure>
+<p>可以看出，<code>name3</code> 的地址变了，再看一下断点的截图：<br><img src="/upload/images/2018/12/30/2.jpg" alt=""></p>
+<p>充分说明了 <code>name3</code> 经过不可变的 <code>name</code> 进行<code>mutableCopy</code> 后变成了可变对象。那么可以将上面的示例代码稍作修改：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableString</span> *name3 = [name mutableCopy];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name3 addr: %p, name3 content: %@"</span>, name3, name3);</div><div class="line">[name3 appendString:<span class="string">@"veryitman.com"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name3 addr: %p, name3 content: %@"</span>, name3, name3);</div></pre></td></tr></table></figure>
+<p>从下面的输出结果也充分说明了 <code>name3</code> 经过不可变的 <code>name</code> 进行 <code>mutableCopy</code> 后变成了可变对象。输出结果如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">name3 addr: <span class="number">0x1d0058270</span>, name3 content: www.veryitman.com</div></pre></td></tr></table></figure>
+<p><strong>结论 1：</strong></p>
+<ul>
+<li>不可变的 <code>NSString</code> 对象经过 <code>copy</code> 后，还是不可变对象。</li>
+<li>不可变的 <code>NSString</code> 对象经过 <code>mutableCopy</code> 后，变成了可变的 <code>NSMutableString</code> 对象。</li>
+</ul>
+<h2 id="NSMutableString-的-copy-和-mutableCopy"><a href="#NSMutableString-的-copy-和-mutableCopy" class="headerlink" title="NSMutableString 的 copy 和 mutableCopy"></a>NSMutableString 的 copy 和 mutableCopy</h2><p>类 <code>NSMutableString</code> 继承自 <code>NSString</code> 的，其当然也是实现了 <code>NSCopying</code>, <code>NSMutableCopying</code> 这两个协议的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@interface NSMutableString : NSString</div></pre></td></tr></table></figure>
+<p>我们还是看例子，示例代码如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableString</span> *name = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"www."</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name  addr: %p, name  content: %@"</span>, name, name);</div><div class="line"></div><div class="line"><span class="comment">// 简单赋值</span></div><div class="line"><span class="built_in">NSMutableString</span> *name1 = name;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name1 addr: %p, name1 content: %@"</span>, name1, name1);</div><div class="line">   </div><div class="line"><span class="comment">// 使用 copy    </span></div><div class="line"><span class="keyword">id</span> name2 = [name <span class="keyword">copy</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name2 addr: %p, name2 content: %@"</span>, name2, name2);</div><div class="line"> </div><div class="line"><span class="comment">// 使用 mutableCopy   </span></div><div class="line"><span class="keyword">id</span> name3 = [name mutableCopy];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name3 addr: %p, name3 content: %@"</span>, name3, name3);</div></pre></td></tr></table></figure>
+<p>因为事先我们不知道 <code>NSMutableString</code> 经过 <code>copy</code> 和 <code>mutableCopy</code> 之后到底会变成可变还是不可变，上面的例子暂时将 <code>name2</code> 和 <code>name3</code> 用 <code>id</code> 来表示。</p>
+<p>断点截图如下：<br><img src="/upload/images/2018/12/30/3.jpg" alt=""></p>
+<p>结合一下输出的日志：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">name  addr: <span class="number">0x1d044a980</span>, name  content: www.</div><div class="line">name1 addr: <span class="number">0x1d044a980</span>, name1 content: www.</div><div class="line">name2 addr: <span class="number">0xa0000002e7777774</span>, name2 content: www.</div><div class="line">name3 addr: <span class="number">0x1d044a5f0</span>, name3 content: www.</div></pre></td></tr></table></figure>
+<p>可以看出 <code>name2</code> 是一个不可变的 <code>NSString</code> 对象， <code>name</code>、<code>name1</code> 和 <code>name3</code> 都是可变的 <code>NSMutableString</code> 对象。</p>
+<p>也可以从另外一个角度来验证一下上面的说法，我们修改一下代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableString</span> *name2 = [name <span class="keyword">copy</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name2 addr: %p, name2 content: %@"</span>, name2, name2);</div><div class="line">[name2 appendString:<span class="string">@"veryitman.com"</span>];</div><div class="line">    </div><div class="line"><span class="built_in">NSMutableString</span> *name3 = [name mutableCopy];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"name3 addr: %p, name3 content: %@"</span>, name3, name3);</div><div class="line">[name3 appendString:<span class="string">@"veryitman.com"</span>];</div></pre></td></tr></table></figure>
+<p>运行后，可以看到，代码 <code>[name2 appendString:@&quot;veryitman.com&quot;]</code> 这里会引起 Crash，报错内容如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> -[<span class="built_in">NSTaggedPointerString</span> appendString:]: unrecognized selector sent to instance <span class="number">0xa0000002e7777774</span></div><div class="line"> </div><div class="line">*** Terminating app due to uncaught exception 'NSInvalidArgumentException'</div><div class="line"></div><div class="line">reason: '-[NSTaggedPointerString appendString:]: unrecognized selector sent to instance 0xa0000002e7777774'</div></pre></td></tr></table></figure>
+<p>也充分说明了，<code>name2</code> 是一个不可变的 <code>NSString</code> 对象。</p>
+<p><strong>结论 2：</strong></p>
+<ul>
+<li>可变的 <code>NSMutableString</code> 对象经过 <code>copy</code> 后，会变成不可变的 <code>NSString</code> 对象。</li>
+<li>可变的 <code>NSMutableString</code> 对象经过 <code>mutableCopy</code> 后，仍然是可变的 <code>NSMutableString</code> 对象。</li>
+</ul>
+<h2 id="copy、strong-修饰-NSString"><a href="#copy、strong-修饰-NSString" class="headerlink" title="copy、strong 修饰 NSString"></a>copy、strong 修饰 NSString</h2><p>创建 Employee 文件，如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Employee</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *userName;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>其 <code>userName</code> 属性是 <code>copy</code>。</p>
+<p>使用示例，如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Employee *employee = [Employee new];</div><div class="line">employee.userName = <span class="string">@"John"</span>;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"--before-- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div><div class="line">        </div><div class="line"><span class="comment">// 创建一个可变对象</span></div><div class="line"><span class="built_in">NSMutableString</span> *newUserName = [[<span class="built_in">NSMutableString</span> alloc] initWithString:<span class="string">@"new_user_name"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"newUserName addr: %p, newUserName content: %@"</span>, newUserName, newUserName);</div><div class="line">    </div><div class="line"><span class="comment">// 将一个新的对像赋值给 employee.userName，此时 employee.userName 的地址肯定会变化</span></div><div class="line">employee.userName = newUserName;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"---after1--- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div><div class="line">    </div><div class="line"><span class="comment">// 试图改变 newUserName 的内容，看 employee.userName 的内容是否改变</span></div><div class="line">[newUserName appendString:<span class="string">@"_hello"</span>];</div><div class="line"></div><div class="line"><span class="comment">// newUserName 的内容被改变成了 new_user_name_hello</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"newUserName addr: %p, newUserName content: %@"</span>, newUserName, newUserName);</div><div class="line"></div><div class="line"><span class="comment">// employee.userName 的内容未变化</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"---after2--- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div><div class="line">    </div><div class="line"><span class="comment">// Crash，因为 employee.userName 还是不可变对象</span></div><div class="line"><span class="comment">// [(NSMutableString *)(employee.userName) appendString:@"nana"];</span></div></pre></td></tr></table></figure>
+<p>在上面的示例中，故意将 <code>NSMutableString</code> 对象 <code>newUserName</code> 赋值给不可变的 <code>NSString</code> 对象 <code>employee.userName</code>，看一下输出结果，如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">--before-- employee.userName addr: <span class="number">0x100096cf8</span>, employee.userName content: John</div><div class="line"></div><div class="line">newUserName addr: <span class="number">0x174070a00</span>, newUserName content: new_user_name</div><div class="line"></div><div class="line">---after1--- employee.userName addr: <span class="number">0x174023b80</span>, employee.userName content: new_user_name</div><div class="line"></div><div class="line">newUserName addr: <span class="number">0x174070a00</span>, newUserName content: new_user_name_hello</div><div class="line"></div><div class="line">---after2--- employee.userName addr: <span class="number">0x174023b80</span>, employee.userName content: new_user_name</div></pre></td></tr></table></figure>
+<p>按照 </p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">可变的 `<span class="built_in">NSMutableString</span>` 对象经过 `<span class="keyword">copy</span>` 后，会变成不可变的 `<span class="built_in">NSString</span>` 对象。</div></pre></td></tr></table></figure>
+<p>这个结论来看，<code>employee.userName</code> 肯定是不可变的对象，即使改变 <code>newUserName</code> 的内容也不会影响 <code>employee.userName</code> 这个对象的内容。</p>
+<p>那么，我们将 <code>employee.userName</code> 的属性修饰符 <code>copy</code> 改为 <code>strong</code>，又会是什么样子呢？</p>
+<p>我们修改两处代码</p>
+<p><strong>Employee.h</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Employee</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="comment">//@property (nonatomic, copy) NSString *userName;</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span> *userName;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>示例代码，只是打开之前会 crash 的部分</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// employee.userName 经过 strong 修饰过后， 彻底变成了可变对象</span></div><div class="line">[(<span class="built_in">NSMutableString</span> *)(employee.userName) appendString:<span class="string">@"_oc"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"---after3--- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div></pre></td></tr></table></figure>
+<p>看一下输出日志：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">--before-- employee.userName addr: <span class="number">0x1000a6cf8</span>, employee.userName content: John</div><div class="line"></div><div class="line">newUserName addr: <span class="number">0x17426b280</span>, newUserName content: new_user_name</div><div class="line"></div><div class="line">---after1--- employee.userName addr: <span class="number">0x17426b280</span>, employee.userName content: new_user_name</div><div class="line"></div><div class="line">newUserName addr: <span class="number">0x17426b280</span>, newUserName content: new_user_name_hello</div><div class="line"></div><div class="line">---after2--- employee.userName addr: <span class="number">0x17426b280</span>, employee.userName content: new_user_name_hello</div><div class="line"></div><div class="line">---after3--- employee.userName addr: <span class="number">0x17426b280</span>, employee.userName content: new_user_name_hello_oc</div></pre></td></tr></table></figure>
+<p>可以看到 <code>employee.userName</code> 最终和 <code>newUserName</code> 的地址、内容完全相同了，彻底变成了可变对象。</p>
+<p>另外，如果不是将可变的 <code>NSMutableString</code> 对象赋值给不可变的 <code>NSString</code> 对象，换句话说，<code>NSString</code> 对 <code>NSString</code> 赋值，那么使用 <code>strong</code> 和 <code>copy</code> 效果都是一样的。</p>
+<p>示例代码（无论 <code>employee.userName</code> 使用 <code>strong</code> 还是 <code>copy</code>，效果都是 <code>employee.userName</code> 不可变的）：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Employee *employee = [Employee new];</div><div class="line">employee.userName = <span class="string">@"John"</span>;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"--before-- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div><div class="line">    </div><div class="line"><span class="comment">// 创建一个不可变对象</span></div><div class="line"><span class="built_in">NSString</span> *newUserName = <span class="string">@"new_user_name"</span>;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"newUserName addr: %p, newUserName content: %@"</span>, newUserName, newUserName);</div><div class="line">    </div><div class="line"><span class="comment">// 将一个新的对像赋值给 employee.userName，此时 employee.userName 的地址肯定会变化</span></div><div class="line">employee.userName = newUserName;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"---after1--- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div></pre></td></tr></table></figure>
+<h2 id="copy、strong-修饰-NSMutableString"><a href="#copy、strong-修饰-NSMutableString" class="headerlink" title="copy、strong 修饰 NSMutableString"></a>copy、strong 修饰 NSMutableString</h2><p>在 property 的修饰语中，只有 <code>copy</code> 修饰语而没有 <code>mutableCopy</code> 的修饰语。</p>
+<p><strong>Employee.h</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface Employee : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSMutableString *userName;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Employee *employee = [Employee new];</div><div class="line">employee.userName = [NSMutableString stringWithString:@&quot;John&quot;];</div><div class="line">NSLog(@&quot;--before-- employee.userName addr: %p, employee.userName content: %@&quot;, employee.userName, employee.userName);</div><div class="line"></div><div class="line">// 创建一个可变对象</div><div class="line">NSMutableString *newUserName = [NSMutableString stringWithFormat:@&quot;new_user_name&quot;];</div><div class="line">NSLog(@&quot;newUserName addr: %p, newUserName content: %@&quot;, newUserName, newUserName);</div><div class="line"></div><div class="line">// 将一个新的对像赋值给 employee.userName，此时 employee.userName 的地址肯定会变化</div><div class="line">employee.userName = newUserName;</div><div class="line">NSLog(@&quot;---after1--- employee.userName addr: %p, employee.userName content: %@&quot;, employee.userName, employee.userName);</div><div class="line">    </div><div class="line">// employee.userName 虽然是 NSMutableString 对象，但经过 copy 修饰过后，仍然是不可变对象</div><div class="line">// 所以，运行到这里会引起 crash</div><div class="line">[employee.userName appendString:@&quot;_oc&quot;];</div><div class="line">NSLog(@&quot;---after2--- employee.userName addr: %p, employee.userName content: %@&quot;, employee.userName, employee.userName);</div></pre></td></tr></table></figure>
+<p>可以看出 <code>copy</code> 后的的可变对象还是不可变的。</p>
+<p>那么，我们将 <code>employee.userName</code> 的属性修饰符 <code>copy</code> 改为 <code>strong</code>，又会是什么样子呢？</p>
+<p><strong>Employee.h</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Employee</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span> *userName;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>示例代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">Employee *employee = [Employee new];</div><div class="line">employee.userName = [<span class="built_in">NSMutableString</span> stringWithString:<span class="string">@"John"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"--before-- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div><div class="line"></div><div class="line"><span class="comment">// 创建一个可变对象</span></div><div class="line"><span class="built_in">NSMutableString</span> *newUserName = [<span class="built_in">NSMutableString</span> stringWithFormat:<span class="string">@"new_user_name"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"newUserName addr: %p, newUserName content: %@"</span>, newUserName, newUserName);</div><div class="line"></div><div class="line"><span class="comment">// 将一个新的对像赋值给 employee.userName，此时 employee.userName 的地址肯定会变化</span></div><div class="line">employee.userName = newUserName;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"---after1--- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div><div class="line">    </div><div class="line"><span class="comment">// employee.userName 虽然是 NSMutableString 对象，但经过 strong 修饰过后，变成了可变对象</span></div><div class="line">[employee.userName appendString:<span class="string">@"_hello"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"---after2--- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div><div class="line">    </div><div class="line">[newUserName appendString:<span class="string">@"_oc"</span>];</div><div class="line"><span class="comment">// newUserName 的内容被改变成了 new_user_name_hello_oc</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"newUserName addr: %p, newUserName content: %@"</span>, newUserName, newUserName);</div><div class="line"><span class="comment">// employee.userName 的内容发生了变化</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"---after2--- employee.userName addr: %p, employee.userName content: %@"</span>, employee.userName, employee.userName);</div></pre></td></tr></table></figure>
+<p>经过 <code>strong</code> 修饰后，可变的 <code>NSMutableString</code> 对象还是可变的对象。</p>
+<p>在这个部分的开始，说过在 property 中没有 <code>mutableCopy</code> 的修饰语，那么我们能否达到 <code>mutableCopy</code> 的效果呢？</p>
+<p>很显然是可以的，我们可以重写属性的 <code>set</code> 方法，改造一下 <code>Employee</code> 的代码，如下：</p>
+<p><strong>Employee.h</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface Employee : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSMutableString *userName;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p><strong>Employee.m</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#import &quot;Employee.h&quot;</div><div class="line"></div><div class="line">@implementation Employee</div><div class="line"></div><div class="line">- (void)setUserName:(NSMutableString *)userName</div><div class="line">&#123;</div><div class="line">    _userName = [userName mutableCopy];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这样，就达到了和是 <code>strong</code> 修饰语一样的效果了。</p>
+<p>大家，可以使用同样的方法来实践一下 <code>NSArray</code>、<code>NSMutableArry</code> 等集合数据的 <code>copy</code> 以及 <code>mutableCopy</code> 的效果了。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li><p>不可变的 <code>NSString</code> 对象经过 <code>copy</code> 后，还是不可变对象。</p>
+</li>
+<li><p>不可变的 <code>NSString</code> 对象经过 <code>mutableCopy</code> 后，变成了可变的 <code>NSMutableString</code> 对象。</p>
+</li>
+<li><p>可变的 <code>NSMutableString</code> 对象经过 <code>copy</code> 后，会变成不可变的 <code>NSString</code> 对象。</p>
+</li>
+<li><p>可变的 <code>NSMutableString</code> 对象经过 <code>mutableCopy</code> 后，仍然是可变的 <code>NSMutableString</code> 对象。</p>
+</li>
+<li><p>不可变的 <code>NSString</code> 对象在 property 中，尽量使用 <code>copy</code> 来修饰，因为使用 <code>strong</code> 修饰符可变字符串如果给不可变字符串赋值后，会导致你原本预期发生了变化，除非你有特殊的目的才使用 <code>strong</code> 修饰符。</p>
+</li>
+<li><p>可变的 <code>NSMutableString</code> 对象在 property 中，尽量使用 <code>strong</code> 来修饰，除非你有特殊的目的才使用 <code>copy</code> 修饰符。</p>
+</li>
+<li><p>虽然在 property 中没有 <code>mutableCopy</code> 修饰符，但是可以通过重写其 <code>set</code> 方法来达到目的。</p>
+</li>
+</ul>
+<hr>
+<p><strong>扫码关注，你我就各多一个朋友~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NSString-NSMutableString-copy-mutableCopy/" rel="tag"><i class="fa fa-tag"></i> NSString NSMutableString copy mutableCopy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/23/2018-12-23-OC-self/" rel="next" title="OC: self">
+                <i class="fa fa-chevron-left"></i> OC: self
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/31/2018-12-31-2018，不会重来/" rel="prev" title="2018，不会重来">
+                2018，不会重来 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://veryitman.blog.csdn.net" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可变对象和不可变对象"><span class="nav-number">2.</span> <span class="nav-text">可变对象和不可变对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSString-的-copy-和-mutableCopy"><span class="nav-number">3.</span> <span class="nav-text">NSString 的 copy 和 mutableCopy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSMutableString-的-copy-和-mutableCopy"><span class="nav-number">4.</span> <span class="nav-text">NSMutableString 的 copy 和 mutableCopy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy、strong-修饰-NSString"><span class="nav-number">5.</span> <span class="nav-text">copy、strong 修饰 NSString</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy、strong-修饰-NSMutableString"><span class="nav-number">6.</span> <span class="nav-text">copy、strong 修饰 NSMutableString</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
