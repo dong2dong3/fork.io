@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SpringBoot Actuator Admin," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介Spring Boot Admin 并不是 Spring Boot 官方出品的，开源地址 SpringBoot Admin，伴随着 SpringBoot 的更新，Spring Boot Admin 也做了相对应的更新。Spring Boot 推出 2.X 版本时，Spring Boot Admin 也及时进行了更新。本篇使用的就是 Spring Boot Admin 2.2.1版本，最新版本是">
+<meta name="keywords" content="SpringBoot Actuator Admin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务: Admin与服务监测和管理">
+<meta property="og:url" content="http://yoursite.com/2020/05/03/微服务-Admin与服务监测和管理/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="简介Spring Boot Admin 并不是 Spring Boot 官方出品的，开源地址 SpringBoot Admin，伴随着 SpringBoot 的更新，Spring Boot Admin 也做了相对应的更新。Spring Boot 推出 2.X 版本时，Spring Boot Admin 也及时进行了更新。本篇使用的就是 Spring Boot Admin 2.2.1版本，最新版本是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/1.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/2.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/3.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/4.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/5.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/6.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2020/05/03/7.png">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2020-05-04T12:03:56.119Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务: Admin与服务监测和管理">
+<meta name="twitter:description" content="简介Spring Boot Admin 并不是 Spring Boot 官方出品的，开源地址 SpringBoot Admin，伴随着 SpringBoot 的更新，Spring Boot Admin 也做了相对应的更新。Spring Boot 推出 2.X 版本时，Spring Boot Admin 也及时进行了更新。本篇使用的就是 Spring Boot Admin 2.2.1版本，最新版本是">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2020/05/03/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/03/微服务-Admin与服务监测和管理/"/>
+
+
+
+
+
+  <title>微服务: Admin与服务监测和管理 | veryitman</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/微服务-Admin与服务监测和管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务: Admin与服务监测和管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T11:16:30+08:00">
+                2020-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/03/微服务-Admin与服务监测和管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/05/03/微服务-Admin与服务监测和管理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Spring Boot Admin</code> 并不是 Spring Boot 官方出品的，开源地址 <a href="https://github.com/codecentric/spring-boot-admin" target="_blank" rel="noopener">SpringBoot Admin</a>，伴随着 SpringBoot 的更新，<code>Spring Boot Admin</code> 也做了相对应的更新。Spring Boot 推出 2.X 版本时，<code>Spring Boot Admin</code> 也及时进行了更新。本篇使用的就是 <code>Spring Boot Admin</code> 2.2.1版本，最新版本是 <code>2.2.2</code>。 <code>Spring Boot Admin</code>  分为 <code>client</code> 和 <code>server</code> 端，<code>server</code> 端一般独立为一个服务，<code>client</code> 可以是你已经开发完成的服务，也可以是你即将要开发的服务。</p>
+<p>对 <code>Spring Boot Admin</code>  2.x 版本的具体的更新内容和变化感兴趣的朋友，可以参考 <a href="https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-docs/src/main/asciidoc/changes-2.x.adoc" target="_blank" rel="noopener">changes-2.x.adoc</a> 文档，这里不再赘述。</p>
+<p>继上一篇 <a href="http://www.veryitman.com/2020/05/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1-Actuator%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%B5%8B/" target="_blank" rel="noopener">微服务-Actuator实现服务监测</a>，我们说到使用 <code>Actuator</code> 组件可以实现对服务的监测，但是这种方式没有管理界面体验很不友好。本篇继续学习关于 Admin 的知识，该组件不仅囊括了 <code>Actuator</code> 的功能，还提供了管理界面，使用起来比较方便。</p>
+<p>本篇主要内容，如下：</p>
+<ul>
+<li><p>通过 HTTP 方式集成和使用 <code>spring-boot-admin-server</code>；</p>
+</li>
+<li><p>如何安全的使用 <code>spring-boot-admin</code>，这里又包含两个内容:</p>
+</li>
+<li><ul>
+<li>如何将 <code>spring-boot-admin-server</code> 结合 <code>spring-boot-security</code>，实现安全管控以及如何配置；</li>
+<li>如何将 <code>spring-boot-admin-client</code> 结合 <code>spring-boot-security</code>，实现安全管控以及如何配置；</li>
+</ul>
+</li>
+</ul>
+<p>完整工程代码，请移步 <a href="https://github.com/veryitman/MSTutorial" target="_blank" rel="noopener">Github</a> 下载。后续会结合  <code>spring-cloud</code> 中的 <code>Eureka</code> 组件再次学习和分享使用  <code>spring-boot-admin</code>。  </p>
+<h2 id="配置-Admin-Server"><a href="#配置-Admin-Server" class="headerlink" title="配置 Admin Server"></a>配置 Admin Server</h2><p>为了学习和验证 <code>Spring Boot Admin</code> 的使用，我创建了一个 <code>Admin-Server</code>工程即 <code>ms-admin</code>，创建了两个 <code>Admin-Client</code> 工程即 <code>ms-user</code> 和 <code>ms-admin-client</code>，工程结构如下图:</p>
+<p><img src="/upload/images/2020/05/03/1.png" alt=""></p>
+<p><code>ms-user</code> 和 <code>ms-admin-client</code> 不同点在于：<code>ms-user</code> 使用了 <code>spring-boot-security</code> 模块，而 <code>ms-admin-client</code> 没有使用  <code>spring-boot-security</code>  模块，是一个相对比较简单的 SpringBoot 服务。</p>
+<h3 id="1、配置-ms-admin"><a href="#1、配置-ms-admin" class="headerlink" title="1、配置 ms-admin"></a>1、配置 <code>ms-admin</code></h3><p>在该 module 的 <code>properties</code> 文件中，配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">spring.application.name=Admin-Server</div><div class="line"># ---------------------------------</div><div class="line"># 配置该服务的独立端口</div><div class="line"># ---------------------------------</div><div class="line">server.port=8087</div></pre></td></tr></table></figure>
+<p><strong>注意：该服务的端口为 <code>8087</code>。</strong></p>
+<p>该 module 的 pom 文件，使用了 <code>spring-boot</code> 版本为 <code>2.2.6.RELEASE</code>，<code>spring-boot-admin</code> 版本为 <code>2.2.1</code>，这里一定要注意版本的匹配，否则工程运行会存在各种奇葩问题。这里教大家一个方法，如果你不知道如何匹配版本，直接使用 <a href="https://start.spring.io/" target="_blank" rel="noopener">spring initializr</a> 创建工程，然后下载创建的工程，看一下里面的 pom文件中各个模块的版本号就可以了。</p>
+<p>修改一下启动类，增加 <code>@EnableAdminServer</code> 注解，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> de.codecentric.boot.admin.server.config.EnableAdminServer;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"></div><div class="line"><span class="meta">@EnableAdminServer</span></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MZAdminApplication</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SpringApplication.run(MZAdminApplication.class, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2、配置-ms-admin-client"><a href="#2、配置-ms-admin-client" class="headerlink" title="2、配置 ms-admin-client"></a>2、配置 <code>ms-admin-client</code></h3><p>在该 module 的 <code>properties</code> 文件中，配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">spring.application.name=Admin-Client</div><div class="line">server.port=8083</div><div class="line"></div><div class="line"># ------------------------</div><div class="line"># Actuator config</div><div class="line"># ------------------------</div><div class="line"># 可以访问任意控制点</div><div class="line">management.endpoints.web.exposure.include=*</div><div class="line"></div><div class="line"># ------------------------------------------</div><div class="line"># 配置 spring boot admin</div><div class="line"># ------------------------------------------</div><div class="line">spring.boot.admin.client.url=http://localhost:8087</div><div class="line">management.endpoint.health.show-details=always</div></pre></td></tr></table></figure>
+<p><strong>注意：该服务的端口为 <code>8083</code>。如果 admin-client 和 admin-server 没有部署在同一台服务器，这里的<code>spring.boot.admin.client.url</code> 一定要写上 admin-server 所在服务器的ip地址。</strong></p>
+<p>在该 module 的 <code>pom</code> 文件中，引入如下依赖即可，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- springboot admin client --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>de.codecentric<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-admin-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>其余的不需要修改任何东西。</p>
+<h3 id="3、启动验证"><a href="#3、启动验证" class="headerlink" title="3、启动验证"></a>3、启动验证</h3><p>分别启动 <code>ms-admin</code>、<code>ms-admin-client</code>，启动成功后，在浏览器中打开 <code>http://localhost:8087</code> 就可以看到如下效果，可以看到 <code>ms-admin-client</code> 被发现了。</p>
+<p><img src="/upload/images/2020/05/03/2.png" alt=""></p>
+<p>点进去，可以看到 <code>ms-admin-client</code> 的运行状况。大家可以自己试试，我就不截图了。</p>
+<h2 id="配置带-security-的-Admin-Client"><a href="#配置带-security-的-Admin-Client" class="headerlink" title="配置带 security 的 Admin-Client"></a>配置带 security 的 Admin-Client</h2><p>上面我们说了，<code>ms-user</code> 也是一个 Admin-Client，我也希望他能被监控和管理，但是 <code>ms-user</code> 有点特殊它使用了 security 模块，那么如何让他被 Admin-Server 发现呢，我们接着往下看。</p>
+<p><strong>PS</strong>：<code>ms-user</code> 模块其实是我之前一直在 <a href="http://www.veryitman.com/2019/05/28/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0/" target="_blank" rel="noopener">微服务相关文章</a> 中使用的工程模块，这里只是重构了一下工程结构并且修改了一下名称而已。</p>
+<p>因为 <code>ms-user</code> 包含了比较多的内容，其 pom 文件也相对复杂一些，这里粘贴一部分（MySQL和Swagger相关配置就不写了）。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">spring.application.name=User-Server</div><div class="line"></div><div class="line"># ------------------------</div><div class="line"># Actuator config</div><div class="line"># ------------------------</div><div class="line"># 可以访问任意控制点</div><div class="line">management.endpoints.web.exposure.include=*</div><div class="line"># 配置独立的端口</div><div class="line">management.server.port=1012</div><div class="line"># 自定义访问控制点的路径</div><div class="line">management.endpoints.web.base-path=/monitor</div><div class="line">management.endpoint.shutdown.enabled=true</div><div class="line"></div><div class="line"># -----------------------------------------------</div><div class="line"># Spring Security Default user name and password</div><div class="line"># -----------------------------------------------</div><div class="line">spring.security.user.name=admin</div><div class="line">spring.security.user.password=admin</div><div class="line">spring.security.user.roles=ACTUATOR_ADMIN</div><div class="line"></div><div class="line"># ------------------------------------------</div><div class="line"># 配置 spring boot admin</div><div class="line"># ------------------------------------------</div><div class="line">spring.boot.admin.client.url=http://localhost:8087</div><div class="line">management.endpoint.health.show-details=always</div><div class="line"># 告诉admin-server用户名和密码，否则监控不到</div><div class="line">spring.boot.admin.client.instance.metadata.user.name=$&#123;spring.security.user.name&#125;</div><div class="line">spring.boot.admin.client.instance.metadata.user.password=$&#123;spring.security.user.password&#125;</div></pre></td></tr></table></figure>
+<p>这里要特别注意， <code>ms-user</code> 使用了security并且设置了用户名和密码，一定要告诉 Admin-Server，否则无法被监控到。也就是说如下的配置必须写：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 告诉admin-server用户名和密码，否则监控不到</div><div class="line">spring.boot.admin.client.instance.metadata.user.name=$&#123;spring.security.user.name&#125;</div><div class="line">spring.boot.admin.client.instance.metadata.user.password=$&#123;spring.security.user.password&#125;</div></pre></td></tr></table></figure>
+<p>紧接着我们启动 <code>ms-user</code> 这个服务，刷新一下浏览器，效果如下图：</p>
+<p><img src="/upload/images/2020/05/03/3.png" alt=""></p>
+<p>可以看到 <code>ms-user</code> 这个服务被如愿以偿的发现了。</p>
+<h2 id="Admin-Server-使用-security"><a href="#Admin-Server-使用-security" class="headerlink" title="Admin-Server 使用 security"></a>Admin-Server 使用 security</h2><p>在  <code>ms-admin</code> 的 pom 文件中引入 security 模块，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>修改 properties 文件，增加用户名和密码的配置，完整配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">spring.application.name=Admin-Server</div><div class="line"># ---------------------------------</div><div class="line"># 配置该服务的独立端口</div><div class="line"># ---------------------------------</div><div class="line">server.port=8087</div><div class="line"></div><div class="line"># ---------------------------------</div><div class="line"># security 配置</div><div class="line"># ---------------------------------</div><div class="line">spring.security.user.name=admin</div><div class="line">spring.security.user.password=admin</div></pre></td></tr></table></figure>
+<p>配置完成后，我们分别重新启动一下 <code>ms-admin</code>、<code>ms-admin-client</code> 这两个服务。</p>
+<p>再次打开 <code>localhost:8087</code>，会出现如下界面：</p>
+<p><img src="/upload/images/2020/05/03/4.png" alt=""></p>
+<p>输入在 <code>properties</code> 文件中配置的用户名和密码，这里我配置的用户名和密码都是 <code>admin</code>，你也可以配置其他的。</p>
+<p>输入之后可以看到如下界面，再次输入上面的用户名和密码即可。</p>
+<p><img src="/upload/images/2020/05/03/5.png" alt=""></p>
+<p>初次进入显示效果如下截图，居然没有发现 <code>ms-admin-client</code> 这个服务。</p>
+<p><img src="/upload/images/2020/05/03/6.png" alt=""></p>
+<p>这是因为没有在客户端配置进入 Admin-Server 的密码，安排上。</p>
+<p>在 <code>ms-admin-client</code>  的 properties 中配置，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># ------------------------------------------</div><div class="line"># 配置 spring boot admin</div><div class="line"># ------------------------------------------</div><div class="line">spring.boot.admin.client.url=http://localhost:8087</div><div class="line">management.endpoint.health.show-details=always</div><div class="line"># 配置 admin server 的用户名和密码，否则注册不上</div><div class="line">spring.boot.admin.discovery.instances-metadata.user.name=$&#123;spring.security.user.name&#125;</div><div class="line">spring.boot.admin.discovery.instances-metadata.user.password=$&#123;spring.security.user.password&#125;</div></pre></td></tr></table></figure>
+<p>同理，在 <code>ms-user</code> 的配置文件 properties 中也增加相关的配置即可。</p>
+<p><strong>记得继承自 <code>WebSecurityConfigurerAdapter</code> 写一个配置类</strong>，可以参考 <a href="https://github.com/anandvarkeyphilips/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-server-with-security/src/main/java/de/codecentric/boot/admin/server/SpringBootAdminServerApplication.java" target="_blank" rel="noopener">SpringBootAdminServerApplication</a> 示例代码，不然客户端有可能无法注册成功。</p>
+<p>重新启动 <code>ms-admin</code> 服务然后登录进去再启动客户端，就可以看到如下界面：</p>
+<p><img src="/upload/images/2020/05/03/7.png" alt=""></p>
+<p>另外，Admin-Server 还可以集成 <code>spring-boot-starter-mail</code> 模块再简单的配置一下，就可以实现发送邮件的功能，这样服务的运行状态可以及时通知到对应的收件人了。</p>
+<hr>
+<p><strong>面朝大海，春暖花开。尚拙能成才，你没有比别人聪明，你只是更加努力罢了~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SpringBoot-Actuator-Admin/" rel="tag"><i class="fa fa-tag"></i> SpringBoot Actuator Admin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/01/微服务-Actuator实现服务监测/" rel="next" title="微服务: Actuator实现服务监测">
+                <i class="fa fa-chevron-left"></i> 微服务: Actuator实现服务监测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/10/瘦身秘笈-养成好习惯/" rel="prev" title="瘦身秘笈: 养成好习惯">
+                瘦身秘笈: 养成好习惯 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://veryitman.blog.csdn.net" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Admin-Server"><span class="nav-number">2.</span> <span class="nav-text">配置 Admin Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、配置-ms-admin"><span class="nav-number">2.1.</span> <span class="nav-text">1、配置 ms-admin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、配置-ms-admin-client"><span class="nav-number">2.2.</span> <span class="nav-text">2、配置 ms-admin-client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、启动验证"><span class="nav-number">2.3.</span> <span class="nav-text">3、启动验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置带-security-的-Admin-Client"><span class="nav-number">3.</span> <span class="nav-text">配置带 security 的 Admin-Client</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Admin-Server-使用-security"><span class="nav-number">4.</span> <span class="nav-text">Admin-Server 使用 security</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: decodeURI(window.location.pathname), 
+            owner: 'veryitman',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1260c6965da6716ac0755f498978eb5e2c0453b8',
+            
+                client_id: '842fcef1874cd7f58202'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
