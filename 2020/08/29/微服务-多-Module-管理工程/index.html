@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/08/29/13.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/08/29/14.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-08-30T02:15:13.917Z">
+<meta property="og:updated_time" content="2020-10-25T01:47:25.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: 多 Module 管理工程">
 <meta name="twitter:description" content="简介在 微服务-想办法让项目运行起来 这篇文章中，介绍了如何使用 IDEA 开发工具搭建本地的微服务开发环境，通常我们会把一个微服务项目分解成多个服务，那么为了更好的管理该项目，大家一般都会在 IDE 里面通过多 Module 来进行管理。这里的多 Module 可以理解为多个 SpringBoot 项目。 近期收到一些小伙伴的反馈，在使用 IDEA 搭建多 Module 的时候总会遇到一些莫名其">
@@ -437,11 +437,11 @@
 <p>不废话，直接实践开干！</p>
 <p>1、打开 IDEA，File/New Project</p>
 <p><img src="/upload/images/2020/08/29/1.png" alt=""></p>
-<p>选择 <code>Maven 工程</code></p>
+<p>选择 <code>Spring Initializr</code></p>
 <p><img src="/upload/images/2020/08/29/2.png" alt=""></p>
 <p><img src="/upload/images/2020/08/29/3.png" alt=""></p>
 <p>填写完成后，点击 <code>Finish</code> 即可。</p>
-<p>删除工程的 <code>src</code> 目录</p>
+<p>删除工程的 <code>src</code>、<code>.mvn</code>、<code>mvnw</code> 、<code>mvnw.cmd</code>  这几个目录。</p>
 <p><img src="/upload/images/2020/08/29/4.png" alt=""></p>
 <p>删除后，工程目录如下</p>
 <p><img src="/upload/images/2020/08/29/5.png" alt=""></p>
@@ -468,8 +468,13 @@
 <p><img src="/upload/images/2020/08/29/8.png" alt=""></p>
 <p>按照你自己的需求填写对应的信息即可进入到下一步直至 <code>Finish</code>.</p>
 <p><img src="/upload/images/2020/08/29/9.png" alt=""></p>
+<p>此时，修改该 module 的 pom 文件，如下（将从工程继承而不是从spring boot继承）所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.veryitman.main<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>project-xxx-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span> <span class="comment">&lt;!-- 工程名称 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>同理，再新建一个 <code>mz-payment-inone</code> 的 <code>Module</code>，最后工程目录如下：</p>
 <p><img src="/upload/images/2020/08/29/10.png" alt=""></p>
+<p>同理， <code>mz-payment-inone</code> 建立好之后也修改一下它的 pom 文件中的 <code>&lt;parent&gt;</code> 标签内容。</p>
+<p>所有的 module 建立完成之后，在 <strong>工程的</strong> pom 中增加 module 的说明即增加 <code>&lt;module&gt;</code> 标签 ，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 模块说明：这里声明多个子模块 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">modules</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>ms-login-inone<span class="tag">&lt;/<span class="name">module</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>mz-payment-inone<span class="tag">&lt;/<span class="name">module</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">modules</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>至此，工程中多 <code>Module</code> 已经创建完成👏，接下来再给大家介绍一下 <code>Module</code> 之间如何相互调用。</p>
 <h3 id="Module-之间的调用"><a href="#Module-之间的调用" class="headerlink" title="Module 之间的调用"></a>Module 之间的调用</h3><p>按照上面的方法，我再次创建了一个 <code>mz-core</code> 的 <code>Module</code>，该 <code>Module</code> 为 上面两个 SpringBoot Module 提供基础的方法。</p>
 <p>在 <code>mz-core</code> 中增加了一个 <code>MZDateUtil</code> 类和对应的方法</p>
