@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/11/15/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/11/15/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-11-15T08:11:18.799Z">
+<meta property="og:updated_time" content="2020-11-15T08:36:10.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Win10 安装 Redis">
 <meta name="twitter:description" content="简介关于微服务相关的分享，我都是在 Windows 10 系统下实践的，所以跟 Spring Boot 配套的软件也是在此系统上面安装的。 今天跟大家介绍一下如何在 Win10 下安装 Redis，该篇是 Spring Boot 使用 Redis 的处女篇，下篇结合之前登录场景举例如何在 Spring Boot 中使用 Redis。 往期 Win10 下面安装 MySQL 的文章：MySQL8-0">
@@ -451,7 +451,7 @@
 <p><strong>Step5：设置 Redis 成 Windows 服务</strong></p>
 <p>另外打开一个命令行窗口，执行如下命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./redis-server.exe --service-install redis.windows-service.conf --loglevel verbose --service-name Redis</div></pre></td></tr></table></figure>
-<p>执行成功后，你可以在 <code>Windows</code> 的系统服务（<code>CMD+R/services.msc</code>）中找到该服务（服务名称未 <code>Redis</code>），如下图：</p>
+<p>执行成功后，你可以在 <code>Windows</code> 的系统服务（<code>CMD+R/services.msc</code>）中找到该服务（服务名称为 <code>Redis</code>），如下图：</p>
 <p><img src="/upload/images/2020/11/15/4.png" alt=""></p>
 <p>另外从下图可以看到其属性，对应的配置文件是 <code>redis.windows-service.conf</code>，对应上面注册服务时使用的配置文件，所以后续的自定义配置就需要修改这个文件，不要搞错了。</p>
 <p>如果你使用 <code>redis.windows.conf</code> 那么这里就应该是这个文件。</p>
