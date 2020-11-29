@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/11/15/6.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2020/11/15/7.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-11-15T08:36:10.932Z">
+<meta property="og:updated_time" content="2020-11-29T02:56:15.732Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Win10 安装 Redis">
 <meta name="twitter:description" content="简介关于微服务相关的分享，我都是在 Windows 10 系统下实践的，所以跟 Spring Boot 配套的软件也是在此系统上面安装的。 今天跟大家介绍一下如何在 Win10 下安装 Redis，该篇是 Spring Boot 使用 Redis 的处女篇，下篇结合之前登录场景举例如何在 Spring Boot 中使用 Redis。 往期 Win10 下面安装 MySQL 的文章：MySQL8-0">
@@ -462,6 +462,9 @@
 <p>在服务列表中刷新一下，可以看到 <code>Redis</code> 正在运行。</p>
 <p><img src="/upload/images/2020/11/15/6.png" alt=""></p>
 <p>注册服务成功后，就不需要像 <strong>Step3</strong> 那样开启服务了，在 <strong>Step3</strong> 中开启的服务窗口也可以关闭了。后续使用 <strong>Step6</strong> 方式启动即可，或者将该服务设置为开机自启动也可以。</p>
+<p>如果在启动 redis 服务的时候报如下的错误：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[18236] 29 Nov 10:52:01.070 # HandleServiceCommands: system error caught. error code=1056, message = StartService failed: unknown error</div></pre></td></tr></table></figure>
+<p>说明你的 redis 服务已经启动了，可以查看 Windows 的服务（<code>CMD+R/services.msc</code>）中是否已经启动成功。</p>
 <h2 id="使用-Redis"><a href="#使用-Redis" class="headerlink" title="使用 Redis"></a>使用 Redis</h2><h3 id="Redis-相关命令"><a href="#Redis-相关命令" class="headerlink" title="Redis 相关命令"></a>Redis 相关命令</h3><blockquote>
 <p>再次强调一下，如果使用了 <code>git bash</code> 终端执行下面的命令没有反应或者卡住很久的话，需要在下面命令前加上 <code>winpty</code> 即可。</p>
 </blockquote>
