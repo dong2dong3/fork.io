@@ -436,7 +436,7 @@
 <p>然后在空白地方右键，会显示 <code>Git Bash</code>，选他就会打开命令终端工具，如下图所示：</p>
 <p><img src="/upload/images/2019/06/09/2.png" alt="1555860285254"></p>
 <p>在终端操作命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 添加所有文件</span></div><div class="line">git add -A *</div><div class="line"><span class="meta">#</span><span class="bash"> 提交到本地仓库并加上注释</span></div><div class="line">git commit -m "Create a greate project"</div><div class="line"><span class="meta">#</span><span class="bash"> 推送到远程master分支</span></div><div class="line">git push origin master</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 添加所有文件</div><div class="line">git add -A *</div><div class="line"><span class="meta">#</span> 提交到本地仓库并加上注释</div><div class="line">git commit -m "Create a greate project"</div><div class="line"><span class="meta">#</span> 推送到远程master分支</div><div class="line">git push origin master</div></pre></td></tr></table></figure>
 <p>如果你之前没有进行任何git提交的话，首次提交会提示你输入用户名和密码，此时你输入自己的github账号和密码即可。</p>
 <p>三步操作完成后，工程也就提交成功了。为了验证提交是否成功，你也可以到远程仓库(使用浏览器打开你的仓库地址)刷新看看有没有刚才提交的内容，如果网络不好就等会在瞅瞅。</p>
 <h2 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h2><p>为了不影响主干(master)上面的代码，我们可以创建一个个人分支来进行开发，例如我的个人分支 <code>veryitman-feature</code> 分支。</p>
@@ -451,7 +451,7 @@
 <p>去远程代码仓库中，刷新页面后，在Branch可以看到刚才创建的  <code>veryitman-feature</code> 分支，如下图所示：</p>
 <p><img src="/upload/images/2019/06/09/3.png" alt="1555860471904"></p>
 <p>也可以使用下面的方式进行创建和推送分支代码，操作步骤如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 在本地创建新的veryitman-feature分支 </span></div><div class="line">git branch veryitman-feature</div><div class="line"><span class="meta">#</span><span class="bash"> 切换到新的veryitman-feature分支    </span></div><div class="line">git checkout veryitman-feature</div><div class="line"><span class="meta">#</span><span class="bash"> 将新的分支推送到仓库</span></div><div class="line">git push origin veryitman-feature</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 在本地创建新的veryitman-feature分支 </div><div class="line">git branch veryitman-feature</div><div class="line"><span class="meta">#</span> 切换到新的veryitman-feature分支    </div><div class="line">git checkout veryitman-feature</div><div class="line"><span class="meta">#</span> 将新的分支推送到仓库</div><div class="line">git push origin veryitman-feature</div></pre></td></tr></table></figure>
 <h2 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h2><p>在上面的操作中，大家已经看到我们创建了 <code>veryitman-feature</code> 分支，加上原来默认的 <code>master</code> 分支，一共是两个分支了。</p>
 <p>一般来说，<code>master</code> 分支上面的代码应该是经过测试并且稳定的版本，保证其稳定不会出错。而其他分支如上面的  <code>veryitman-feature</code> 是我们需要进行开发的个人分支，不保证其稳定性（因为在开发嘛）。等  <code>veryitman-feature</code>  开发完成再合并到 <code>master</code> 分支上面，关于分支的合并操作，后续再说吧！</p>
 <p><code>Git</code> 支持在分支之间自由切换，比如你在  <code>veryitman-feature</code>  分支，提交完成代码后，可以切换到 <code>master</code> 分支。切换分支的命令如下：</p>
@@ -467,9 +467,9 @@
 <h2 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h2><p><code>Git</code> 提供了可以删除分支的方法和命令。</p>
 <p>删除分支分为两类，一个是仅仅删除本地分支，另一个是删除远程分支。</p>
 <p>删除本地分支意思是删除已经存储在你本地计算机上面的文件，如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 在本地删除veryitman-feature分支</span></div><div class="line">git branch -d veryitman-feature</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 在本地删除veryitman-feature分支</div><div class="line">git branch -d veryitman-feature</div></pre></td></tr></table></figure>
 <p>删除远程分支意思是删除存在 <code>GitHub</code> 上面的代码文件，如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 在github远程端删除veryitman-feature分支</span></div><div class="line">git push origin --delete veryitman-feature</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 在github远程端删除veryitman-feature分支</div><div class="line">git push origin --delete veryitman-feature</div></pre></td></tr></table></figure>
 <hr>
 <p>关于Git的使用还有很多，今天先说这么多，用到的时候再补充。现在最重要的是需要你去注册一个 <code>Github</code> 账号折腾起来，熟能生巧，动手实践才是王道！</p>
 <hr>
