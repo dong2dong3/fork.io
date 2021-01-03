@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="google-site-verification" content="cBOaqTQRdMPJ-wlGwmOFfL6VDz_CO18xzGqSxOUgpnY"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/me_max.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/me_32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/me_16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Redis JWT Token," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介在 Win10-安装-Redis 和 微服务-SpringBoot-集成-Redis 分别介绍了如何安装和使用 Redis，今天继续结合 Redis，聊聊 token 授权登录的事情。 今天聊的主角是 JWT，聊完 JWT 之后再结合实例实现用户 token 登录。 JWT 介绍JWT，JSON Web Token 的缩写，基于 RFC 7519 标准。 下面内容来自 jwd.io，如下： 1">
+<meta name="keywords" content="Redis JWT Token">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务: Token的处理">
+<meta property="og:url" content="http://yoursite.com/2021/01/03/微服务-Token的处理/index.html">
+<meta property="og:site_name" content="veryitman">
+<meta property="og:description" content="简介在 Win10-安装-Redis 和 微服务-SpringBoot-集成-Redis 分别介绍了如何安装和使用 Redis，今天继续结合 Redis，聊聊 token 授权登录的事情。 今天聊的主角是 JWT，聊完 JWT 之后再结合实例实现用户 token 登录。 JWT 介绍JWT，JSON Web Token 的缩写，基于 RFC 7519 标准。 下面内容来自 jwd.io，如下： 1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/upload/images/2021/01/03/1.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2021/01/03/2.png">
+<meta property="og:image" content="http://yoursite.com/upload/images/2021/01/03/3.png">
+<meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
+<meta property="og:updated_time" content="2021-01-03T05:44:36.744Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务: Token的处理">
+<meta name="twitter:description" content="简介在 Win10-安装-Redis 和 微服务-SpringBoot-集成-Redis 分别介绍了如何安装和使用 Redis，今天继续结合 Redis，聊聊 token 授权登录的事情。 今天聊的主角是 JWT，聊完 JWT 之后再结合实例实现用户 token 登录。 JWT 介绍JWT，JSON Web Token 的缩写，基于 RFC 7519 标准。 下面内容来自 jwd.io，如下： 1">
+<meta name="twitter:image" content="http://yoursite.com/upload/images/2021/01/03/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/03/微服务-Token的处理/"/>
+
+
+
+
+
+  <title>微服务: Token的处理 | veryitman</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?25ad0f9635dbee0e1f2af74ca99ec3e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">veryitman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+    
+  
+  
+
+  <article class="post post-type-normal true" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/03/微服务-Token的处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="veryitman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="veryitman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务: Token的处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-03T13:38:45+08:00">
+                2021-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/01/03/微服务-Token的处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2021/01/03/微服务-Token的处理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在 <a href="http://www.veryitman.com/2020/11/15/Win10-%E5%AE%89%E8%A3%85-Redis/" target="_blank" rel="noopener">Win10-安装-Redis</a> 和 <a href="http://www.veryitman.com/2020/12/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-SpringBoot-%E9%9B%86%E6%88%90-Redis/" target="_blank" rel="noopener">微服务-SpringBoot-集成-Redis</a> 分别介绍了如何安装和使用 Redis，今天继续结合 Redis，聊聊 token 授权登录的事情。</p>
+<p>今天聊的主角是 JWT，聊完 JWT 之后再结合实例实现用户 token 登录。</p>
+<h2 id="JWT-介绍"><a href="#JWT-介绍" class="headerlink" title="JWT 介绍"></a>JWT 介绍</h2><p>JWT，JSON Web Token 的缩写，基于 <a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a> 标准。</p>
+<p>下面内容来自 <a href="https://jwt.io/" target="_blank" rel="noopener">jwd.io</a>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.</div></pre></td></tr></table></figure>
+<p>JWT 定义了一种紧凑的、自包含的方式，用于作为 JSON 对象在各方之间安全地传输信息。该信息可以被验证和信任（因为它是数字签名的）。</p>
+<p>JWT 可应用于但不仅限于下面的几种场景：</p>
+<p><strong>1、跨域认证</strong></p>
+<p>JWT 是一种比较流行的跨域认证解决方案，JWT 的诞生并不是解决 CSRF 跨域攻击，而是解决跨域认证的难题。</p>
+<p>A 网站和 B 网站是同一家公司的关联服务，现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，这应该如何实现呢？客户端保存 Token，每次请求都发回给服务器即可。</p>
+<p><strong>2、授权</strong>（Authorization）</p>
+<p>用户一旦登录成功后，后续用户的每个请求都将包含 JWT，允许用户访问该令牌允许的路由、服务和资源。单点登录是现在广泛使用的 JWT 的一个特性，因为它的开销很小，并且可以轻松地跨域使用。授权，是使用 JWT 的最常见的场景之一。</p>
+<p><strong>3、信息交换</strong>（Information Exchange） </p>
+<p>对于安全的在各方之间传输信息而言，JWT 是一种很好的方式。JWT 可以被签名，例如，用公钥/私钥对，可以确定发送人就是它们所说的那个人。另外，由于签名是使用头和有效负载计算的，还可以验证内容没有被篡改。</p>
+<p>可以参考阮一峰老师的 <a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">JSON Web Token 入门教程</a>，更多详细的介绍可以参考 <a href="https://jwt.io/" target="_blank" rel="noopener">jwd.io</a> 的相关资料。</p>
+<h2 id="使用-JWT"><a href="#使用-JWT" class="headerlink" title="使用 JWT"></a>使用 JWT</h2><h3 id="Spring-Boot-集成-jjwt"><a href="#Spring-Boot-集成-jjwt" class="headerlink" title="Spring Boot 集成 jjwt"></a>Spring Boot 集成 jjwt</h3><p>本文以集成 <a href="https://github.com/jwtk/jjwt" target="_blank" rel="noopener">https://github.com/jwtk/jjwt</a> 为例。如果你有兴趣也可以试着去使用 <a href="https://github.com/auth0/java-jwt，它是" target="_blank" rel="noopener">https://github.com/auth0/java-jwt，它是</a> JWT 的另一个 Java 实现。</p>
+<p>截止到该文发布，在 maven repository 仓库中 <a href="https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt?__cf_chl_jschl_tk__=40ed76b98ea56a31b34ae41068be356abf8e7c14-1609035481-0-AXWqPSMWrV3GrvD-HnJUNECglQaslmvbqqmHDG7k-9M_29qE9GRZ7nwtHkgj20FyvUbV-IqHyAZKdY10ws0QZectFAnTTF6idWvIqF2O-g_hc4soVukN5OssNoHWgnIAyGNWw2Q28eih-vEnuqJVLpkcsI2TrmW6Iv7vTrhFqSCplqYa9vntXVPeRuAcH174hq_Ep4XROJH84lwN__3I9NOG41A64oXIsyPC5i6ZfBwLTt7T1VC0JISbVfnGAAsekbFItQYPA_gfd_jnUDVG9ygyaW0luOrMFoejVThPtzAPr04IX-A7CNQJKVwpZgAMbb1WsjCwGHgKLdoOmkEkzwC66AmNlIh4tz2zEca4TO1-0TzHk9sz8u78f2sMQfdL8WyiXwUVJ5F30CB3tiN8wHw" target="_blank" rel="noopener">jjwt</a> 最新版本是 <code>0.9.1</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="修改了哪些文件"><a href="#修改了哪些文件" class="headerlink" title="修改了哪些文件"></a>修改了哪些文件</h3><p>本次涉及修改和新增的文件如下：</p>
+<ul>
+<li>【修改】<code>MSUserSigninService.java</code>：登录服务的接口；</li>
+<li>【修改】<code>MSUserSigninServiceImpl.java</code>：登录服务的接口实现；</li>
+<li>【修改】<code>MSSigninController.java</code>：登录的Controller；</li>
+<li>【新增】<code>MSAuthTokenUtil.java</code>：token工具类；</li>
+<li>【新增】<code>MSAuthConfigurer.java</code>：token配置管理；</li>
+<li>【新增】<code>MSAuthInterceptor.java</code>：自定义拦截器；</li>
+</ul>
+<p>具体的实现步骤为：</p>
+<ul>
+<li>写 token 工具类，实现 token 的生成，校验等工作即 <code>MSAuthTokenUtil.java</code>;</li>
+<li>写自定义拦截器，即 <code>MSAuthInterceptor.java</code>，该类实现了 <code>HandlerInterceptor</code> 接口；<ul>
+<li>拦截客户端相关的 API 请求，对相关的接口进行token的校验；</li>
+<li>有了统一的拦截器不需要在每个 Controller 或者对应的 Service 中去做 token 的判断；</li>
+</ul>
+</li>
+<li>写自定义拦截器的配置管理类即 <code>MSAuthConfigurer.java</code>，该类实现了 <code>WebMvcConfigurer</code> 接口；</li>
+<li>增加 token 登录的 API，并实现 Redis 缓存 token 的逻辑；</li>
+</ul>
+<h3 id="实例演练"><a href="#实例演练" class="headerlink" title="实例演练"></a>实例演练</h3><p>用户登录完成后，根据 userID 生成 token，将 token 保存到 Redis 中按照 userID 为 key 来进行存储的。</p>
+<p><code>MSAuthInterceptor.java</code> 是自定义的拦截器，在该拦截器中获取请求的 token 并进行相关的校验。核心代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSAuthInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String REQUEST_TOKEN_KEY = <span class="string">"token"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        String requestMethod = request.getMethod();</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="string">"OPTIONS"</span>.equalsIgnoreCase(requestMethod)) &#123;</div><div class="line">            response.setStatus(HttpServletResponse.SC_OK);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 请求的Header中拿</span></div><div class="line">        String token = request.getHeader(REQUEST_TOKEN_KEY);</div><div class="line">        <span class="comment">// Header中拿不到token</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == token) &#123;</div><div class="line">            String[] tokens = request.getParameterValues(<span class="string">"token"</span>);</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != tokens &amp;&amp; tokens.length &gt; <span class="number">0</span>) &#123;</div><div class="line">                token = tokens[<span class="number">0</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (MSAuthTokenUtil.verifyToken(token)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        PrintWriter writer = <span class="keyword">null</span>;</div><div class="line">        response.setCharacterEncoding(<span class="string">"UTF-8"</span>);</div><div class="line">        response.setContentType(<span class="string">"application/json; charset=utf-8"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            writer = response.getWriter();</div><div class="line">            Map&lt;String, Object&gt; result = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">2</span>);</div><div class="line">            result.put(<span class="string">"code"</span>, <span class="number">400</span>);</div><div class="line">            result.put(<span class="string">"msg"</span>, <span class="string">"用户令牌token无效"</span>);</div><div class="line">            result.put(<span class="string">"data"</span>, <span class="keyword">null</span>);</div><div class="line">            writer.print(result);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            </div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != writer) &#123;</div><div class="line">                writer.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>拦截器的配置在 <code>MSAuthConfigurer.java</code> 中进行管理，关键代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSAuthConfigurer</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MSAuthInterceptor authInterceptor;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MSAuthConfigurer</span><span class="params">(MSAuthInterceptor authInterceptor)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.authInterceptor = authInterceptor;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> </span>&#123;</div><div class="line">        <span class="comment">// 如下路径不做拦截</span></div><div class="line">        List&lt;String&gt; excludePaths = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        excludePaths.add(<span class="string">"/signup/**"</span>); <span class="comment">//注册</span></div><div class="line">        excludePaths.add(<span class="string">"/signin/name/**"</span>); <span class="comment">//用户名登录</span></div><div class="line">        excludePaths.add(<span class="string">"/signin/get/token/**"</span>); <span class="comment">//获取token</span></div><div class="line">        excludePaths.add(<span class="string">"/signout/**"</span>); <span class="comment">//登出</span></div><div class="line">        excludePaths.add(<span class="string">"/static/**"</span>);  <span class="comment">//静态资源</span></div><div class="line">        excludePaths.add(<span class="string">"/assets/**"</span>);  <span class="comment">//静态资源</span></div><div class="line"></div><div class="line">        <span class="comment">// 除了 excludePaths 外的请求地址都做拦截</span></div><div class="line">        registry.addInterceptor(authInterceptor)</div><div class="line">                .addPathPatterns(<span class="string">"/**"</span>)</div><div class="line">                .excludePathPatterns(excludePaths);</div><div class="line"></div><div class="line">        WebMvcConfigurer.<span class="keyword">super</span>.addInterceptors(registry);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来重点说一下 <code>MSAuthTokenUtil.java</code> 里面如何生成 token 的，<code>MSAuthTokenUtil.java</code> 主要是完成生成、检验、刷新 token 等工作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">generateToken</span><span class="params">(String userID)</span> </span>&#123;</div><div class="line">    String token = <span class="string">""</span>;</div><div class="line"></div><div class="line">    Date date = <span class="keyword">new</span> Date();</div><div class="line">    <span class="comment">// 过期时间</span></div><div class="line">    Date expireDate = <span class="keyword">new</span> Date(System.currentTimeMillis() + TOKEN_EXPIRE_TIME);</div><div class="line"></div><div class="line">    token = Jwts.builder().setId(JWTSID)</div><div class="line">        .setSubject(SUBJECT)</div><div class="line">        .setAudience(AUDIENCE)</div><div class="line">        .setIssuedAt(date)</div><div class="line">        .setExpiration(expireDate)</div><div class="line">        .claim(CLAIMS_USERID, userID)</div><div class="line">        .signWith(SignatureAlgorithm.HS256, TOKEN_SECRET)</div><div class="line">        .compact();</div><div class="line"></div><div class="line">    log.info(<span class="string">"generateToken token: "</span> + token);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> token;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据用户ID 生成 token，其中 <code>claim(CLAIMS_USERID, userID)</code> 是用于自定义字段的，便于解析 token 时获取相关的信息。</p>
+<p>当我们调用用户名+密码登录的时候，会生成对应的 token，然后将该 token 保存到 Redis 中。下次调用 token 登录的接口时，会从 Redis 中取出对应的 token 信息进行校对，校对通过就返回成功，否则返回失败无法登录。</p>
+<p>在 <code>MSSigninController.java</code> 分别实现了获取 token、刷新 token，token 登录三个接口，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/get/token"</span>, method = RequestMethod.GET)</div><div class="line"><span class="meta">@ApiOperation</span>(value = <span class="string">"获取token"</span>, httpMethod = <span class="string">"GET"</span>, notes = <span class="string">"获取登录"</span>)</div><div class="line"><span class="meta">@ApiImplicitParams</span>(&#123;</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"userID"</span>, value = <span class="string">"userID"</span>, required = <span class="keyword">true</span>)</div><div class="line">&#125;)</div><div class="line"><span class="function"><span class="keyword">public</span> MSResponse <span class="title">getToken</span><span class="params">(@RequestParam(value = <span class="string">"userid"</span>)</span> String userID) </span>&#123;</div><div class="line">    MSResponse response = userSigninService.fetchUserToken(userID);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/token"</span>, method = RequestMethod.GET)</div><div class="line"><span class="meta">@ApiOperation</span>(value = <span class="string">"Token登录"</span>, httpMethod = <span class="string">"GET"</span>, notes = <span class="string">"Token登录"</span>)</div><div class="line"><span class="meta">@ApiImplicitParams</span>(&#123;</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"userID"</span>, value = <span class="string">"userID"</span>, required = <span class="keyword">true</span>),</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"token"</span>, value = <span class="string">"token"</span>, required = <span class="keyword">true</span>)</div><div class="line">&#125;)</div><div class="line"><span class="function"><span class="keyword">public</span> MSResponse <span class="title">siginWithToken</span><span class="params">(@RequestParam(value = <span class="string">"userid"</span>)</span> String userID, @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"token"</span>)</span> String token) </span>&#123;</div><div class="line">    MSResponse response = userSigninService.signinUsingToken(userID, token);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/refresh/token"</span>, method = RequestMethod.GET)</div><div class="line"><span class="meta">@ApiOperation</span>(value = <span class="string">"刷新Token"</span>, httpMethod = <span class="string">"GET"</span>, notes = <span class="string">"Token刷新"</span>)</div><div class="line"><span class="meta">@ApiImplicitParams</span>(&#123;</div><div class="line">    <span class="meta">@ApiImplicitParam</span>(name = <span class="string">"token"</span>, value = <span class="string">"token"</span>, required = <span class="keyword">true</span>)</div><div class="line">&#125;)</div><div class="line"><span class="function"><span class="keyword">public</span> MSResponse <span class="title">refreshToken</span><span class="params">(@RequestParam(value = <span class="string">"token"</span>)</span> String token) </span>&#123;</div><div class="line">    MSResponse response = userSigninService.refreshUserToken(token);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了方便使用了 GET 方式进行网络请求。后续可以改为 POST 请求。</p>
+<p>登录逻辑都在 <code>MSUserSigninServiceImpl.java</code> 中，大家可以自行去看源码，这里不再赘述。</p>
+<h3 id="API-调用效果"><a href="#API-调用效果" class="headerlink" title="API 调用效果"></a>API 调用效果</h3><p>启动 MySQL，启动 Redis，再启动项目即可。</p>
+<p>用户登录成功后，调用 <code>/get/token</code> API，如下：</p>
+<p><img src="/upload/images/2021/01/03/1.png" alt=""></p>
+<p>调用 <code>/token</code> 进行登录的 API，如下：</p>
+<p><img src="/upload/images/2021/01/03/2.png" alt=""></p>
+<p>调用 <code>refresh/token</code> API 如下：</p>
+<p><img src="/upload/images/2021/01/03/3.png" alt=""></p>
+<h2 id="待办事项"><a href="#待办事项" class="headerlink" title="待办事项"></a>待办事项</h2><ul>
+<li style="list-style: none"><input type="checkbox"> Redis 中设置 token 的过期时间；</li>
+<li style="list-style: none"><input type="checkbox"> 调用刷新 token 的 API 后更新 Redis 中 token 的有效时间；</li>
+<li style="list-style: none"><input type="checkbox"> 刷新 token、使用 token 登录的API 修改为 POST 方式；</li>
+</ul>
+<hr>
+<p><strong>只有弱者才去争取公平，这句话虽然残忍但很现实~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/pay/wechat.png" alt="veryitman 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/pay/alipay.png" alt="veryitman 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis-JWT-Token/" rel="tag"><i class="fa fa-tag"></i> Redis JWT Token</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/13/解决bash-profile不生效的方法/" rel="next" title="解决bash profile不生效的方法">
+                <i class="fa fa-chevron-left"></i> 解决bash profile不生效的方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">veryitman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">168</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">138</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/veryitman" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://veryitman.blog.csdn.net" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-CSDN"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT-介绍"><span class="nav-number">2.</span> <span class="nav-text">JWT 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-JWT"><span class="nav-number">3.</span> <span class="nav-text">使用 JWT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot-集成-jjwt"><span class="nav-number">3.1.</span> <span class="nav-text">Spring Boot 集成 jjwt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改了哪些文件"><span class="nav-number">3.2.</span> <span class="nav-text">修改了哪些文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例演练"><span class="nav-number">3.3.</span> <span class="nav-text">实例演练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API-调用效果"><span class="nav-number">3.4.</span> <span class="nav-text">API 调用效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待办事项"><span class="nav-number">4.</span> <span class="nav-text">待办事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">veryitman</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+  <span class="post-meta-divider">|</span>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_page_pv">
+    本文阅读<span id="busuanzi_value_page_pv"></span>次
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'FY2C9UCttYNaE1j8umenqdCE-gzGzoHsz',
+        appKey: '4i7xMwkfSEGmEDhi6SceKFxz',
+        placeholder: '欢迎您留言~',
+        avatar:'wavatar',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
