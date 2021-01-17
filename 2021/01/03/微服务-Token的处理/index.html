@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/01/03/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/01/03/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2021-01-03T06:12:12.749Z">
+<meta property="og:updated_time" content="2021-01-17T05:24:21.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务: Token的处理">
 <meta name="twitter:description" content="简介在 Win10-安装-Redis 和 微服务-SpringBoot-集成-Redis 分别介绍了如何安装和使用 Redis，今天继续结合 Redis，聊聊 token 授权登录的事情。 今天聊的主角是 JWT，聊完 JWT 之后再结合实例实现用户 token 登录。 JWT 介绍JWT，JSON Web Token 的缩写，基于 RFC 7519 标准。 下面内容来自 jwd.io，如下： 1">
@@ -478,9 +478,10 @@
 <p>调用 <code>refresh/token</code> API 如下：</p>
 <p><img src="/upload/images/2021/01/03/3.png" alt=""></p>
 <h2 id="待办事项"><a href="#待办事项" class="headerlink" title="待办事项"></a>待办事项</h2><ul>
+<li style="list-style: none"><input type="checkbox" checked> token 配置信息放置到配置文件中；2021.01.17 Done <a href="http://www.veryitman.com/2021/01/17/%E5%BE%AE%E6%9C%8D%E5%8A%A1-Token-%E7%9B%B8%E5%85%B3%E7%9A%84%E9%87%8D%E6%9E%84/" target="_blank" rel="noopener">微服务-Token-相关的重构</a>;</li>
 <li style="list-style: none"><input type="checkbox"> Redis 中设置 token 的过期时间；</li>
 <li style="list-style: none"><input type="checkbox"> 调用刷新 token 的 API 后更新 Redis 中 token 的有效时间；</li>
-<li style="list-style: none"><input type="checkbox"> 刷新 token、使用 token 登录的API 修改为 POST 方式；</li>
+<li style="list-style: none"><input type="checkbox"> 刷新 token、使用 token 登录的 API 修改为 POST 方式；</li>
 <li style="list-style: none"><input type="checkbox"> Token 的加密，减少 Token 登录的数据库查询次数；</li>
 </ul>
 <hr>
