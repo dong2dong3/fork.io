@@ -499,9 +499,8 @@
 <p>1、打开 IDEA，File/New Project</p>
 <p><img src="/upload/images/2020/08/29/1.png" alt=""></p>
 <p>选择 <code>Spring Initializr</code>，工程类型选择 Maven。</p>
-<p><img src="/upload/images/2020/08/29/2.png" alt=""></p>
 <p><img src="/upload/images/2020/08/29/3.png" alt=""></p>
-<p>填写完成后，点击 <code>Finish</code> 即可。</p>
+<p>在接下来的步骤中，不需要选择任何依赖。填写完成后，点击 <code>Finish</code> 即可。</p>
 <p>删除工程的 <code>src</code>、<code>.mvn</code>、<code>mvnw</code> 、<code>mvnw.cmd</code>  这几个目录。</p>
 <p><img src="/upload/images/2020/08/29/4.png" alt=""></p>
 <p>删除后，工程目录如下</p>
@@ -509,6 +508,7 @@
 <p>修改 <code>pom.xml</code> 文件，增加如下内容：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>在 <code>Maven</code> 项目中，<code>packaging</code> 给出了项目的打包类型，即作为项目的发布形式，其可能的类型。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 继承说明：这里继承SpringBoot提供的父工程 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.8.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 项目说明：这里作为聚合工程的父工程，修改打包为pom聚合工程 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.veryitman.main<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>blog-main-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>blog-main-server<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Blog of main project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>在 <code>Maven 3</code> 中，其可用的打包类型如下：</p>
 <ul>
 <li>jar，默认类型</li>
@@ -522,9 +522,9 @@
 </ul>
 <p>如下图所示：</p>
 <p><img src="/upload/images/2020/08/29/6.png" alt=""></p>
+<p>2、创建 <code>Module</code></p>
 <p>在工程名称上面右键新建 <code>module</code>，如下图</p>
 <p><img src="/upload/images/2020/08/29/7.png" alt=""></p>
-<p>2、创建 <code>Module</code></p>
 <p>这里以创建 SpringBoot Module 为例，使用 <code>Spring Initializr</code> 创建 <code>Module</code></p>
 <p><img src="/upload/images/2020/08/29/8.png" alt=""></p>
 <p>按照你自己的需求填写对应的信息即可进入到下一步直至 <code>Finish</code>.</p>
