@@ -3,6 +3,58 @@
   
     
     <entry>
+      <title><![CDATA[AS、VSCode中实时显示每行代码的修改记录]]></title>
+      <url>/2021/04/12/AS%E3%80%81VSCode%E4%B8%AD%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BA%E6%AF%8F%E8%A1%8C%E4%BB%A3%E7%A0%81%E7%9A%84%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95/</url>
+      <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>阅读下面内容开始之前，假设你已经在使用 git 管理自己的代码了。</p>
+<p>阅读本篇，可以看到如下内容：</p>
+<p>1、如何在 Android Studio 中实时显示每行代码的提交历史记录；</p>
+<p>2、如何在 Android Studio 中查看单个文件的修改历史记录；</p>
+<p>3、如何在 Visual Studio Code 中实时显示每行代码的提交历史记录；</p>
+<h2 id="plugin-之功"><a href="#plugin-之功" class="headerlink" title="plugin 之功"></a>plugin 之功</h2><p>工欲善其事必先利其器，在使用 IDE 工具的时候找到适合自己的插件可以让你的工作事半功倍。</p>
+<p>大家可以在 在 AS 中安装如下两个插件：</p>
+<ul>
+<li>Git</li>
+<li>GitToolBox</li>
+</ul>
+<p><img src="/upload/images/2021/04/12/01.png" alt=""></p>
+<p>安装方式很简单，<code>File/Setttings/Plugins</code>，搜索插件名称直接安装完成重启 AS 即可。</p>
+<p>在 VSCode 中安装如下插件：</p>
+<ul>
+<li>GitLens</li>
+</ul>
+<p><img src="/upload/images/2021/04/12/02.png" alt=""></p>
+<p>使用快捷键 <code>Ctrl + Shift + P</code>，输入 <code>Install Extensions</code>，再搜索 <code>GitLens</code> 安装即可。</p>
+<p>安装完成之后，就可以如下分别在 VSCode 和 AS 中的效果了，如下图所示：</p>
+<p>VSCode 显示效果：</p>
+<p><img src="/upload/images/2021/04/12/03.png" alt=""></p>
+<p>AS 显示效果：</p>
+<p><img src="/upload/images/2021/04/12/04.png" alt=""></p>
+<h2 id="AS-查看单文件修改记录"><a href="#AS-查看单文件修改记录" class="headerlink" title="AS 查看单文件修改记录"></a>AS 查看单文件修改记录</h2><p>按照下面截图的步骤操作即可查看，例如查看 <code>main.dart</code> 的修改记录。</p>
+<p><img src="/upload/images/2021/04/12/05.png" alt=""></p>
+<p><img src="/upload/images/2021/04/12/06.png" alt=""></p>
+<p><code>Show History</code> 后，在打开的页面中即可查看该文件的修改记录。</p>
+<p>如果你习惯使用 git 命令行操作，也可以结合 <code>git log --pretty=oneline 文件名</code> 和 <code>git show COMMITID</code> 的方式来查看。</p>
+<hr>
+<p><strong>一味的妥协和让步只会让事情愈发以控制，直至灾难来临~</strong></p>
+<p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Tools </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git AS VSCode </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[微服务: Token 相关的重构]]></title>
       <url>/2021/01/17/%E5%BE%AE%E6%9C%8D%E5%8A%A1-Token-%E7%9B%B8%E5%85%B3%E7%9A%84%E9%87%8D%E6%9E%84/</url>
       <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在上一篇 <a href="http://www.veryitman.com/2021/01/03/%E5%BE%AE%E6%9C%8D%E5%8A%A1-Token%E7%9A%84%E5%A4%84%E7%90%86/" target="_blank" rel="noopener">微服务-Token的处理</a> 中，写了一个 <code>MSAuthTokenUtil</code> 类，用来生成、刷新、校验 token，该类的方法都是 <code>static</code> 的。后续想了一下，还是将其改为普通的组件较好，在最新代码中对其做了两个较大的重构。</p>
