@@ -95,23 +95,23 @@
 
 
 
-<meta name="description" content="本篇内容概要不知道大家有没有问过别人，或者是自己偷偷在网上搜过 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？ 总结一句话，正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。 那我们今天就来掰扯掰扯这个问题。 VPN 和正向代理小明：“你昨天看了我给你发的YouTube视频链接了吗？超级精彩哟！”。小丽：“哦，那个链接根本打不开呀，看个屁！”，小明失望的看了看">
+<meta name="description" content="本篇内容概要不知道大家有没有问过别人，或者是自己偷偷在网上搜过类似 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？ 总结一句粗话：正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。 那我们今天就来掰扯掰扯这个问题。 VPN 和正向代理小明：“你昨天看了我给你发的视频链接了吗？超级好看哟！”。小丽：“哦，那个链接根本打不开呀，看个pi！”，小明失望的看了看小丽。">
 <meta name="keywords" content="Nginx VPN 代理服务器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="反向代理">
 <meta property="og:url" content="http://yoursite.com/2019/04/14/反向代理/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="本篇内容概要不知道大家有没有问过别人，或者是自己偷偷在网上搜过 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？ 总结一句话，正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。 那我们今天就来掰扯掰扯这个问题。 VPN 和正向代理小明：“你昨天看了我给你发的YouTube视频链接了吗？超级精彩哟！”。小丽：“哦，那个链接根本打不开呀，看个屁！”，小明失望的看了看">
+<meta property="og:description" content="本篇内容概要不知道大家有没有问过别人，或者是自己偷偷在网上搜过类似 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？ 总结一句粗话：正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。 那我们今天就来掰扯掰扯这个问题。 VPN 和正向代理小明：“你昨天看了我给你发的视频链接了吗？超级好看哟！”。小丽：“哦，那个链接根本打不开呀，看个pi！”，小明失望的看了看小丽。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/04/14/1.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/04/14/2.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/04/14/3.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/images/2019/04/14/4.jpg">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2020-05-23T09:58:50.233Z">
+<meta property="og:updated_time" content="2021-06-06T08:32:12.811Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反向代理">
-<meta name="twitter:description" content="本篇内容概要不知道大家有没有问过别人，或者是自己偷偷在网上搜过 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？ 总结一句话，正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。 那我们今天就来掰扯掰扯这个问题。 VPN 和正向代理小明：“你昨天看了我给你发的YouTube视频链接了吗？超级精彩哟！”。小丽：“哦，那个链接根本打不开呀，看个屁！”，小明失望的看了看">
+<meta name="twitter:description" content="本篇内容概要不知道大家有没有问过别人，或者是自己偷偷在网上搜过类似 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？ 总结一句粗话：正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。 那我们今天就来掰扯掰扯这个问题。 VPN 和正向代理小明：“你昨天看了我给你发的视频链接了吗？超级好看哟！”。小丽：“哦，那个链接根本打不开呀，看个pi！”，小明失望的看了看小丽。">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2019/04/14/1.jpg">
 
 
@@ -420,13 +420,13 @@
       
 
       
-        <h2 id="本篇内容概要"><a href="#本篇内容概要" class="headerlink" title="本篇内容概要"></a>本篇内容概要</h2><p>不知道大家有没有问过别人，或者是自己偷偷在网上搜过 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？</p>
-<p><strong>总结一句话，正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。</strong></p>
+        <h2 id="本篇内容概要"><a href="#本篇内容概要" class="headerlink" title="本篇内容概要"></a>本篇内容概要</h2><p>不知道大家有没有问过别人，或者是自己偷偷在网上搜过类似 “什么是正向和反向代理“ 类似的问题，即使问过、搜过是不是也很懵？</p>
+<p><strong>总结一句粗话：正向代理就是代理客户端的代理服务，反向代理就是代理服务端的代理服务。</strong></p>
 <p>那我们今天就来掰扯掰扯这个问题。</p>
-<h2 id="VPN-和正向代理"><a href="#VPN-和正向代理" class="headerlink" title="VPN 和正向代理"></a>VPN 和正向代理</h2><p>小明：“你昨天看了我给你发的YouTube视频链接了吗？超级精彩哟！”。<br>小丽：“哦，那个链接根本打不开呀，看个屁！”，小明失望的看了看小丽。<br>小明：“好吧，肯定是你没有使用 VPN(fanqiang) 软件，怪不得你看不了…”。</p>
-<p>相信你也有经历过类似的场景，朋友给了一个需要你拥有VPN服务才能打开的链接，无论你是万兆光纤也好还是亿兆光纤也罢，死活都无法打开。</p>
-<p>这里所说的 VPN 就是人们通常所说的正向代理服务器，VPN(虚拟私人网络 <code>Virtual Private Network</code>)，是一种加密通讯技术。VPN 有很多的具体实现，比如 <code>PPTP</code>、<code>L2TP</code>、<code>IPSec</code> 和 <code>openvpn</code>。VPN 不是为了翻墙而生的，他只是一中技术，就好比菜刀本来是用来切菜的道理一样。使用 VPN 来翻墙基本已经作废了，但当大家谈及翻墙的时候说得最多的还是 “你有好用的 VPN 吗？”，所以把 VPN 当成翻墙工具的代名词也情有可原。</p>
-<p>如果你有了翻墙软件就可以轻松访问全世界的网站了，特别是程序员，可以在知识的海洋里遨游。简单来说正向代理服务器类似于下面图所示：<br><img src="/upload/images/2019/04/14/1.jpg" alt=""></p>
+<h2 id="VPN-和正向代理"><a href="#VPN-和正向代理" class="headerlink" title="VPN 和正向代理"></a>VPN 和正向代理</h2><p>小明：“你昨天看了我给你发的视频链接了吗？超级好看哟！”。<br>小丽：“哦，那个链接根本打不开呀，看个pi！”，小明失望的看了看小丽。<br>小明：“好吧，肯定是你没有使用 VPN 软件，所以你看不了…”。</p>
+<p>相信你也有经历过类似的场景，朋友给了一个需要你拥有 VPN 才能打开的链接，无论你是万兆光纤也好还是亿兆光纤也罢，死活都无法打开。</p>
+<p>这里所说的 VPN 就是人们通常所说的正向代理服务器，VPN(虚拟私人网络 <code>Virtual Private Network</code>)，是一种加密通讯技术。VPN 有很多的具体实现，比如 <code>PPTP</code>、<code>L2TP</code>、<code>IPSec</code> 和 <code>openvpn</code>。VPN 不是为了翻墙而生的，他只是一中技术，就好比菜刀本来是用来切菜的道理一样。使用 VPN 来爬楼梯基本已经作废了，但当大家谈及 fanqiang 的时候说得最多的还是 “你有好用的 VPN 吗？”，所以把 VPN 当成 fanqiang 工具的代名词也情有可原。</p>
+<p>如果你有了 fanqiang 软件就可以轻松访问全世界的网站了，特别是程序员，可以在知识的海洋里遨游。简单来说正向代理服务器类似于下面图所示：<br><img src="/upload/images/2019/04/14/1.jpg" alt=""></p>
 <h2 id="反向代理和-Nginx"><a href="#反向代理和-Nginx" class="headerlink" title="反向代理和 Nginx"></a>反向代理和 Nginx</h2><p>这里可以给大家举个例子，假如你想让电信公司给你安装宽带或者网络电视，这个时候你可能需要打电话咨询一下相关的内容，于是你拿起了手机给电信公司打电话，经过一番复杂操作后终于可以等待人工服务了。电信的人工客服人员有很多，系统会根据一定的规则给你分配一个人，接下来可能是美眉也可能是汉子为你服务，究竟是谁给你提供语音服务取决与系统的分配，而不是你可以决定的。</p>
 <p>系统分配和调度的功能就类似于反向代理服务器，对用户来说没有感知。类似于下面图所示：<br><img src="/upload/images/2019/04/14/2.jpg" alt=""></p>
 <p>在软件设计中，服务端开发经常会用到反向代理服务器，比如 <code>Nginx</code>、<code>Apache</code> 等，它们经常也被用作为 WEB 服务器，<code>Nginx</code> 被当做代理服务器比较多，所谓的代理服务器是架设在 WEB 服务器和网络中断(比如手机客户端)之间的服务器，换句话说，<code>Nginx</code> 提供了反向代理服务的能力。</p>
@@ -455,6 +455,7 @@
 <p>在浏览器打开 <code>http://www.ithome.com:80</code>，此时打开的是百度首页。至此，简单的配置 <code>Nginx</code> 作为反向代理服务器的功能已经完成，当然想配置好 <code>Nginx</code> 还需要大家多去实践和看官方技术手册。</p>
 <p><code>proxy_pass</code> 默认使用的是 <code>http 1.0</code>，可以通过 <code>proxy_http_version</code>指令让它使用 <code>http 1.1</code>，以便开启 <code>keepalive</code> 之类的功能。<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_http_version" target="_blank" rel="noopener">官方说明</a> 如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Sets the HTTP protocol version <span class="keyword">for</span> proxying. By default, version 1.0 is used. </div><div class="line"></div><div class="line">Version 1.1 is recommended <span class="keyword">for</span> use with keepalive connections and NTLM authentication.</div></pre></td></tr></table></figure>
+<p>另外，nginx 还可以设置透明代理，可以参考 <a href="https://www.nginx.com/blog/ip-transparency-direct-server-return-nginx-plus-transparent-proxy/" target="_blank" rel="noopener">IP Transparency and Direct Server Return with NGINX and NGINX Plus as Transparent Proxy</a> 这篇文章。</p>
 <h2 id="附录：Nginx-命令"><a href="#附录：Nginx-命令" class="headerlink" title="附录：Nginx 命令"></a>附录：Nginx 命令</h2><p><strong>1、查看 nginx 的配置信息</strong></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -V</div></pre></td></tr></table></figure>
 <p>注意：是大写字母 <code>V</code>。</p>
@@ -480,6 +481,10 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -t</div></pre></td></tr></table></figure>
 <p><strong>11、停止 nginx 的命令</strong></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s stop</div></pre></td></tr></table></figure>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="https://laravelacademy.org/post/9336" target="_blank" rel="noopener">图解正向代理、反向代理、透明代理：可能是你见过的讲解最透彻的代理技术教程</a></li>
+<li><a href="https://www.nginx.cn/doc/standard/httpproxy.html" target="_blank" rel="noopener">HttpProxy模块</a></li>
+</ul>
 <hr>
 <p><strong>不经历风雨怎么见彩虹，没有人能够随随便便成功~</strong></p>
 <p><img src="/upload/me/qrcode_wx.jpg" alt=""></p>
@@ -705,7 +710,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本篇内容概要"><span class="nav-number">1.</span> <span class="nav-text">本篇内容概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPN-和正向代理"><span class="nav-number">2.</span> <span class="nav-text">VPN 和正向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理和-Nginx"><span class="nav-number">3.</span> <span class="nav-text">反向代理和 Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-配置反向代理"><span class="nav-number">4.</span> <span class="nav-text">Nginx 配置反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：Nginx-命令"><span class="nav-number">5.</span> <span class="nav-text">附录：Nginx 命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本篇内容概要"><span class="nav-number">1.</span> <span class="nav-text">本篇内容概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPN-和正向代理"><span class="nav-number">2.</span> <span class="nav-text">VPN 和正向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理和-Nginx"><span class="nav-number">3.</span> <span class="nav-text">反向代理和 Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-配置反向代理"><span class="nav-number">4.</span> <span class="nav-text">Nginx 配置反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：Nginx-命令"><span class="nav-number">5.</span> <span class="nav-text">附录：Nginx 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读"><span class="nav-number">6.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
 
           </div>
