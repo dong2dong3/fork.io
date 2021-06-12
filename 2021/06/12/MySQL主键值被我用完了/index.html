@@ -95,23 +95,23 @@
 
 
 
-<meta name="description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该类型值的下界。 咱们先看下下面这个 C 语言例子。 123456789101112131415#include &amp;lt;stdio.h&amp;gt;#">
+<meta name="description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐两篇关于 MySQL 的文章：  http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/ http://www.v">
 <meta name="keywords" content="MySQL windows">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL主键被我用完了">
+<meta property="og:title" content="MySQL主键值被我用完了">
 <meta property="og:url" content="http://yoursite.com/2021/06/12/MySQL主键值被我用完了/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该类型值的下界。 咱们先看下下面这个 C 语言例子。 123456789101112131415#include &amp;lt;stdio.h&amp;gt;#">
+<meta property="og:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐两篇关于 MySQL 的文章：  http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/ http://www.v">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2021-06-12T05:34:36.381Z">
+<meta property="og:updated_time" content="2021-06-12T06:19:27.195Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL主键被我用完了">
-<meta name="twitter:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该类型值的下界。 咱们先看下下面这个 C 语言例子。 123456789101112131415#include &amp;lt;stdio.h&amp;gt;#">
+<meta name="twitter:title" content="MySQL主键值被我用完了">
+<meta name="twitter:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐两篇关于 MySQL 的文章：  http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/ http://www.v">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2021/06/12/1.png">
 
 
@@ -148,7 +148,7 @@
 
 
 
-  <title>MySQL主键被我用完了 | veryitman</title>
+  <title>MySQL主键值被我用完了 | veryitman</title>
   
 
 
@@ -338,7 +338,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MySQL主键被我用完了</h1>
+          <h1 class="post-title" itemprop="name headline">MySQL主键值被我用完了</h1>
         
 
         <div class="post-meta">
@@ -437,13 +437,18 @@
 <li>不设置主键行吗？</li>
 </ul>
 <p>看完正文之后，可以在小结部分找到答案。</p>
+<p>推荐两篇关于 MySQL 的文章：</p>
+<ul>
+<li><a href="http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank" rel="noopener">http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</a></li>
+<li><a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15在Win10上的折腾记/" target="_blank" rel="noopener">http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0/</a></li>
+</ul>
 <h2 id="数值类型的边界值"><a href="#数值类型的边界值" class="headerlink" title="数值类型的边界值"></a>数值类型的边界值</h2><p>C 标准库  <code>limits.h</code> 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该类型值的下界。</p>
 <p>咱们先看下下面这个 C 语言例子。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// 65535</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"unsigned short max value: %u\n"</span>, USHRT_MAX);</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> yy = USHRT_MAX;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"xx = %hu\n"</span>, yy); <span class="comment">//65535</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"xx + 1 = %hu\n"</span>, yy+<span class="number">1</span>); <span class="comment">//0</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"xx + 2 = %hu\n"</span>, yy+<span class="number">2</span>); <span class="comment">//1</span></div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"unsigned short sizeof: %u\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">unsigned</span> <span class="keyword">short</span>));</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>编译运行，可以得到如下结果：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> max value: <span class="number">65535</span></div><div class="line">xx = <span class="number">65535</span></div><div class="line">xx + <span class="number">1</span> = <span class="number">0</span></div><div class="line">xx + <span class="number">2</span> = <span class="number">1</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">sizeof</span>: <span class="number">2</span></div></pre></td></tr></table></figure>
 <p>从结果来看，无符号的 short 数据类型的最大值是 65535，当然最小值就是 0，即范围是 0 ~ 65535。</p>
-<p>在这里，还是要再提一下关于格式化打印里面的一些说明符：</p>
+<p>在这里，还是要再提一下关于格式化打印里面的一些说明：</p>
 <ul>
 <li><code>i%</code> 和 <code>d%</code>，都可以用来表示有符号的十进制整数，一般 <code>ld%</code> 用来表示 <code>long</code> 类型的；</li>
 <li><p><code>o%</code> 用来表示八进制整数，<code>x%</code>（<code>X%</code>）用来表示十六进制整数；</p>
