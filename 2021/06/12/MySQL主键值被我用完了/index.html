@@ -95,23 +95,23 @@
 
 
 
-<meta name="description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐两篇关于 MySQL 的文章：  http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/ http://www.v">
+<meta name="description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐下面几篇关于 MySQL 的文章：  MySQL8-0-15在Win10上的折腾记 微服务-MySQL基本操作 导入MySQL数据库文件  数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该">
 <meta name="keywords" content="MySQL windows">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL主键值被我用完了">
 <meta property="og:url" content="http://yoursite.com/2021/06/12/MySQL主键值被我用完了/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐两篇关于 MySQL 的文章：  http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/ http://www.v">
+<meta property="og:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐下面几篇关于 MySQL 的文章：  MySQL8-0-15在Win10上的折腾记 微服务-MySQL基本操作 导入MySQL数据库文件  数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2021-06-12T06:24:58.127Z">
+<meta property="og:updated_time" content="2021-06-14T08:30:23.466Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL主键值被我用完了">
-<meta name="twitter:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐两篇关于 MySQL 的文章：  http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/ http://www.v">
+<meta name="twitter:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐下面几篇关于 MySQL 的文章：  MySQL8-0-15在Win10上的折腾记 微服务-MySQL基本操作 导入MySQL数据库文件  数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2021/06/12/1.png">
 
 
@@ -437,10 +437,11 @@
 <li>不设置主键行吗？</li>
 </ul>
 <p>看完正文之后，可以在小结部分找到答案。</p>
-<p>推荐两篇关于 MySQL 的文章：</p>
+<p>推荐下面几篇关于 MySQL 的文章：</p>
 <ul>
-<li><a href="http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank" rel="noopener">http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</a></li>
-<li><a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15在Win10上的折腾记/" target="_blank" rel="noopener">http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0/</a></li>
+<li><a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0" target="_blank" rel="noopener">MySQL8-0-15在Win10上的折腾记</a></li>
+<li><a href="http://www.veryitman.com/2019/12/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1-MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank" rel="noopener">微服务-MySQL基本操作</a></li>
+<li><a href="http://www.veryitman.com/2020/12/13/%E5%AF%BC%E5%85%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">导入MySQL数据库文件</a></li>
 </ul>
 <h2 id="数值类型的边界值"><a href="#数值类型的边界值" class="headerlink" title="数值类型的边界值"></a>数值类型的边界值</h2><p>C 标准库  <code>limits.h</code> 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该类型值的下界。</p>
 <p>咱们先看下下面这个 C 语言例子。</p>
