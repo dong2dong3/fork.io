@@ -95,23 +95,23 @@
 
 
 
-<meta name="description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐下面几篇关于 MySQL 的文章：  MySQL8-0-15在Win10上的折腾记 微服务-MySQL基本操作 导入MySQL数据库文件  数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该">
+<meta name="description" content="简介对于关系表，有个很重要的约束，就是任意两条记录不能重复。不能重复是指能够通过某个字段唯一区分出不同的记录，这个字段被称为 主键。 对表的主键要求比较关键的一点是：记录一旦插入到表中，主键最好不要再修改。 选取表的主键一个基本原则是：没有特殊情况，不使用任何业务相关的字段（如证件号码、手机号码等）作为主键。 本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文">
 <meta name="keywords" content="MySQL windows">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL主键值被我用完了">
 <meta property="og:url" content="http://yoursite.com/2021/06/12/MySQL主键值被我用完了/index.html">
 <meta property="og:site_name" content="veryitman">
-<meta property="og:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐下面几篇关于 MySQL 的文章：  MySQL8-0-15在Win10上的折腾记 微服务-MySQL基本操作 导入MySQL数据库文件  数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该">
+<meta property="og:description" content="简介对于关系表，有个很重要的约束，就是任意两条记录不能重复。不能重复是指能够通过某个字段唯一区分出不同的记录，这个字段被称为 主键。 对表的主键要求比较关键的一点是：记录一旦插入到表中，主键最好不要再修改。 选取表的主键一个基本原则是：没有特殊情况，不使用任何业务相关的字段（如证件号码、手机号码等）作为主键。 本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/1.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/2.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/06/12/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2021-06-14T08:30:23.466Z">
+<meta property="og:updated_time" content="2021-06-14T09:33:44.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL主键值被我用完了">
-<meta name="twitter:description" content="简介本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文之后，可以在小结部分找到答案。 推荐下面几篇关于 MySQL 的文章：  MySQL8-0-15在Win10上的折腾记 微服务-MySQL基本操作 导入MySQL数据库文件  数值类型的边界值C 标准库  limits.h 中定义了一些数据类型的值的范围、限制值，也就是说该类型的值不可以大于该上界或者小于该">
+<meta name="twitter:description" content="简介对于关系表，有个很重要的约束，就是任意两条记录不能重复。不能重复是指能够通过某个字段唯一区分出不同的记录，这个字段被称为 主键。 对表的主键要求比较关键的一点是：记录一旦插入到表中，主键最好不要再修改。 选取表的主键一个基本原则是：没有特殊情况，不使用任何业务相关的字段（如证件号码、手机号码等）作为主键。 本篇主要说明下面两个问题：  主键值范围越界了会发生什么？ 不设置主键行吗？  看完正文">
 <meta name="twitter:image" content="http://yoursite.com/upload/images/2021/06/12/1.png">
 
 
@@ -431,12 +431,15 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇主要说明下面两个问题：</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>对于关系表，有个很重要的约束，就是任意两条记录不能重复。不能重复是指能够通过某个字段唯一区分出不同的记录，这个字段被称为 <em>主键</em>。</p>
+<p>对表的主键要求比较关键的一点是：记录一旦插入到表中，主键最好不要再修改。</p>
+<p>选取表的主键一个基本原则是：没有特殊情况，不使用任何业务相关的字段（如证件号码、手机号码等）作为主键。</p>
+<p>本篇主要说明下面两个问题：</p>
 <ul>
 <li>主键值范围越界了会发生什么？</li>
 <li>不设置主键行吗？</li>
 </ul>
-<p>看完正文之后，可以在小结部分找到答案。</p>
+<p>看完正文之后，可以在本篇的【小结】部分找到答案。</p>
 <p>推荐下面几篇关于 MySQL 的文章：</p>
 <ul>
 <li><a href="http://www.veryitman.com/2019/11/10/MySQL8-0-15%E5%9C%A8Win10%E4%B8%8A%E7%9A%84%E6%8A%98%E8%85%BE%E8%AE%B0" target="_blank" rel="noopener">MySQL8-0-15在Win10上的折腾记</a></li>
