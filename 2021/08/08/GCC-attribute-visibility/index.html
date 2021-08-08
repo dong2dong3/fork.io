@@ -104,7 +104,7 @@
 <meta property="og:description" content="在 objc-api.h 里面有很多关于 __attribute__ 的定义。 例如下面的代码片段： 1234567891011#if !defined(OBJC_VISIBLE)#   if TARGET_OS_WIN32#       if defined(BUILDING_OBJC)#           define OBJC_VISIBLE __declspec(dllexport)#">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2021-08-08T05:23:09.864Z">
+<meta property="og:updated_time" content="2021-08-08T05:35:40.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GCC: __attribute__((visibility()))">
 <meta name="twitter:description" content="在 objc-api.h 里面有很多关于 __attribute__ 的定义。 例如下面的代码片段： 1234567891011#if !defined(OBJC_VISIBLE)#   if TARGET_OS_WIN32#       if defined(BUILDING_OBJC)#           define OBJC_VISIBLE __declspec(dllexport)#">
@@ -441,7 +441,7 @@
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">g++<span class="number">-4.9</span> -o app main.c -L ./ -lCar</div></pre></td></tr></table></figure>
 <p> 提示信息</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Undefined symbols <span class="keyword">for</span> architecture x86_64:</div><div class="line">  <span class="string">"stop()"</span>, referenced from:</div><div class="line">      _main <span class="keyword">in</span> ccZnwENu.o</div><div class="line">ld: symbol(s) not found <span class="keyword">for</span> architecture x86_64</div><div class="line">collect2: error: ld returned <span class="number">1</span> exit status</div></pre></td></tr></table></figure>
-<p> 这说明了上面提到的第一中情况。</p>
+<p> 这说明了上面提到的第一种情况。</p>
 <p>重新编译 <code>Car.c</code>，换个方式：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">g++<span class="number">-4.9</span> -shared -o libCar.so -fvisibility=<span class="keyword">default</span> Car.c</div></pre></td></tr></table></figure>
 <p> <strong>注意: 这次使用了 default 属性。</strong></p>
