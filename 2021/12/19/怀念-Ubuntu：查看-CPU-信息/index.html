@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/12/19/3.png">
 <meta property="og:image" content="http://yoursite.com/upload/images/2021/12/19/4.png">
 <meta property="og:image" content="http://yoursite.com/upload/me/qrcode_wx.jpg">
-<meta property="og:updated_time" content="2021-12-19T08:34:05.056Z">
+<meta property="og:updated_time" content="2021-12-19T08:35:45.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="怀念 Ubuntu：查看 CPU 信息">
 <meta name="twitter:description" content="初中时期结识了一位挚友，在初中生涯我俩算是焦不离孟的友情，有一次我们聊天。 我说：“看到自己之前写的字，实在太丑了。。。” 他说：“说明你进步了。每当你审视之前做的东西不够完美，说明你是有追求的人。” 现在想想，这位朋友当时的解释算是哲学界的泰斗解说了。 今天在翻阅之前写的技术文章，发现了 linux 常用命令: 查看 CPU 信息 这篇文章，那是我在 2012 年写的。当时自己使用 Linux">
@@ -434,7 +434,7 @@
 <p><img src="/upload/images/2021/12/19/2.png" alt=""></p>
 <p>可以看出，CPU 的信息出来了，红色部分是 CPU 的位数和 CPU 的核数。</p>
 <p>也可以用 <code>cat -n /proc/cpuinfo</code> 命令查看更加详细的信息，但查出来的内容太多，看起来挺费劲。</p>
-<p>下面给出几个常用的命令。<strong>wc</strong> 主要用于统计，<strong>uniq</strong> 主要用于出去重复行，只显示其中相同的某条数据。大家可以自行去搜索和学习这两个命令。</p>
+<p>下面给出几个常用的命令。<strong>wc</strong> 主要用于统计，<strong>uniq</strong> 主要用于除去重复行，只显示其中相同的某条数据。大家可以自行去搜索和学习这两个命令。</p>
 <p><strong>1、查看物理 CPU 的个数</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat  /proc/cpuinfo | grep "physical id" | sort  | uniq | wc -l</div></pre></td></tr></table></figure>
 <p>注意：物理 CPU 就是实实在在的硬件。</p>
